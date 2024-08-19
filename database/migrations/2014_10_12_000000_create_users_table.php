@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['admin','expense_manager'])->default('expense_manager');
+            $table->enum('role', ['Admin','Expense Manager'])->default('Expense Manager');
             $table->rememberToken();
             $table->softDeletes('deleted_at', 0);
             $table->timestamps();

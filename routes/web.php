@@ -20,7 +20,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
-Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('user',\App\Http\Controllers\resource\user::class);
+Route::post('/user/deleteUser', [\App\Http\Controllers\resource\user::class, 'deleteUser'])->name('user.deleteUser');

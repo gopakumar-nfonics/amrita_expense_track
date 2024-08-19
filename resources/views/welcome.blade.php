@@ -3,36 +3,59 @@
 @section('content')
 		<!--begin::Theme mode setup on page load-->
 		<!--end::Theme mode setup on page load-->
+
 		<!--begin::Root-->
-		<div class="d-flex flex-column flex-root kt_app_root-login" id="kt_app_root">
-			<!--begin::Page bg image-->
-			<style>body { background-image: url("{{ url('/') }}/assets/media/auth/bg4.jpg");background-size: cover; background-repeat: no-repeat; } </style>
-			<!--end::Page bg image-->
+		<div class="d-flex flex-column flex-root" id="kt_app_root">
 			<!--begin::Authentication - Sign-in -->
-			<div class="d-flex flex-column flex-column-fluid flex-lg-row">
-			
+			<div class="d-flex flex-column flex-lg-row flex-column-fluid">
+
+			<!--begin::Aside-->
+			<div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-1" style="background-image: url(assets/media/misc/auth-bg.png)">
+					<!--begin::Content-->
+					<div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
+						<!--begin::Logo-->
+						<a href="" class="mb-0 mb-lg-12">
+							<img alt="Logo" src="assets/media/logos/logo.svg" class="h-60px h-lg-75px" />
+						</a>
+						<!--end::Logo-->
+						<!--begin::Image-->
+						<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="assets/media/misc/auth-screens.png" alt="" />
+						<!--end::Image-->
+						<!--begin::Title-->
+						<h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">Expense Tracking Solution</h1>
+						<!--end::Title-->
+						<!--begin::Text--> 
+						<div class="d-none d-lg-block text-white fs-base text-center">Effortlessly track expenses,
+						<a href="#" class="opacity-75-hover text-warning fw-bold me-1">set budgets,</a>and stay in control of your 
+						<br />financial health with our
+						<a href="#" class="opacity-75-hover text-warning fw-bold me-1">intuitive expense tracking solution.</a></div>
+						<!--end::Text-->
+					</div>
+					<!--end::Content-->
+				</div>
+				<!--end::Aside-->
 				<!--begin::Body-->
-				<div class="d-flex flex-center w-lg-100 px-10">
-					<!--begin::Card-->
-					<div class="card rounded-3 w-md-500px login-div px-10 py-5">
-						<!--begin::Card body-->
-						<div class="card-body p-10">
+				<div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-2">
+					<!--begin::Form-->
+					<div class="d-flex flex-center flex-column flex-lg-row-fluid">
+						<!--begin::Wrapper-->
+						<div class="w-lg-500px p-10">
 							<!--begin::Form-->
-							<form method="post" action="{{ route('login') }}" class="form w-100" id="kt_sign_in_form">
+											<form method="post" action="{{ route('login') }}" class="form w-100" id="kt_sign_in_form">
                             @csrf
 								<!--begin::Heading-->
 								<div class="text-center mb-15">
 									<!--begin::Title-->
-									<img alt="Logo" src="{{ url('/') }}/assets/media/logos/logo.svg" />
-									<h6 class="text-white fw-normal mt-2 pt-3 br-t-3">EXPENSE TRACKER SYSTEM</h6>
+								
+									<h2 class="text-grey-200 fw-bolder mt-2 pt-3 br-b-1">Sign In</h2>
 								
 									<!--end::Title-->
 									<!--begin::Subtitle-->
 									
 
 									@if ($errors->has('email'))
-        <strong style="color: #ff0000;font-size: 1.2em;">{{ $errors->first('email') }}</strong>
-        @endif
+							<strong style="color: #ff0000;font-size: 1.2em;">{{ $errors->first('email') }}</strong>
+							@endif
 									
 									<!--end::Subtitle=-->
 								</div>
@@ -58,7 +81,7 @@
 									<div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mt-5">
 									<div></div>
 									<!--begin::Link-->
-									<a  href="{{ route('password.request') }}" class="link-secondary"><u>Forgot Password ?</u></a>
+									<a  href="{{ route('password.request') }}" class="link-primary"><u>Forgot Password ?</u></a>
 									<!--end::Link-->
 								</div>
 								<!--end::Wrapper-->
@@ -81,16 +104,27 @@
 								
 							</form>
 							<!--end::Form-->
-							<footer class="page-copyright-inverse footer-label">  © 2024. Amrita Vishwa Vidyapeetham. All Rights Reserved.         					</footer>
+						</div>
+						<!--end::Wrapper-->
+					</div>
+					<!--end::Form-->
+					<!--begin::Footer-->
+					<div class="d-flex flex-center flex-wrap px-5">
+						<!--begin::Links-->
+						<div class="d-flex fw-semibold text-primary fs-base">
+							<a href="../../demo1/dist/pages/team.html" class="px-5" target="_blank">© 2024. Amrita Vishwa Vidyapeetham. All Rights Reserved.</a>
 
 						</div>
-						<!--end::Card body-->
+						<!--end::Links-->
 					</div>
-					<!--end::Card-->
+					<!--end::Footer-->
 				</div>
 				<!--end::Body-->
+				
 			</div>
 			<!--end::Authentication - Sign-in-->
 		</div>
+		<!--end::Root-->
+		
 		
         @endsection	

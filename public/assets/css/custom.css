@@ -1,5 +1,5 @@
 .kt_app_root-login{
-    background: #0c0c0c7a;
+
     display: flex;
     width: 100%;
     padding-right: 30px;
@@ -11,12 +11,19 @@
     width: 290px;
     margin: 0px auto;
 }
+.br-b-1
+{
+border-bottom: 1px solid #e2e2e2;
+width: 100%;
+margin: 0px auto;
+padding-bottom: 20px;
+}
 .app-sidebar .app-sidebar-logo {
     background-color: var(--kt-primary);
 }
 .footer-label
 {
-    color:#a19d9d !important;
+    color:#f3f3f396 !important;
     font-size: 12px;
     font-weight: 400;
     text-align: center;
@@ -27,7 +34,7 @@
 }
 
 .login-div {
-    background: #000000cb  !important;
+    background: #00121ede !important;
 
 }
 .download-menu-item

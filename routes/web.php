@@ -15,11 +15,21 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', function(){
+    if ( Auth::user()->isAdmin() ) {
+        return redirect(route('dashboard'));
+    }
+    if ( Auth::user()->isExpenseManager() ) {
+        return redirect(route('dashboard'));
+    }
+})->name('dashboard');
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 Route::resource('user',\App\Http\Controllers\resource\user::class);
 Route::post('/user/deleteUser', [\App\Http\Controllers\resource\user::class, 'deleteUser'])->name('user.deleteUser');

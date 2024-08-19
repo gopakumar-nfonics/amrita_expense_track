@@ -157,7 +157,7 @@
 						<!--begin::Logo-->
 						<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 							<!--begin::Logo image-->
-							<a href="">
+							<a href="{{route('dashboard')}}">
 								<img alt="Logo" src="{{ url('/') }}/assets/media/logos/logo.svg" class="h-35px app-sidebar-logo-default" />
 								<img alt="Logo" src="{{ url('/') }}/assets/media/logos/logo-small.png" class="h-35px app-sidebar-logo-minimize" />
 							</a>
@@ -185,7 +185,7 @@
 									<!--begin:Menu item-->
 									<div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
 										<!--begin:Menu link-->
-										<a  href="">
+										<a  href="{{route('dashboard')}}">
 											<span class="menu-link @if(in_array(Route::currentRouteName(),array('dashboard'))) active  @endif">
 												<span class="menu-icon">
 													<!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->

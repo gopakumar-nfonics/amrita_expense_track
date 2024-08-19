@@ -19,10 +19,10 @@
 						</a>
 						<!--end::Logo-->
 						<!--begin::Image-->
-						<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20 mt-10" src="assets/media/misc/auth-screens.png" alt="" />
+						<img class="d-none d-lg-block mx-auto w-200px w-md-50 w-lg-400px" src="assets/media/misc/auth-screens.png" alt="" />
 						<!--end::Image-->
 						<!--begin::Title-->
-						<h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">Expense Tracking Solution</h1>
+						<h1 class="d-none d-lg-block text-white fs-1 fw-bolder text-center mt-6">Expense Tracking Solution</h1>
 						<!--end::Title-->
 						<!--begin::Text--> 
 						<div class="d-none d-lg-block text-white fs-base text-center">Effortlessly track expenses,

@@ -3,7 +3,7 @@
 <html lang="en">
 	<!--begin::Head-->
 	<head><base href=""/>
-		<title>Login | {{config('app.name')}}</title>
+		<title>{{config('app.name')}}</title>
 		<meta charset="utf-8" />
 		<link rel="shortcut icon" href="{{ url('/') }}/assets/media/logos/favicon.ico" />
 		<!--begin::Fonts(mandatory for all pages)-->
@@ -444,9 +444,9 @@
 										<!--begin:Menu link-->
 										<span class="menu-link">
 											<span class="menu-icon">
-											<i class="fa-solid fa-users-line f-15 p-0"></i>
+											<i class="fa-solid fa-shop f-15 p-0"></i>
 											</span>
-											<span class="menu-title">Batch</span>
+											<span class="menu-title">Vendor</span>
 											<span class="menu-arrow"></span>
 										</span>
 										<!--end:Menu link-->
@@ -459,7 +459,7 @@
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
-													<span class="menu-title">Batch List</span>
+													<span class="menu-title">Vendor List</span>
 												</a>
 												<!--end:Menu link-->
 											</div>
@@ -484,9 +484,9 @@
                                         <!--begin:Menu link-->
                                         <span class="menu-link">
                                             <span class="menu-icon">
-                                            <i class="fa-solid fa-code-branch fa-rotate-90"></i>
+                                            <i class="fa-solid fa-building"></i>
                                             </span>
-                                            <span class="menu-title">Branch</span>
+                                            <span class="menu-title">Company</span>
                                             <span class="menu-arrow"></span>
                                         </span>
                                         <!--end:Menu link-->
@@ -499,7 +499,7 @@
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">Branch List</span>
+                                                    <span class="menu-title">Company List</span>
                                                 </a>
                                                 <!--end:Menu link-->
                                             </div>
@@ -515,9 +515,9 @@
 										<!--begin:Menu link-->
 										<span class="menu-link">
 											<span class="menu-icon">
-											<i class="fa-solid fa-graduation-cap f-15 p-0"></i>
+											<i class="fa-solid fa-object-ungroup f-15 p-0"></i>
 											</span>
-											<span class="menu-title">Course</span>
+											<span class="menu-title">Category</span>
 											<span class="menu-arrow"></span>
 										</span>
 										<!--end:Menu link-->
@@ -530,7 +530,7 @@
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
-													<span class="menu-title">Course List</span>
+													<span class="menu-title">Category List</span>
 												</a>
 												<!--end:Menu link-->
 											</div>
@@ -549,9 +549,9 @@
 										<!--begin:Menu link-->
 										<span class="menu-link">
 											<span class="menu-icon">
-											<i class="fa-solid fa-school f-15 p-0"></i>
+											<i class="fa-solid fa-code-branch fa-rotate-90 f-15 p-0"></i>
 											</span>
-											<span class="menu-title">School</span>
+											<span class="menu-title">Stream</span>
 											<span class="menu-arrow"></span>
 										</span>
 										<!--end:Menu link-->
@@ -564,7 +564,7 @@
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
-													<span class="menu-title">School List</span>
+													<span class="menu-title">Stream List</span>
 												</a>
 												<!--end:Menu link-->
 											</div>
@@ -577,48 +577,7 @@
 									
 									<!--end:Menu item-->
 		
-									<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-										
-										<span class="menu-link">
-											<span class="menu-icon">
-											<i class="fa-solid fa-layer-group f-15 p-0"></i>
-											</span>
-											<span class="menu-title">Subject</span>
-											<span class="menu-arrow"></span>
-										</span>
-										
-										<div class="menu-sub menu-sub-accordion ">
-											
-											<div class="menu-item">
-												
-												<a class="menu-link" href="">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-													<span class="menu-title">Subject List</span>
-												</a>
-												
-											</div>
-											
-											
-											
-
-											
-											<!-- <div class="menu-item">
-												
-												<a class="menu-link" href="">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-													<span class="menu-title">Import Subject</span>
-												</a>
-												
-											</div> -->
-											
-											
-										</div>
-										
-									</div>
+									
 									<!--end:Menu item-->
 
 									

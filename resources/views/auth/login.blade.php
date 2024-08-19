@@ -15,11 +15,11 @@
 					<div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
 						<!--begin::Logo-->
 						<a href="" class="mb-0 mb-lg-12">
-							<img alt="Logo" src="assets/media/logos/logo.svg" class="h-60px h-lg-75px" />
+							<img alt="Logo" src="assets/media/logos/logo.svg" class="h-50px h-lg-50px" />
 						</a>
 						<!--end::Logo-->
 						<!--begin::Image-->
-						<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="assets/media/misc/auth-screens.png" alt="" />
+						<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20 mt-10" src="assets/media/misc/auth-screens.png" alt="" />
 						<!--end::Image-->
 						<!--begin::Title-->
 						<h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">Expense Tracking Solution</h1>
@@ -47,7 +47,7 @@
 								<div class="text-center mb-15">
 									<!--begin::Title-->
 								
-									<h2 class="text-grey-200 fw-bolder mt-2 pt-3 br-b-1">Sign In</h2>
+									<h2 class="text-gray-800 fw-bolder mt-2 pt-3 br-b-1">Sign In</h2>
 								
 									<!--end::Title-->
 									<!--begin::Subtitle-->
@@ -111,8 +111,8 @@
 					<!--begin::Footer-->
 					<div class="d-flex flex-center flex-wrap px-5">
 						<!--begin::Links-->
-						<div class="d-flex fw-semibold text-primary fs-base">
-							<a href="../../demo1/dist/pages/team.html" class="px-5" target="_blank">© 2024. Amrita Vishwa Vidyapeetham. All Rights Reserved.</a>
+						<div class="d-flex fw-semibold text-gray-400 fs-base">
+							<span class="px-5" target="_blank">© 2024. Amrita Vishwa Vidyapeetham. All Rights Reserved.</span>
 
 						</div>
 						<!--end::Links-->

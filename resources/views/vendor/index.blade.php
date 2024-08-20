@@ -52,8 +52,7 @@
 															<th class="min-w-100px">Name</th>
 															<th class="min-w-50px">Code</th>
 															<th class="min-w-100px">Email</th>
-															<th class="min-w-100px">Phone</th>
-														
+															<th class="min-w-100px">Phone</th>														
 															<th class="min-w-100px">Company</th>
                                                             <th class="min-w-150px text-center">Actions</th>
 														</tr>

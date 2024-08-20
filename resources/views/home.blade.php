@@ -557,15 +557,15 @@
 																<span class="text-muted fw-semibold text-muted d-block fs-7">+91-898-589-0432</span>
 															</td>
 															<td>
-															₹7,562.00
+															₹27,562.00
 															</td>
 															<td class="text-end">
 																<div class="d-flex flex-column w-100 me-2">
 																	<div class="d-flex flex-stack mb-2">
-																		<span class="text-muted me-2 fs-7 fw-bold">50%</span>
+																		<span class="text-muted me-2 fs-7 fw-bold">90%</span>
 																	</div>
 																	<div class="progress h-6px w-100">
-																		<div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+																		<div class="progress-bar bg-danger" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
 																	</div>
 																</div>
 															</td>
@@ -589,7 +589,7 @@
 																<span class="text-muted fw-semibold text-muted d-block fs-7">+91-998-589-0432</span>
 															</td>
 															<td>
-															₹4,562.00
+															₹24,168.00
 															</td>
 															<td class="text-end">
 																<div class="d-flex flex-column w-100 me-2">
@@ -597,7 +597,7 @@
 																		<span class="text-muted me-2 fs-7 fw-bold">70%</span>
 																	</div>
 																	<div class="progress h-6px w-100">
-																		<div class="progress-bar bg-danger" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
+																		<div class="progress-bar bg-warning" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
 																	</div>
 																</div>
 															</td>
@@ -621,7 +621,7 @@
 																<span class="text-muted fw-semibold text-muted d-block fs-7">+91-798-789-0432</span>
 															</td>
 															<td>
-															₹1,562.00
+															₹21,297.00
 															</td>
 															<td class="text-end">
 																<div class="d-flex flex-column w-100 me-2">
@@ -653,7 +653,7 @@
 																<span class="text-muted fw-semibold text-muted d-block fs-7">+91-698-589-0432</span>
 															</td>
 															<td>
-															₹8,562.00
+															₹18,733.00
 															</td>
 															<td class="text-end">
 																<div class="d-flex flex-column w-100 me-2">
@@ -661,7 +661,7 @@
 																		<span class="text-muted me-2 fs-7 fw-bold">50%</span>
 																	</div>
 																	<div class="progress h-6px w-100">
-																		<div class="progress-bar bg-warning" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+																		<div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 																	</div>
 																</div>
 															</td>
@@ -685,15 +685,15 @@
 																<span class="text-muted fw-semibold text-muted d-block fs-7">+91-798-789-0432</span>
 															</td>
 															<td>
-															₹17,562.00
+															₹14,345.00
 															</td>
 															<td class="text-end">
 																<div class="d-flex flex-column w-100 me-2">
 																	<div class="d-flex flex-stack mb-2">
-																		<span class="text-muted me-2 fs-7 fw-bold">90%</span>
+																		<span class="text-muted me-2 fs-7 fw-bold">40%</span>
 																	</div>
 																	<div class="progress h-6px w-100">
-																		<div class="progress-bar bg-info" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+																		<div class="progress-bar bg-info" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
 																	</div>
 																</div>
 															</td>

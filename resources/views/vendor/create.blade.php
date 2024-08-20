@@ -104,6 +104,33 @@
 																<!--end::Col-->
 														</div>
 													</div>
+
+													<div class="row mb-6">
+														<!--begin::Label-->
+														<label class="col-lg-2 col-form-label  fw-semibold fs-6">GST #</label>
+														<!--end::Label-->
+														<!--begin::Col-->
+														<div class="col-lg-4 fv-row">	
+																<!--begin::Col-->
+																<div class="col-lg-12 fv-row">
+																	<input type="text" name="email" class="form-control form-control-lg form-control-solid @error('email') is-invalid @enderror" placeholder="GST #" value="{{ old('email') }}" />
+																	@error('email')<div class="invalid-feedback">{{ $message }}</div> @enderror
+                                                                </div>
+																<!--end::Col-->
+														</div>
+														<!--end::Col-->
+														<label class="col-lg-2 col-form-label  fw-semibold fs-6">PAN #</label>
+														<!--end::Label-->
+														<!--begin::Col-->
+														<div class="col-lg-4 fv-row">	
+																<!--begin::Col-->
+																<div class="col-lg-12 fv-row">
+																	<input type="number" name="phone" class="form-control form-control-lg form-control-solid @error('phone') is-invalid @enderror" placeholder="PAN #" value="{{ old('phone') }}" />
+																    @error('phone')<div class="invalid-feedback">{{ $message }}</div> @enderror
+                                                                </div>
+																<!--end::Col-->
+														</div>
+													</div>
                                                     
 													<!--end::Input group-->
 													<div class="row mb-6">

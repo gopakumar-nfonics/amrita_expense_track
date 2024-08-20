@@ -87,7 +87,7 @@
 														<!--begin::Col-->
 														<div class="col-lg-8">
 															<!--begin::Dialer-->
-															<div class="position-relative w-md-300px" data-kt-dialer="true" data-kt-dialer-prefix="&#x20b9;" data-kt-dialer-decimals="2">
+															<div class="position-relative w-md-300px" data-kt-dialer="true" data-kt-dialer-prefix="&#x20b9; " data-kt-dialer-decimals="0">
 																<!--begin::Decrease control-->
 																<button type="button" class="btn btn-icon btn-active-color-gray-700 position-absolute translate-middle-y top-50 start-0" data-kt-dialer-control="decrease">
 																	<!--begin::Svg Icon | path: icons/duotune/general/gen036.svg-->
@@ -101,7 +101,7 @@
 																</button>
 																<!--end::Decrease control-->
 																<!--begin::Input control-->
-																<input type="text" class="form-control form-control-solid border-0 ps-12" data-kt-dialer-control="input" placeholder="Amount" name="manageBudget" value="&#x20b9;100.00">
+																<input type="text" class="form-control form-control-solid border-0 ps-12" data-kt-dialer-control="input" placeholder="Amount" name="manageBudget" value="&#x20b9; 100.00">
 																<!--end::Input control-->
 																<!--begin::Increase control-->
 																<button type="button" class="btn btn-icon btn-active-color-gray-700 position-absolute translate-middle-y top-50 end-0" data-kt-dialer-control="increase">

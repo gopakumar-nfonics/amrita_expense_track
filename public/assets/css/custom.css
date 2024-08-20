@@ -434,3 +434,8 @@ button.btn-close:hover{
 {
     font-weight: 400 !important;
 }
+
+table th {
+    text-transform: uppercase !important;
+    color: var(--kt-text-muted) !important;
+}

@@ -69,21 +69,21 @@
 															<td>
 																<div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																		Direct Sales 
+																		Train Ticket
 																	</div>
 																</div>
 															</td>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-                                                                        DS
+                                                                        TT
 																	</div>
 																</div>
 															</td>
                                                             <td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																		Sales
+																		Travel
 																	</div>
 																</div>
 															</td>

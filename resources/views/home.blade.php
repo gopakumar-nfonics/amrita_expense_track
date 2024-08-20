@@ -531,7 +531,7 @@
 													
 															<th class="min-w-200px">Vendor</th>
 															<th class="min-w-150px">Company</th>
-															<th class="min-w-150px">Expense</th>
+															<th class="min-w-150px">Remittance</th>
 															<th class="min-w-150px">Percentage</th>
 														</tr>
 													</thead>

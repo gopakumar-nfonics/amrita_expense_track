@@ -47,61 +47,84 @@
 													<!--begin::Table head-->
 													<thead>
 														<tr class="fw-bold">
-															<th class="w-50px">#</th>
+															<th class="w-50px">#</th>																
 															<th class="min-w-100px">Name</th>
-															<th class="min-w-100px">Code</th>
-															<th class="min-w-250px">Address</th>
-                                                            <th class="min-w-150px text-center">Actions</th>
+															<th class="min-w-50px">Code</th>
+															<th class="min-w-100px">Email</th>
+															<th class="min-w-100px">Phone</th>	
+															<th class="min-w-150px">Address</th>														
+											                <th class="min-w-150px text-center">Actions</th>
 														</tr>
 													</thead>
 													<!--end::Table head-->
 													<!--begin::Table body-->
 													<tbody>
                                                         
-														<tr>
+													<tr>
 															<td>
                                                                 <div class="d-flex align-items-center">
-																	<div class="fw-400 d-block fs-6">
+																	<div class="fw-100 d-block fs-6">
                                                                         1
 																	</div>
 																</div>
 															<td>
 																<div class="d-flex align-items-center">
-																	<div class="fw-400 d-block fs-6">
-                                                                        Amazon 
+																	<div class="fw-100 d-block fs-6">
+																		Melinda 
 																	</div>
 																</div>
 															</td>
 															<td>
                                                                 <div class="d-flex align-items-center">
-																	<div class="fw-400 d-block fs-6">
-                                                                        AMZN
+																	<div class="d-block fs-6">
+																		MDA
 																	</div>
 																</div>
 															</td>
-                                                            <td>
+															<td>
                                                                 <div class="d-flex align-items-center">
-																	<div class="fw-400 d-block fs-6">
-                                                                        8th floor, Brigade Gateway 26/1 Dr. Rajkumar Road Bangalore Karnataka 560055 India.
+																	<div class="d-block fs-6">
+                                                                        melinda@gmail.com
 																	</div>
 																</div>
 															</td>
-                                                            <td class="text-center">
+															<td>
+                                                                <div class="d-flex align-items-center">
+																	<div class="d-block fs-6">
+																		9568565869
+																	</div>
+																</div>
+															</td>
+														
+															<td>
+															8th Floor, Brigade Gateway, #26/1, Dr. Rajkumar Road, Bangalore-560055
+															</td>
+                                                            <!-- <td>
+																<div class="d-flex justify-content-end flex-shrink-0">
+																	<a href="" class="link-info mx-3">
+                                  										<i class="fa-regular fa-pen-to-square mx-1 link-info"></i>Edit
+																	</a>
+																	<a href="javascript:void(0)" onclick=""  class="link-danger ">
+                                  										<i class="fa-regular fa-trash-can mx-1 link-danger"></i>Delete
+																	</a>
+																</div>
+															</td> -->
+															<td class="text-center">
 																<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
 																<i class="fa-solid fa-angle-down"></i></a>
-																<!--begin::Menu-->
-																<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-																	<!--begin::Menu item-->
-																	<div class="menu-item px-3">
-																		<a href="" class="menu-link px-3">Edit</a>
-																	</div>
-																	<!--end::Menu item-->
-																	<!--begin::Menu item-->
-																	<div class="menu-item px-3">
-																		<a href="" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-																	</div>
-																	<!--end::Menu item-->
+															<!--begin::Menu-->
+															<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+																<!--begin::Menu item-->
+																<div class="menu-item px-3">
+																	<a href="" class="menu-link px-3">Edit</a>
 																</div>
+																<!--end::Menu item-->
+																<!--begin::Menu item-->
+																<div class="menu-item px-3">
+																	<a href="" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+																</div>
+																<!--end::Menu item-->
+															</div>
 															<!--end::Menu-->
 															</td>
 														</tr>

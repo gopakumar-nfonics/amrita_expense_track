@@ -48,10 +48,12 @@
 													<thead>
 														<tr class="fw-bold">
 															<th class="w-50px">#</th>
+															
 															<th class="min-w-100px">Name</th>
+															<th class="min-w-50px">Code</th>
 															<th class="min-w-100px">Email</th>
 															<th class="min-w-100px">Phone</th>
-															<th class="min-w-100px">Code</th>
+														
 															<th class="min-w-100px">Company</th>
                                                             <th class="min-w-150px text-center">Actions</th>
 														</tr>
@@ -77,6 +79,13 @@
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="d-block fs-6">
+																		MDA
+																	</div>
+																</div>
+															</td>
+															<td>
+                                                                <div class="d-flex align-items-center">
+																	<div class="d-block fs-6">
                                                                         melinda@gmail.com
 																	</div>
 																</div>
@@ -88,13 +97,7 @@
 																	</div>
 																</div>
 															</td>
-															<td>
-                                                                <div class="d-flex align-items-center">
-																	<div class="d-block fs-6">
-																		MDA
-																	</div>
-																</div>
-															</td>
+														
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="d-block fs-6">

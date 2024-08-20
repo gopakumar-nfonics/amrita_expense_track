@@ -84,13 +84,13 @@
 													<!--end::Input group-->
 													<div class="row mb-6">
 														<!--begin::Label-->
-														<label class="col-lg-4 col-form-label required fw-semibold fs-6">Parent Category</label>
+														<label class="col-lg-4 col-form-label fw-semibold fs-6">Parent Category</label>
 														<!--end::Label-->
 														<!--begin::Col-->
 														<div class="col-lg-8 fv-row">
                                                             <select class="form-control form-control-lg form-control-solid @error('parent-category') is-invalid @enderror" id="parent-category" name="parent-category">
 															<option value="">--Select Parent Category--</option>
-															<option value="">Amazon</option>
+															<option value="">Travel</option>
                                                             </select>
                                                             @error('parent-category')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                                         </div>
@@ -98,7 +98,7 @@
 													</div>
 													<!--begin::Input group-->
 													<div class="row mb-6">
-														<label class="col-lg-4 col-form-label required fw-semibold fs-6">Remarks</label>
+														<label class="col-lg-4 col-form-label fw-semibold fs-6">Remarks</label>
 														<div class="col-lg-8 fv-row">	
 																<div class="col-lg-12 fv-row">
 																	<input type="text" name="remarks" class="form-control form-control-lg form-control-solid @error('remarks') is-invalid @enderror" placeholder="Remarks" value="{{ old('remarks') }}" />

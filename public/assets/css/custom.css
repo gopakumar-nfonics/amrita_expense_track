@@ -430,3 +430,7 @@ button.btn-close:hover{
     color: #50cd89 !important;
 
 }
+.table td
+{
+    font-weight: 400 !important;
+}

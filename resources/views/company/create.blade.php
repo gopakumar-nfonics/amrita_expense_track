@@ -44,8 +44,9 @@
 										<!--begin::Card header-->
 										<!--begin::Content-->
 										<div id="kt_account_settings_profile_details" class="collapse show">
-											<!--begin::Form-->
-											<form id="kt_account_profile_details_form" class="form" method="POST" action="" enctype="multipart/form-data">
+
+<!--begin::Form-->
+<form id="kt_account_profile_details_form" class="form" method="POST" action="" enctype="multipart/form-data">
                                             @csrf
 												<!--begin::Card body-->
 												<div class="card-body border-top p-9">
@@ -53,10 +54,10 @@
 													<!--begin::Input group-->
 													<div class="row mb-6">
 														<!--begin::Label-->
-														<label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
+														<label class="col-lg-2 col-form-label required fw-semibold fs-6">Name</label>
 														<!--end::Label-->
 														<!--begin::Col-->
-														<div class="col-lg-8 fv-row">	
+														<div class="col-lg-4 fv-row">	
 																<!--begin::Col-->
 																<div class="col-lg-12 fv-row">
 																	<input type="text" name="name" class="form-control form-control-lg form-control-solid @error('name') is-invalid @enderror" placeholder="Name" value="{{ old('name') }}" />
@@ -65,13 +66,10 @@
 																<!--end::Col-->
 														</div>
 														<!--end::Col-->
-													</div>
-                                                    <div class="row mb-6">
-														<!--begin::Label-->
-														<label class="col-lg-4 col-form-label required fw-semibold fs-6">Code</label>
+														<label class="col-lg-2 col-form-label required fw-semibold fs-6">Code</label>
 														<!--end::Label-->
 														<!--begin::Col-->
-														<div class="col-lg-8 fv-row">	
+														<div class="col-lg-4 fv-row">	
 																<!--begin::Col-->
 																<div class="col-lg-12 fv-row">
 																	<input type="text" name="code" class="form-control form-control-lg form-control-solid @error('code') is-invalid @enderror" placeholder="Code" value="{{ old('code') }}" />
@@ -79,15 +77,42 @@
                                                                 </div>
 																<!--end::Col-->
 														</div>
-														<!--end::Col-->
 													</div>
-													<!--end::Input group-->
-                                                    <div class="row mb-6">
+
+													<div class="row mb-6">
 														<!--begin::Label-->
-														<label class="col-lg-4 col-form-label required fw-semibold fs-6">Address</label>
+														<label class="col-lg-2 col-form-label required fw-semibold fs-6">Email</label>
 														<!--end::Label-->
 														<!--begin::Col-->
-														<div class="col-lg-8 fv-row">	
+														<div class="col-lg-4 fv-row">	
+																<!--begin::Col-->
+																<div class="col-lg-12 fv-row">
+																	<input type="text" name="email" class="form-control form-control-lg form-control-solid @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email') }}" />
+																	@error('email')<div class="invalid-feedback">{{ $message }}</div> @enderror
+                                                                </div>
+																<!--end::Col-->
+														</div>
+														<!--end::Col-->
+														<label class="col-lg-2 col-form-label required fw-semibold fs-6">Phone</label>
+														<!--end::Label-->
+														<!--begin::Col-->
+														<div class="col-lg-4 fv-row">	
+																<!--begin::Col-->
+																<div class="col-lg-12 fv-row">
+																	<input type="number" name="phone" class="form-control form-control-lg form-control-solid @error('phone') is-invalid @enderror" placeholder="Phone Number" value="{{ old('phone') }}" />
+																    @error('phone')<div class="invalid-feedback">{{ $message }}</div> @enderror
+                                                                </div>
+																<!--end::Col-->
+														</div>
+													</div>
+                                                    
+												
+                                                    <div class="row mb-6">
+														<!--begin::Label-->
+														<label class="col-lg-2 col-form-label required fw-semibold fs-6">Address</label>
+														<!--end::Label-->
+														<!--begin::Col-->
+														<div class="col-lg-10 fv-row">	
 																<!--begin::Col-->
 																<div class="col-lg-12 fv-row">
 																	<textarea name="address" class="form-control form-control-lg form-control-solid @error('address') is-invalid @enderror" placeholder="Address">{{ old('address') }}</textarea>
@@ -97,7 +122,9 @@
 														</div>
 														<!--end::Col-->
 													</div>
+													
 													<!--begin::Input group-->
+													
 													<!--end::Input group-->
 												</div>
 												<!--end::Card body-->
@@ -108,6 +135,8 @@
 												<!--end::Actions-->
 											</form>
 											<!--end::Form-->
+
+											
 										</div>
 										<!--end::Content-->
 									</div>

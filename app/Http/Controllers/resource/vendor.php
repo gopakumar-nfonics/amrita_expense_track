@@ -46,7 +46,7 @@ class vendor extends Controller
      */
     public function show($id)
     {
-        //
+        return view('vendor.show');
     }
 
     /**

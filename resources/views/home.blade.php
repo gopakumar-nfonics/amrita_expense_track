@@ -547,7 +547,7 @@
 																
 																	</div>
 																	<div class="d-flex justify-content-start flex-column">
-																		<a href="#" class="text-dark fw-bold text-hover-primary fs-6">Ana Simmons</a>
+																		<a href="{{ route('vendor.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">Ana Simmons</a>
 																		<span class="text-muted fw-semibold text-muted d-block fs-7">info@simmons.com</span>
 																	</div>
 																</div>

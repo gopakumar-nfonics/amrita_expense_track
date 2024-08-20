@@ -208,7 +208,7 @@
 									<div class="menu-item pt-5">
 										<!--begin:Menu content-->
 										<div class="menu-content">
-											<span class="menu-heading fw-bold text-uppercase fs-7">Allocation</span>
+											<span class="menu-heading fw-bold text-uppercase fs-7">Reports</span>
 										</div>
 										<!--end:Menu content-->
 									</div>
@@ -220,9 +220,9 @@
 										<!--begin:Menu link-->
 										<span class="menu-link">
 											<span class="menu-icon">
-											<i class="fa-solid fa-people-arrows f-15 p-0"></i>
+											<i class="fa-solid fa-print"></i>
 											</span>
-											<span class="menu-title">Allocation</span>
+											<span class="menu-title">Reports</span>
 											<span class="menu-arrow"></span>
 										</span>
 										<!--end:Menu link-->
@@ -235,7 +235,7 @@
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
-													<span class="menu-title">Allocation List</span>
+													<span class="menu-title">Expense Report</span>
 												</a>
 												<!--end:Menu link-->
 											</div>
@@ -247,7 +247,7 @@
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
-													<span class="menu-title">Configure Allocation</span>
+													<span class="menu-title">Budget Report</span>
 												</a>
 												<!--end:Menu link-->
 											</div>
@@ -258,115 +258,29 @@
 									</div>
 									
 									<!--end:Menu item-->
+
+
+
+									
 
 
 
 									<div class="menu-item pt-5">
 										<!--begin:Menu content-->
 										<div class="menu-content">
-											<span class="menu-heading fw-bold text-uppercase fs-7">Exam</span>
+											<span class="menu-heading fw-bold text-uppercase fs-7">Expense</span>
 										</div>
 										<!--end:Menu content-->
-									</div>						
-
-
-									<!--begin:Menu item-->
-									<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-										<!--begin:Menu link-->
-										<span class="menu-link">
-											<span class="menu-icon">
-											<i class="fa-solid fa-person-shelter f-15 p-0"></i>
-											</span>
-											<span class="menu-title">Room</span>
-											<span class="menu-arrow"></span>
-										</span>
-										<!--end:Menu link-->
-										<!--begin:Menu sub-->
-										<div class="menu-sub menu-sub-accordion">
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-												<a class="menu-link">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-													<span class="menu-title">Room List</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-												<a class="menu-link">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-													<span class="menu-title">Create Room</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-											
-										</div>
-										<!--end:Menu sub-->
 									</div>
-									
-									<!--end:Menu item-->
 
-
-									<!--begin:Menu item-->
+										<!--begin:Menu item-->
 									<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 										<!--begin:Menu link-->
 										<span class="menu-link">
 											<span class="menu-icon">
-											<i class="fa-solid fa-file-pen f-15 p-0"></i>
+											<i class="fa-solid fa-scale-balanced"></i>
 											</span>
-											<span class="menu-title">Exam</span>
-											<span class="menu-arrow"></span>
-										</span>
-										<!--end:Menu link-->
-										<!--begin:Menu sub-->
-										<div class="menu-sub menu-sub-accordion">
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-												<a class="menu-link">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-													<span class="menu-title">Exam List</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-												<a class="menu-link">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-													<span class="menu-title">Create Exam</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-											
-										</div>
-										<!--end:Menu sub-->
-									</div>
-									
-									<!--end:Menu item-->
-									
-									<!--begin:Menu item-->
-									<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-										<!--begin:Menu link-->
-										<span class="menu-link">
-											<span class="menu-icon">
-											<i class="fa-solid fa-clock"></i>
-											</span>
-											<span class="menu-title">Session</span>
+											<span class="menu-title">Manage Expense</span>
 											<span class="menu-arrow"></span>
 										</span>
 										<!--end:Menu link-->
@@ -379,7 +293,7 @@
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
-													<span class="menu-title">Session List</span>
+													<span class="menu-title">Expense List</span>
 												</a>
 												
 											</div>
@@ -391,7 +305,7 @@
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
-													<span class="menu-title">Create Session</span>
+													<span class="menu-title">Manage Expense</span>
 												</a>
 												<!--end:Menu link-->
 											</div>
@@ -401,32 +315,60 @@
 										<!--end:Menu sub-->
 									</div>
 									
-									<!--end:Menu item-->
-
 									<!--end:Menu item-->
 							
 
 									<div class="menu-item pt-5">
 										<!--begin:Menu content-->
 										<div class="menu-content">
-											<span class="menu-heading fw-bold text-uppercase fs-7">Students</span>
+											<span class="menu-heading fw-bold text-uppercase fs-7">Budget</span>
 										</div>
 										<!--end:Menu content-->
 									</div>
 
 										<!--begin:Menu item-->
-										<div class="menu-item">
+									<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+										<!--begin:Menu link-->
+										<span class="menu-link">
+											<span class="menu-icon">
+											<i class="fa-solid fa-indian-rupee-sign"></i>
+											</span>
+											<span class="menu-title">Budget Allocation</span>
+											<span class="menu-arrow"></span>
+										</span>
+										<!--end:Menu link-->
+										<!--begin:Menu sub-->
+										<div class="menu-sub menu-sub-accordion">
+											<!--begin:Menu item-->
+											<div class="menu-item">
+												
+												<a class="menu-link">
+													<span class="menu-bullet">
+														<span class="bullet bullet-dot"></span>
+													</span>
+													<span class="menu-title">Budget List</span>
+												</a>
+												
+											</div>
+											<!--end:Menu item-->
+											<!--begin:Menu item-->
+											<div class="menu-item">
 												<!--begin:Menu link-->
 												<a class="menu-link">
-													
-													<span class="menu-icon">
-											<i class="fa-solid fa-file-import f-15 p-0"></i>
-											</span>
-													<span class="menu-title">Import Students</span>
+													<span class="menu-bullet">
+														<span class="bullet bullet-dot"></span>
+													</span>
+													<span class="menu-title">Allocate Budget</span>
 												</a>
 												<!--end:Menu link-->
 											</div>
 											<!--end:Menu item-->
+											
+										</div>
+										<!--end:Menu sub-->
+									</div>
+									
+									<!--end:Menu item-->
 
 
 									<div class="menu-item pt-5">

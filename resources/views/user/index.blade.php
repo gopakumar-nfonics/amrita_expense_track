@@ -10,14 +10,14 @@
 									<!--begin::Page title-->
 									<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 										<!--begin::Title-->
-										<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Manage User</h1>
+										<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">User Listing</h1>
 										<!--end::Title-->
 										
 									</div>
 									<!--end::Page title-->
 									<div class="card-toolbar">
 												<a href="{{route('user.create')}}" class="btn btn-sm btn-primary">
-													Create User
+													Create
 												</a>
 									</div>								
 								</div>
@@ -30,11 +30,11 @@
 								<div id="kt_app_content_container" class="app-container container-xxl">
                 					<div class="card mb-5 mb-xl-8">
 										<!--begin::Header-->
-										<div class="card-header border-0 pt-5">
+										<!-- <div class="card-header border-0 pt-5">
 											<h3 class="card-title align-items-start flex-column">
 												<span class="card-label fw-bold fs-3 mb-1">User List</span>
 											</h3>
-										</div>
+										</div> -->
 										<!--end::Header-->
 										<!--begin::Body-->
 										<div class="card-body py-3">
@@ -49,7 +49,7 @@
 															<th class="min-w-200px">Name</th>
 															<th class="min-w-150px">Email</th>
 															<th class="min-w-150px">Role</th>
-															<th class="min-w-100px text-center">Actions</th>
+															<th class="min-w-150px text-center">Actions</th>
 														</tr>
 													</thead>
 													<!--end::Table head-->
@@ -84,7 +84,7 @@
                                   									</div>
 																</div>
 															</td>
-															<td>
+															<!-- <td>
 																<div class="d-flex justify-content-end flex-shrink-0">
 																	<a href="{{route('user.edit',$user->id)}}" class="link-info mx-3">
                                   										<i class="fa-regular fa-pen-to-square mx-1 link-info"></i>Edit
@@ -93,6 +93,25 @@
                                   										<i class="fa-regular fa-trash-can mx-1 link-danger"></i>Delete
 																	</a>
 																</div>
+															</td> -->
+															<td class="text-center">
+																<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+																<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+																<i class="fa-solid fa-angle-down"></i></a>
+																<!--begin::Menu-->
+																<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="{{route('user.edit',$user->id)}}" class="menu-link px-3">Edit</a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="javascript:void(0)" onclick="removeUser('{{$user->id}}')" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+																	</div>
+																	<!--end::Menu item-->
+																</div>
+															
 															</td>
 														</tr>
 														@empty

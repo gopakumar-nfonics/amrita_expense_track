@@ -33,3 +33,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 Route::resource('user',\App\Http\Controllers\resource\user::class);
 Route::post('/user/deleteUser', [\App\Http\Controllers\resource\user::class, 'deleteUser'])->name('user.deleteUser');
+Route::resource('stream',\App\Http\Controllers\resource\stream::class);
+Route::resource('company',\App\Http\Controllers\resource\company::class);
+Route::resource('vendor',\App\Http\Controllers\resource\vendor::class);
+Route::resource('category',\App\Http\Controllers\resource\category::class);

@@ -13,7 +13,7 @@
 									<!--begin::Page title-->
 									<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 										<!--begin::Title-->
-										<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Edit User</h1>
+										<!-- <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Create Company</h1> -->
 										<!--end::Title-->
 										<!--begin::Breadcrumb-->
 										<ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
@@ -30,15 +30,14 @@
 							<!--begin::Content-->
 							<div id="kt_app_content" class="app-content flex-column-fluid">
 								<!--begin::Content container-->
-								<div id="kt_app_content_container" class="app-container container-xxl">
-									
+								<div id="kt_app_content_container" class="app-container container-xxl">	
 									<!--begin::Basic info-->
 									<div class="card mb-5 mb-xl-10">
 										<!--begin::Card header-->
 										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
 											<!--begin::Card title-->
 											<div class="card-title m-0">
-												<h3 class="fw-bold m-0">Edit User</h3>
+												<h3 class="fw-bold m-0">Create Category</h3>
 											</div>
 											<!--end::Card title-->
 										</div>
@@ -46,81 +45,66 @@
 										<!--begin::Content-->
 										<div id="kt_account_settings_profile_details" class="collapse show">
 											<!--begin::Form-->
-											<form id="kt_account_profile_details_form" class="form" method="POST" action="{{route('user.update',$user->id)}}" enctype="multipart/form-data">
+											<form id="kt_account_profile_details_form" class="form" method="POST" action="" enctype="multipart/form-data">
                                             @csrf
-											@method('PUT')
 												<!--begin::Card body-->
 												<div class="card-body border-top p-9">
 													
 													<!--begin::Input group-->
 													<div class="row mb-6">
 														<!--begin::Label-->
-														<label class="col-lg-4 col-form-label required fw-semibold fs-6">Full Name</label>
+														<label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
 														<!--end::Label-->
 														<!--begin::Col-->
-														<div class="col-lg-8">
-															<!--begin::Row-->
-															<div class="row">
+														<div class="col-lg-8 fv-row">	
 																<!--begin::Col-->
-																<div class="col-lg-6 fv-row">
-																	<input type="text" name="fname" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('fname') is-invalid @enderror" placeholder="First name" value="{{ old('fname', $user->first_name) }}" />
-																    @error('fname')<div class="invalid-feedback">{{ $message }}</div> @enderror
+																<div class="col-lg-12 fv-row">
+																	<input type="text" name="name" class="form-control form-control-lg form-control-solid @error('name') is-invalid @enderror" placeholder="Name" value="{{ old('name') }}" />
+																    @error('name')<div class="invalid-feedback">{{ $message }}</div> @enderror
                                                                 </div>
 																<!--end::Col-->
+														</div>
+														<!--end::Col-->
+													</div>
+                                                    <div class="row mb-6">
+														<!--begin::Label-->
+														<label class="col-lg-4 col-form-label required fw-semibold fs-6">Code</label>
+														<!--end::Label-->
+														<!--begin::Col-->
+														<div class="col-lg-8 fv-row">	
 																<!--begin::Col-->
-																<div class="col-lg-6 fv-row">
-																	<input type="text" name="lname" class="form-control form-control-lg form-control-solid" placeholder="Last name" value="{{ old('lname', $user->last_name) }}" />
-																</div>
+																<div class="col-lg-12 fv-row">
+																	<input type="text" name="code" class="form-control form-control-lg form-control-solid @error('code') is-invalid @enderror" placeholder="Code" value="{{ old('code') }}" />
+																    @error('code')<div class="invalid-feedback">{{ $message }}</div> @enderror
+                                                                </div>
 																<!--end::Col-->
-															</div>
-															<!--end::Row-->
 														</div>
 														<!--end::Col-->
 													</div>
 													<!--end::Input group-->
-													<!--begin::Input group-->
 													<div class="row mb-6">
 														<!--begin::Label-->
-														<label class="col-lg-4 col-form-label required fw-semibold fs-6">Email</label>
+														<label class="col-lg-4 col-form-label required fw-semibold fs-6">Parent Category</label>
 														<!--end::Label-->
 														<!--begin::Col-->
 														<div class="col-lg-8 fv-row">
-															<input type="text" name="email" class="form-control form-control-lg form-control-solid @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email', $user->email) }}" />
-														    @error('email')<div class="invalid-feedback">{{ $message }}</div> @enderror
+                                                            <select class="form-control form-control-lg form-control-solid @error('parent-category') is-invalid @enderror" id="parent-category" name="parent-category">
+															<option value="">--Select Parent Category--</option>
+															<option value="">Amazon</option>
+                                                            </select>
+                                                            @error('parent-category')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                                         </div>
 														<!--end::Col-->
 													</div>
-													<!--end::Input group-->
 													<!--begin::Input group-->
 													<div class="row mb-6">
-														<!--begin::Label-->
-														<label class="col-lg-4 col-form-label fw-semibold fs-6">Password</label>
-														<!--end::Label-->
-														<!--begin::Col-->
-														<div class="col-lg-8 fv-row">
-															<input type="password" name="password" class="form-control form-control-lg form-control-solid @error('password') is-invalid @enderror" placeholder="Password" value="{{ old('password') }}" />
-														    @error('password')<div class="invalid-feedback">{{ $message }}</div> @enderror
-                                                        </div>
-														<!--end::Col-->
-													</div>
-													<!--end::Input group-->
-													
-													<!--begin::Input group-->
-													<div class="row mb-6">
-														<!--begin::Label-->
-														<label class="col-lg-4 col-form-label fw-semibold fs-6">
-															<span class="required">User Role</span></label>
-														<!--end::Label-->
-														<!--begin::Col-->
-														<div class="col-lg-8 fv-row">
-															<select name="role" aria-label="Select a Role" class="form-select form-select-solid form-select-lg fw-semibold @error('role') is-invalid @enderror">
-																<option value="">Select a Role</option>
-																<option value="Admin" @if(old('role',$user->role) == "Admin") selected @endif>Admin</option>
-                                                                <option value="Expense Manager" @if(old('role',$user->role) == "Expense Manager") selected @endif>Expense Manager</option>
-																</select>
-                                                                @error('role')<div class="invalid-feedback">{{ $message }}</div> @enderror
+														<label class="col-lg-4 col-form-label required fw-semibold fs-6">Remarks</label>
+														<div class="col-lg-8 fv-row">	
+																<div class="col-lg-12 fv-row">
+																	<input type="text" name="remarks" class="form-control form-control-lg form-control-solid @error('remarks') is-invalid @enderror" placeholder="Remarks" value="{{ old('remarks') }}" />
+																    @error('remarks')<div class="invalid-feedback">{{ $message }}</div> @enderror
+                                                                </div>
 														</div>
-														<!--end::Col-->
 													</div>
 													<!--end::Input group-->
 												</div>

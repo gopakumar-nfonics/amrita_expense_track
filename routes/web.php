@@ -37,3 +37,4 @@ Route::resource('stream',\App\Http\Controllers\resource\stream::class);
 Route::resource('company',\App\Http\Controllers\resource\company::class);
 Route::resource('vendor',\App\Http\Controllers\resource\vendor::class);
 Route::resource('category',\App\Http\Controllers\resource\category::class);
+Route::resource('budget',\App\Http\Controllers\resource\budget::class);

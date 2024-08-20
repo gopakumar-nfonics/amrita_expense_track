@@ -327,7 +327,7 @@
 									</div>
 
 										<!--begin:Menu item-->
-									<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+									<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('budget.index','budget.create'))) show  @endif">
 										<!--begin:Menu link-->
 										<span class="menu-link">
 											<span class="menu-icon">
@@ -342,7 +342,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												
-												<a class="menu-link">
+												<a class="menu-link @if(in_array(Route::currentRouteName(),array('budget.index'))) active  @endif" href="{{route('budget.index')}}">
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
@@ -354,7 +354,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-												<a class="menu-link">
+												<a class="menu-link @if(in_array(Route::currentRouteName(),array('budget.create'))) active  @endif" href="{{route('budget.create')}}">
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>

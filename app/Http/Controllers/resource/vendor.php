@@ -4,6 +4,8 @@ namespace App\Http\Controllers\resource;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Vendor as vendors;
+use App\Models\Company;
 
 class vendor extends Controller
 {
@@ -14,7 +16,8 @@ class vendor extends Controller
      */
     public function index()
     {
-        return view('vendor.index');
+        $vendors=vendors::with('company')->orderBy('vendor_name')->get();
+        return view('vendor.index', compact('vendors'));
     }
 
     /**
@@ -24,7 +27,8 @@ class vendor extends Controller
      */
     public function create()
     {
-        return view('vendor.create');
+        $companies=Company::orderBy('company_name')->get();
+        return view('vendor.create', compact('companies'));
     }
 
     /**
@@ -35,7 +39,36 @@ class vendor extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'code' => 'required|unique:vendor,vendor_code',
+            'email' => 'required|string|email|max:255|unique:vendor',
+            'phone' => 'required|max:15',
+            'company'=> 'required',
+            'address' => 'required',
+        ]);
+    
+            try {
+                $vendor = new vendors();
+                $vendor->vendor_name = $request->name;
+                $vendor->vendor_code = $request->code;
+                $vendor->email = $request->email;
+                $vendor->phone = $request->phone;
+                $vendor->company_id  = $request->company;
+                if ($request->has('gst')) {
+                    $vendor->gst = $request->gst;
+                }
+                if ($request->has('pan')) {
+                    $vendor->pan = $request->pan;
+                }
+                $vendor->address = $request->address;
+                $vendor->save();
+        
+                return redirect()->route('vendor.index')->with('success', 'Vendor Created Successfully');
+            } catch (\Exception $e) {
+                // Log the exception message
+                return redirect()->back()->with('error', $e->getMessage());
+            }
     }
 
     /**

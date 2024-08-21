@@ -84,15 +84,16 @@
 																	<select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select Category" name="payment_method" id="kt_ecommerce_edit_order_payment">
 																		<option></option>
 																		@foreach ($main_categories as $main_category)
+																		@if ($main_category->children->isNotEmpty())
 																		<optgroup label="{{ $main_category->category_name }}">
-																			@if ($main_category->children->isNotEmpty())
 																			@foreach ($main_category->children as $subcategory)
-																			<option value="{{ $subcategory->id }}">{{ $subcategory->category_name }}</option>
+																			<option class="sub-category" value="{{ $subcategory->id }}">{{ $subcategory->category_name }}</option>
 																			@endforeach
-																			@else
-																			<option value="{{ $main_category->id }}">{{ $main_category->category_name }}</option>
-																			@endif
 																		</optgroup>
+																		@else
+																		<!-- Print the main category as a standalone option if no children exist -->
+																		<option class="main-category" value="{{ $main_category->id }}">{{ $main_category->category_name }}</option>
+																		@endif
 																		@endforeach
 																	</select>
 																	<!--end::Select2-->

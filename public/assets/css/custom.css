@@ -439,6 +439,11 @@ table th {
     text-transform: uppercase !important;
     color: var(--kt-text-muted) !important;
 }
+.br-right
+{
+    border-right: 1px solid #eff2f5;
+    border-radius: 0;
+}
 
 
 @media (min-width: 1400px) {

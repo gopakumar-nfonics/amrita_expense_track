@@ -48,9 +48,8 @@
 													<thead>
 														<tr class="fw-bold">
 															<th class="w-50px">#</th>
-															<th class="min-w-200px">Name</th>
-															<th class="min-w-150px">Code</th>
-                                                            <th class="min-w-150px text-center">Actions</th>
+															<th class="min-w-300px">Stream</th>
+														    <th class="min-w-150px text-center">Actions</th>
 														</tr>
 													</thead>
 													<!--end::Table head-->
@@ -65,19 +64,19 @@
 																	</div>
 																</div>
 															<td>
+																
 																<div class="d-flex align-items-center">
-																	<div class="fw-400 d-block fs-6">
-																		{{$stream->stream_name}}
+																	<div class="symbol symbol-45px me-5">
+																		<span class="symbol-label color-blue w-80px"> {{$stream->stream_code}}</span>
+																
+																	</div>
+																	<div class="d-flex justify-content-start flex-column">
+																		<a href="{{ route('vendor.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">{{$stream->stream_name}}</a>
+																		
 																	</div>
 																</div>
 															</td>
-															<td>
-                                                                <div class="d-flex align-items-center">
-																	<div class="fw-400 d-block fs-6">
-																		{{$stream->stream_code}}
-																	</div>
-																</div>
-															</td>
+														
                                                             <td class="text-center">
 																<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
 																<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->

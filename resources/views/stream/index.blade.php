@@ -56,25 +56,25 @@
 													<!--end::Table head-->
 													<!--begin::Table body-->
 													<tbody>
-                                                        
+														@forelse($streams as $key => $stream)
 														<tr>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-                                                                        1
+																		{{ $key+1 }}
 																	</div>
 																</div>
 															<td>
 																<div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-                                                                        Bachelor of Technology
+																		{{$stream->stream_name}}
 																	</div>
 																</div>
 															</td>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-                                                                        BTech
+																		{{$stream->stream_code}}
 																	</div>
 																</div>
 															</td>
@@ -99,11 +99,11 @@
 															<!--end::Menu-->
 															</td>
 														</tr>
-														
-                                                        <!-- <tr>
+														@empty
+                                                        <tr>
                                                             <td colspan="4">No data found</td>
-                                                        </tr> -->
-                                                    
+                                                        </tr>
+														@endforelse
 													</tbody>
 													<!--end::Table body-->
 												</table>

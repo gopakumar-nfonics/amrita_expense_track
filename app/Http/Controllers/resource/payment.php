@@ -5,7 +5,7 @@ namespace App\Http\Controllers\resource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class expense extends Controller
+class payment extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class expense extends Controller
      */
     public function index()
     {
-        return view('expense.index');
+        return view('payment.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class expense extends Controller
      */
     public function create()
     {
-        return view('expense.create');
+        return view('payment.create');
     }
 
     /**

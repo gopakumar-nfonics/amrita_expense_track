@@ -235,7 +235,7 @@
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
-													<span class="menu-title">Expense Report</span>
+													<span class="menu-title">payment Report</span>
 												</a>
 												<!--end:Menu link-->
 											</div>
@@ -268,19 +268,19 @@
 									<div class="menu-item pt-5">
 										<!--begin:Menu content-->
 										<div class="menu-content">
-											<span class="menu-heading fw-bold text-uppercase fs-7">Expense</span>
+											<span class="menu-heading fw-bold text-uppercase fs-7">Payments</span>
 										</div>
 										<!--end:Menu content-->
 									</div>
 
 										<!--begin:Menu item-->
-									<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('expense.index','expense.create'))) show  @endif">
+									<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('payment.index','payment.create'))) show  @endif">
 										<!--begin:Menu link-->
 										<span class="menu-link">
 											<span class="menu-icon">
 											<i class="fa-solid fa-scale-balanced"></i>
 											</span>
-											<span class="menu-title">Manage Expense</span>
+											<span class="menu-title">Manage Payments</span>
 											<span class="menu-arrow"></span>
 										</span>
 										<!--end:Menu link-->
@@ -289,11 +289,11 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												
-												<a class="menu-link @if(in_array(Route::currentRouteName(),array('expense.index'))) active  @endif" href="{{route('expense.index')}}">
+												<a class="menu-link @if(in_array(Route::currentRouteName(),array('payment.index'))) active  @endif" href="{{route('payment.index')}}">
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
-													<span class="menu-title">Expense List</span>
+													<span class="menu-title">Payments List</span>
 												</a>
 												
 											</div>
@@ -301,11 +301,11 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-												<a class="menu-link @if(in_array(Route::currentRouteName(),array('expense.create'))) active  @endif" href="{{route('expense.create')}}">
+												<a class="menu-link @if(in_array(Route::currentRouteName(),array('payment.create'))) active  @endif" href="{{route('payment.create')}}">
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
-													<span class="menu-title">Manage Expense</span>
+													<span class="menu-title">Payment Request</span>
 												</a>
 												<!--end:Menu link-->
 											</div>

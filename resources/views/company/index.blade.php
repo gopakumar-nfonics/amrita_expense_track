@@ -48,13 +48,9 @@
 													<thead>
 														<tr class="fw-bold">
 															<th class="w-50px">#</th>																
-															<th class="min-w-100px">Name</th>
-															<th class="min-w-50px">Code</th>
-															<th class="min-w-100px">Email</th>
-															<th class="min-w-100px">Phone</th>
-															<th class="min-w-100px">GST</th>	
-															<th class="min-w-100px">PAN</th>	
-															<th class="min-w-150px">Address</th>	
+															<th class="min-w-200px">Company</th>
+															<th class="min-w-100px">Tax #</th>	
+															<th class="min-w-250px">Address</th>	
 											                <th class="min-w-150px text-center">Actions</th>
 														</tr>
 													</thead>
@@ -70,49 +66,38 @@
 																	</div>
 																</div>
 															<td>
+
+															<div class="d-flex align-items-center">
+																	<div class="symbol symbol-45px me-5">
+																		<span class="symbol-label color-blue w-80px"> {{$company->company_code}}</span>
+																
+																	</div>
+																	<div class="d-flex justify-content-start flex-column">
+																		<a href="{{ route('vendor.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">{{$company->company_name}}</a>
+																		<span class="text-muted fw-semibold text-muted d-block fs-7">{{$company->email}}</span>
+																		<span class="text-muted fw-semibold text-muted d-block fs-7">{{$company->phone}}</span>
+																	</div>
+																</div>
 																<div class="d-flex align-items-center">
 																	<div class="fw-100 d-block fs-6">
-																		{{$company->company_name}}
+																		
 																	</div>
 																</div>
 															</td>
+															
 															<td>
-                                                                <div class="d-flex align-items-center">
-																	<div class="d-block fs-6">
-																		{{$company->company_code}}
+															<div class="d-flex justify-content-start flex-column">
+																	<span class="text-dark fw-semibold text-dark d-block fs-7">GST : {{$company->gst}}</span>
+																	<span class="text-dark fw-semibold text-dark d-block fs-7">PAN : {{$company->pan}}</span>
 																	</div>
-																</div>
 															</td>
+															
 															<td>
-                                                                <div class="d-flex align-items-center">
-																	<div class="d-block fs-6">
-																		{{$company->email}}
+																
+																<div class="d-flex justify-content-start flex-column">
+																	<span class="text-dark fw-semibold text-dark d-block fs-7">{{$company->address}}</span>
+																	
 																	</div>
-																</div>
-															</td>
-															<td>
-                                                                <div class="d-flex align-items-center">
-																	<div class="d-block fs-6">
-																		{{$company->phone}}
-																	</div>
-																</div>
-															</td>
-															<td>
-                                                                <div class="d-flex align-items-center">
-																	<div class="d-block fs-6">
-																		{{$company->gst}}
-																	</div>
-																</div>
-															</td>
-															<td>
-                                                                <div class="d-flex align-items-center">
-																	<div class="d-block fs-6">
-																		{{$company->pan}}
-																	</div>
-																</div>
-															</td>
-															<td>
-																{{$company->address}}
 															</td>
 															<td class="text-center">
 																<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
@@ -161,6 +146,9 @@
         "iDisplayLength":10,
         "searching": true,
         "recordsTotal":3615,
+		"columnDefs": [
+            { "orderable": false, "targets": [0] }  // Disable sorting on specific columns (0-indexed)
+        ]
         "pagingType": "full_numbers"
     } );
   });

@@ -24,7 +24,7 @@ Route::get('/home', function(){
     if ( Auth::user()->isAdmin() ) {
         return redirect(route('dashboard'));
     }
-    if ( Auth::user()->isExpenseManager() ) {
+    if ( Auth::user()->ispaymentManager() ) {
         return redirect(route('dashboard'));
     }
 })->name('dashboard');
@@ -38,4 +38,4 @@ Route::resource('company',\App\Http\Controllers\resource\company::class);
 Route::resource('vendor',\App\Http\Controllers\resource\vendor::class);
 Route::resource('category',\App\Http\Controllers\resource\category::class);
 Route::resource('budget',\App\Http\Controllers\resource\budget::class);
-Route::resource('expense',\App\Http\Controllers\resource\expense::class);
+Route::resource('payment',\App\Http\Controllers\resource\payment::class);

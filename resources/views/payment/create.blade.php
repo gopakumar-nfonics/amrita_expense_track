@@ -16,7 +16,7 @@
 										<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
 											<!--begin::Item-->
 											<li class="breadcrumb-item text-muted">
-												<a href="" class="text-muted text-hover-primary">Expense</a>
+												<a href="" class="text-muted text-hover-primary">Payment</a>
 											</li>
 											<!--end::Item-->
 											<!--begin::Item-->
@@ -25,7 +25,7 @@
 											</li>
 											<!--end::Item-->
 											<!--begin::Item-->
-											<li class="breadcrumb-item text-muted">Manage Expense</li>
+											<li class="breadcrumb-item text-muted">Manage Payment</li>
 											<!--end::Item-->
 										</ul>
 										<!--end::Breadcrumb-->

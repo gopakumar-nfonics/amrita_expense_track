@@ -37,7 +37,7 @@
 										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
 											<!--begin::Card title-->
 											<div class="card-title m-0">
-												<h3 class="fw-bold m-0">Create Category</h3>
+												<h3 class="fw-bold m-0">Edit Category</h3>
 											</div>
 											<!--end::Card title-->
 										</div>
@@ -45,8 +45,9 @@
 										<!--begin::Content-->
 										<div id="kt_account_settings_profile_details" class="collapse show">
 											<!--begin::Form-->
-											<form id="kt_account_profile_details_form" class="form" method="POST" action="{{route('category.store')}}" enctype="multipart/form-data">
+											<form id="kt_account_profile_details_form" class="form" method="POST" action="{{route('category.update',$category->id)}}" enctype="multipart/form-data">
                                             @csrf
+											@method('PUT')
 												<!--begin::Card body-->
 												<div class="card-body border-top p-9">
 													
@@ -59,7 +60,7 @@
 														<div class="col-lg-8 fv-row">	
 																<!--begin::Col-->
 																<div class="col-lg-12 fv-row">
-																	<input type="text" name="cat_name" class="form-control form-control-lg form-control-solid @error('cat_name') is-invalid @enderror" placeholder="Name" value="{{ old('cat_name') }}" />
+																	<input type="text" name="cat_name" class="form-control form-control-lg form-control-solid @error('cat_name') is-invalid @enderror" placeholder="Name" value="{{ old('cat_name', $category->category_name) }}" />
 																    @error('cat_name')<div class="invalid-feedback">{{ $message }}</div> @enderror
                                                                 </div>
 																<!--end::Col-->
@@ -74,7 +75,7 @@
 														<div class="col-lg-8 fv-row">	
 																<!--begin::Col-->
 																<div class="col-lg-12 fv-row">
-																	<input type="text" name="cat_code" class="form-control form-control-lg form-control-solid @error('cat_code') is-invalid @enderror" placeholder="Code" value="{{ old('cat_code') }}" />
+																	<input type="text" name="cat_code" class="form-control form-control-lg form-control-solid @error('cat_code') is-invalid @enderror" placeholder="Code" value="{{ old('cat_code', $category->category_code) }}" />
 																    @error('cat_code')<div class="invalid-feedback">{{ $message }}</div> @enderror
                                                                 </div>
 																<!--end::Col-->
@@ -90,8 +91,8 @@
 														<div class="col-lg-8 fv-row">
                                                             <select class="form-control form-control-lg form-control-solid @error('parent_category') is-invalid @enderror" id="parent_category" name="parent_category">
 															<option value="">--Select Parent Category--</option>
-															@foreach($category as $cat)
-                                                                    <option value="{{ $cat->id }}" @if(old('parent_category') == $cat->id) selected @endif>{{ $cat->category_name }}</option>
+															@foreach($parent_cat as $cat)
+                                                                    <option value="{{ $cat->id }}" @if(old('parent_category',$category->parent_category) == $cat->id) selected @endif>{{ $cat->category_name }}</option>
                                                                 @endforeach
                                                             </select>
                                                             @error('parent_category')<div class="invalid-feedback">{{ $message }}</div>@enderror
@@ -103,7 +104,7 @@
 														<label class="col-lg-4 col-form-label fw-semibold fs-6">Remarks</label>
 														<div class="col-lg-8 fv-row">	
 																<div class="col-lg-12 fv-row">
-																	<input type="text" name="remarks" class="form-control form-control-lg form-control-solid @error('remarks') is-invalid @enderror" placeholder="Remarks" value="{{ old('remarks') }}" />
+																	<input type="text" name="remarks" class="form-control form-control-lg form-control-solid @error('remarks') is-invalid @enderror" placeholder="Remarks" value="{{ old('remarks', $category->remarks) }}" />
 																    @error('remarks')<div class="invalid-feedback">{{ $message }}</div> @enderror
                                                                 </div>
 														</div>

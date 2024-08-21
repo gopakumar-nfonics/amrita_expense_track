@@ -4,6 +4,9 @@ namespace App\Http\Controllers\resource;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Category as Categories;
+use Carbon\Carbon;
+
 
 class category extends Controller
 {
@@ -14,7 +17,8 @@ class category extends Controller
      */
     public function index()
     {
-        return view('category.index');
+        $category = Categories::with('parent')->orderBy('category_name')->get();
+        return view('category.index',['category'=>$category]);
     }
 
     /**
@@ -24,7 +28,8 @@ class category extends Controller
      */
     public function create()
     {
-        return view('category.create');
+        $category=Categories::orderBy('category_name')->get();
+        return view('category.create',['category'=>$category]);
     }
 
     /**
@@ -35,7 +40,24 @@ class category extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'cat_name' => 'required|unique:tbl_category,category_name',
+            'cat_code' => 'required|unique:tbl_category,category_code',
+        ]);
+    
+            try {
+                $category = new Categories();
+                $category->category_name = $request->cat_name;    
+                $category->category_code = $request->cat_code;
+                $category->parent_category  = $request->parent_category;    
+                $category->	remarks  = $request->remarks;    
+                $category->save();
+        
+                return redirect()->route('category.index')->with('success', 'Category Created Successfully');
+            } catch (\Exception $e) {
+                // Log the exception message
+                return redirect()->back()->with('error', $e->getMessage());
+            }
     }
 
     /**
@@ -57,7 +79,9 @@ class category extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Categories::find($id);
+        $parent_cat=$parent_cat = Categories::where('id', '!=', $id)->orderBy('category_name')->get();
+        return view('category.edit',compact('category','parent_cat'));
     }
 
     /**
@@ -69,7 +93,24 @@ class category extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'cat_name' => 'required|unique:tbl_category,category_name,'.$id,
+            'cat_code' => 'required|unique:tbl_category,category_code,'.$id,
+        ]);
+    
+            try {
+                $category = Categories::findOrFail($id);;
+                $category->category_name = $request->cat_name;    
+                $category->category_code = $request->cat_code;
+                $category->parent_category  = $request->parent_category;    
+                $category->	remarks  = $request->remarks;    
+                $category->save();
+        
+                return redirect()->route('category.index')->with('success', 'Category Updated Successfully');
+            } catch (\Exception $e) {
+                // Log the exception message
+                return redirect()->back()->with('error', $e->getMessage());
+            }
     }
 
     /**
@@ -81,5 +122,19 @@ class category extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function deletecat(Request $request)
+    {
+
+        $category = Categories::findOrFail($request->input('id'));
+        if (!$category) {
+        return response()->json(['error' => 'Category not found.'], 404);
+        }
+        $category->deleted_at = Carbon::parse(now())->format('Y-m-d H:i:s');
+        $category->save();
+        $category->children()->update(['deleted_at' => Carbon::now()]);
+        return response()->json(['success' => 'The Category has been deleted!']);
+        
     }
 }

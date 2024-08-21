@@ -4,6 +4,7 @@ namespace App\Http\Controllers\resource;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Company as companies;
 
 class company extends Controller
 {
@@ -14,7 +15,8 @@ class company extends Controller
      */
     public function index()
     {
-        return view('company.index');
+        $companies=companies::orderBy('company_name')->get();
+        return view('company.index', compact('companies'));
     }
 
     /**
@@ -35,7 +37,34 @@ class company extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:company,company_name',
+            'code' => 'required|unique:company,company_code',
+            'email' => 'required|string|email|max:255|unique:company',
+            'phone' => 'required|max:15',
+            'address' => 'required',
+        ]);
+    
+            try {
+                $company = new companies();
+                $company->company_name = $request->name;
+                $company->company_code = $request->code;
+                $company->email = $request->email;
+                $company->phone = $request->phone;
+                if ($request->has('gst')) {
+                    $company->gst = $request->gst;
+                }
+                if ($request->has('pan')) {
+                    $company->pan = $request->pan;
+                }
+                $company->address = $request->address;
+                $company->save();
+        
+                return redirect()->route('company.index')->with('success', 'Company Created Successfully');
+            } catch (\Exception $e) {
+                // Log the exception message
+                return redirect()->back()->with('error', $e->getMessage());
+            }
     }
 
     /**

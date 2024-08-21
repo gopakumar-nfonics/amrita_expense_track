@@ -44,9 +44,8 @@
 										<!--begin::Card header-->
 										<!--begin::Content-->
 										<div id="kt_account_settings_profile_details" class="collapse show">
-
-<!--begin::Form-->
-<form id="kt_account_profile_details_form" class="form" method="POST" action="" enctype="multipart/form-data">
+											<!--begin::Form-->
+											<form id="kt_account_profile_details_form" class="form" method="POST" action="{{route('company.store')}}" enctype="multipart/form-data">
                                             @csrf
 												<!--begin::Card body-->
 												<div class="card-body border-top p-9">
@@ -99,7 +98,7 @@
 														<div class="col-lg-4 fv-row">	
 																<!--begin::Col-->
 																<div class="col-lg-12 fv-row">
-																	<input type="number" name="phone" class="form-control form-control-lg form-control-solid @error('phone') is-invalid @enderror" placeholder="Phone Number" value="{{ old('phone') }}" />
+																	<input type="text" name="phone" class="form-control form-control-lg form-control-solid @error('phone') is-invalid @enderror" placeholder="Phone Number" value="{{ old('phone') }}" />
 																    @error('phone')<div class="invalid-feedback">{{ $message }}</div> @enderror
                                                                 </div>
 																<!--end::Col-->
@@ -115,8 +114,8 @@
 														<div class="col-lg-4 fv-row">	
 																<!--begin::Col-->
 																<div class="col-lg-12 fv-row">
-																	<input type="text" name="email" class="form-control form-control-lg form-control-solid @error('email') is-invalid @enderror" placeholder="GST #" value="{{ old('email') }}" />
-																	@error('email')<div class="invalid-feedback">{{ $message }}</div> @enderror
+																	<input type="text" name="gst" class="form-control form-control-lg form-control-solid @error('gst') is-invalid @enderror" placeholder="GST #" value="{{ old('gst') }}" />
+																	@error('gst')<div class="invalid-feedback">{{ $message }}</div> @enderror
                                                                 </div>
 																<!--end::Col-->
 														</div>
@@ -127,8 +126,8 @@
 														<div class="col-lg-4 fv-row">	
 																<!--begin::Col-->
 																<div class="col-lg-12 fv-row">
-																	<input type="number" name="phone" class="form-control form-control-lg form-control-solid @error('phone') is-invalid @enderror" placeholder="PAN #" value="{{ old('phone') }}" />
-																    @error('phone')<div class="invalid-feedback">{{ $message }}</div> @enderror
+																	<input type="text" name="pan" class="form-control form-control-lg form-control-solid @error('pan') is-invalid @enderror" placeholder="PAN #" value="{{ old('pan') }}" />
+																    @error('pan')<div class="invalid-feedback">{{ $message }}</div> @enderror
                                                                 </div>
 																<!--end::Col-->
 														</div>

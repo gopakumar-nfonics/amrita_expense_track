@@ -51,88 +51,93 @@
 															<th class="min-w-100px">Name</th>
 															<th class="min-w-50px">Code</th>
 															<th class="min-w-100px">Email</th>
-															<th class="min-w-100px">Phone</th>	
-															<th class="min-w-150px">Address</th>														
+															<th class="min-w-100px">Phone</th>
+															<th class="min-w-100px">GST</th>	
+															<th class="min-w-100px">PAN</th>	
+															<th class="min-w-150px">Address</th>	
 											                <th class="min-w-150px text-center">Actions</th>
 														</tr>
 													</thead>
 													<!--end::Table head-->
 													<!--begin::Table body-->
 													<tbody>
-                                                        
-													<tr>
+														@forelse($companies as $key => $company) 
+														<tr>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-100 d-block fs-6">
-                                                                        1
+																		{{ $key+1 }}
 																	</div>
 																</div>
 															<td>
 																<div class="d-flex align-items-center">
 																	<div class="fw-100 d-block fs-6">
-																		Melinda 
+																		{{$company->company_name}}
 																	</div>
 																</div>
 															</td>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="d-block fs-6">
-																		MDA
+																		{{$company->company_code}}
 																	</div>
 																</div>
 															</td>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="d-block fs-6">
-                                                                        melinda@gmail.com
+																		{{$company->email}}
 																	</div>
 																</div>
 															</td>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="d-block fs-6">
-																		9568565869
+																		{{$company->phone}}
 																	</div>
 																</div>
 															</td>
-														
 															<td>
-															8th Floor, Brigade Gateway, #26/1, Dr. Rajkumar Road, Bangalore-560055
-															</td>
-                                                            <!-- <td>
-																<div class="d-flex justify-content-end flex-shrink-0">
-																	<a href="" class="link-info mx-3">
-                                  										<i class="fa-regular fa-pen-to-square mx-1 link-info"></i>Edit
-																	</a>
-																	<a href="javascript:void(0)" onclick=""  class="link-danger ">
-                                  										<i class="fa-regular fa-trash-can mx-1 link-danger"></i>Delete
-																	</a>
+                                                                <div class="d-flex align-items-center">
+																	<div class="d-block fs-6">
+																		{{$company->gst}}
+																	</div>
 																</div>
-															</td> -->
+															</td>
+															<td>
+                                                                <div class="d-flex align-items-center">
+																	<div class="d-block fs-6">
+																		{{$company->pan}}
+																	</div>
+																</div>
+															</td>
+															<td>
+																{{$company->address}}
+															</td>
 															<td class="text-center">
 																<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
 																<i class="fa-solid fa-angle-down"></i></a>
-															<!--begin::Menu-->
-															<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-																<!--begin::Menu item-->
-																<div class="menu-item px-3">
-																	<a href="" class="menu-link px-3">Edit</a>
+																<!--begin::Menu-->
+																<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="" class="menu-link px-3">Edit</a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+																	</div>
+																	<!--end::Menu item-->
 																</div>
-																<!--end::Menu item-->
-																<!--begin::Menu item-->
-																<div class="menu-item px-3">
-																	<a href="" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-																</div>
-																<!--end::Menu item-->
-															</div>
 															<!--end::Menu-->
 															</td>
 														</tr>
-														
-                                                        <!-- <tr>
+														@empty
+                                                        <tr>
                                                             <td colspan="4">No data found</td>
-                                                        </tr> -->
-                                                    
+                                                        </tr>
+														@endforelse
 													</tbody>
 													<!--end::Table body-->
 												</table>

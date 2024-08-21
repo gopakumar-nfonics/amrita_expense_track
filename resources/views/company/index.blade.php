@@ -1,6 +1,15 @@
 @extends('layouts.admin')
 
 @section('content')
+
+<style>
+	#companytable th:first-child::after {
+		display: none !important;
+	}
+    .hide {
+            display: none !important;
+        }
+</style>
 						<div class="d-flex flex-column flex-column-fluid">
 							<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
 								<!--begin::Toolbar container-->
@@ -49,7 +58,7 @@
 														<tr class="fw-bold">
 															<th class="w-50px">#</th>																
 															<th class="min-w-200px">Company</th>
-															<th class="min-w-100px">Tax #</th>	
+															<th class="min-w-200px">Tax #</th>	
 															<th class="min-w-250px">Address</th>	
 											                <th class="min-w-150px text-center">Actions</th>
 														</tr>
@@ -147,8 +156,8 @@
         "searching": true,
         "recordsTotal":3615,
 		"columnDefs": [
-            { "orderable": false, "targets": [0] }  // Disable sorting on specific columns (0-indexed)
-        ]
+            { "orderable": false, "targets": [0,2,3,4] }  // Disable sorting on specific columns (0-indexed)
+        ],
         "pagingType": "full_numbers"
     } );
   });

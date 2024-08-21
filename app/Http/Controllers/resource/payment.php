@@ -4,6 +4,8 @@ namespace App\Http\Controllers\resource;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Vendor;
 
 class payment extends Controller
 {
@@ -24,7 +26,9 @@ class payment extends Controller
      */
     public function create()
     {
-        return view('payment.create');
+        $main_categories = Category::whereNull('parent_category')->with('children')->get();
+        $vendors = Vendor::orderBy('vendor_name')->get();
+        return view('payment.create',compact('main_categories','vendors'));
     }
 
     /**

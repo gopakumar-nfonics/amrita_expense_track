@@ -11,13 +11,13 @@
 									<!--begin::Page title-->
 									<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 										<!--begin::Title-->
-										<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Create</h1>
+										<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Create Payment Request</h1>
 										<!--end::Title-->
 										<!--begin::Breadcrumb-->
 										<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
 											<!--begin::Item-->
 											<li class="breadcrumb-item text-muted">
-												<a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">Home</a>
+												<a href="" class="text-muted text-hover-primary">Payment</a>
 											</li>
 											<!--end::Item-->
 											<!--begin::Item-->
@@ -26,7 +26,7 @@
 											</li>
 											<!--end::Item-->
 											<!--begin::Item-->
-											<li class="breadcrumb-item text-muted">Invoice Manager</li>
+											<li class="breadcrumb-item text-muted">Manage Payment</li>
 											<!--end::Item-->
 										</ul>
 										<!--end::Breadcrumb-->
@@ -52,113 +52,143 @@
 												<div class="card-body p-12">
 													<!--begin::Form-->
 													<form action="" id="kt_invoice_form">
-														<!--begin::Wrapper-->
-														<div class="d-flex flex-column align-items-start flex-xxl-row">
-															<!--begin::Input group-->
-															<div class="d-flex align-items-center flex-equal fw-row me-4 order-2" data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">
-																<!--begin::Date-->
-																<div class="fs-6 fw-bold text-gray-700 text-nowrap">Date:</div>
-																<!--end::Date-->
-																<!--begin::Input-->
-																<div class="position-relative d-flex align-items-center w-150px">
-																	<!--begin::Datepicker-->
-																	<input class="form-control form-control-transparent fw-bold pe-5 flatpickr-input" placeholder="Select date" name="invoice_date" type="text" readonly="readonly">
-																	<!--end::Datepicker-->
-																	<!--begin::Icon-->
-																	<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-																	<span class="svg-icon svg-icon-2 position-absolute ms-4 end-0">
-																		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																			<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																		</svg>
-																	</span>
-																	<!--end::Svg Icon-->
-																	<!--end::Icon-->
-																</div>
-																<!--end::Input-->
-															</div>
-															<!--end::Input group-->
-															<!--begin::Input group-->
-															<div class="d-flex flex-center flex-equal fw-row text-nowrap order-1 order-xxl-2 me-4" data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">
-																<span class="fs-2x fw-bold text-gray-800">Invoice #</span>
-																<input type="text" class="form-control form-control-flush fw-bold text-muted fs-3 w-125px" value="2021001" placehoder="...">
-															</div>
-															<!--end::Input group-->
-															<!--begin::Input group-->
-															<div class="d-flex align-items-center justify-content-end flex-equal order-3 fw-row" data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">
-																<!--begin::Date-->
-																<div class="fs-6 fw-bold text-gray-700 text-nowrap">Due Date:</div>
-																<!--end::Date-->
-																<!--begin::Input-->
-																<div class="position-relative d-flex align-items-center w-150px">
-																	<!--begin::Datepicker-->
-																	<input class="form-control form-control-transparent fw-bold pe-5 flatpickr-input" placeholder="Select date" name="invoice_due_date" type="text" readonly="readonly">
-																	<!--end::Datepicker-->
-																	<!--begin::Icon-->
-																	<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-																	<span class="svg-icon svg-icon-2 position-absolute end-0 ms-4">
-																		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																			<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																		</svg>
-																	</span>
-																	<!--end::Svg Icon-->
-																	<!--end::Icon-->
-																</div>
-																<!--end::Input-->
-															</div>
-															<!--end::Input group-->
-														</div>
-														<!--end::Top-->
-														<!--begin::Separator-->
-														<div class="separator separator-dashed my-10"></div>
-														<!--end::Separator-->
-														<!--begin::Wrapper-->
+													<!--begin::Wrapper-->
 														<div class="mb-0">
 															<!--begin::Row-->
 															<div class="row gx-10 mb-5">
-																<!--begin::Col-->
-																<div class="col-lg-6">
-																	<label class="form-label fs-6 fw-bold text-gray-700 mb-3">Bill From</label>
-																	<!--begin::Input group-->
-																	<div class="mb-5">
-																		<input type="text" class="form-control form-control-solid" placeholder="Name">
-																	</div>
-																	<!--end::Input group-->
-																	<!--begin::Input group-->
-																	<div class="mb-5">
-																		<input type="text" class="form-control form-control-solid" placeholder="Email">
-																	</div>
-																	<!--end::Input group-->
-																	<!--begin::Input group-->
-																	<div class="mb-5">
-																		<textarea name="notes" class="form-control form-control-solid" rows="3" placeholder="Who is this invoice from?"></textarea>
-																	</div>
-																	<!--end::Input group-->
-																</div>
-																<!--end::Col-->
-																<!--begin::Col-->
-																<div class="col-lg-6">
-																	<label class="form-label fs-6 fw-bold text-gray-700 mb-3">Bill To</label>
-																	<!--begin::Input group-->
-																	<div class="mb-5">
-																		<input type="text" class="form-control form-control-solid" placeholder="Name">
-																	</div>
-																	<!--end::Input group-->
-																	<!--begin::Input group-->
-																	<div class="mb-5">
-																		<input type="text" class="form-control form-control-solid" placeholder="Email">
-																	</div>
-																	<!--end::Input group-->
-																	<!--begin::Input group-->
-																	<div class="mb-5">
-																		<textarea name="notes" class="form-control form-control-solid" rows="3" placeholder="What is this invoice for?"></textarea>
-																	</div>
-																	<!--end::Input group-->
-																</div>
-																<!--end::Col-->
-															</div>
+																															
 															<!--end::Row-->
+															<div class="col-lg-3">
+															<div class="w-100 flex-lg-row-auto w-lg-300px mb-7 me-7 me-lg-10">
+											<!--begin::Order details-->
+											<div class="card card-flush py-4 br-right">
+												<!--begin::Card body-->
+												<div class="card-body pt-0">
+													<div class="d-flex flex-column gap-10">
+														<!--begin::Input group-->
+														<div class="fv-row">
+															<!--begin::Label-->
+															<label class="form-label">Request ID</label>
+															<!--end::Label-->
+															<!--begin::Auto-generated ID-->
+															<div class="fw-bold fs-3">#2324-569</div>
+															<!--end::Input-->
+														</div>
+														<!--end::Input group-->
+														<!--begin::Input group-->
+														<div class="fv-row">
+															<!--begin::Label-->
+															<label class="required form-label">Category</label>
+															<!--end::Label-->
+															<!--begin::Select2-->
+															<select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select Category" name="payment_method" id="kt_ecommerce_edit_order_payment">
+																<option></option>
+																<option value="cod">Cash on Delivery</option>
+																<option value="visa">Credit Card (Visa)</option>
+																<option value="mastercard">Credit Card (Mastercard)</option>
+																<option value="paypal">Paypal</option>
+															</select>
+															<!--end::Select2-->
+															<!--begin::Description-->
+															<div class="d-flex flex-column">
+															<div class="d-flex justify-content-between w-100 fs-9 fw-bold mb-3">
+																<span>Budget</span>
+																<span>&#x20b9;22,300 of 36,000 Used</span>
+															</div>
+															<div class="h-8px bg-light rounded mb-3">
+																<div class="bg-success rounded h-8px" role="progressbar" style="width: 68%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+															</div>
+															<div class="fw-semibold text-gray-600 fs-7">14% remaining</div>
+														</div>
+															<!--end::Description-->
+														</div>
+														<!--end::Input group-->
+														<!--begin::Input group-->
+														<div class="fv-row">
+															<!--begin::Label-->
+															<label class="required form-label">Vendor</label>
+															<!--end::Label-->
+															<!--begin::Select2-->
+															<select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select Vendor" name="shipping_method" id="kt_ecommerce_edit_order_shipping">
+																<option></option>
+																<option value="none">N/A - Virtual Product</option>
+																<option value="standard">Standard Rate</option>
+																<option value="express">Express Rate</option>
+																<option value="speed">Speed Overnight Rate</option>
+															</select>
+															<!--end::Select2-->
+															<!--begin::Description-->
+															<div class="text-muted fs-7">Select Vendor to process request.</div>
+															<!--end::Description-->
+														</div>
+														<!--end::Input group-->
+														<!--begin::Input group-->
+														<div class="fv-row">
+															<!--begin::Label-->
+															<label class="required form-label">Request Date</label>
+															<!--end::Label-->
+															<!--begin::Editor-->
+															<!--begin::Input group-->
+															<div class="d-flex align-items-center justify-content-end flex-equal order-3 fw-row" data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">
+																<!--begin::Date-->
+																<!--end::Date-->
+																<!--begin::Input-->
+																<div class="position-relative d-flex align-items-center">
+																	<!--begin::Datepicker-->
+																	<input class="form-control fw-bold pe-5 flatpickr-input" placeholder="Select date" name="invoice_due_date" type="text" readonly="readonly">
+																	<!--end::Datepicker-->
+																	<!--begin::Icon-->
+																	<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+																	<span class="svg-icon svg-icon-2 position-absolute end-0 me-4">
+																		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																			<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
+																		</svg>
+																	</span>
+																	<!--end::Svg Icon-->
+																	<!--end::Icon-->
+																</div>
+																<!--end::Input-->
+															</div>
+															<!--end::Input group-->
+															
+															<!--end::Editor-->
+															<!--begin::Description-->
+															<div class="text-muted fs-7">Select date the request date.</div>
+															<!--end::Description-->
+														</div>
+														<!--end::Input group-->
+
+														<!--begin::Input group-->
+														<div class="fv-row">
+															<!--begin::Label-->
+															<label class="required form-label">Reference #</label>
+															<!--end::Label-->
+															<!--begin::Editor-->
+															<input id="" name="order_date" placeholder="Reference Invoice #" class="form-control mb-2" value="" />
+															<!--end::Editor-->
+															<div class="text-center">
+															<button type="button" class="btn btn-sm btn-info w-100 mt-5 mb-1" data-bs-toggle="modal" data-bs-target="#kt_modal_upload">
+													<!--begin::Svg Icon | path: icons/duotune/files/fil018.svg-->
+													<span class="svg-icon svg-icon-2">
+													<i class="fa-solid fa-upload"></i>
+													</span>
+													<!--end::Svg Icon-->Upload File</button>
+													</div>
+
+														<!--begin::Description-->
+														<div class="text-muted fs-7">Upload reference Invoice.</div>
+															<!--end::Description-->
+														</div>
+														<!--end::Input group-->
+													</div>
+												</div>
+												<!--end::Card header-->
+											</div>
+											<!--end::Order details-->
+										</div>
+																</div>
 															<!--begin::Table wrapper-->
-															<div class="table-responsive mb-10">
+															<div class="table-responsive mb-10 col-lg-9">
 																<!--begin::Table-->
 																<table class="table g-5 gs-0 mb-0 fw-bold text-gray-700" data-kt-element="items">
 																	<!--begin::Table head-->
@@ -229,6 +259,7 @@
 																	<!--end::Table foot-->
 																</table>
 															</div>
+															
 															<!--end::Table-->
 															<!--begin::Item template-->
 															<table class="table d-none" data-kt-element="item-template">
@@ -265,13 +296,11 @@
 																	<th colspan="5" class="text-muted text-center py-10">No items</th>
 																</tr>
 															</tbody></table>
+															
 															<!--end::Item template-->
-															<!--begin::Notes-->
-															<div class="mb-0">
-																<label class="form-label fs-6 fw-bold text-gray-700">Notes</label>
-																<textarea name="notes" class="form-control form-control-solid" rows="3" placeholder="Thanks for your business"></textarea>
+													
+											
 															</div>
-															<!--end::Notes-->
 														</div>
 														<!--end::Wrapper-->
 													</form>

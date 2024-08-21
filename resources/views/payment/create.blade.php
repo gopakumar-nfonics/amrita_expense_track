@@ -59,12 +59,12 @@
 
 											<!--end::Row-->
 											<div class="col-lg-3">
-												<div class="w-100 flex-lg-row-auto w-lg-300px mb-7 me-7 me-lg-10">
+												<div class="w-100 flex-lg-row-auto mb-7 me-7 me-lg-10">
 													<!--begin::Order details-->
 													<div class="card card-flush py-4 br-right">
 														<!--begin::Card body-->
 														<div class="card-body pt-0">
-															<div class="d-flex flex-column gap-10">
+															<div class="d-flex flex-column gap-6">
 																<!--begin::Input group-->
 																<div class="fv-row">
 																	<!--begin::Label-->
@@ -129,6 +129,17 @@
 																	<!--end::Description-->
 																</div>
 																<!--end::Input group-->
+
+																<!--begin::Input group-->
+																<div class="fv-row">
+																	<!--begin::Label-->
+																	<label class="required form-label">Bank Account</label>
+																	<!--end::Label-->
+																	<div class="mb-5">
+																		<textarea name="notes" class="form-control form-control-solid" rows="6" placeholder="Account details from invoice"></textarea>
+																	</div>
+																</div>
+																<!--end::Input group-->
 																<!--begin::Input group-->
 																<div class="fv-row">
 																	<!--begin::Label-->
@@ -136,7 +147,7 @@
 																	<!--end::Label-->
 																	<!--begin::Editor-->
 																	<!--begin::Input group-->
-																	<div class="d-flex align-items-center justify-content-end flex-equal order-3 fw-row" data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">
+																	<div class="d-flex align-items-center justify-content-start flex-equal order-3 fw-row" data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">
 																		<!--begin::Date-->
 																		<!--end::Date-->
 																		<!--begin::Input-->
@@ -192,6 +203,7 @@
 														<!--end::Card header-->
 													</div>
 													<!--end::Order details-->
+													
 												</div>
 											</div>
 											<!--begin::Table wrapper-->
@@ -205,7 +217,7 @@
 															<th class="min-w-100px w-100px">QTY</th>
 															<th class="min-w-150px w-150px">Price</th>
 															<th class="min-w-100px w-150px text-end">Total</th>
-															<th class="min-w-75px w-75px text-end">Action</th>
+															<th class="min-w-75px w-75px text-end">Remove</th>
 														</tr>
 													</thead>
 													<!--end::Table head-->
@@ -214,7 +226,7 @@
 														<tr class="border-bottom border-bottom-dashed" data-kt-element="item">
 															<td class="pe-7">
 																<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Item name">
-																<input type="text" class="form-control form-control-solid" name="description[]" placeholder="Description">
+																
 															</td>
 															<td class="ps-0">
 																<input class="form-control form-control-solid" type="number" min="1" name="quantity[]" placeholder="1" value="1" data-kt-element="quantity">
@@ -222,7 +234,7 @@
 															<td>
 																<input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" value="0.00" data-kt-element="price">
 															</td>
-															<td class="pt-8 text-end text-nowrap">$
+															<td class="pt-8 text-end text-nowrap">&#x20b9;
 																<span data-kt-element="total">0.00</span>
 															</td>
 															<td class="pt-5 text-end">
@@ -245,29 +257,45 @@
 													<tfoot>
 														<tr class="border-top border-top-dashed align-top fs-6 fw-bold text-gray-700">
 															<th class="text-primary">
-																<button class="btn btn-link py-1" data-kt-element="add-item">Add item</button>
+																<button class="btn btn-sm btn-success w-100px mt-0 mb-1" data-kt-element="add-item">Add  Item</button>
 															</th>
-															<th colspan="2" class="border-bottom border-bottom-dashed ps-0">
-																<div class="d-flex flex-column align-items-start">
-																	<div class="fs-5">Subtotal</div>
-																	<button class="btn btn-link py-1" data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">Add tax</button>
-																	<button class="btn btn-link py-1" data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">Add discount</button>
+															<th colspan="4" class="border-bottom border-bottom-dashed ps-0">
+																<div class="d-flex flex-column align-items-end">
+																	<div class="fs-6 color-blue">Sub total : &#x20b9; <span data-kt-element="sub-total">0.00</span></div>
+																	<div class="d-flex align-items-end  mt-10">
+																	<input class="form-control form-control-solid w-150px me-5" type="number" min="1" name="" placeholder="SGST (%)"  data-kt-element="">
+																	<input class="form-control form-control-solid w-150px me-5" type="number" min="1" name="" placeholder="CGST (%)"  data-kt-element="">
+																	<input class="form-control form-control-solid w-150px me-0" type="number" min="1" name="" placeholder="IGST (%)"  data-kt-element="">
+																	</div>
+																	
 																</div>
 															</th>
-															<th colspan="2" class="border-bottom border-bottom-dashed text-end">$
+															<!-- <th colspan="2" class="border-bottom border-bottom-dashed text-end">
 																<span data-kt-element="sub-total">0.00</span>
-															</th>
+															</th> -->
 														</tr>
 														<tr class="align-top fw-bold text-gray-700">
 															<th></th>
-															<th colspan="2" class="fs-4 ps-0">Total</th>
-															<th colspan="2" class="text-end fs-4 text-nowrap">$
+															<th colspan="4" class="text-end fs-5 text-nowrap color-blue">Total : &#x20b9;
 																<span data-kt-element="grand-total">0.00</span>
 															</th>
 														</tr>
 													</tfoot>
 													<!--end::Table foot-->
 												</table>
+												<!--end::Order details-->
+											<div class="d-flex justify-content-end border-top mt-5 pt-5">
+												<!--begin::Button-->
+												<a href="../../demo1/dist/apps/ecommerce/catalog/products.html" id="kt_ecommerce_edit_order_cancel" class="btn btn-light me-5">Cancel</a>
+												<!--end::Button-->
+												<!--begin::Button-->
+												<button type="submit" id="kt_ecommerce_edit_order_submit" class="btn btn-primary">
+													<span class="indicator-label">Generate Payment Request</span>
+													<span class="indicator-progress">Please wait...
+													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+												</button>
+												<!--end::Button-->
+											</div>
 											</div>
 
 											<!--end::Table-->
@@ -277,7 +305,7 @@
 													<tr class="border-bottom border-bottom-dashed" data-kt-element="item">
 														<td class="pe-7">
 															<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Item name">
-															<input type="text" class="form-control form-control-solid" name="description[]" placeholder="Description">
+															
 														</td>
 														<td class="ps-0">
 															<input class="form-control form-control-solid" type="number" min="1" name="quantity[]" placeholder="1" data-kt-element="quantity">
@@ -316,8 +344,10 @@
 
 
 										</div>
+										
 									</div>
 									<!--end::Wrapper-->
+									
 								</form>
 								<!--end::Form-->
 							</div>

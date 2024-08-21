@@ -444,7 +444,27 @@ table th {
     border-right: 1px solid #eff2f5  !important;
     border-radius: 0;
 }
-
+.select2-container--bootstrap5 .select2-dropdown .select2-results__option.select2-results__option--group .select2-results__option
+{
+    text-indent: 20px;
+    padding-bottom: 0px;
+    font-size: 14px !important;
+    color: #666 !important;
+}
+.select2-container--bootstrap5 .select2-dropdown .select2-results__option
+{
+    color: #0095e8 !important;
+}
+.select2-container--bootstrap5 .select2-dropdown .select2-results__option.select2-results__option--group
+{
+    padding-bottom: 0px !important;
+    font-size: 15px !important;
+}
+.select2-container--bootstrap5 .select2-dropdown .select2-results__option.select2-results__option--group .select2-results__group
+{
+    color: #0095e8 !important;
+    font-size: 15px !important;
+}
 
 @media (min-width: 1400px) {
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {

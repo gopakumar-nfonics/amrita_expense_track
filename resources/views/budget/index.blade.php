@@ -58,39 +58,39 @@
 													<!--end::Table head-->
 													<!--begin::Table body-->
 													<tbody>
-                                                        
+													@forelse($budgets as $key => $budget)
 														<tr>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-                                                                        1
+																	{{ $key+1 }}
 																	</div>
 																</div>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-                                                                        Travel
+																	{{$budget->category->category_name}}
 																	</div>
 																</div>
 															</td>
                                                             <td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																		&#x20b9;10,000
+																		&#x20b9;{{$budget->amount}}
 																	</div>
 																</div>
 															</td>
 															<td>
 																<div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																		2023-2024
+																	{{$budget->financialYear->year}}
 																	</div>
 																</div>
 															</td>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																		For College Tech-Fest
+																	{{$budget->notes}}
 																		</Tech->
 																	</div>
 																</div>
@@ -102,12 +102,12 @@
 																<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
 																	<!--begin::Menu item-->
 																	<div class="menu-item px-3">
-																		<a href="" class="menu-link px-3">Edit</a>
+																		<a href="{{route('budget.edit',$budget->id)}}" class="menu-link px-3">Edit</a>
 																	</div>
 																	<!--end::Menu item-->
 																	<!--begin::Menu item-->
 																	<div class="menu-item px-3">
-																		<a href="" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+																		<a href="javascript:void(0)" onclick="removebudget('{{$budget->id}}')" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
 																	</div>
 																	<!--end::Menu item-->
 																</div>
@@ -115,9 +115,11 @@
 															</td>
 														</tr>
 														
-                                                        <!-- <tr>
-                                                            <td colspan="4">No data found</td>
-                                                        </tr> -->
+														@empty
+								                   <tr>
+									<td colspan="4">No data found</td>
+								             </tr>
+								           @endforelse
                                                     
 													</tbody>
 													<!--end::Table body-->
@@ -145,6 +147,56 @@
         "pagingType": "full_numbers"
     } );
   });
+</script>
+
+<script>
+	function removebudget(budid) {
+		swal({
+				title: "Are you sure?",
+				text: "You want to remove this Budget",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+			.then((willDelete) => {
+				if (willDelete) {
+					$.ajax({
+						url: "{{ route('budget.deletebudget') }}",
+						type: 'POST',
+						data: {
+							_token: '{{ csrf_token() }}',
+							id: budid,
+						},
+						success: function(response) {
+							if (response.success) {
+								swal(response.success, {
+									icon: "success",
+									buttons: false,
+								});
+								setTimeout(() => {
+									location.reload();
+								}, 1000);
+							} else {
+								swal(response.error || 'Something went wrong.', {
+									icon: "warning",
+									buttons: false,
+								});
+								setTimeout(() => {
+									location.reload();
+								}, 1000);
+							}
+						},
+						error: function(xhr) {
+							swal('Error: Something went wrong.', {
+								icon: "error",
+							}).then(() => {
+								location.reload();
+							});
+						}
+					});
+				}
+			});
+	}
 </script>
 
 @endsection

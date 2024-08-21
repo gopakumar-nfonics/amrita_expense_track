@@ -37,7 +37,7 @@
 					<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
 						<!--begin::Card title-->
 						<div class="card-title m-0">
-							<h3 class="fw-bold m-0">Allocate Budget</h3>
+							<h3 class="fw-bold m-0">Edit Budget</h3>
 						</div>
 						<!--end::Card title-->
 					</div>
@@ -45,8 +45,9 @@
 					<!--begin::Content-->
 					<div id="kt_account_settings_profile_details" class="collapse show">
 						<!--begin::Form-->
-						<form id="kt_account_profile_details_form" class="form" method="POST" action="{{route('budget.store')}}" enctype="multipart/form-data">
+						<form id="kt_account_profile_details_form" class="form" method="POST" action="{{route('budget.update',$budget->id)}}" enctype="multipart/form-data">
 							@csrf
+							@method('PUT')
 							<!--begin::Card body-->
 							<div class="card-body border-top p-9">
 								<div class="row mb-6">
@@ -58,7 +59,7 @@
 										<select class="form-control form-control-lg form-control-solid @error('financialyear') is-invalid @enderror" id="financialyear" name="financialyear">
 											<option value="">--Select Year--</option>
 											@foreach($financialyears as $years)
-											<option value="{{ $years->id }}" @if(old('financialyear')==$years->id) selected @endif>{{ $years->year }}</option>
+											<option value="{{ $years->id }}" @if(old('financialyear',$budget->financial_year_id) == $years->id) selected @endif>{{ $years->year }}</option>
 											@endforeach
 										</select>
 										@error('financialyear')<div class="invalid-feedback">{{ $message }}</div>@enderror
@@ -77,7 +78,7 @@
 										<select class="form-control form-control-lg form-control-solid @error('category') is-invalid @enderror" id="category" name="category">
 											<option value="">--Select Category--</option>
 											@foreach($category as $cat)
-											<option value="{{ $cat->id }}" @if(old('category')==$cat->id) selected @endif>{{ $cat->category_name }}</option>
+											<option value="{{ $cat->id }}" @if(old('category',$budget->category_id) == $cat->id) selected @endif>{{ $cat->category_name }}</option>
 											@endforeach
 										</select>
 										@error('category')<div class="invalid-feedback">{{ $message }}</div>@enderror
@@ -110,7 +111,7 @@
 												data-kt-dialer-control="input"
 												placeholder="Amount"
 												name="amount"
-												value="{{ old('amount', '100') }}">
+												value="{{ old('amount', $budget->amount) }}">
 
 											@error('amount')
 											<div class="invalid-feedback">{{ $message }}</div>
@@ -144,7 +145,7 @@
 									<!--end::Col-->
 									<!--begin::Col-->
 									<div class="col-lg-8">
-										<textarea name="notes" class="form-control form-control-solid" rows="5"></textarea>
+										<textarea name="notes" class="form-control form-control-solid" rows="5">{{ old('notes', $budget->notes) }}</textarea>
 									</div>
 									<!--end::Col-->
 								</div>

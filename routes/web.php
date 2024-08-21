@@ -39,4 +39,5 @@ Route::resource('vendor',\App\Http\Controllers\resource\vendor::class);
 Route::resource('category',\App\Http\Controllers\resource\category::class);
 Route::post('/category/deletecat', [\App\Http\Controllers\resource\category::class, 'deletecat'])->name('category.deletecat');
 Route::resource('budget',\App\Http\Controllers\resource\budget::class);
+Route::post('/budget/deletebudget', [\App\Http\Controllers\resource\budget::class, 'deletebudget'])->name('budget.deletebudget');
 Route::resource('payment',\App\Http\Controllers\resource\payment::class);

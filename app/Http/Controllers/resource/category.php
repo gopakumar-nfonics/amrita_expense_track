@@ -99,7 +99,7 @@ class category extends Controller
         ]);
     
             try {
-                $category = Categories::findOrFail($id);;
+                $category = Categories::findOrFail($id);
                 $category->category_name = $request->cat_name;    
                 $category->category_code = $request->cat_code;
                 $category->parent_category  = $request->parent_category;    

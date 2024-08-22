@@ -124,7 +124,7 @@
 																	
 																	<!--begin::Menu item-->
 																	<div class="menu-item px-3">
-																		<a href="" class="menu-link px-3">Update Payment</a>
+																		<a href="{{ route('payment.updatepayment',1) }}" class="menu-link px-3">Update Payment</a>
 																	</div>
 																	<!--end::Menu item-->
 																		<!--begin::Menu item-->

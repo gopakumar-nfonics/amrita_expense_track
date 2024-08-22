@@ -52,7 +52,7 @@ class payment extends Controller
      */
     public function show($id)
     {
-        return view('payment.show');
+        //
     }
 
     /**
@@ -87,5 +87,9 @@ class payment extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function updatepayment(){
+        return view('payment.update');
     }
 }

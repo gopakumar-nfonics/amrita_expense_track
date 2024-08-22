@@ -8,7 +8,7 @@
 									<!--begin::Page title-->
 									<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 										<!--begin::Title-->
-										<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Budget Listing</h1>
+										<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Payment Listing</h1>
 										<!--end::Title-->
 										<!--begin::Breadcrumb-->
 										<!-- <ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
@@ -47,11 +47,12 @@
 													<!--begin::Table head-->
 													<thead>
 														<tr class="fw-bold">
-															<th class="w-50px">#</th>
-															<th class="min-w-100px">Category</th>
-															<th class="min-w-100px">Amount</th>
-															<th class="min-w-100px">Year</th>
-															<th class="min-w-200px">Notes</th>
+															<th class="min-w-100px">ID</th>
+															<th class="min-w-200px">Vendor</th>
+															<th class="min-w-100px">Date</th>														
+															<th class="min-w-100px">Total</th>
+															<th class="min-w-100px">Paid</th>
+															<th class="min-w-100px">Balance</th>
                                                             <th class="min-w-150px text-center">Actions</th>
 														</tr>
 													</thead>
@@ -63,35 +64,55 @@
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-                                                                        1
+                                                                        #2324-569
+																		<div class="text-gray-400 fw-semibold fs-9">
+																	<span class="badge badge-light-success fs-8">
+																	<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+																	<span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+																	<i class="fa-solid fa-arrow-up light-green fs-8 me-1 "></i>
+																	</span>
+																	<!--end::Svg Icon-->32.6%</span>
+																</div>
 																	</div>
 																</div>
+														
 															<td>
+															<div class="d-flex align-items-center">
+																	<div class="symbol symbol-35px me-2">
+																		<span class="symbol-label bg-blue text-white"> AS</span>
+																
+																	</div>
+																	<div class="d-flex justify-content-start flex-column">
+																		<a href="http://127.0.0.1:8000/vendor/1" class="text-dark fw-bold text-hover-primary fs-6">Ana Simmons</a>
+																		<span class="text-muted fw-semibold text-muted d-block fs-7">NFONICS Solutions</span>
+																	</div>
+																</div>
+																</td>
+																<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-                                                                        Travel
+                                                                        25-July-2024
 																	</div>
 																</div>
 															</td>
                                                             <td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																		&#x20b9;10,000
+																		&#x20b9;210,000
 																	</div>
 																</div>
 															</td>
 															<td>
-																<div class="d-flex align-items-center">
+															<div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																		2023-2024
+																		&#x20b9;1,60,000
 																	</div>
 																</div>
 															</td>
 															<td>
-                                                                <div class="d-flex align-items-center">
+															<div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																		For College Tech-Fest
-																		</Tech->
+																		&#x20b9;50,000
 																	</div>
 																</div>
 															</td>
@@ -99,7 +120,22 @@
 																<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
 																<i class="fa-solid fa-angle-down"></i></a>
 																<!--begin::Menu-->
-																<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
+																<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-150px py-4" data-kt-menu="true">
+																	
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="" class="menu-link px-3">Update Payment</a>
+																	</div>
+																	<!--end::Menu item-->
+																		<!--begin::Menu item-->
+																		<div class="menu-item px-3">
+																		<a href="" class="menu-link px-3">Print</a>
+																	</div>
+																		<!--begin::Menu item-->
+																		<div class="menu-item px-3">
+																		<a href="" class="menu-link px-3">View </a>
+																	</div>
+																	<!--end::Menu item-->
 																	<!--begin::Menu item-->
 																	<div class="menu-item px-3">
 																		<a href="" class="menu-link px-3">Edit</a>

@@ -437,7 +437,11 @@ button.btn-close:hover{
 
 table th {
     text-transform: uppercase !important;
-    color: var(--kt-text-muted) !important;
+    color: #3f4254 !important;
+}
+.table td, .table th, .table tr
+{
+    font-size: 13px !important;
 }
 .br-right
 {

@@ -24,13 +24,13 @@
 									<!--begin::Page title-->
 									<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 										<!--begin::Title-->
-										<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Invoice 3</h1>
+										<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">View Payment Request</h1>
 										<!--end::Title-->
 										<!--begin::Breadcrumb-->
 										<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
 											<!--begin::Item-->
 											<li class="breadcrumb-item text-muted">
-												<a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">Home</a>
+												<a href="../../demo1/dist/index.html" class="text-muted text-hover-primary">Payment</a>
 											</li>
 											<!--end::Item-->
 											<!--begin::Item-->
@@ -39,7 +39,7 @@
 											</li>
 											<!--end::Item-->
 											<!--begin::Item-->
-											<li class="breadcrumb-item text-muted">Invoice Manager</li>
+											<li class="breadcrumb-item text-muted">Payment Request</li>
 											<!--end::Item-->
 											<!--begin::Item-->
 											<li class="breadcrumb-item">
@@ -47,7 +47,7 @@
 											</li>
 											<!--end::Item-->
 											<!--begin::Item-->
-											<li class="breadcrumb-item text-muted">View Invoices</li>
+											<li class="breadcrumb-item text-muted">#2324-569</li>
 											<!--end::Item-->
 										</ul>
 										<!--end::Breadcrumb-->
@@ -73,72 +73,70 @@
 											<!-- begin::Wrapper-->
 											<div class="mw-lg-950px mx-auto w-100" id="printableArea">
 												<!-- begin::Header-->
-												<div class="d-flex justify-content-between flex-column flex-sm-row mb-19">
-													<h4 class="fw-bolder text-gray-800 fs-2qx pe-5 pb-7">INVOICE</h4>
+												<div class="d-flex justify-content-between flex-column flex-sm-row mb-2">
 													<!--end::Logo-->
 													<div class="text-sm-end">
 														<!--begin::Logo-->
-														<a href="#" class="d-block mw-150px ms-sm-auto">
-															<img alt="Logo" src="assets/media/svg/brand-logos/lloyds-of-london-logo.svg" class="w-100">
+														<a href="#" class="d-block mw-250px w-250px ms-sm-auto">
+															<img alt="Logo"  src="{{ url('/') }}/assets/media/logos/logo_purple.png" class="w-100">
 														</a>
 														<!--end::Logo-->
+													
+													</div>
 														<!--begin::Text-->
-														<div class="text-sm-end fw-semibold fs-4 text-muted mt-7">
-															<div>Cecilia Chapman, 711-2880 Nulla St, Mankato</div>
-															<div>Mississippi 96522</div>
+														<div class="text-sm-end fw-semibold fs-7 text-muted mt-7 ps-20">
+															<address>DIRECTORATE OF ADMISSIONS 
+															AMRITA SCHOOL OF ENGINEERING, </br> AMRITA VISHWA VIDYAPEETHAM, 
+															AMRITA NAGAR(PO), ETTIMADAI, COIMBATORE - 641112
+															</br> PHONE : 9489932973 | GSTIN : 33AAHTA3636K1ZQ</address>
+														
 														</div>
 														<!--end::Text-->
-													</div>
 												</div>
 												<!--end::Header-->
 												<!--begin::Body-->
 												<div class="pb-12">
 													<!--begin::Wrapper-->
 													<div class="d-flex flex-column gap-7 gap-md-10">
-														<!--begin::Message-->
-														<div class="fw-bold fs-2">Dear Lucy Kunic
-														<span class="fs-6">(lucy.m@fentech.com)</span>,
-														<br>
-														<span class="text-muted fs-5">Here are your order details. We thank you for your purchase.</span></div>
-														<!--begin::Message-->
+													
 														<!--begin::Separator-->
 														<div class="separator"></div>
 														<!--begin::Separator-->
 														<!--begin::Order details-->
 														<div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
 															<div class="flex-root d-flex flex-column">
-																<span class="text-muted">Order ID</span>
-																<span class="fs-5">#14534</span>
+																<span class="text-muted">Request ID</span>
+																<span class="fs-5">#2324-569</span>
 															</div>
 															<div class="flex-root d-flex flex-column">
 																<span class="text-muted">Date</span>
-																<span class="fs-5">06 October, 2022</span>
+																<span class="fs-5">06 October, 2024</span>
 															</div>
 															<div class="flex-root d-flex flex-column">
-																<span class="text-muted">Invoice ID</span>
+																<span class="text-muted">Invoice #</span>
 																<span class="fs-5">#INV-000414</span>
 															</div>
 															<div class="flex-root d-flex flex-column">
-																<span class="text-muted">Shipment ID</span>
-																<span class="fs-5">#SHP-0025410</span>
+																<span class="text-muted">Category</span>
+																<span class="fs-5">BE -  Travel </span>
 															</div>
 														</div>
 														<!--end::Order details-->
 														<!--begin::Billing & shipping-->
 														<div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
 															<div class="flex-root d-flex flex-column">
-																<span class="text-muted">Billing Address</span>
-																<span class="fs-6">Unit 1/23 Hastings Road,
-																<br>Melbourne 3000,
-																<br>Victoria,
-																<br>Australia.</span>
+																<span class="text-muted">Vendor Details</span>
+																<span class="fs-5">NFONICS Solutions (P) Ltd</span>
+																<span class="fs-7">Unit 1/23 Hastings Road,
+																<br>Banglore 3000,Karnataka | 677593
+																<br>GSTIN : 32AAN0826C1Z4 | PAN NO: A46CN0826C</span>
 															</div>
 															<div class="flex-root d-flex flex-column">
-																<span class="text-muted">Shipping Address</span>
-																<span class="fs-6">Unit 1/23 Hastings Road,
-																<br>Melbourne 3000,
-																<br>Victoria,
-																<br>Australia.</span>
+																<span class="text-muted">Bank Details</span>
+																<span class="fs-5">NFONICS Solutions (P) Ltd</span>
+																<span class="fs-7">Account NO. : 17020200000221
+																<br>IFSC Code : FDRL0001702
+																<br> Federal Bank, MG Road Branch, Banglore 3000,Karnataka </span>
 															</div>
 														</div>
 														<!--end::Billing & shipping-->
@@ -149,8 +147,8 @@
 																<table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
 																	<thead>
 																		<tr class="border-bottom fs-6 fw-bold text-muted">
-																			<th class="min-w-175px pb-2">Products</th>
-																			<th class="min-w-70px text-end pb-2">SKU</th>
+																			<th class="min-w-175px pb-2">ITEM</th>
+																			<th class="min-w-70px text-end pb-2">Price</th>
 																			<th class="min-w-80px text-end pb-2">QTY</th>
 																			<th class="min-w-100px text-end pb-2">Total</th>
 																		</tr>
@@ -161,82 +159,75 @@
 																			<!--begin::Product-->
 																			<td>
 																				<div class="d-flex align-items-center">
-																					<!--begin::Thumbnail-->
-																					<a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html" class="symbol symbol-50px">
-																						<span class="symbol-label" style="background-image:url(assets/media//stock/ecommerce/1.gif);"></span>
-																					</a>
-																					<!--end::Thumbnail-->
+																				
 																					<!--begin::Title-->
-																					<div class="ms-5">
-																						<div class="fw-bold">Product 1</div>
-																						<div class="fs-7 text-muted">Delivery Date: 06/10/2022</div>
+																					<div class="ms-0">
+																						<div class="fw-bold">Hotel booking Taj Vivanta</div>																						
 																					</div>
 																					<!--end::Title-->
 																				</div>
 																			</td>
 																			<!--end::Product-->
 																			<!--begin::SKU-->
-																			<td class="text-end">01871003</td>
+																			<td class="text-end">&#x20b9;2,400.00</td>
 																			<!--end::SKU-->
 																			<!--begin::Quantity-->
 																			<td class="text-end">2</td>
 																			<!--end::Quantity-->
 																			<!--begin::Total-->
-																			<td class="text-end">$240.00</td>
+																			<td class="text-end">&#x20b9;4,800.00</td>
 																			<!--end::Total-->
 																		</tr>
+																		
+																		<!--end::Products-->
+
+																		<!--begin::Products-->
 																		<tr>
 																			<!--begin::Product-->
 																			<td>
 																				<div class="d-flex align-items-center">
-																					<!--begin::Thumbnail-->
-																					<a href="../../demo1/dist/apps/ecommerce/catalog/edit-product.html" class="symbol symbol-50px">
-																						<span class="symbol-label" style="background-image:url(assets/media//stock/ecommerce/100.gif);"></span>
-																					</a>
-																					<!--end::Thumbnail-->
+																				
 																					<!--begin::Title-->
-																					<div class="ms-5">
-																						<div class="fw-bold">Footwear</div>
-																						<div class="fs-7 text-muted">Delivery Date: 06/10/2022</div>
+																					<div class="ms-0">
+																						<div class="fw-bold">Train Ticket to BGLR</div>																						
 																					</div>
 																					<!--end::Title-->
 																				</div>
 																			</td>
 																			<!--end::Product-->
 																			<!--begin::SKU-->
-																			<td class="text-end">02771005</td>
+																			<td class="text-end">&#x20b9;1,415.00</td>
 																			<!--end::SKU-->
 																			<!--begin::Quantity-->
-																			<td class="text-end">1</td>
+																			<td class="text-end">3</td>
 																			<!--end::Quantity-->
 																			<!--begin::Total-->
-																			<td class="text-end">$24.00</td>
+																			<td class="text-end">&#x20b9;4,245.00</td>
 																			<!--end::Total-->
 																		</tr>
+																		
 																		<!--end::Products-->
 																		<!--begin::Subtotal-->
 																		<tr>
 																			<td colspan="3" class="text-end">Subtotal</td>
-																			<td class="text-end">$264.00</td>
+																			<td class="text-end">&#x20b9;9,045.00</td>
 																		</tr>
 																		<!--end::Subtotal-->
 																		<!--begin::VAT-->
 																		<tr>
-																			<td colspan="3" class="text-end">VAT (0%)</td>
-																			<td class="text-end">$0.00</td>
+																			<td colspan="3" class="text-end">GST (18%)</td>
+																			<td class="text-end">&#x20b9;162.00</td>
 																		</tr>
 																		<!--end::VAT-->
-																		<!--begin::Shipping-->
+																	<!--begin::Grand total-->
 																		<tr>
-																			<td colspan="3" class="text-end">Shipping Rate</td>
-																			<td class="text-end">$5.00</td>
+																			<td colspan="3" class="fs-2 text-dark fw-bold text-end" style="font-size:18px !important;">Grand Total</td>
+																			<td class="text-dark fw-bolder text-end fs-2 " style="font-size:18px !important;">&#x20b9;9,207.00</td>
 																		</tr>
-																		<!--end::Shipping-->
-																		<!--begin::Grand total-->
+																		
 																		<tr>
-																			<td colspan="3" class="fs-3 text-dark fw-bold text-end">Grand Total</td>
-																			<td class="text-dark fs-3 fw-bolder text-end">$269.00</td>
-																		</tr>
+																			<td colspan="4" class="fw-bold text-end" style="font-size:14px !important;text-transform: uppercase; color:#009ef7 !important;" >AMOUNT IN WORDS : RUPEES Nine thousand two hundred seven rupees only </td>
+																			</tr>
 																		<!--end::Grand total-->
 																	</tbody>
 																</table>
@@ -249,20 +240,16 @@
 												</div>
 												<!--end::Body-->
 												<!-- begin::Footer-->
-												<div class="d-flex flex-stack flex-wrap mt-lg-20 pt-13">
+												<div class="d-flex justify-content-end mt-0 pt-0">
 													<!-- begin::Actions-->
-													<div class="my-1 me-5">
+													<div class="my-1 me-0">
 														<!-- begin::Pint-->
-														<button type="button" class="btn btn-success my-1 me-12" onclick="window.print();">Print Invoice</button>
+														<button type="button" class="btn btn-success my-1 me-0" onclick="window.print();">Print</button>
 														<!-- end::Pint-->
-														<!-- begin::Download-->
-														<button type="button" class="btn btn-light-success my-1">Download</button>
-														<!-- end::Download-->
+														
 													</div>
 													<!-- end::Actions-->
-													<!-- begin::Action-->
-													<a href="../../demo1/dist/apps/invoices/create.html" class="btn btn-primary my-1">Create Invoice</a>
-													<!-- end::Action-->
+													
 												</div>
 												<!-- end::Footer-->
 											</div>

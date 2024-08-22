@@ -68,11 +68,11 @@
                                                 </div>
                                                 <div class="fs-6 fw-bold text-gray-700 text-nowrap col-lg-3">
                                                     <label class="form-label fw-bold fs-6">Vendor</label>
-                                                    <div class="fw-bold fs-8">KSGD</div>
+                                                    <div class="fw-bold fs-8">Ana Simmons</div>
                                                 </div>
                                                 <div class="fs-6 fw-bold text-gray-700 text-nowrap col-lg-3">
                                                     <label class="form-label fw-bold fs-6">Company</label>
-                                                    <div class="fw-bold fs-8">SANCO</div>
+                                                    <div class="fw-bold fs-8">Intertico Solutions</div>
                                                 </div>
                                                 <div class="fs-6 fw-bold text-gray-700 text-nowrap col-lg-3">
                                                     <label class="form-label fw-bold fs-6">Request Date</label>

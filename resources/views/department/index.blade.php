@@ -8,7 +8,7 @@
 			<!--begin::Page title-->
 			<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 				<!--begin::Title-->
-				<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Category Listing</h1>
+				<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Department Listing</h1>
 				<!--end::Title-->
 				<!--begin::Breadcrumb-->
 				<!-- <ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
@@ -19,7 +19,7 @@
 			<!--end::Page title-->
 			<!--begin::Button-->
 			<div class="card-toolbar">
-				<a href="{{ route('category.create') }}" class="btn btn-sm btn-primary">
+				<a href="{{ route('department.create') }}" class="btn btn-sm btn-primary">
 					Create
 				</a>
 			</div>
@@ -43,21 +43,21 @@
 					<!--begin::Table container-->
 					<div class="table-responsive">
 						<!--begin::Table-->
-						<table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="categorytable">
+						<table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="departmenttable">
 							<!--begin::Table head-->
 							<thead>
 								<tr class="fw-bold">
 									<th class="w-50px">#</th>
-									<th class="min-w-200px">Category</th>
-									<th class="min-w-100px">Parent Category</th>
-									<th class="min-w-150px">Remarks</th>
+									<th class="min-w-200px">Department</th>
+									<th class="min-w-100px">Campus</th>
+									<th class="min-w-150px">Address</th>
 									<th class="min-w-150px text-center">Actions</th>
 								</tr>
 							</thead>
 							<!--end::Table head-->
 							<!--begin::Table body-->
 							<tbody>
-								@forelse($category as $key => $cat)
+								@forelse($departments as $key => $department)
 								<tr>
 									<td>
 										<div class="d-flex align-items-center">
@@ -68,12 +68,12 @@
 									<td>
 										<div class="d-flex align-items-center">
 											<div class="symbol symbol-45px me-5">
-												<span class="symbol-label color-blue w-80px"> {{$cat->category_code}}</span>
+												<span class="symbol-label color-blue w-80px"> {{$department->department_code}}</span>
 
 											</div>
 											<div class="d-flex justify-content-start flex-column">
 												<div class="fw-400 d-block fs-6">
-													{{ucfirst($cat->category_name)}}
+													{{ucfirst($department->department_name)}}
 												</div>
 											</div>
 										</div>
@@ -82,14 +82,14 @@
 									<td>
 										<div class="d-flex align-items-center">
 											<div class="fw-400 d-block fs-6">
-												{{ ucfirst($cat->parent ? $cat->parent->category_name : ' ') }}
+												{{ $department->campus->campus_name }}
 											</div>
 										</div>
 									</td>
 									<td>
 										<div class="d-flex align-items-center">
 											<div class="fw-400 d-block fs-6">
-
+												{{$department->address}}
 											</div>
 										</div>
 									</td>
@@ -100,12 +100,12 @@
 										<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
 											<!--begin::Menu item-->
 											<div class="menu-item px-3">
-												<a href="{{route('category.edit',$cat->id)}}" class="menu-link px-3">Edit</a>
+												<a href="" class="menu-link px-3">Edit</a>
 											</div>
 											<!--end::Menu item-->
 											<!--begin::Menu item-->
 											<div class="menu-item px-3">
-												<a href="javascript:void(0)" onclick="removeCat('{{$cat->id}}')" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+												<a href="javascript:void(0)" onclick="" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
 											</div>
 											<!--end::Menu item-->
 										</div>
@@ -138,7 +138,7 @@
 
 <script>
 	$(document).ready(function() {
-		$('#categorytable').DataTable({
+		$('#departmenttable').DataTable({
 			"iDisplayLength": 10,
 			"searching": true,
 			"recordsTotal": 3615,
@@ -146,54 +146,6 @@
 		});
 	});
 </script>
-<script>
-	function removeCat(catid) {
-		swal({
-				title: "Are you sure?",
-				text: "You want to remove this category",
-				icon: "warning",
-				buttons: true,
-				dangerMode: true,
-			})
-			.then((willDelete) => {
-				if (willDelete) {
-					$.ajax({
-						url: "{{ route('category.deletecat') }}",
-						type: 'POST',
-						data: {
-							_token: '{{ csrf_token() }}',
-							id: catid,
-						},
-						success: function(response) {
-							if (response.success) {
-								swal(response.success, {
-									icon: "success",
-									buttons: false,
-								});
-								setTimeout(() => {
-									location.reload();
-								}, 1000);
-							} else {
-								swal(response.error || 'Something went wrong.', {
-									icon: "warning",
-									buttons: false,
-								});
-								setTimeout(() => {
-									location.reload();
-								}, 1000);
-							}
-						},
-						error: function(xhr) {
-							swal('Error: Something went wrong.', {
-								icon: "error",
-							}).then(() => {
-								location.reload();
-							});
-						}
-					});
-				}
-			});
-	}
-</script>
+
 
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\resource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User as userauthenticate;
+use App\Models\Campus;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Route;
@@ -20,7 +21,7 @@ class user extends Controller
     {
         $currentUserId = Auth::id();
 
-        $users = userauthenticate::where('id', '!=', $currentUserId) ->orderBy('first_name') ->get(); 
+        $users = userauthenticate::with('campus')->where('id', '!=', $currentUserId) ->orderBy('first_name') ->get(); 
         return view('user.index',compact('users'));
     }
 
@@ -31,7 +32,8 @@ class user extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        $campus=Campus::orderBy('campus_name')->get();
+        return view('user.create', compact('campus'));
     }
 
     /**
@@ -59,7 +61,10 @@ class user extends Controller
     
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
-            $user->role = $request->role;    
+            $user->role = $request->role;  
+            if ($request->has('campus')) {
+                $user->campus_id = $request->campus;
+            }  
             $user->save();
     
             return redirect()->route('user.index')->with('success', 'User Created Successfully');

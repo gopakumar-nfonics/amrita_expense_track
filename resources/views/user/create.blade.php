@@ -121,6 +121,26 @@
 														<!--end::Col-->
 													</div>
 													<!--end::Input group-->
+
+													<!--begin::Input group-->
+													<div class="row mb-6">
+														<!--begin::Label-->
+														<label class="col-lg-4 col-form-label fw-semibold fs-6">
+															<span>Campus</span></label>
+														<!--end::Label-->
+														<!--begin::Col-->
+														<div class="col-lg-8 fv-row">
+															<select name="campus" aria-label="Select a Role" class="form-select form-select-solid form-select-lg fw-semibold @error('campus') is-invalid @enderror">
+																<option value="">Select a Campus</option>
+																@foreach ($campus as $cmp)
+																		<option value="{{$cmp->id}}" @if(old('campus') == $cmp->id) selected @endif>{{$cmp->campus_name}}</option>
+																		@endforeach
+																</select>
+                                                                @error('campus')<div class="invalid-feedback">{{ $message }}</div> @enderror
+														</div>
+														<!--end::Col-->
+													</div>
+													<!--end::Input group-->
 												</div>
 												<!--end::Card body-->
 												<!--begin::Actions-->

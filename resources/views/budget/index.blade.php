@@ -49,9 +49,11 @@
 														<tr class="fw-bold">
 															<th class="w-50px">#</th>
 															<th class="min-w-100px">Category</th>
-															<th class="min-w-100px">Amount</th>
 															<th class="min-w-100px">Year</th>
-															<th class="min-w-200px">Notes</th>
+															<th class="min-w-100px">Allocated</th>
+															<th class="min-w-100px">Spent</th>
+															<th class="min-w-100px">Balance</th>
+															<th class="min-w-200px">Percentage</th>
                                                             <th class="min-w-150px text-center">Actions</th>
 														</tr>
 													</thead>
@@ -73,6 +75,13 @@
 																	</div>
 																</div>
 															</td>
+															<td>
+																<div class="d-flex align-items-center">
+																	<div class="fw-400 d-block fs-6">
+																	{{$budget->financialYear->year}}
+																	</div>
+																</div>
+															</td>
                                                             <td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
@@ -81,20 +90,31 @@
 																</div>
 															</td>
 															<td>
-																<div class="d-flex align-items-center">
+                                                                <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																	{{$budget->financialYear->year}}
+																		&#x20b9; 15297.00
 																	</div>
 																</div>
 															</td>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																	{{$budget->notes}}
-																		</Tech->
+																		&#x20b9; 6217.00
 																	</div>
 																</div>
 															</td>
+															<td>
+															<div class="d-flex flex-column w-100 me-2">
+																	<div class="d-flex flex-stack mb-2">
+																		<span class="text-muted me-2 fs-7 fw-bold">60%</span>
+																	</div>
+																	<div class="progress h-6px w-100">
+																		<div class="progress-bar bg-success" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+																	</div>
+																</div>
+															</td>
+															
+															
                                                             <td class="text-center">
 																<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
 																<i class="fa-solid fa-angle-down"></i></a>

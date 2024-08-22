@@ -1,7 +1,22 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="d-flex flex-column flex-column-fluid">
+	<style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printableArea, #printableArea * {
+                visibility: visible;
+            }
+            #printableArea {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+    </style>
+						<div class="d-flex flex-column flex-column-fluid">
 							<!--begin::Toolbar-->
 							<div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
 								<!--begin::Toolbar container-->
@@ -56,7 +71,7 @@
 										<!-- begin::Body-->
 										<div class="card-body py-20">
 											<!-- begin::Wrapper-->
-											<div class="mw-lg-950px mx-auto w-100">
+											<div class="mw-lg-950px mx-auto w-100" id="printableArea">
 												<!-- begin::Header-->
 												<div class="d-flex justify-content-between flex-column flex-sm-row mb-19">
 													<h4 class="fw-bolder text-gray-800 fs-2qx pe-5 pb-7">INVOICE</h4>

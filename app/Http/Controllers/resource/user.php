@@ -94,7 +94,8 @@ class user extends Controller
     public function edit($id)
     {
         $user = userauthenticate::find($id);
-        return view('user.edit',compact('user'));
+        $campus=Campus::orderBy('campus_name')->get();
+        return view('user.edit',compact('user','campus'));
     }
 
     /**
@@ -126,6 +127,9 @@ class user extends Controller
             $user->password = bcrypt($request->password);
             }
             $user->role = $request->role;
+            if ($request->has('campus')) {
+                $user->campus_id = $request->campus;
+            }  
             $user->save();
     
             return redirect()->route('user.index')->with('success', 'User Updated Successfully');

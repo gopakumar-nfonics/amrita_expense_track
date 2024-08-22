@@ -78,6 +78,22 @@
 																<!--begin::Input group-->
 																<div class="fv-row">
 																	<!--begin::Label-->
+																	<label class="required form-label">Stream</label>
+																	<!--end::Label-->
+																	<!--begin::Select2-->
+																	<select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select Stream" name="stream" id="stream">
+																		<option></option>
+																		@foreach ($stream as $strm)
+																		<option value="{{$strm->id}}">{{$strm->stream_name}}</option>
+																		@endforeach
+																	</select>
+																	<!--end::Select2-->
+																	
+																</div>
+																<!--end::Input group-->
+																<!--begin::Input group-->
+																<div class="fv-row">
+																	<!--begin::Label-->
 																	<label class="required form-label">Category</label>
 																	<!--end::Label-->
 																	<!--begin::Select2-->

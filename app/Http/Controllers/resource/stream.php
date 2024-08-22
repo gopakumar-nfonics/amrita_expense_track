@@ -5,6 +5,7 @@ namespace App\Http\Controllers\resource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Stream as streams;
+use App\Models\Department;
 
 class stream extends Controller
 {
@@ -15,7 +16,7 @@ class stream extends Controller
      */
     public function index()
     {
-        $streams=streams::orderBy('stream_name')->get();
+        $streams=streams::with('department')->orderBy('stream_name')->get();
         return view('stream.index', compact('streams'));
     }
 
@@ -26,7 +27,8 @@ class stream extends Controller
      */
     public function create()
     {
-        return view('stream.create');
+        $department=Department::orderBy('department_name')->get();
+        return view('stream.create',compact('department'));
     }
 
     /**
@@ -40,12 +42,14 @@ class stream extends Controller
         $request->validate([
             'name' => 'required|unique:stream,stream_name',
             'code' => 'required|unique:stream,stream_code',
+            'department' => 'required',
         ]);
     
             try {
                 $stream = new streams();
                 $stream->stream_name = $request->name;
                 $stream->stream_code = $request->code;
+                $stream->department_id = $request->department;
                 $stream->save();
         
                 return redirect()->route('stream.index')->with('success', 'Stream Created Successfully');

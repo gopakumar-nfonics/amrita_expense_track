@@ -81,6 +81,29 @@
 														</div>
 														<!--end::Col-->
 													</div>
+
+													<div class="row mb-6">
+														<!--begin::Label-->
+														<label class="col-lg-4 col-form-label required fw-semibold fs-6">Department</label>
+														<!--end::Label-->
+														<!--begin::Col-->
+														<div class="col-lg-8 fv-row">	
+																<!--begin::Col-->
+																<div class="col-lg-12 fv-row">
+																<select class="form-select mb-2 @error('department') is-invalid @enderror" data-control="select2" data-hide-search="true" data-placeholder="Select Department" name="department" id="department">
+																		<option></option>
+																		<option></option>
+																		@foreach ($department as $dept)
+																		<option value="{{$dept->id}}" @if(old('department') == $dept->id) selected @endif>{{$dept->department_name}}</option>
+																		@endforeach
+																		
+																	</select>
+																    @error('department')<div class="invalid-feedback">{{ $message }}</div> @enderror
+                                                                </div>
+																<!--end::Col-->
+														</div>
+														<!--end::Col-->
+													</div>
 												</div>
 												<!--end::Card body-->
 												<!--begin::Actions-->

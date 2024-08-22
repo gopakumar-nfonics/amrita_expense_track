@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Vendor;
+use App\Models\Stream;
 
 class payment extends Controller
 {
@@ -28,7 +29,8 @@ class payment extends Controller
     {
         $main_categories = Category::whereNull('parent_category')->with('children')->get();
         $vendors = Vendor::orderBy('vendor_name')->get();
-        return view('payment.create',compact('main_categories','vendors'));
+        $stream = Stream::orderBy('stream_name')->get();
+        return view('payment.create',compact('main_categories','vendors','stream'));
     }
 
     /**

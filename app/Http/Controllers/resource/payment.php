@@ -52,7 +52,7 @@ class payment extends Controller
      */
     public function show($id)
     {
-        //
+        return view('payment.show');
     }
 
     /**

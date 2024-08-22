@@ -19,7 +19,7 @@
 									<!--end::Page title-->
 									<!--begin::Button-->
 									<div class="card-toolbar">
-										<a href="{{ route('budget.create') }}" class="btn btn-sm btn-primary">
+										<a href="{{ route('payment.create') }}" class="btn btn-sm btn-primary">
 											Create
 										</a>
 									</div>
@@ -133,7 +133,7 @@
 																	</div>
 																		<!--begin::Menu item-->
 																		<div class="menu-item px-3">
-																		<a href="" class="menu-link px-3">View </a>
+																		<a href="{{ route('payment.show',1) }}" class="menu-link px-3">View </a>
 																	</div>
 																	<!--end::Menu item-->
 																	<!--begin::Menu item-->

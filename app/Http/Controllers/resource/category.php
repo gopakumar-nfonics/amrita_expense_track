@@ -28,7 +28,7 @@ class category extends Controller
      */
     public function create()
     {
-        $category=Categories::orderBy('category_name')->get();
+        $category=Categories::where('parent_category', NULL)->orderBy('category_name')->get();
         return view('category.create',['category'=>$category]);
     }
 
@@ -80,7 +80,7 @@ class category extends Controller
     public function edit($id)
     {
         $category = Categories::find($id);
-        $parent_cat=$parent_cat = Categories::where('id', '!=', $id)->orderBy('category_name')->get();
+        $parent_cat = Categories::where('id', '!=', $id)->where('parent_category', NULL)->orderBy('category_name')->get();
         return view('category.edit',compact('category','parent_cat'));
     }
 

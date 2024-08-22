@@ -531,7 +531,9 @@
 													
 															<th class="min-w-200px">Vendor</th>
 															<th class="min-w-150px">Company</th>
-															<th class="min-w-150px">Remittance</th>
+															<th class="min-w-150px">Total</th>
+															<th class="min-w-150px">Paid</th>
+															<th class="min-w-150px">Balance</th>
 															<th class="min-w-150px">Percentage</th>
 														</tr>
 													</thead>
@@ -558,6 +560,12 @@
 															</td>
 															<td>
 															₹27,562.00
+															</td>
+															<td>
+															₹20,262.00
+															</td>
+															<td>
+															₹7,362.00
 															</td>
 															<td class="text-end">
 																<div class="d-flex flex-column w-100 me-2">
@@ -591,6 +599,12 @@
 															<td>
 															₹24,168.00
 															</td>
+															<td>
+															₹17,100.00
+															</td>
+															<td>
+															₹7,068.00
+															</td>
 															<td class="text-end">
 																<div class="d-flex flex-column w-100 me-2">
 																	<div class="d-flex flex-stack mb-2">
@@ -622,6 +636,12 @@
 															</td>
 															<td>
 															₹21,297.00
+															</td>
+															<td>
+															₹15,297.00
+															</td>
+															<td>
+															₹6,217.00
 															</td>
 															<td class="text-end">
 																<div class="d-flex flex-column w-100 me-2">
@@ -655,6 +675,12 @@
 															<td>
 															₹18,733.00
 															</td>
+															<td>
+															₹9,533.00
+															</td>
+															<td>
+															₹9,200.00
+															</td>
 															<td class="text-end">
 																<div class="d-flex flex-column w-100 me-2">
 																	<div class="d-flex flex-stack mb-2">
@@ -686,6 +712,12 @@
 															</td>
 															<td>
 															₹14,345.00
+															</td>
+															<td>
+															₹6,245.00
+															</td>
+															<td>
+															₹8,145.00
 															</td>
 															<td class="text-end">
 																<div class="d-flex flex-column w-100 me-2">

@@ -88,7 +88,7 @@
 																	<label class="required form-label">Category</label>
 																	<!--end::Label-->
 																	<!--begin::Select2-->
-																	<select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select Category" name="payment_method" id="kt_ecommerce_edit_order_payment">
+																	<select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select Category" name="payment_method" id="pay_category" onchange="getallocatedbudget()">
 																		<option></option>
 																		@foreach ($main_categories as $main_category)
 																		@if ($main_category->children->isNotEmpty())
@@ -111,9 +111,9 @@
 										
 											</div>
 																	<!--begin::Description-->
-																	<div class="d-flex flex-column pt-5">
+																	<div class="d-flex flex-column pt-5" id="allocate_status" style="display:none !important;">
 																		<div class="d-flex justify-content-between w-100 fs-7 fw-bold mb-3">
-																			<span>Budget allocated for Travel</span>
+																			<span>Budget allocated for <span id="catname">Travel</span></span>
 																			
 																		</div>
 																		<div class="h-8px bg-light rounded mb-3">
@@ -435,4 +435,25 @@
 <script src="{{ asset('assets/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
 <script src="{{ asset('assets/js/custom/utilities/modals/create-app.js') }}"></script>
 <script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
+
+<script>
+    function getallocatedbudget() {
+		$('#allocate_status').show();
+         const selectElement = document.getElementById("pay_category");
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+
+        // Find the optgroup (parent category)
+        const optgroupElement = selectedOption.closest('optgroup');
+        let parentCategoryName = '';
+
+        // Check if the option belongs to an optgroup (subcategory)
+        if (optgroupElement) {
+            parentCategoryName = optgroupElement.label; // Get the parent category name
+        } else {
+            parentCategoryName = selectedOption.text; // If no parent, it's a main category
+        }
+        
+        document.getElementById("catname").innerText = parentCategoryName;
+    }
+</script>
 @endsection

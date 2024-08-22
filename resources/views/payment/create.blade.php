@@ -52,33 +52,25 @@
 							<div class="card-body p-12">
 								<!--begin::Form-->
 								<form action="" id="kt_invoice_form">
+
+								
 									<!--begin::Wrapper-->
 									<div class="mb-0">
 										<!--begin::Row-->
 										<div class="row gx-10 mb-5">
-
-											<!--end::Row-->
-											<div class="col-lg-3">
-												<div class="w-100 flex-lg-row-auto mb-7 me-7 me-lg-10">
-													<!--begin::Order details-->
-													<div class="card card-flush py-4 br-right">
-														<!--begin::Card body-->
-														<div class="card-body pt-0">
-															<div class="d-flex flex-column gap-6">
-																<!--begin::Input group-->
-																<div class="fv-row">
-																	<!--begin::Label-->
-																	<label class="form-label">Request ID</label>
+										<div class="row ps-15 pe-0 pb-5">
+										<div class="col-lg-12 d-flex justify-content-between">
+														<div class="fs-6 fw-bold text-gray-700 text-nowrap col-lg-3">
+																<!--begin::Label-->
+																<label class="form-label">Request ID</label>
 																	<!--end::Label-->
 																	<!--begin::Auto-generated ID-->
 																	<div class="fw-bold fs-3">#2324-569</div>
 																	<!--end::Input-->
 																</div>
-																<!--end::Input group-->
-																<!--begin::Input group-->
-																<div class="fv-row">
+																<div class="fs-6 fw-bold text-gray-700 col-lg-4 me-15">
 																	<!--begin::Label-->
-																	<label class="required form-label">Stream</label>
+																<label class="required form-label">Stream</label>
 																	<!--end::Label-->
 																	<!--begin::Select2-->
 																	<select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select Stream" name="stream" id="stream">
@@ -88,11 +80,10 @@
 																		@endforeach
 																	</select>
 																	<!--end::Select2-->
-																	
 																</div>
-																<!--end::Input group-->
-																<!--begin::Input group-->
-																<div class="fv-row">
+																<div class="fs-6 fw-bold text-gray-700 col-lg-4">
+
+																
 																	<!--begin::Label-->
 																	<label class="required form-label">Category</label>
 																	<!--end::Label-->
@@ -113,20 +104,37 @@
 																		@endforeach
 																	</select>
 																	<!--end::Select2-->
+																	
+																</div>
+																
+									
+										
+											</div>
 																	<!--begin::Description-->
-																	<div class="d-flex flex-column">
-																		<div class="d-flex justify-content-between w-100 fs-9 fw-bold mb-3">
-																			<span>Budget</span>
-																			<span>&#x20b9;22,300 of 36,000 Used</span>
+																	<div class="d-flex flex-column pt-5">
+																		<div class="d-flex justify-content-between w-100 fs-7 fw-bold mb-3">
+																			<span>Budget allocated for Travel</span>
+																			
 																		</div>
 																		<div class="h-8px bg-light rounded mb-3">
 																			<div class="bg-success rounded h-8px" role="progressbar" style="width: 68%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
 																		</div>
-																		<div class="fw-semibold text-gray-600 fs-7">14% remaining</div>
+																		<div class="fw-semibold text-gray-600 fs-7 d-flex justify-content-between w-100"><span class="color-blue">14% remaining </span><span class="color-orange">&#x20b9;22,300 of 36,000 Used</span></div>
 																	</div>
 																	<!--end::Description-->
-																</div>
-																<!--end::Input group-->
+																
+																	<div class="separator separator-solid mt-7 mb-2"></div>
+																	</div>
+																
+											<!--end::Row-->
+											<div class="col-lg-3">
+												<div class="w-100 flex-lg-row-auto mb-7 me-7 me-lg-10">
+													<!--begin::Order details-->
+													<div class="card card-flush py-4 br-right">
+														<!--begin::Card body-->
+														<div class="card-body pt-0">
+															<div class="d-flex flex-column gap-6">
+																
 																<!--begin::Input group-->
 																<div class="fv-row">
 																	<!--begin::Label-->
@@ -224,7 +232,11 @@
 											</div>
 											<!--begin::Table wrapper-->
 											<div class="table-responsive mb-10 col-lg-9">
+
+												<!--begin::Input group-->
+												
 												<!--begin::Table-->
+												<div class="min-h-550px">
 												<table class="table g-5 gs-0 mb-0 fw-bold text-gray-700" data-kt-element="items">
 													<!--begin::Table head-->
 													<thead>
@@ -299,6 +311,7 @@
 													</tfoot>
 													<!--end::Table foot-->
 												</table>
+												</div>
 												<!--end::Order details-->
 											<div class="d-flex justify-content-end border-top mt-5 pt-5">
 												<!--begin::Button-->

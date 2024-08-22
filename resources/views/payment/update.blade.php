@@ -32,6 +32,11 @@
                     <!--end::Breadcrumb-->
                 </div>
                 <!--end::Page title-->
+				<div class="card-toolbar">
+										<a href="{{ route('payment.index') }}" class="btn btn-sm btn-primary">
+											Back to List
+										</a>
+									</div>
             </div>
             <!--end::Toolbar container-->
         </div>
@@ -41,10 +46,7 @@
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-xxl">
-                <!--begin::Layout-->
-                <div class="d-flex flex-column flex-lg-row">
-                    <!--begin::Content-->
-                    <div class="flex-lg-row-fluid mb-10 mb-lg-0 me-lg-7 me-xl-10">
+                
                         <!--begin::Card-->
                         <div class="card">
                             <!--begin::Card body-->
@@ -171,10 +173,7 @@
                             <!--end::Card body-->
                         </div>
                         <!--end::Card-->
-                    </div>
-                    <!--end::Content-->
-                </div>
-                <!--end::Layout-->
+                    
             </div>
             <!--end::Content container-->
         </div>

@@ -723,6 +723,34 @@
         });
     </script>
 
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			// Get the sidebar toggle button
+			const sidebarToggle = document.getElementById('kt_app_sidebar_toggle');
+			const body = document.body;
+
+			function isPaymentRequestPage() {
+				return window.location.href.includes('/payment/create');
+			}
+
+			function toggleSidebarMinimize() {
+				if (isPaymentRequestPage()) {
+					// Add the class to minimize the sidebar
+					sidebarToggle.classList.add('active');
+					// Add the data attribute to the body
+					body.setAttribute('data-kt-app-sidebar-minimize', 'on');
+				} else {
+					// Remove the class to restore the sidebar
+					sidebarToggle.classList.remove('active');
+					// Remove the data attribute from the body
+					body.removeAttribute('data-kt-app-sidebar-minimize');
+				}
+			}
+			toggleSidebarMinimize();
+		});
+		</script>
+
+
 		@yield('pageScripts')
 	</body>
 	<!--end::Body-->

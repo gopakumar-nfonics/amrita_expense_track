@@ -22,13 +22,13 @@
 						<img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20" src="assets/media/misc/auth-screens.png" alt="" />
 						<!--end::Image-->
 						<!--begin::Title-->
-						<h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">Expense Tracking Solution</h1>
+						<h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">Budgeting & Expense Tracking Solution</h1>
 						<!--end::Title-->
 						<!--begin::Text--> 
 						<div class="d-none d-lg-block text-white fs-base text-center">Effortlessly track expenses,
 						<a href="#" class="opacity-75-hover text-warning fw-bold me-1">set budgets,</a>and stay in control of your 
 						<br />financial health with our
-						<a href="#" class="opacity-75-hover text-warning fw-bold me-1">intuitive expense tracking solution.</a></div>
+						<a href="#" class="opacity-75-hover text-warning fw-bold me-1">intuitive budgeting & expense tracking solution.</a></div>
 						<!--end::Text-->
 					</div>
 					<!--end::Content-->

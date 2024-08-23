@@ -38,15 +38,15 @@
 								<!--begin::Content container-->
 								<div id="kt_app_content_container" class="app-container container-xxl">
 									<!--begin::Layout-->
-									<div class="d-flex flex-column flex-xl-row">
+									<div class="d-flex flex-column flex-row">
 										<!--begin::Sidebar-->
-										<div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
+										<div class="flex-lg-row-auto w-100 mb-0">
 											<!--begin::Card-->
-											<div class="card mb-5 mb-xl-8">
+											<div class="card mb-5 mb-xl-8">												
 												<!--begin::Card body-->
-												<div class="card-body pt-15">
+												<div class="card-body d-flex flex-center">
 													<!--begin::Summary-->
-													<div class="d-flex flex-center flex-column mb-5">
+													<div class="d-flex flex-center flex-column me-10 br-right pe-10">
 														<!--begin::Avatar-->
 														<div class="symbol symbol-100px symbol-circle mb-7">
                                                             <span class="symbol-label bg-blue text-white fs-2tx"> AS</span>
@@ -59,10 +59,10 @@
 														<div class="fs-5 fw-semibold text-muted mb-6">Intertico Solutions</div>
 														<!--end::Position-->
 														<!--begin::Info-->
-														<div class="d-flex flex-wrap flex-center">
+														<div class="d-flex flex-row flex-center">
 															<!--begin::Stats-->
 															<div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
-																<div class="fs-4 fw-bold text-gray-700">
+																<div class="fs-6 fw-bold text-gray-700">
 																	<span class="w-75px">&#x20b9;6,75,900</span>
 																</div>
 																<div class="fw-semibold text-muted text-center color-blue">Total</div>
@@ -70,7 +70,7 @@
 															<!--end::Stats-->
 															<!--begin::Stats-->
 															<div class="border border-gray-300 border-dashed rounded py-3 px-3 mx-4 mb-3">
-																<div class="fs-4 fw-bold text-gray-700">
+																<div class="fs-6 fw-bold text-gray-700">
 																	<span class="w-50px">&#x20b9;3,56,879</span>
 																</div>
 																<div class="fw-semibold text-muted text-center color-green">Paid</div>
@@ -78,7 +78,7 @@
 															<!--end::Stats-->
 															<!--begin::Stats-->
 															<div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
-																<div class="fs-4 fw-bold text-gray-700">
+																<div class="fs-6 fw-bold text-gray-700">
 																	<span class="w-50px">&#x20b9;3,19,021</span>
 																</div>
 																<div class="fw-semibold text-muted text-center color-orange">Balance</div>
@@ -88,23 +88,7 @@
 														<!--end::Info-->
 													</div>
 													<!--end::Summary-->
-													<!--begin::Details toggle-->
-													<div class="d-flex flex-stack fs-4 py-3">
-														<div class="fw-bold rotate collapsible" data-bs-toggle="collapse" href="#kt_customer_view_details" role="button" aria-expanded="false" aria-controls="kt_customer_view_details">Details
-														<span class="ms-2 rotate-180">
-															<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-															<span class="svg-icon svg-icon-3">
-																<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																	<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																</svg>
-															</span>
-															<!--end::Svg Icon-->
-														</span></div>
-														<span data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">
-															<a href="" class="btn btn-sm btn-light-primary" data-bs-toggle="" data-bs-target="#kt_modal_update_customer">Edit</a>
-														</span>
-													</div>
-													<!--end::Details toggle-->
+													
 													<div class="separator separator-dashed my-3"></div>
 													<!--begin::Details content-->
 													<div id="kt_customer_view_details" class="collapse show">
@@ -112,22 +96,42 @@
 															<!--begin::Badge-->
 															<!-- <div class="badge badge-light-info d-inline">Premium user</div> -->
 															<!--begin::Badge-->
+															<div class="d-flex justify-content-md-start fs-6 py-3">
+																
 															<!--begin::Details item-->
-															<div class="fw-bold mt-5">Account ID</div>
-															<div class="text-gray-600">ID-45453423</div>
 															<!--begin::Details item-->
-															<!--begin::Details item-->
-															<div class="fw-bold mt-5">Email</div>
-															<div class="text-gray-600">
-																<a href="#" class="text-gray-600 text-hover-primary">info@keenthemes.com</a>
+																<div class="flex-column mb-0 w-300px">
+																<div class="fw-bold mt-5">Email</div>
+																<div class="text-gray-600">
+																	<a href="#" class="text-gray-600 text-hover-primary">info@keenthemes.com</a>
+																</div>
+																</div>
+																<div class="flex-column mb-0">
+																<div class="fw-bold mt-5">Phone</div>
+																<div class="text-gray-600">
+																	<a href="#" class="text-gray-600 text-hover-primary">9589632104</a>
+																</div>
+																</div>
 															</div>
-                                                            <div class="fw-bold mt-5">Phone</div>
-															<div class="text-gray-600">
-																<a href="#" class="text-gray-600 text-hover-primary">9589632104</a>
+															<div class="d-flex justify-content-md-start fs-6 py-3">
+																<!--begin::Details item-->
+																<div class="flex-column mb-0  w-300px">
+																<div class="fw-bold mt-0">GST #</div>
+																<div class="text-gray-600">32AAN0826C1Z4</div>
+																</div>
+															<!--begin::Details item-->
+															<!--begin::Details item-->
+																<div class="flex-column mb-0">
+																<div class="fw-bold mt-0">PAN #</div>
+																<div class="text-gray-600">
+																	<a href="#" class="text-gray-600 text-hover-primary">A46CN0826C2</a>
+																</div>
+																</div>
+																
 															</div>
 															<!--begin::Details item-->
 															<!--begin::Details item-->
-															<div class="fw-bold mt-5">Address</div>
+															<div class="fw-bold mt-5 ">Address</div>
 															<div class="text-gray-600">
                                                                 Building Number : 58
                                                                 Street Name : Reddy Street
@@ -150,7 +154,7 @@
 										</div>
 										<!--end::Sidebar-->
 										<!--begin::Content-->
-										<div class="flex-lg-row-fluid ms-lg-15">
+										<div class="flex-lg-row-fluid">
 											<!--begin:::Tabs-->
 											<!--end:::Tabs-->
 											<!--begin:::Tab content-->
@@ -163,7 +167,7 @@
 														<div class="card-header border-0">
 															<!--begin::Card title-->
 															<div class="card-title">
-																<h2>Payment Records</h2>
+																<h2 class="fs-3">Payment Details</h2>
 															</div>
 															<!--end::Card title-->
 															<!--begin::Card toolbar-->
@@ -187,261 +191,194 @@
 														<!--begin::Card body-->
 														<div class="card-body pt-0 pb-5">
 															<!--begin::Table-->
-															<div id="kt_table_customers_payment_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive"><table class="table align-middle table-row-dashed gy-5 dataTable no-footer" id="kt_table_customers_payment">
-																<!--begin::Table head-->
-																<thead class="border-bottom border-gray-200 fs-7 fw-bold">
-																	<!--begin::Table row-->
-																	<tr class="text-start text-muted text-uppercase gs-0"><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_table_customers_payment" rowspan="1" colspan="1" aria-label="Invoice No.: activate to sort column ascending" style="width: 100px;">Invoice No.</th><th class="sorting" tabindex="0" aria-controls="kt_table_customers_payment" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 82.2031px;">Status</th><th class="sorting" tabindex="0" aria-controls="kt_table_customers_payment" rowspan="1" colspan="1" aria-label="Amount: activate to sort column ascending" style="width: 78.9062px;">Amount</th><th class="min-w-100px sorting" tabindex="0" aria-controls="kt_table_customers_payment" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 153.641px;">Date</th><th class="text-end min-w-100px pe-4 sorting_disabled" rowspan="1" colspan="1" aria-label="Actions" style="width: 100px;">Actions</th></tr>
-																	<!--end::Table row-->
-																</thead>
-																<!--end::Table head-->
-																<!--begin::Table body-->
-																<tbody class="fs-6 fw-semibold text-gray-600">
-																	<!--begin::Table row-->
+															<div id="kt_table_customers_payment_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer"><div class="table-responsive">
+
+															<!--begin::Table-->
+												<table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="budgettable">
+													<!--begin::Table head-->
+													<thead>
+														<tr class="fw-bold">
+															<th class="min-w-100px">ID</th>
+															<th class="min-w-100px">Date</th>														
+															<th class="min-w-100px">Total</th>
+															<th class="min-w-100px">Paid</th>
+															<th class="min-w-100px">Balance</th>
+                                                            <th class="min-w-150px text-center">Actions</th>
+														</tr>
+													</thead>
+													<!--end::Table head-->
+													<!--begin::Table body-->
+													<tbody>
+                                                        
+														<tr>
+															<td>
+                                                                <div class="d-flex align-items-center">
+																	<div class="fw-400 d-block fs-6">
+                                                                        #2324-604
+																		<div class="text-gray-400 fw-semibold fs-9">
+																	<span class="badge badge-light-success fs-8">
+																	<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+																	<span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+																	<i class="fa-solid fa-arrow-up light-green fs-8 me-1 "></i>
+																	</span>
+																	<!--end::Svg Icon-->75.77%</span>
+																</div>
+																	</div>
+																</div>
+														
+															
+																<td>
+                                                                <div class="d-flex align-items-center">
+																	<div class="fw-400 d-block fs-6">
+                                                                        15-Aug-2024
+																	</div>
+																</div>
+															</td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+																	<div class="fw-400 d-block fs-6">
+																		&#x20b9;340,000
+																	</div>
+																</div>
+															</td>
+															<td>
+															<div class="d-flex align-items-center">
+																	<div class="fw-400 d-block fs-6">
+																		&#x20b9;2,36,000
+																	</div>
+																</div>
+															</td>
+															<td>
+															<div class="d-flex align-items-center">
+																	<div class="fw-400 d-block fs-6">
+																		&#x20b9;34,000
+																	</div>
+																</div>
+															</td>
+                                                            <td class="text-center">
+																<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+																<i class="fa-solid fa-angle-down"></i></a>
+																<!--begin::Menu-->
+																<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-150px py-4" data-kt-menu="true">
 																	
-																	<!--end::Table row-->
-																	<!--begin::Table row-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="{{ route('payment.updatepayment',1) }}" class="menu-link px-3">Update Payment</a>
+																	</div>
+																	<!--end::Menu item-->
+																		<!--begin::Menu item-->
+																		<div class="menu-item px-3">
+																		<a href="" class="menu-link px-3">Print</a>
+																	</div>
+																		<!--begin::Menu item-->
+																		<div class="menu-item px-3">
+																		<a href="{{ route('payment.show',1) }}" class="menu-link px-3">View </a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="" class="menu-link px-3">Edit</a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+																	</div>
+																	<!--end::Menu item-->
+																</div>
+															<!--end::Menu-->
+															</td>
+														</tr>
+														<tr>
+															<td>
+                                                                <div class="d-flex align-items-center">
+																	<div class="fw-400 d-block fs-6">
+                                                                        #2324-569
+																		<div class="text-gray-400 fw-semibold fs-9">
+																	<span class="badge badge-light-success fs-8">
+																	<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+																	<span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+																	<i class="fa-solid fa-arrow-up light-green fs-8 me-1 "></i>
+																	</span>
+																	<!--end::Svg Icon-->32.6%</span>
+																</div>
+																	</div>
+																</div>
+														
+															
+																<td>
+                                                                <div class="d-flex align-items-center">
+																	<div class="fw-400 d-block fs-6">
+                                                                        25-July-2024
+																	</div>
+																</div>
+															</td>
+                                                            <td>
+                                                                <div class="d-flex align-items-center">
+																	<div class="fw-400 d-block fs-6">
+																		&#x20b9;210,000
+																	</div>
+																</div>
+															</td>
+															<td>
+															<div class="d-flex align-items-center">
+																	<div class="fw-400 d-block fs-6">
+																		&#x20b9;1,60,000
+																	</div>
+																</div>
+															</td>
+															<td>
+															<div class="d-flex align-items-center">
+																	<div class="fw-400 d-block fs-6">
+																		&#x20b9;50,000
+																	</div>
+																</div>
+															</td>
+                                                            <td class="text-center">
+																<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
+																<i class="fa-solid fa-angle-down"></i></a>
+																<!--begin::Menu-->
+																<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-150px py-4" data-kt-menu="true">
 																	
-																	<!--end::Table row-->
-																	<!--begin::Table row-->
-																	
-																	<!--end::Table row-->
-																	<!--begin::Table row-->
-																	
-																	<!--end::Table row-->
-																	<!--begin::Table row-->
-																	
-																	<!--end::Table row-->
-																	<!--begin::Table row-->
-																	
-																	<!--end::Table row-->
-																	<!--begin::Table row-->
-																	
-																	<!--end::Table row-->
-																	<!--begin::Table row-->
-																	
-																	<!--end::Table row-->
-																	<!--begin::Table row-->
-																	
-																	<!--end::Table row-->
-																<tr class="odd">
-																		<!--begin::Invoice=-->
-																		<td>
-																			<a href="#" class="text-gray-600 text-hover-primary mb-1">4214-3561</a>
-																		</td>
-																		<!--end::Invoice=-->
-																		<!--begin::Status=-->
-																		<td>
-																			<span class="badge badge-light-success">Success</span>
-																		</td>
-																		<!--end::Status=-->
-																		<!--begin::Amount=-->
-																		<td>&#x20b9;1,200.00</td>
-																		<!--end::Amount=-->
-																		<!--begin::Date=-->
-																		<td data-order="2020-12-14T20:43:00+05:30">14 Dec 2020</td>
-																		<!--end::Date=-->
-																		<!--begin::Action=-->
-																		<td class="pe-0 text-end">
-																			<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-																			<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-																			<span class="svg-icon svg-icon-5 m-0">
-																				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																					<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																				</svg>
-																			</span>
-																			<!--end::Svg Icon--></a>
-																			<!--begin::Menu-->
-																			<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-																				<!--begin::Menu item-->
-																				<div class="menu-item px-3">
-																					<a href="../../demo1/dist/apps/customers/view.html" class="menu-link px-3">View</a>
-																				</div>
-																				<!--end::Menu item-->
-																				<!--begin::Menu item-->
-																				<div class="menu-item px-3">
-																					<a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-																				</div>
-																				<!--end::Menu item-->
-																			</div>
-																			<!--end::Menu-->
-																		</td>
-																		<!--end::Action=-->
-																	</tr><tr class="even">
-																		<!--begin::Invoice=-->
-																		<td>
-																			<a href="#" class="text-gray-600 text-hover-primary mb-1">2437-8847</a>
-																		</td>
-																		<!--end::Invoice=-->
-																		<!--begin::Status=-->
-																		<td>
-																			<span class="badge badge-light-success">Success</span>
-																		</td>
-																		<!--end::Status=-->
-																		<!--begin::Amount=-->
-																		<td>&#x20b9;79.00</td>
-																		<!--end::Amount=-->
-																		<!--begin::Date=-->
-																		<td data-order="2020-12-01T10:12:00+05:30">01 Dec 2020</td>
-																		<!--end::Date=-->
-																		<!--begin::Action=-->
-																		<td class="pe-0 text-end">
-																			<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-																			<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-																			<span class="svg-icon svg-icon-5 m-0">
-																				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																					<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																				</svg>
-																			</span>
-																			<!--end::Svg Icon--></a>
-																			<!--begin::Menu-->
-																			<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-																				<!--begin::Menu item-->
-																				<div class="menu-item px-3">
-																					<a href="../../demo1/dist/apps/customers/view.html" class="menu-link px-3">View</a>
-																				</div>
-																				<!--end::Menu item-->
-																				<!--begin::Menu item-->
-																				<div class="menu-item px-3">
-																					<a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-																				</div>
-																				<!--end::Menu item-->
-																			</div>
-																			<!--end::Menu-->
-																		</td>
-																		<!--end::Action=-->
-																	</tr><tr class="odd">
-																		<!--begin::Invoice=-->
-																		<td>
-																			<a href="#" class="text-gray-600 text-hover-primary mb-1">3605-6453</a>
-																		</td>
-																		<!--end::Invoice=-->
-																		<!--begin::Status=-->
-																		<td>
-																			<span class="badge badge-light-success">Success</span>
-																		</td>
-																		<!--end::Status=-->
-																		<!--begin::Amount=-->
-																		<td>&#x20b9;5,500.00</td>
-																		<!--end::Amount=-->
-																		<!--begin::Date=-->
-																		<td data-order="2020-11-12T14:01:00+05:30">12 Nov 2020</td>
-																		<!--end::Date=-->
-																		<!--begin::Action=-->
-																		<td class="pe-0 text-end">
-																			<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-																			<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-																			<span class="svg-icon svg-icon-5 m-0">
-																				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																					<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																				</svg>
-																			</span>
-																			<!--end::Svg Icon--></a>
-																			<!--begin::Menu-->
-																			<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-																				<!--begin::Menu item-->
-																				<div class="menu-item px-3">
-																					<a href="../../demo1/dist/apps/customers/view.html" class="menu-link px-3">View</a>
-																				</div>
-																				<!--end::Menu item-->
-																				<!--begin::Menu item-->
-																				<div class="menu-item px-3">
-																					<a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-																				</div>
-																				<!--end::Menu item-->
-																			</div>
-																			<!--end::Menu-->
-																		</td>
-																		<!--end::Action=-->
-																	</tr><tr class="even">
-																		<!--begin::Invoice=-->
-																		<td>
-																			<a href="#" class="text-gray-600 text-hover-primary mb-1">6380-6771</a>
-																		</td>
-																		<!--end::Invoice=-->
-																		<!--begin::Status=-->
-																		<td>
-																			<span class="badge badge-light-warning">Pending</span>
-																		</td>
-																		<!--end::Status=-->
-																		<!--begin::Amount=-->
-																		<td>&#x20b9;880.00</td>
-																		<!--end::Amount=-->
-																		<!--begin::Date=-->
-																		<td data-order="2020-10-21T17:54:00+05:30">21 Oct 2020</td>
-																		<!--end::Date=-->
-																		<!--begin::Action=-->
-																		<td class="pe-0 text-end">
-																			<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-																			<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-																			<span class="svg-icon svg-icon-5 m-0">
-																				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																					<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																				</svg>
-																			</span>
-																			<!--end::Svg Icon--></a>
-																			<!--begin::Menu-->
-																			<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-																				<!--begin::Menu item-->
-																				<div class="menu-item px-3">
-																					<a href="../../demo1/dist/apps/customers/view.html" class="menu-link px-3">View</a>
-																				</div>
-																				<!--end::Menu item-->
-																				<!--begin::Menu item-->
-																				<div class="menu-item px-3">
-																					<a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-																				</div>
-																				<!--end::Menu item-->
-																			</div>
-																			<!--end::Menu-->
-																		</td>
-																		<!--end::Action=-->
-																	</tr><tr class="odd">
-																		<!--begin::Invoice=-->
-																		<td>
-																			<a href="#" class="text-gray-600 text-hover-primary mb-1">1003-5648</a>
-																		</td>
-																		<!--end::Invoice=-->
-																		<!--begin::Status=-->
-																		<td>
-																			<span class="badge badge-light-success">Success</span>
-																		</td>
-																		<!--end::Status=-->
-																		<!--begin::Amount=-->
-																		<td>&#x20b9;7,650.00</td>
-																		<!--end::Amount=-->
-																		<!--begin::Date=-->
-																		<td data-order="2020-10-19T07:32:00+05:30">19 Oct 2020</td>
-																		<!--end::Date=-->
-																		<!--begin::Action=-->
-																		<td class="pe-0 text-end">
-																			<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-																			<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-																			<span class="svg-icon svg-icon-5 m-0">
-																				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																					<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																				</svg>
-																			</span>
-																			<!--end::Svg Icon--></a>
-																			<!--begin::Menu-->
-																			<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-																				<!--begin::Menu item-->
-																				<div class="menu-item px-3">
-																					<a href="../../demo1/dist/apps/customers/view.html" class="menu-link px-3">View</a>
-																				</div>
-																				<!--end::Menu item-->
-																				<!--begin::Menu item-->
-																				<div class="menu-item px-3">
-																					<a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-																				</div>
-																				<!--end::Menu item-->
-																			</div>
-																			<!--end::Menu-->
-																		</td>
-																		<!--end::Action=-->
-																	</tr></tbody>
-																<!--end::Table body-->
-															</table></div><div class="row"><div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div><div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end"><div class="dataTables_paginate paging_simple_numbers" id="kt_table_customers_payment_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="kt_table_customers_payment_previous"><a href="#" aria-controls="kt_table_customers_payment" data-dt-idx="0" tabindex="0" class="page-link"><i class="previous"></i></a></li><li class="paginate_button page-item active"><a href="#" aria-controls="kt_table_customers_payment" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="kt_table_customers_payment" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="kt_table_customers_payment_next"><a href="#" aria-controls="kt_table_customers_payment" data-dt-idx="3" tabindex="0" class="page-link"><i class="next"></i></a></li></ul></div></div></div></div>
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="{{ route('payment.updatepayment',1) }}" class="menu-link px-3">Update Payment</a>
+																	</div>
+																	<!--end::Menu item-->
+																		<!--begin::Menu item-->
+																		<div class="menu-item px-3">
+																		<a href="" class="menu-link px-3">Print</a>
+																	</div>
+																		<!--begin::Menu item-->
+																		<div class="menu-item px-3">
+																		<a href="{{ route('payment.show',1) }}" class="menu-link px-3">View </a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="" class="menu-link px-3">Edit</a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+																	</div>
+																	<!--end::Menu item-->
+																</div>
+															<!--end::Menu-->
+															</td>
+														</tr>
+														
+                                                        <!-- <tr>
+                                                            <td colspan="4">No data found</td>
+                                                        </tr> -->
+                                                    
+													</tbody>
+													<!--end::Table body-->
+												</table>
+												<!--end::Table-->
+																
+															</div><div class="row"><div class="col-sm-12 col-md-5 d-flex align-items-center justify-content-center justify-content-md-start"></div><div class="col-sm-12 col-md-7 d-flex align-items-center justify-content-center justify-content-md-end"><div class="dataTables_paginate paging_simple_numbers" id="kt_table_customers_payment_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="kt_table_customers_payment_previous"><a href="#" aria-controls="kt_table_customers_payment" data-dt-idx="0" tabindex="0" class="page-link"><i class="previous"></i></a></li><li class="paginate_button page-item active"><a href="#" aria-controls="kt_table_customers_payment" data-dt-idx="1" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="kt_table_customers_payment" data-dt-idx="2" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item next" id="kt_table_customers_payment_next"><a href="#" aria-controls="kt_table_customers_payment" data-dt-idx="3" tabindex="0" class="page-link"><i class="next"></i></a></li></ul></div></div></div></div>
 															<!--end::Table-->
 														</div>
 														<!--end::Card body-->

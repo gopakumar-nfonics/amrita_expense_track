@@ -83,7 +83,7 @@
 																
 																	</div>
 																	<div class="d-flex justify-content-start flex-column">
-																		<a href="http://127.0.0.1:8000/vendor/1" class="text-dark fw-bold text-hover-primary fs-6">Ana Simmons</a>
+																		<a href="{{ route('vendor.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">Ana Simmons</a>
 																		<span class="text-muted fw-semibold text-muted d-block fs-7">NFONICS Solutions</span>
 																	</div>
 																</div>

@@ -41,7 +41,7 @@
 													<div class="px-9 pt-7 card-rounded h-275px w-100 bg-blue">
 														<!--begin::Heading-->
 														<div class="d-flex flex-stack">
-															<h3 class="m-0 text-white fw-bold fs-3">Budget Summary</h3>
+															<h3 class="m-0 text-white fw-bold fs-3">Allocation</h3>
 															
 														</div>
 														<!--end::Heading-->
@@ -225,13 +225,13 @@
 													<div class="px-9 pt-7 card-rounded h-275px w-100 bg-danger">
 														<!--begin::Heading-->
 														<div class="d-flex flex-stack">
-															<h3 class="m-0 text-white fw-bold fs-3">Expense Summary</h3>
+															<h3 class="m-0 text-white fw-bold fs-3">Usage</h3>
 															
 														</div>
 														<!--end::Heading-->
 														<!--begin::Balance-->
 														<div class="d-flex text-center flex-column text-white pt-8">
-															<span class="fw-semibold fs-7">Amount Spent</span>
+															<span class="fw-semibold fs-7">Budget Used</span>
 															<span class="fw-bold fs-2x pt-1">&#x20b9;4,24,473.00</span>
 														</div>
 														<!--end::Balance-->
@@ -418,13 +418,13 @@
 													<div class="px-9 pt-7 card-rounded h-275px w-100 bg-success">
 														<!--begin::Heading-->
 														<div class="d-flex flex-stack">
-															<h3 class="m-0 text-white fw-bold fs-3">Balance Summary</h3>
+															<h3 class="m-0 text-white fw-bold fs-3">Balance</h3>
 															
 														</div>
 														<!--end::Heading-->
 														<!--begin::Balance-->
 														<div class="d-flex text-center flex-column text-white pt-8">
-															<span class="fw-semibold fs-7">You Balance</span>
+															<span class="fw-semibold fs-7">Remaning Budget</span>
 															<span class="fw-bold fs-2x pt-1">&#x20b9;2,13,087.00</span>
 														</div>
 														<!--end::Balance-->
@@ -441,7 +441,7 @@
 														</div>
 														<div>
 														<p class="text-center fs-6 pb-0 mb-0">
-														<span class="badge badge-light-danger fs-8">Note :</span>&nbsp; 74% of the budget has been strategically allocated.</p>
+														<span class="badge badge-light-danger fs-8">Note :</span>&nbsp; 74% of the budget has been strategically used.</p>
 														
 														</div>
 													</div>

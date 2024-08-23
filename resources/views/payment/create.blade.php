@@ -201,13 +201,52 @@
 																<!--end::Input group-->
 
 																<!--begin::Input group-->
-																<div class="fv-row">
+																<div class="fv-row pt-5">
 																	<!--begin::Label-->
-																	<label class="required form-label">Reference #</label>
+																	<label class="required form-label">RO #</label>
+																	<!--end::Label-->
+																	<!--begin::Editor-->
+																	<input id="" name="order_date" placeholder="Reference RO#" class="form-control mb-2" value="" />
+																	<!--end::Editor-->
+																</div>
+
+																<!--begin::Input group-->
+																<div class="fv-row border-top pt-5">
+																	<!--begin::Label-->
+																	<label class="required form-label">Invoice #</label>
 																	<!--end::Label-->
 																	<!--begin::Editor-->
 																	<input id="" name="order_date" placeholder="Reference Invoice #" class="form-control mb-2" value="" />
 																	<!--end::Editor-->
+
+
+																	<!--begin::Label-->
+																	<label class="required form-label mt-3">Invoice Date</label>
+																	<!--end::Label-->
+																	<!--begin::Editor-->
+																	<!--begin::Input group-->
+																	<div class="d-flex align-items-center justify-content-start flex-equal order-3 fw-row" data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">
+																		<!--begin::Date-->
+																		<!--end::Date-->
+																		<!--begin::Input-->
+																		<div class="position-relative d-flex align-items-center">
+																			<!--begin::Datepicker-->
+																			<input class="form-control fw-bold pe-5 flatpickr-input" placeholder="Select date" name="invoice_due_date" type="text" readonly="readonly">
+																			<!--end::Datepicker-->
+																			<!--begin::Icon-->
+																			<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+																			<span class="svg-icon svg-icon-2 position-absolute end-0 me-4">
+																				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																					<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
+																				</svg>
+																			</span>
+																			<!--end::Svg Icon-->
+																			<!--end::Icon-->
+																		</div>
+																		<!--end::Input-->
+																	</div>
+																	<!--end::Input group-->
+
 																	<div class="text-center">
 																		<button type="button" class="btn btn-sm btn-info w-100 mt-5 mb-1" data-bs-toggle="modal" data-bs-target="#kt_modal_upload">
 																			<!--begin::Svg Icon | path: icons/duotune/files/fil018.svg-->

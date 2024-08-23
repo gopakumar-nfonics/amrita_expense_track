@@ -453,11 +453,7 @@ table th {
     text-indent: 20px;
     padding-bottom: 0px;
     font-size: 14px;
-    color: #666;
-}
-.select2-container--bootstrap5 .select2-dropdown .select2-results__option
-{
-    color: #0095e8 !important;
+  
 }
 .select2-container--bootstrap5 .select2-dropdown .select2-results__option.select2-results__option--group
 {
@@ -466,7 +462,6 @@ table th {
 }
 .select2-container--bootstrap5 .select2-dropdown .select2-results__option.select2-results__option--group .select2-results__group
 {
-    color: #0095e8 !important;
     font-size: 15px !important;
 }
 

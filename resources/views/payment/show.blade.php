@@ -54,9 +54,17 @@
 									</div>
 									<!--end::Page title-->
 									<div class="card-toolbar">
+								
+														<!-- begin::Pint-->
+														<button type="button" class="btn btn-sm btn-success me-5" onclick="window.print();"><i class="fa-solid fa-print"></i> Print</button>
+														<!-- end::Pint-->
+														
+										
+													<!-- end::Actions-->
 										<a href="{{ route('payment.index') }}" class="btn btn-sm btn-primary">
 											Back to List
 										</a>
+										
 									</div>
 								</div>
 								<!--end::Toolbar container-->
@@ -118,7 +126,7 @@
 															</div>
 															<div class="flex-root d-flex flex-column">
 																<span class="text-muted">Category</span>
-																<span class="fs-5">BE -  Travel </span>
+																<span class="fs-5">B.Tech -  Travel </span>
 															</div>
 														</div>
 														<!--end::Order details-->
@@ -239,19 +247,7 @@
 													<!--end::Wrapper-->
 												</div>
 												<!--end::Body-->
-												<!-- begin::Footer-->
-												<div class="d-flex justify-content-end mt-0 pt-0">
-													<!-- begin::Actions-->
-													<div class="my-1 me-0">
-														<!-- begin::Pint-->
-														<button type="button" class="btn btn-success my-1 me-0" onclick="window.print();">Print</button>
-														<!-- end::Pint-->
-														
-													</div>
-													<!-- end::Actions-->
-													
-												</div>
-												<!-- end::Footer-->
+											
 											</div>
 											<!-- end::Wrapper-->
 										</div>

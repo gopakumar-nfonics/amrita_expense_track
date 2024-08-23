@@ -169,23 +169,7 @@
 															<div class="card-title">
 																<h2 class="fs-3">Payment Details</h2>
 															</div>
-															<!--end::Card title-->
-															<!--begin::Card toolbar-->
-															<div class="card-toolbar">
-																<!--begin::Filter-->
-																<button type="button" class="btn btn-sm btn-flex btn-light-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment">
-																<!--begin::Svg Icon | path: icons/duotune/general/gen035.svg-->
-																<span class="svg-icon svg-icon-3">
-																	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																		<rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="currentColor"></rect>
-																		<rect x="10.8891" y="17.8033" width="12" height="2" rx="1" transform="rotate(-90 10.8891 17.8033)" fill="currentColor"></rect>
-																		<rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="currentColor"></rect>
-																	</svg>
-																</span>
-																<!--end::Svg Icon-->Add payment</button>
-																<!--end::Filter-->
-															</div>
-															<!--end::Card toolbar-->
+															<!--end::Card title-->															
 														</div>
 														<!--end::Card header-->
 														<!--begin::Card body-->
@@ -198,6 +182,7 @@
 													<!--begin::Table head-->
 													<thead>
 														<tr class="fw-bold">
+														<th class="min-w-50px">#</th>
 															<th class="min-w-100px">ID</th>
 															<th class="min-w-100px">Date</th>														
 															<th class="min-w-100px">Total</th>
@@ -211,6 +196,7 @@
 													<tbody>
                                                         
 														<tr>
+														<td class="min-w-50px">1</td>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
@@ -290,6 +276,7 @@
 															</td>
 														</tr>
 														<tr>
+														<td class="min-w-50px">2</td>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">

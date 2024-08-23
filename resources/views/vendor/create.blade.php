@@ -106,7 +106,7 @@
 									<div class="col-lg-4 fv-row d-flex">
 										<label class="form-check form-check-sm form-check-custom form-check-solid">
 											<input class="form-check-input" type="checkbox" name="use_company_details" />
-											<span class="form-check-label ms-2">Use Company Tax and Contact Details</span>
+											<span class="form-check-label ms-2">Use Company Tax & Contact Details</span>
 										</label>
 									</div>
 									<!--end::Checkbox Col-->

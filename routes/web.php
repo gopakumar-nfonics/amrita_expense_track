@@ -24,7 +24,7 @@ Route::get('/home', function(){
     if ( Auth::user()->isAdmin() ) {
         return redirect(route('dashboard'));
     }
-    if ( Auth::user()->ispaymentManager() ) {
+    if ( Auth::user()->isExpenseManager() ) {
         return redirect(route('dashboard'));
     }
 })->name('dashboard');

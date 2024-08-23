@@ -53,7 +53,7 @@
 															<th class="min-w-100px">Allocated</th>
 															<th class="min-w-100px">Spent</th>
 															<th class="min-w-100px">Balance</th>
-															<th class="min-w-200px">Percentage</th>
+															<th class="min-w-100px">Usage (%)</th>
                                                             <th class="min-w-150px text-center">Actions</th>
 														</tr>
 													</thead>
@@ -70,6 +70,10 @@
 																</div>
 															<td>
                                                                 <div class="d-flex align-items-center">
+																<div class="symbol symbol-35px me-5">
+																		<span class="symbol-label color-blue w-80px"> {{$budget->category->category_code}}</span>
+
+																	</div>
 																	<div class="fw-400 d-block fs-6">
 																	{{$budget->category->category_name}}
 																	</div>
@@ -105,12 +109,14 @@
 															</td>
 															<td>
 															<div class="d-flex flex-column w-100 me-2">
-																	<div class="d-flex flex-stack mb-2">
-																		<span class="text-muted me-2 fs-7 fw-bold">60%</span>
-																	</div>
-																	<div class="progress h-6px w-100">
-																		<div class="progress-bar bg-success" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-																	</div>
+															<div class="text-gray-400 fw-semibold fs-7">
+																	<span class="badge badge-light-success fs-7">
+																	<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+																	<span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+																	<i class="fa-solid fa-arrow-up light-green fs-7 me-1 "></i>
+																	</span>
+																	<!--end::Svg Icon-->32.6%</span>
+																</div>
 																</div>
 															</td>
 															

@@ -534,7 +534,7 @@
 															<th class="min-w-150px">Total</th>
 															<th class="min-w-150px">Paid</th>
 															<th class="min-w-150px">Balance</th>
-															<th class="min-w-150px">Percentage</th>
+															<th class="min-w-150px">Payment (%)</th>
 														</tr>
 													</thead>
 													<!--end::Table head-->

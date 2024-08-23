@@ -89,7 +89,7 @@
 									<td>
 										<div class="d-flex align-items-center">
 											<div class="fw-400 d-block fs-6">
-
+                                            {{ ucfirst($cat->remarks ? $cat->remarks : ' ') }}
 											</div>
 										</div>
 									</td>

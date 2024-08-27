@@ -59,7 +59,7 @@
 														<div class="col-lg-4 fv-row">	
 																<!--begin::Col-->
 																<div class="col-lg-12 fv-row">
-																<div class="fw-bold fs-6">{{$companycode}}</div>
+																<div class="fw-bold fs-6 pt-3">{{$companycode}}</div>
 																	<input type="hidden" name="code"  placeholder="Code" value="{{$companycode}}" />
 																   
                                                                 </div>

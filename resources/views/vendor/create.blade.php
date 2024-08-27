@@ -52,13 +52,13 @@
 
 								<!--begin::Input group-->
 								<div class="row mb-6">
-								<label class="col-lg-2 col-form-label required fw-semibold fs-6">Code</label>
+								<label class="col-lg-2 col-form-label fw-semibold fs-6">Code</label>
 									<!--end::Label-->
 									<!--begin::Col-->
 									<div class="col-lg-4 fv-row">
 										<!--begin::Col-->
 										<div class="col-lg-12 fv-row">
-										<div class="fw-bold fs-6">{{$vendorcode}}</div>
+										<div class="fw-bold fs-6 pt-3">{{$vendorcode}}</div>
 											<input type="hidden" name="code" value="{{$vendorcode}}" />
 										</div>
 										<!--end::Col-->

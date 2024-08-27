@@ -11,5 +11,5 @@ class Campus extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'campus';
-    protected $fillable = ['campus_name', 'address'];
+    protected $fillable = ['campus_name','campus_code', 'address'];
 }

@@ -43,3 +43,5 @@ Route::post('/budget/deletebudget', [\App\Http\Controllers\resource\budget::clas
 Route::resource('payment',\App\Http\Controllers\resource\payment::class);
 Route::get('/payment/{id}/updatepayment', [\App\Http\Controllers\resource\payment::class, 'updatepayment'])->name('payment.updatepayment');
 Route::resource('department',\App\Http\Controllers\resource\department::class);
+Route::resource('campus',\App\Http\Controllers\resource\campus::class);
+Route::get('campus/getdepartments/{campusId}', [\App\Http\Controllers\resource\campus::class, 'getdepartments'])->name('campus.getdepartments');

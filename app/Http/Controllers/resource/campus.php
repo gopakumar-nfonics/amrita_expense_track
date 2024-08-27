@@ -4,11 +4,10 @@ namespace App\Http\Controllers\resource;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Stream as streams;
-use App\Models\Department;
-use App\Models\Campus;
+use App\Models\Department as departments;
+use App\Models\Campus as cmps;
 
-class stream extends Controller
+class campus extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,8 @@ class stream extends Controller
      */
     public function index()
     {
-        $streams=streams::with('campus','department')->orderBy('stream_name')->get();
-        return view('stream.index', compact('streams'));
+        $campus=cmps::orderBy('campus_name')->get();
+        return view('campus.index', compact('campus'));
     }
 
     /**
@@ -28,9 +27,8 @@ class stream extends Controller
      */
     public function create()
     {
-        $campus=campus::orderBy('campus_name')->get();
-        $department=Department::orderBy('department_name')->get();
-        return view('stream.create',compact('department','campus'));
+        $campus=cmps::orderBy('campus_name')->get();
+        return view('campus.create', compact('campus'));
     }
 
     /**
@@ -42,24 +40,23 @@ class stream extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:stream,stream_name',
-            'code' => 'required|unique:stream,stream_code',
-            'campus' => 'required',
+            'name' => 'required|unique:campus,campus_name',
+            'code' => 'required|unique:campus,campus_code',
+            'address' => 'required',
         ]);
+
+        try {
+            $campus = new cmps();
+            $campus->campus_name = $request->name;
+            $campus->campus_code = $request->code;
+            $campus->address = $request->address;
+            $campus->save();
     
-            try {
-                $stream = new streams();
-                $stream->stream_name = $request->name;
-                $stream->stream_code = $request->code;
-                $stream->campus_id = $request->campus;
-                $stream->department_id = $request->department;
-                $stream->save();
-        
-                return redirect()->route('stream.index')->with('success', 'Programme Created Successfully');
-            } catch (\Exception $e) {
-                // Log the exception message
-                return redirect()->back()->with('error', $e->getMessage());
-            }
+            return redirect()->route('campus.index')->with('success', 'Campus Created Successfully');
+        } catch (\Exception $e) {
+            // Log the exception message
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -105,5 +102,13 @@ class stream extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function getdepartments($campusId)
+    {
+        // Fetch departments based on the campus ID
+        $departments = departments::where('campus_id', $campusId)->get();
+
+        // Return the departments as JSON
+        return response()->json($departments);
     }
 }

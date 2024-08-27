@@ -52,6 +52,19 @@
 													
 													<!--begin::Input group-->
 													<div class="row mb-6">
+														<!--end::Col-->
+														<label class="col-lg-2 col-form-label fw-semibold fs-6">Code</label>
+														<!--end::Label-->
+														<!--begin::Col-->
+														<div class="col-lg-4 fv-row">	
+																<!--begin::Col-->
+																<div class="col-lg-12 fv-row">
+																<div class="fw-bold fs-6">{{$companycode}}</div>
+																	<input type="hidden" name="code"  placeholder="Code" value="{{$companycode}}" />
+																   
+                                                                </div>
+																<!--end::Col-->
+														</div>
 														<!--begin::Label-->
 														<label class="col-lg-2 col-form-label required fw-semibold fs-6">Name</label>
 														<!--end::Label-->
@@ -65,17 +78,7 @@
 																<!--end::Col-->
 														</div>
 														<!--end::Col-->
-														<label class="col-lg-2 col-form-label required fw-semibold fs-6">Code</label>
-														<!--end::Label-->
-														<!--begin::Col-->
-														<div class="col-lg-4 fv-row">	
-																<!--begin::Col-->
-																<div class="col-lg-12 fv-row">
-																	<input type="text" name="code" class="form-control form-control-lg form-control-solid @error('code') is-invalid @enderror" placeholder="Code" value="{{ old('code') }}" />
-																    @error('code')<div class="invalid-feedback">{{ $message }}</div> @enderror
-                                                                </div>
-																<!--end::Col-->
-														</div>
+														
 													</div>
 
 													<div class="row mb-6">

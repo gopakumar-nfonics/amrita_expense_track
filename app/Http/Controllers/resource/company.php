@@ -26,7 +26,21 @@ class company extends Controller
      */
     public function create()
     {
-        return view('company.create');
+        $prefix = 'BUET-CY-';
+        // Retrieve the highest existing code
+        $latestCode = companies::where('company_code', 'like', $prefix . '%')
+            ->orderByRaw('CAST(SUBSTRING(company_code, LENGTH(?) + 1) AS UNSIGNED) DESC', [$prefix])
+            ->pluck('company_code')
+            ->first();
+
+        $latestNumber = 0;
+        if ($latestCode) {
+            $latestNumber = (int)substr($latestCode, strlen($prefix));
+        }
+
+        $nextNumber = str_pad($latestNumber + 1, 3, '0', STR_PAD_LEFT); // Adjust to 4 digits
+        $companycode = $prefix . $nextNumber;
+        return view('company.create',compact('companycode'));
     }
 
     /**

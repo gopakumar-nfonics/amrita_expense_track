@@ -27,8 +27,23 @@ class vendor extends Controller
      */
     public function create()
     {
+        $prefix = 'BUET-VR-';
+        // Retrieve the highest existing code
+        $latestCode = vendors::where('vendor_code', 'like', $prefix . '%')
+            ->orderByRaw('CAST(SUBSTRING(vendor_code, LENGTH(?) + 1) AS UNSIGNED) DESC', [$prefix])
+            ->pluck('vendor_code')
+            ->first();
+
+        $latestNumber = 0;
+        if ($latestCode) {
+            $latestNumber = (int)substr($latestCode, strlen($prefix));
+        }
+
+        $nextNumber = str_pad($latestNumber + 1, 3, '0', STR_PAD_LEFT); // Adjust to 4 digits
+        $vendorcode = $prefix . $nextNumber;
+
         $companies=Company::orderBy('company_name')->get();
-        return view('vendor.create', compact('companies'));
+        return view('vendor.create', compact('companies','vendorcode'));
     }
 
     /**

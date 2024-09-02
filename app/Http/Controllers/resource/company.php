@@ -5,6 +5,7 @@ namespace App\Http\Controllers\resource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Company as companies;
+use Illuminate\Validation\Rule;
 
 class company extends Controller
 {
@@ -100,7 +101,8 @@ class company extends Controller
      */
     public function edit($id)
     {
-        //
+        $company = companies::find($id);
+        return view('company.edit',compact('company'));
     }
 
     /**
@@ -112,7 +114,47 @@ class company extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => [
+                'required',
+                Rule::unique('company', 'company_name')->ignore($id),
+            ],
+            'code' => [
+                'required',
+                Rule::unique('company', 'company_code')->ignore($id),
+            ],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('company', 'email')->ignore($id),
+            ],
+            'phone' => 'required|max:15',
+            'address' => 'required',
+        ]);
+        
+    
+            try {
+                $company = companies::findOrFail($id);
+                $company->company_name = $request->name;
+                $company->company_code = $request->code;
+                $company->email = $request->email;
+                $company->phone = $request->phone;
+                if ($request->has('gst')) {
+                    $company->gst = $request->gst;
+                }
+                if ($request->has('pan')) {
+                    $company->pan = $request->pan;
+                }
+                $company->address = $request->address;
+                $company->save();
+        
+                return redirect()->route('company.index')->with('success', 'Company Updated Successfully');
+            } catch (\Exception $e) {
+                // Log the exception message
+                return redirect()->back()->with('error', $e->getMessage());
+            }
     }
 
     /**

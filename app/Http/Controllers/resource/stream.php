@@ -81,7 +81,11 @@ class stream extends Controller
      */
     public function edit($id)
     {
-        //
+        $campus=campus::orderBy('campus_name')->get();
+        $stream = streams::find($id);
+        $department = Department::where('campus_id', $stream->campus_id)->get();
+        
+        return view('stream.edit',compact('department','campus','stream'));
     }
 
     /**
@@ -93,7 +97,25 @@ class stream extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:stream,stream_name,'.$id,
+            'code' => 'required|unique:stream,stream_code,'.$id,
+            'campus' => 'required',
+        ]);
+    
+            try {
+                $stream = streams::findOrFail($id);
+                $stream->stream_name = $request->name;
+                $stream->stream_code = $request->code;
+                $stream->campus_id = $request->campus;
+                $stream->department_id = $request->department;
+                $stream->save();
+        
+                return redirect()->route('stream.index')->with('success', 'Programme Updated Successfully');
+            } catch (\Exception $e) {
+                // Log the exception message
+                return redirect()->back()->with('error', $e->getMessage());
+            }
     }
 
     /**

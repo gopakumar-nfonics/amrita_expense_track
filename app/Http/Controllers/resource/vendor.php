@@ -57,7 +57,7 @@ class vendor extends Controller
         $request->validate([
             'name' => 'required',
             'code' => 'required|unique:vendor,vendor_code',
-            'email' => 'required|string|email|max:255|unique:vendor',
+            'email' => 'required|string|email',
             'phone' => 'required|max:15',
             'company'=> 'required',
             'address' => 'required',
@@ -105,7 +105,9 @@ class vendor extends Controller
      */
     public function edit($id)
     {
-        //
+        $vendor=vendors::find($id);
+        $companies=Company::orderBy('company_name')->get();
+        return view('vendor.edit', compact('vendor','companies'));
     }
 
     /**
@@ -117,7 +119,36 @@ class vendor extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'code' => 'required|unique:vendor,vendor_code,'.$id,
+            'email' => 'required|string|email',
+            'phone' => 'required|max:15',
+            'company'=> 'required',
+            'address' => 'required',
+        ]);
+    
+            try {
+                $vendor = vendors::findOrFail($id);
+                $vendor->vendor_name = $request->name;
+                $vendor->vendor_code = $request->code;
+                $vendor->email = $request->email;
+                $vendor->phone = $request->phone;
+                $vendor->company_id  = $request->company;
+                if ($request->has('gst')) {
+                    $vendor->gst = $request->gst;
+                }
+                if ($request->has('pan')) {
+                    $vendor->pan = $request->pan;
+                }
+                $vendor->address = $request->address;
+                $vendor->save();
+        
+                return redirect()->route('vendor.index')->with('success', 'Vendor Updated Successfully');
+            } catch (\Exception $e) {
+                // Log the exception message
+                return redirect()->back()->with('error', $e->getMessage());
+            }
     }
 
     /**

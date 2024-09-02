@@ -91,7 +91,9 @@ class department extends Controller
      */
     public function edit($id)
     {
-        //
+        $campus=Campus::orderBy('campus_name')->get();
+        $department = departments::find($id);
+        return view('department.edit', compact('campus','department'));
     }
 
     /**
@@ -103,7 +105,40 @@ class department extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => [
+                'required',
+                Rule::unique('department', 'department_name')
+                    ->ignore($id) // Exclude the current record if updating
+                    ->where(function ($query) use ($request) {
+                        return $query->where('campus_id', $request->campus);
+                    }),
+            ],
+            'code' => [
+                'required',
+                Rule::unique('department', 'department_code')
+                    ->ignore($id) // Exclude the current record if updating
+                    ->where(function ($query) use ($request) {
+                        return $query->where('campus_id', $request->campus);
+                    }),
+            ],
+            'campus' => 'required',
+            'address' => 'required',
+        ]);
+    
+            try {
+                $department = departments::findOrFail($id);
+                $department->department_name = $request->name;
+                $department->department_code = $request->code;
+                $department->campus_id = $request->campus;
+                $department->address = $request->address;
+                $department->save();
+        
+                return redirect()->route('department.index')->with('success', 'Department Updated Successfully');
+            } catch (\Exception $e) {
+                // Log the exception message
+                return redirect()->back()->with('error', $e->getMessage());
+            }
     }
 
     /**

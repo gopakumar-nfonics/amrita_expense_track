@@ -78,7 +78,8 @@ class campus extends Controller
      */
     public function edit($id)
     {
-        //
+        $campus=cmps::find($id);
+        return view('campus.edit', compact('campus'));
     }
 
     /**
@@ -90,7 +91,24 @@ class campus extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:campus,campus_name,'.$id,
+            'code' => 'required|unique:campus,campus_code,'.$id,
+            'address' => 'required',
+        ]);
+
+        try {
+            $campus = cmps::findOrFail($id);;
+            $campus->campus_name = $request->name;
+            $campus->campus_code = $request->code;
+            $campus->address = $request->address;
+            $campus->save();
+    
+            return redirect()->route('campus.index')->with('success', 'Campus Updated Successfully');
+        } catch (\Exception $e) {
+            // Log the exception message
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     /**

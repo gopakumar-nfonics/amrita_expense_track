@@ -100,7 +100,8 @@
 								</div>
 								<!--end::Submit button-->
 
-								
+								<div class="text-gray-500 text-center fw-semibold fs-6 mt-10">Not a Vendor yet?
+								<a href="{{route('register')}}" class="link-primary">Sign Up</a></div>
 								
 							</form>
 							<!--end::Form-->

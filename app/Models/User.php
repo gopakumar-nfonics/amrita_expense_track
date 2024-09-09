@@ -37,11 +37,13 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function isAdmin() {
+    public function isAdmin()
+    {
         return $this->role === 'Admin';
     }
 
-    public function isExpenseManager() {
+    public function isExpenseManager()
+    {
         return $this->role === 'Expense Manager';
     }
 
@@ -57,5 +59,9 @@ class User extends Authenticatable
     public function campus()
     {
         return $this->belongsTo(Campus::class, 'campus_id');
+    }
+    public function vendor()
+    {
+        return $this->hasOne(Vendor::class);
     }
 }

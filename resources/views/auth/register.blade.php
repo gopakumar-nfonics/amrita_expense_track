@@ -41,7 +41,8 @@
 						<!--begin::Wrapper-->
 						<div class="w-lg-500px p-10">
 
-                        <form class="form w-100 fv-plugins-bootstrap5 fv-plugins-framework" novalidate="novalidate" id="kt_sign_up_form" data-kt-redirect-url="../../demo1/dist/authentication/layouts/corporate/sign-in.html" action="#">
+                        <form class="form w-100 fv-plugins-bootstrap5 fv-plugins-framework" id="kt_sign_up_form" method="POST" action="{{ route('register') }}">
+						@csrf
 								<!--begin::Heading-->
 								<div class="text-center mb-11">
 									<!--begin::Title-->
@@ -57,11 +58,13 @@
 								<!--begin::Input group=-->
 								<div class="fv-row mb-8 fv-plugins-icon-container">
 									<!--begin::Name-->
-									<input type="text" placeholder="Name" name="name" autocomplete="off" class="form-control bg-transparent">
+									<input type="text" placeholder="Name" name="name" autocomplete="off" class="form-control bg-transparent @error('name') is-invalid @enderror" value="{{ old('name') }}">
+									@error('name')<div class="invalid-feedback">{{ $message }}</div> @enderror
 									<!--end::Email-->
                                     <div class="fv-plugins-message-container invalid-feedback"></div></div>
                                     <div class="fv-row mb-8 fv-plugins-icon-container"><!--begin::Email-->
-									<input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent">
+									<input type="text" placeholder="Email" name="email" autocomplete="off" class="form-control bg-transparent @error('email') is-invalid @enderror" value="{{ old('email') }}">
+									@error('email')<div class="invalid-feedback">{{ $message }}</div> @enderror
 									<!--end::Email-->
 								<div class="fv-plugins-message-container invalid-feedback"></div></div>
 								<!--begin::Input group-->
@@ -70,7 +73,8 @@
 									<div class="mb-1">
 										<!--begin::Input wrapper-->
 										<div class="position-relative mb-3">
-											<input class="form-control bg-transparent" type="password" placeholder="Password" name="password" autocomplete="off">
+											<input class="form-control bg-transparent @error('password') is-invalid @enderror" type="password" placeholder="Password" name="password"  value="{{ old('password') }}">
+											@error('password')<div class="invalid-feedback">{{ $message }}</div> @enderror
 											<span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
 												<i class="bi bi-eye-slash fs-2"></i>
 												<i class="bi bi-eye fs-2 d-none"></i>
@@ -97,7 +101,7 @@
 								<!--begin::Accept-->
 								<div class="fv-row mb-8 fv-plugins-icon-container">
 									<label class="form-check form-check-inline">
-										<input class="form-check-input" type="checkbox" name="toc" value="1">
+										<input class="form-check-input" type="checkbox" name="toc" value="1" id="accept_terms">
 										<span class="form-check-label fw-semibold text-gray-700 fs-base ms-1">I Accept the
 										<a href="#" class="ms-1 link-primary">Terms & Conditions</a></span>
 									</label>
@@ -105,7 +109,7 @@
 								<!--end::Accept-->
 								<!--begin::Submit button-->
 								<div class="d-grid mb-10">
-									<button type="submit" id="kt_sign_up_submit" class="btn btn-primary">
+									<button type="submit" id="kt_sign_up_submit" class="btn btn-primary" disabled>
 										<!--begin::Indicator label-->
 										<span class="indicator-label">Sign up</span>
 										<!--end::Indicator label-->
@@ -147,3 +151,43 @@
 		
 		
         @endsection	
+        @section('pageScripts')
+		<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const checkbox = document.getElementById('accept_terms');
+    const submitButton = document.getElementById('kt_sign_up_submit');
+    const form = document.getElementById('kt_sign_up_form');
+
+    function toggleSubmitButton() {
+        // Enable the submit button if the checkbox is checked, otherwise disable it
+        submitButton.disabled = !checkbox.checked;
+    }
+
+    checkbox.addEventListener('change', toggleSubmitButton);
+
+    // Check the checkbox status on page load
+    toggleSubmitButton();
+
+    form.addEventListener('submit', function(event) {
+        // Prevent form submission if the checkbox is not checked
+        if (!checkbox.checked) {
+            event.preventDefault();
+            alert('You must accept the terms and conditions before submitting the form.');
+        }
+    });
+
+    // Handle Enter key press to ensure form submission is blocked
+    form.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && submitButton.disabled) {
+            event.preventDefault();
+            alert('You must accept the terms and conditions before submitting the form.');
+        }
+    });
+});
+
+          
+
+			</script>
+
+@endsection

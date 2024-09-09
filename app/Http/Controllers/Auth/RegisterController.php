@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -29,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/profile';
 
     /**
      * Create a new controller instance.
@@ -52,7 +53,14 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).+$/', // Must contain letters, numbers, and symbols
+            ],
+        ], [
+            'password.regex' => 'The password must be at least 8 characters long and include a mix of letters, numbers, and symbols.',
         ]);
     }
 
@@ -63,11 +71,38 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+{
+    $user = User::create([
+        'first_name' => $data['name'],
+        'email' => $data['email'],
+        'role' => 'Vendor',
+        'password' => Hash::make($data['password']),
+    ]);
+
+    $prefix = 'BUET-VR-';
+    // Retrieve the highest existing code
+    $latestCode = Vendor::where('vendor_code', 'like', $prefix . '%')
+        ->orderByRaw('CAST(SUBSTRING(vendor_code, LENGTH(?) + 1) AS UNSIGNED) DESC', [$prefix])
+        ->pluck('vendor_code')
+        ->first();
+
+    $latestNumber = 0;
+    if ($latestCode) {
+        $latestNumber = (int)substr($latestCode, strlen($prefix));
     }
+
+    $nextNumber = str_pad($latestNumber + 1, 3, '0', STR_PAD_LEFT); // Adjust to 3 digits
+    $vendorcode = $prefix . $nextNumber;
+
+    Vendor::create([
+        'user_id' => $user->id, 
+        'vendor_name' => $data['name'],
+        'email' => $data['email'], // Ensure this field is provided
+        'vendor_code' => $vendorcode,
+    ]);
+
+    return $user;
+}
+
+
 }

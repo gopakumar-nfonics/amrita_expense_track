@@ -36,6 +36,7 @@
 		
 		<!--end::Custom Javascript-->
 		<!--end::Javascript-->
+		@yield('pageScripts')
 	</body>
 	<!--end::Body-->
 </html>

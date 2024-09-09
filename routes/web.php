@@ -45,3 +45,4 @@ Route::get('/payment/{id}/updatepayment', [\App\Http\Controllers\resource\paymen
 Route::resource('department',\App\Http\Controllers\resource\department::class);
 Route::resource('campus',\App\Http\Controllers\resource\campus::class);
 Route::get('campus/getdepartments/{campusId}', [\App\Http\Controllers\resource\campus::class, 'getdepartments'])->name('campus.getdepartments');
+Route::resource('lead',\App\Http\Controllers\resource\lead::class);

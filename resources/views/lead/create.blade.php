@@ -126,7 +126,7 @@
 											</div>
 																	
 											
-																	<div class="separator separator-solid mt-14 mb-2 blue-border-bottom"><label class="form-label legend-label">Cost & Payments</label></div>
+																	<div class="separator separator-solid mt-14 mb-4 blue-border-bottom"><label class="form-label legend-label">Cost & Payments</label></div>
 																	</div>
 																
 											<!--end::Row-->

@@ -465,8 +465,21 @@ table th {
     font-size: 15px !important;
 }
 
+.legend-label
+{
+    position: relative;
+    top: -14px;
+    background: #009ef7;
+    padding: 3px 20px;
+    color: #fff !important;
+
+}
+
+
 @media (min-width: 1400px) {
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
         max-width: 100% !important;
     }
 }
+
+

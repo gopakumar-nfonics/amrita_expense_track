@@ -124,20 +124,9 @@
 													</div>
 																							
 											</div>
-																	<!--begin::Description-->
-																	<div class="d-flex flex-column pt-5" id="allocate_status" style="display:none !important;">
-																		<div class="d-flex justify-content-between w-100 fs-7 fw-bold mb-3">
-																			<span>Budget allocated for <span id="catname">Travel</span></span>
-																			
-																		</div>
-																		<div class="h-8px bg-light rounded mb-3">
-																			<div class="bg-success rounded h-8px" role="progressbar" style="width: 68%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-																		</div>
-																		<div class="fw-semibold text-gray-600 fs-7 d-flex justify-content-between w-100"><span class="color-blue">14% remaining </span><span class="color-orange">&#x20b9;22,300 of 36,000 Used</span></div>
-																	</div>
-																	<!--end::Description-->
-																
-																	<div class="separator separator-solid mt-7 mb-2"></div>
+																	
+											
+																	<div class="separator separator-solid mt-14 mb-2 blue-border-bottom"><label class="form-label legend-label">Cost & Payments</label></div>
 																	</div>
 																
 											<!--end::Row-->
@@ -164,7 +153,7 @@
 																<!--begin::Input group-->
 																<div class="fv-row">
 																	<!--begin::Label-->
-																	<label class="required form-label">GST %</label>
+																	<label class="required form-label">GST (%)</label>
 																	<!--end::Label-->
 																	<!--begin::Editor-->
 																	<input id="" name="order_date" placeholder="GST %" class="form-control mb-2" value="" />

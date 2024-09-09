@@ -51,9 +51,10 @@
 							<div class="card-body border-top p-9">
 								<div class="d-flex flex-column gap-5 gap-md-7">
 									<!--begin::Title-->
-									<div class="fs-3 fw-bold mb-n2">Business Details</div>
+									<div class="separator separator-solid mt-5 mb-4 blue-border-bottom"><label class="form-label legend-label">Business Information</label></div>
 									<!--end::Title-->
 
+									
 									<!--begin::Input group-->
 									<div class="row mb-6">
 
@@ -72,7 +73,7 @@
 										<!--end::Col-->
 
 										<!--begin::Label-->
-										<label class="col-lg-2 col-form-label required fw-semibold fs-6">Organisation</label>
+										<label class="col-lg-2 col-form-label fw-semibold fs-6">Organisation</label>
 										<!--end::Label-->
 										<!--begin::Col-->
 										<div class="col-lg-4 fv-row">
@@ -147,7 +148,7 @@
 								</div>
 								<div class="d-flex flex-column gap-5 gap-md-7">
 									<!--begin::Title-->
-									<div class="fs-3 fw-bold mb-n2">Address Details</div>
+									<div class="separator separator-solid mt-10 mb-6 blue-border-bottom"><label class="form-label legend-label">Address Information</label></div>
 									<!--end::Title-->
 									<!--begin::Input group-->
 									<div class="d-flex flex-column flex-md-row gap-5">
@@ -177,7 +178,7 @@
 									<div class="d-flex flex-column flex-md-row gap-5">
 										<div class="flex-row-fluid">
 											<!--begin::Label-->
-											<label class="form-label">City</label>
+											<label class="required form-label">City</label>
 											<!--end::Label-->
 											<!--begin::Input-->
 											<input class="form-control @error('city') is-invalid @enderror
@@ -187,7 +188,19 @@
 
 											<!--end::Input-->
 										</div>
+										
 										<div class="fv-row flex-row-fluid">
+											<!--begin::Label-->
+											<label class="required form-label">State</label>
+											<!--end::Label-->
+											<select class="form-control form-control-lg form-control-solid @error('category') is-invalid @enderror" id="category" name="category">
+											<option value="">--Select State--</option>
+											
+										</select>
+										@error('state')<div class="invalid-feedback">{{ $message }}</div>@enderror
+										</div>
+
+										<div class="fv-row flex-row-fluid w-100px">
 											<!--begin::Label-->
 											<label class="required form-label">Postcode</label>
 											<!--end::Label-->
@@ -196,17 +209,6 @@
 " name="postcode" placeholder="" value="{{ old('postcode', $vendor['postcode']) }}"  />
 
 @error('postcode')<div class="invalid-feedback">{{ $message }}</div> @enderror
-											<!--end::Input-->
-										</div>
-										<div class="fv-row flex-row-fluid">
-											<!--begin::Label-->
-											<label class="required form-label">State</label>
-											<!--end::Label-->
-											<!--begin::Input-->
-											<input class="form-control @error('state') is-invalid @enderror
-" name="state" placeholder="" value="{{ old('state', $vendor['state']) }}"  />
-
-@error('state')<div class="invalid-feedback">{{ $message }}</div> @enderror
 											<!--end::Input-->
 										</div>
 									</div>

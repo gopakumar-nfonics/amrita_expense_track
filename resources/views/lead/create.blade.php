@@ -11,13 +11,13 @@
 				<!--begin::Page title-->
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<!--begin::Title-->
-					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Create Payment Request</h1>
+					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Create Proposal</h1>
 					<!--end::Title-->
 					<!--begin::Breadcrumb-->
 					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
 						<!--begin::Item-->
 						<li class="breadcrumb-item text-muted">
-							<a href="" class="text-muted text-hover-primary">Payment</a>
+							<a href="" class="text-muted text-hover-primary">Proposal</a>
 						</li>
 						<!--end::Item-->
 						<!--begin::Item-->
@@ -26,7 +26,7 @@
 						</li>
 						<!--end::Item-->
 						<!--begin::Item-->
-						<li class="breadcrumb-item text-muted">Manage Payment</li>
+						<li class="breadcrumb-item text-muted">Create Proposal</li>
 						<!--end::Item-->
 					</ul>
 					<!--end::Breadcrumb-->
@@ -59,56 +59,70 @@
 										<!--begin::Row-->
 										<div class="row gx-10 mb-5">
 										<div class="row ps-15 pe-0 pb-5">
-										<div class="col-lg-12 d-flex justify-content-between">
-														<div class="fs-6 fw-bold text-gray-700 text-nowrap col-lg-3">
-																<!--begin::Label-->
-																<label class="form-label">Request ID</label>
-																	<!--end::Label-->
-																	<!--begin::Auto-generated ID-->
-																	<div class="fw-bold fs-3">#2324-569</div>
-																	<!--end::Input-->
-																</div>
-																<div class="fs-6 fw-bold text-gray-700 col-lg-4 me-15">
+										<div class="col-lg-12">
+										<div class="fv-row  d-flex justify-content-between">
+																<div class="fs-6 fw-bold text-gray-700 col-lg-3">
+																<!--begin::Input group-->
+													
 																	<!--begin::Label-->
-																<label class="required form-label">Stream</label>
+																	<label class="required form-label">Date</label>
 																	<!--end::Label-->
-																	<!--begin::Select2-->
-																	<select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select Stream" name="stream" id="stream">
-																		<option></option>
-																		@foreach ($stream as $strm)
-																		<option value="{{$strm->id}}">{{$strm->stream_name}}</option>
-																		@endforeach
-																	</select>
-																	<!--end::Select2-->
+																	<!--begin::Editor-->
+																	<!--begin::Input group-->
+																	<div class="d-flex align-items-center justify-content-start flex-equal order-3 fw-row" data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">
+																		<!--begin::Date-->
+																		<!--end::Date-->
+																		<!--begin::Input-->
+																		<div class="position-relative d-flex align-items-center">
+																			<!--begin::Datepicker-->
+																			<input class="form-control fw-bold pe-5 flatpickr-input" placeholder="Select date" name="invoice_due_date" type="text" readonly="readonly">
+																			<!--end::Datepicker-->
+																			<!--begin::Icon-->
+																			<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+																			<span class="svg-icon svg-icon-2 position-absolute end-0 me-4">
+																				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																					<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
+																				</svg>
+																			</span>
+																			<!--end::Svg Icon-->
+																			<!--end::Icon-->
+																		</div>
+																		<!--end::Input-->
+																	</div>
+																	<!--end::Input group-->
+
+																
 																</div>
-																<div class="fs-6 fw-bold text-gray-700 col-lg-4">
+																<div class="fs-6 fw-bold text-gray-700 col-lg-9">
 
 																
 																	<!--begin::Label-->
-																	<label class="required form-label">Category</label>
+																	<label class="required form-label">Title</label>
 																	<!--end::Label-->
 																	<!--begin::Select2-->
-																	<select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select Category" name="payment_method" id="pay_category" onchange="getallocatedbudget()">
-																		<option></option>
-																		@foreach ($main_categories as $main_category)
-																		@if ($main_category->children->isNotEmpty())
-																		<optgroup label="{{ $main_category->category_name }}">
-																			@foreach ($main_category->children as $subcategory)
-																			<option class="sub-category" value="{{ $subcategory->id }}">{{ $subcategory->category_name }}</option>
-																			@endforeach
-																		</optgroup>
-																		@else
-																		<!-- Print the main category as a standalone option if no children exist -->
-																		<option class="main-category" value="{{ $main_category->id }}">{{ $main_category->category_name }}</option>
-																		@endif
-																		@endforeach
-																	</select>
+																	<!--begin::Editor-->
+																	<input id="" name="order_date" placeholder="Proposal Title" class="form-control mb-2" value="" />
+																	<!--end::Editor-->
 																	<!--end::Select2-->
 																	
 																</div>
-																
-									
-										
+																</div>
+																<div class="fv-row mt-5">
+																<div class="fs-6 fw-bold text-gray-700 col-lg-12">
+
+																													
+													<!--begin::Label-->
+													<label class="required form-label">Scope & Service Description</label>
+													<!--end::Label-->
+											
+													<!--begin::Editor-->
+													<textarea id="summernote" class="form-control mb-2"></textarea>
+													<!--end::Editor-->
+												
+													
+													</div>
+													</div>
+																							
 											</div>
 																	<!--begin::Description-->
 																	<div class="d-flex flex-column pt-5" id="allocate_status" style="display:none !important;">
@@ -138,115 +152,39 @@
 																<!--begin::Input group-->
 																<div class="fv-row">
 																	<!--begin::Label-->
-																	<label class="required form-label">Vendor</label>
+																	<label class="required form-label">Cost (INR)</label>
 																	<!--end::Label-->
-																	<!--begin::Select2-->
-																	<select class="form-select mb-2" data-control="select2" data-hide-search="true" data-placeholder="Select Vendor" name="shipping_method" id="kt_ecommerce_edit_order_shipping">
-																		<option></option>
-																		@foreach ($vendors as $vendor)
-																		<option value="{{$vendor->id}}">{{$vendor->vendor_name}}</option>
-																		@endforeach
-																	</select>
-																	<!--end::Select2-->
-																	<!--begin::Description-->
-																	<div class="text-muted fs-7">Select Vendor to process request.</div>
-																	<!--end::Description-->
+																	<!--begin::Editor-->
+																	<input id="" name="order_date" placeholder="Cost" class="form-control mb-2" value="" />
+																	<!--end::Editor-->
+																	
 																</div>
 																<!--end::Input group-->
 
 																<!--begin::Input group-->
 																<div class="fv-row">
 																	<!--begin::Label-->
-																	<label class="required form-label">Bank Account</label>
+																	<label class="required form-label">GST %</label>
 																	<!--end::Label-->
-																	<div class="mb-5">
-																		<textarea name="notes" class="form-control form-control-solid" rows="6" placeholder="Account details from invoice"></textarea>
-																	</div>
+																	<!--begin::Editor-->
+																	<input id="" name="order_date" placeholder="GST %" class="form-control mb-2" value="" />
+																	<!--end::Editor-->
 																</div>
 																<!--end::Input group-->
-																<!--begin::Input group-->
-																<div class="fv-row">
-																	<!--begin::Label-->
-																	<label class="required form-label">Request Date</label>
-																	<!--end::Label-->
-																	<!--begin::Editor-->
-																	<!--begin::Input group-->
-																	<div class="d-flex align-items-center justify-content-start flex-equal order-3 fw-row" data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">
-																		<!--begin::Date-->
-																		<!--end::Date-->
-																		<!--begin::Input-->
-																		<div class="position-relative d-flex align-items-center">
-																			<!--begin::Datepicker-->
-																			<input class="form-control fw-bold pe-5 flatpickr-input" placeholder="Select date" name="invoice_due_date" type="text" readonly="readonly">
-																			<!--end::Datepicker-->
-																			<!--begin::Icon-->
-																			<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-																			<span class="svg-icon svg-icon-2 position-absolute end-0 me-4">
-																				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																					<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																				</svg>
-																			</span>
-																			<!--end::Svg Icon-->
-																			<!--end::Icon-->
-																		</div>
-																		<!--end::Input-->
-																	</div>
-																	<!--end::Input group-->
-
-																	<!--end::Editor-->
-																	<!--begin::Description-->
-																	<div class="text-muted fs-7">Select date the request date.</div>
-																	<!--end::Description-->
-																</div>
-																<!--end::Input group-->
+																
 
 																<!--begin::Input group-->
-																<div class="fv-row pt-5">
+																<div class="fv-row pt-0">
 																	<!--begin::Label-->
-																	<label class="required form-label">RO #</label>
+																	<label class="required form-label">Total Cost (INR)</label>
 																	<!--end::Label-->
 																	<!--begin::Editor-->
-																	<input id="" name="order_date" placeholder="Reference RO#" class="form-control mb-2" value="" />
+																	<input id="" name="order_date" placeholder="Total Cost" class="form-control mb-2" value="" />
 																	<!--end::Editor-->
 																</div>
 
 																<!--begin::Input group-->
-																<div class="fv-row border-top pt-5">
-																	<!--begin::Label-->
-																	<label class="required form-label">Invoice #</label>
-																	<!--end::Label-->
-																	<!--begin::Editor-->
-																	<input id="" name="order_date" placeholder="Reference Invoice #" class="form-control mb-2" value="" />
-																	<!--end::Editor-->
-
-
-																	<!--begin::Label-->
-																	<label class="required form-label mt-3">Invoice Date</label>
-																	<!--end::Label-->
-																	<!--begin::Editor-->
-																	<!--begin::Input group-->
-																	<div class="d-flex align-items-center justify-content-start flex-equal order-3 fw-row" data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">
-																		<!--begin::Date-->
-																		<!--end::Date-->
-																		<!--begin::Input-->
-																		<div class="position-relative d-flex align-items-center">
-																			<!--begin::Datepicker-->
-																			<input class="form-control fw-bold pe-5 flatpickr-input" placeholder="Select date" name="invoice_due_date" type="text" readonly="readonly">
-																			<!--end::Datepicker-->
-																			<!--begin::Icon-->
-																			<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-																			<span class="svg-icon svg-icon-2 position-absolute end-0 me-4">
-																				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																					<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																				</svg>
-																			</span>
-																			<!--end::Svg Icon-->
-																			<!--end::Icon-->
-																		</div>
-																		<!--end::Input-->
-																	</div>
-																	<!--end::Input group-->
-
+																<div class="fv-row border-top pt-0">
 																	<div class="text-center">
 																		<button type="button" class="btn btn-sm btn-info w-100 mt-5 mb-1" data-bs-toggle="modal" data-bs-target="#kt_modal_upload">
 																			<!--begin::Svg Icon | path: icons/duotune/files/fil018.svg-->
@@ -257,7 +195,7 @@
 																	</div>
 
 																	<!--begin::Description-->
-																	<div class="text-muted fs-7">Upload reference Invoice.</div>
+																	<div class="text-muted fs-7">Upload reference document.</div>
 																	<!--end::Description-->
 																</div>
 																<!--end::Input group-->
@@ -275,15 +213,17 @@
 												<!--begin::Input group-->
 												
 												<!--begin::Table-->
-												<div class="min-h-550px">
+												<div class="min-h-300px">
+												<label class="form-label color-blue">Payment Milestones</label>
 												<table class="table g-5 gs-0 mb-0 fw-bold text-gray-700" data-kt-element="items">
 													<!--begin::Table head-->
 													<thead>
 														<tr class="border-bottom fs-7 fw-bold text-gray-700 text-uppercase">
-															<th class="min-w-300px w-475px">Item</th>
-															<th class="min-w-100px w-100px">QTY</th>
-															<th class="min-w-150px w-150px">Price</th>
-															<th class="min-w-100px w-150px text-end">Total</th>
+															<th class="min-w-300px w-475px">Milestone</th>
+															<th class="min-w-150px w-175px">Date</th>
+															<th class="min-w-200px w-200px">Amount</th>
+															<th class="min-w-100px w-100px">GST (%) </th>
+															<th class="min-w-200px w-250px text-end">Total</th>
 															<th class="min-w-75px w-75px text-end">Remove</th>
 														</tr>
 													</thead>
@@ -292,14 +232,18 @@
 													<tbody>
 														<tr class="border-bottom border-bottom-dashed" data-kt-element="item">
 															<td class="pe-7">
-																<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Item name">
+																<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Milestone Title">
+																
+															</td>
+															<td class="pe-7">
+																<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Date">
 																
 															</td>
 															<td class="ps-0">
-																<input class="form-control form-control-solid" type="number" min="1" name="quantity[]" placeholder="1" value="1" data-kt-element="quantity">
+																<input class="form-control form-control-solid" type="decimal"  name="quantity[]" >
 															</td>
 															<td>
-																<input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" value="0.00" data-kt-element="price">
+																<input type="text" class="form-control form-control-solid text-end" name="price[]">
 															</td>
 															<td class="pt-8 text-end text-nowrap">&#x20b9;
 																<span data-kt-element="total">0.00</span>
@@ -324,16 +268,12 @@
 													<tfoot>
 														<tr class="border-top border-top-dashed align-top fs-6 fw-bold text-gray-700">
 															<th class="text-primary">
-																<button class="btn btn-sm btn-success w-100px mt-0 mb-1" data-kt-element="add-item">Add  Item</button>
+																<button class="btn btn-sm btn-success w-150px mt-0 mb-1" data-kt-element="add-item">Add  Milestone</button>
 															</th>
 															<th colspan="4" class="border-bottom border-bottom-dashed ps-0">
 																<div class="d-flex flex-column align-items-end">
-																	<div class="fs-6 color-blue">Sub total : &#x20b9; <span data-kt-element="sub-total">0.00</span></div>
-																	<div class="d-flex align-items-end  mt-10">
-																	<input class="form-control form-control-solid w-150px me-5" type="number" min="1" name="" placeholder="SGST (%)"  data-kt-element="">
-																	<input class="form-control form-control-solid w-150px me-5" type="number" min="1" name="" placeholder="CGST (%)"  data-kt-element="">
-																	<input class="form-control form-control-solid w-150px me-0" type="number" min="1" name="" placeholder="IGST (%)"  data-kt-element="">
-																	</div>
+																	<div class="fs-6 color-blue">Total : &#x20b9; <span data-kt-element="sub-total">0.00</span></div>
+																	
 																	
 																</div>
 															</th>
@@ -341,12 +281,7 @@
 																<span data-kt-element="sub-total">0.00</span>
 															</th> -->
 														</tr>
-														<tr class="align-top fw-bold text-gray-700">
-															<th></th>
-															<th colspan="4" class="text-end fs-5 text-nowrap color-blue">Total : &#x20b9;
-																<span data-kt-element="grand-total">0.00</span>
-															</th>
-														</tr>
+														
 													</tfoot>
 													<!--end::Table foot-->
 												</table>
@@ -358,7 +293,7 @@
 												<!--end::Button-->
 												<!--begin::Button-->
 												<button type="submit" id="kt_ecommerce_edit_order_submit" class="btn btn-primary">
-													<span class="indicator-label">Generate Payment Request</span>
+													<span class="indicator-label">Submit Proposal</span>
 													<span class="indicator-progress">Please wait...
 													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
 												</button>
@@ -474,25 +409,23 @@
 <script src="{{ asset('assets/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
 <script src="{{ asset('assets/js/custom/utilities/modals/create-app.js') }}"></script>
 <script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
-
+ <!-- Summernote CSS & JS -->
+ <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <script>
-    function getallocatedbudget() {
-		$('#allocate_status').show();
-         const selectElement = document.getElementById("pay_category");
-        const selectedOption = selectElement.options[selectElement.selectedIndex];
-
-        // Find the optgroup (parent category)
-        const optgroupElement = selectedOption.closest('optgroup');
-        let parentCategoryName = '';
-
-        // Check if the option belongs to an optgroup (subcategory)
-        if (optgroupElement) {
-            parentCategoryName = optgroupElement.label; // Get the parent category name
-        } else {
-            parentCategoryName = selectedOption.text; // If no parent, it's a main category
-        }
-        
-        document.getElementById("catname").innerText = parentCategoryName;
-    }
-</script>
+    $(document).ready(function() {
+      $('#summernote').summernote({
+        height: 125, // Set the editor height
+        placeholder: 'Add service description...',
+        tabsize: 2,
+		toolbar: [
+        // [groupName, [list of buttons]]
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['superscript', 'subscript']],
+		['para', ['ul', 'ol']], 
+        ['insert', ['link']],       
+      ]
+      });
+    });
+  </script>
 @endsection

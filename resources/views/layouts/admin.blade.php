@@ -320,7 +320,7 @@
 									<div class="menu-item pt-5">
 										<!--begin:Menu content-->
 										<div class="menu-content">
-											<span class="menu-heading fw-bold text-uppercase fs-7">Leads</span>
+											<span class="menu-heading fw-bold text-uppercase fs-7">Proposals</span>
 										</div>
 										<!--end:Menu content-->
 									</div>
@@ -332,7 +332,7 @@
 											<span class="menu-icon">
 											<i class="fa-solid fa-scale-balanced"></i>
 											</span>
-											<span class="menu-title">Manage Leads</span>
+											<span class="menu-title">Manage Proposal</span>
 											<span class="menu-arrow"></span>
 										</span>
 										<!--end:Menu link-->
@@ -345,7 +345,7 @@
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
-													<span class="menu-title">Leads List</span>
+													<span class="menu-title">Proposal List</span>
 												</a>
 												
 											</div>
@@ -357,7 +357,7 @@
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
-													<span class="menu-title">Create Lead</span>
+													<span class="menu-title">Create Proposal</span>
 												</a>
 												<!--end:Menu link-->
 											</div>

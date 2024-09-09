@@ -341,7 +341,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												
-												<a class="menu-link @if(in_array(Route::currentRouteName(),array('lead.index'))) active  @endif" href="{{route('payment.index')}}">
+												<a class="menu-link @if(in_array(Route::currentRouteName(),array('lead.index'))) active  @endif" href="{{route('lead.index')}}">
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
@@ -353,7 +353,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-												<a class="menu-link @if(in_array(Route::currentRouteName(),array('lead.create'))) active  @endif" href="{{route('payment.create')}}">
+												<a class="menu-link @if(in_array(Route::currentRouteName(),array('lead.create'))) active  @endif" href="{{route('lead.create')}}">
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>

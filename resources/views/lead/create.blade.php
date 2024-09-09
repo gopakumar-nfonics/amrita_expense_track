@@ -228,12 +228,13 @@
 																<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Date">
 																
 															</td>
-															<td class="ps-0">
-																<input class="form-control form-control-solid" type="decimal"  name="quantity[]" >
-															</td>
 															<td>
-																<input type="text" class="form-control form-control-solid text-end" name="price[]">
+																<input type="text" class="form-control form-control-solid text-end" name="price[]"  data-kt-element="price">
 															</td>
+															<td class="ps-0">
+																<input class="form-control form-control-solid" type="decimal"  name="quantity[]" data-kt-element="quantity">
+															</td>
+															
 															<td class="pt-8 text-end text-nowrap">&#x20b9;
 																<span data-kt-element="total">0.00</span>
 															</td>
@@ -296,14 +297,21 @@
 												<tbody>
 													<tr class="border-bottom border-bottom-dashed" data-kt-element="item">
 														<td class="pe-7">
-															<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Item name">
+															<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Milestone Title">
 															
 														</td>
-														<td class="ps-0">
-															<input class="form-control form-control-solid" type="number" min="1" name="quantity[]" placeholder="1" data-kt-element="quantity">
-														</td>
+														
+														<td class="pe-7">
+																<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Date">
+																
+															</td>
 														<td>
 															<input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" data-kt-element="price">
+														</td>
+
+
+														<td class="ps-0">
+															<input class="form-control form-control-solid"  name="quantity[]"  data-kt-element="quantity">
 														</td>
 														<td class="pt-8 text-end">$
 															<span data-kt-element="total">0.00</span>

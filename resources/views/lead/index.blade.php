@@ -8,7 +8,7 @@
 									<!--begin::Page title-->
 									<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 										<!--begin::Title-->
-										<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Payment Listing</h1>
+										<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Proposal Listing</h1>
 										<!--end::Title-->
 										<!--begin::Breadcrumb-->
 										<!-- <ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
@@ -19,7 +19,7 @@
 									<!--end::Page title-->
 									<!--begin::Button-->
 									<div class="card-toolbar">
-										<a href="{{ route('payment.create') }}" class="btn btn-sm btn-primary">
+										<a href="{{ route('lead.create') }}" class="btn btn-sm btn-primary">
 											Create
 										</a>
 									</div>
@@ -48,12 +48,11 @@
 													<thead>
 														<tr class="fw-bold">
 															<th class="min-w-100px">ID</th>
-															<th class="min-w-200px">Vendor</th>
-															<th class="min-w-100px">Date</th>														
+															<th class="min-w-200px">Title</th>
+																										
 															<th class="min-w-100px">Total</th>
-															<th class="min-w-100px">Paid</th>
-															<th class="min-w-100px">Balance</th>
-                                                            <th class="min-w-150px text-center">Actions</th>
+															<th class="min-w-100px">Status</th>
+															  <th class="min-w-150px text-center">Actions</th>
 														</tr>
 													</thead>
 													<!--end::Table head-->
@@ -69,9 +68,9 @@
 																	<span class="badge badge-light-success fs-8">
 																	<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
 																	<span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
-																	<i class="fa-solid fa-arrow-up light-green fs-8 me-1 "></i>
+																	<i class="fa-solid fa-check light-green fs-8 me-1 "></i>
 																	</span>
-																	<!--end::Svg Icon-->32.6%</span>
+																	<!--end::Svg Icon-->Approved</span>
 																</div>
 																	</div>
 																</div>
@@ -83,18 +82,12 @@
 																
 																	</div>
 																	<div class="d-flex justify-content-start flex-column">
-																		<a href="{{ route('vendor.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">Ana Simmons</a>
-																		<span class="text-muted fw-semibold text-muted d-block fs-7">NFONICS Solutions</span>
+																		<a href="{{ route('vendor.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">Web Development</a>
+																		<span class="text-muted fw-semibold text-muted d-block fs-7">Submitted On :   25-July-2024</span>
 																	</div>
 																</div>
 																</td>
-																<td>
-                                                                <div class="d-flex align-items-center">
-																	<div class="fw-400 d-block fs-6">
-                                                                        25-July-2024
-																	</div>
-																</div>
-															</td>
+																
                                                             <td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
@@ -105,32 +98,20 @@
 															<td>
 															<div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																		&#x20b9;1,60,000
+																		Approved
 																	</div>
 																</div>
 															</td>
-															<td>
-															<div class="d-flex align-items-center">
-																	<div class="fw-400 d-block fs-6">
-																		&#x20b9;50,000
-																	</div>
-																</div>
-															</td>
+													
+														
                                                             <td class="text-center">
 																<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
 																<i class="fa-solid fa-angle-down"></i></a>
 																<!--begin::Menu-->
 																<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-150px py-4" data-kt-menu="true">
 																	
-																	<!--begin::Menu item-->
-																	<div class="menu-item px-3">
-																		<a href="{{ route('payment.updatepayment',1) }}" class="menu-link px-3">Update Payment</a>
-																	</div>
-																	<!--end::Menu item-->
-																		<!--begin::Menu item-->
-																		<div class="menu-item px-3">
-																		<a href="" class="menu-link px-3">Print</a>
-																	</div>
+																	
+																
 																		<!--begin::Menu item-->
 																		<div class="menu-item px-3">
 																		<a href="{{ route('payment.show',1) }}" class="menu-link px-3">View </a>

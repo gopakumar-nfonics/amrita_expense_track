@@ -316,6 +316,58 @@
 									</div>
 									
 									<!--end:Menu item-->
+
+									<div class="menu-item pt-5">
+										<!--begin:Menu content-->
+										<div class="menu-content">
+											<span class="menu-heading fw-bold text-uppercase fs-7">Leads</span>
+										</div>
+										<!--end:Menu content-->
+									</div>
+
+										<!--begin:Menu item-->
+									<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('lead.index','lead.create'))) show  @endif">
+										<!--begin:Menu link-->
+										<span class="menu-link">
+											<span class="menu-icon">
+											<i class="fa-solid fa-scale-balanced"></i>
+											</span>
+											<span class="menu-title">Manage Leads</span>
+											<span class="menu-arrow"></span>
+										</span>
+										<!--end:Menu link-->
+										<!--begin:Menu sub-->
+										<div class="menu-sub menu-sub-accordion">
+											<!--begin:Menu item-->
+											<div class="menu-item">
+												
+												<a class="menu-link @if(in_array(Route::currentRouteName(),array('lead.index'))) active  @endif" href="{{route('payment.index')}}">
+													<span class="menu-bullet">
+														<span class="bullet bullet-dot"></span>
+													</span>
+													<span class="menu-title">Leads List</span>
+												</a>
+												
+											</div>
+											<!--end:Menu item-->
+											<!--begin:Menu item-->
+											<div class="menu-item">
+												<!--begin:Menu link-->
+												<a class="menu-link @if(in_array(Route::currentRouteName(),array('lead.create'))) active  @endif" href="{{route('payment.create')}}">
+													<span class="menu-bullet">
+														<span class="bullet bullet-dot"></span>
+													</span>
+													<span class="menu-title">Create Lead</span>
+												</a>
+												<!--end:Menu link-->
+											</div>
+											<!--end:Menu item-->
+											
+										</div>
+										<!--end:Menu sub-->
+									</div>
+									
+									<!--end:Menu item-->
 							
 
 									<div class="menu-item pt-5">

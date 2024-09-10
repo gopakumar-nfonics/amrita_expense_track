@@ -45,8 +45,11 @@
 					<!--begin::Content-->
 					<div id="kt_account_settings_profile_details" class="collapse show">
 						<!--begin::Form-->
-						<form id="kt_account_profile_details_form" class="form" method="POST" action="{{route('vendor.store')}}" enctype="multipart/form-data">
+						<form id="kt_account_profile_details_form" class="form" method="POST" action="{{route('profileupdate')}}" enctype="multipart/form-data">
 							@csrf
+							@method('PUT')
+
+							<input type="hidden" name="vid"  value="{{ old('vid', $vendor['id']) }}" />
 							<!--begin::Card body-->
 							<div class="card-body border-top p-9">
 								<div class="d-flex flex-column gap-5 gap-md-7">
@@ -79,7 +82,7 @@
 										<div class="col-lg-4 fv-row">
 											<!--begin::Col-->
 											<div class="col-lg-12 fv-row">
-												<input type="text" name="company" class="form-control form-control-lg form-control-solid @error('company') is-invalid @enderror" placeholder="Name" value="{{ old('company') }}" />
+												<input type="text" name="company" class="form-control form-control-lg form-control-solid @error('company') is-invalid @enderror" placeholder="Organisation" value="{{ old('company', $companies['company_name'] ?? '') }}" />
 												@error('company')<div class="invalid-feedback">{{ $message }}</div> @enderror
 											</div>
 											<!--end::Col-->
@@ -193,8 +196,12 @@
 											<!--begin::Label-->
 											<label class="required form-label">State</label>
 											<!--end::Label-->
-											<select class="form-control form-control-lg form-control-solid @error('category') is-invalid @enderror" id="category" name="category">
+											<select class="form-control form-control-lg form-control-solid @error('state') is-invalid @enderror" id="state" name="state">
 											<option value="">--Select State--</option>
+											@foreach($states as $state)
+											<option value="{{ $state->id }}"
+												@if(old('state',$vendor->state) == $state->id) selected @endif>{{ $state->name }}</option>
+											@endforeach
 											
 										</select>
 										@error('state')<div class="invalid-feedback">{{ $message }}</div>@enderror

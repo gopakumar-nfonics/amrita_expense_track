@@ -48,7 +48,7 @@
 													<thead>
 														<tr class="fw-bold">
 															<th class="min-w-100px">ID</th>
-															<th class="min-w-200px">Title</th>
+															<th class="min-w-200px">Invoice</th>
 															<th class="min-w-100px">RO #</th>
 															<th class="min-w-200px">Vendor</th>											
 															<th class="min-w-100px">Cost</th>															
@@ -63,14 +63,14 @@
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-                                                                        #2324-569
+                                                                        #2324-IV-569
 																		<div class="text-gray-400 fw-semibold fs-9">
 																	<span class="badge badge-light-success fs-8">
 																	<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
 																	<span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
 																	<i class="fa-solid fa-check light-green fs-8 me-1 "></i>
 																	</span>
-																	<!--end::Svg Icon-->Approved</span>
+																	<!--end::Svg Icon-->Processed</span>
 																</div>
 																	</div>
 																</div>
@@ -79,7 +79,7 @@
 															<div class="d-flex align-items-center">
 																
 																	<div class="d-flex justify-content-start flex-column">
-																		<a href="{{ route('lead.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">Web Development</a>
+																		<a href="{{ route('lead.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">Web Development - Milestone 1</a>
 																		<span class="text-muted fw-semibold text-muted d-block fs-7">Submitted On :   25-July-2024</span>
 																	</div>
 																</div>

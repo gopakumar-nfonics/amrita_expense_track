@@ -157,36 +157,22 @@
 
 
 													
-																<div class="fv-row mt-5 d-flex justify-content-between">
+																<div class="fv-row mt-5">
 
 																
-																<div class="fs-6 fw-bold text-gray-700 w-50 me-15">
+																<div class="fs-6 fw-bold text-gray-700 col-lg-12">
 
 																													
 													<!--begin::Label-->
-													<label class="required form-label">Bank Account Details</label>
+													<label class="form-label">Notes</label>
 													<!--end::Label-->
 											
 													<!--begin::Editor-->
-													<textarea  class="form-control mb-2 "></textarea>
+													<textarea  class="form-control mb-2"></textarea>
 													<!--end::Editor-->
 												
 													
 													</div>
-
-													<div class="fs-6 fw-bold text-gray-700  w-50">
-
-																													
-<!--begin::Label-->
-<label class="form-label">Notes</label>
-<!--end::Label-->
-
-<!--begin::Editor-->
-<textarea  class="form-control mb-2"></textarea>
-<!--end::Editor-->
-
-
-</div>
 													</div>
 													<div class="fv-row mt-5">
 													<div class="d-flex justify-content-end border-top mt-10 pt-5">

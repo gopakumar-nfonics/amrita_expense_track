@@ -52,7 +52,7 @@ class lead extends Controller
      */
     public function show($id)
     {
-        //
+        return view('lead.show');
     }
 
     /**

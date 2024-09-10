@@ -49,10 +49,10 @@
 														<tr class="fw-bold">
 															<th class="min-w-100px">ID</th>
 															<th class="min-w-200px">Title</th>
-																										
-															<th class="min-w-100px">Total</th>
-															<th class="min-w-100px">Status</th>
-															  <th class="min-w-150px text-center">Actions</th>
+															<th class="min-w-100px">RO #</th>
+															<th class="min-w-200px">Vendor</th>											
+															<th class="min-w-100px">Cost</th>															
+															<th class="min-w-150px text-center">Actions</th>
 														</tr>
 													</thead>
 													<!--end::Table head-->
@@ -77,13 +77,31 @@
 														
 															<td>
 															<div class="d-flex align-items-center">
+																
+																	<div class="d-flex justify-content-start flex-column">
+																		<a href="{{ route('lead.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">Web Development</a>
+																		<span class="text-muted fw-semibold text-muted d-block fs-7">Submitted On :   25-July-2024</span>
+																	</div>
+																</div>
+																</td>
+																<td>
+                                                                <div class="d-flex align-items-center">
+																
+																	<div class="d-flex justify-content-start flex-column">
+																		<a href="{{ route('lead.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">2324-RO-002</a>
+																		<span class="text-muted fw-semibold text-muted d-block fs-7">Issued On :   29-July-2024</span>
+																	</div>
+																</div>
+															</td>
+																<td>
+															<div class="d-flex align-items-center">
 																	<div class="symbol symbol-35px me-2">
-																		<span class="symbol-label bg-blue text-white"> AS</span>
+																		<span class="symbol-label bg-blue text-white"> NS</span>
 																
 																	</div>
 																	<div class="d-flex justify-content-start flex-column">
-																		<a href="{{ route('vendor.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">Web Development</a>
-																		<span class="text-muted fw-semibold text-muted d-block fs-7">Submitted On :   25-July-2024</span>
+																		<a href="{{ route('vendor.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">NFONICS Solutions</a>
+																		<span class="text-muted fw-semibold text-muted d-block fs-7">+91-999-590-4432</span>
 																	</div>
 																</div>
 																</td>
@@ -95,13 +113,7 @@
 																	</div>
 																</div>
 															</td>
-															<td>
-															<div class="d-flex align-items-center">
-																	<div class="fw-400 d-block fs-6">
-																		Approved
-																	</div>
-																</div>
-															</td>
+															
 													
 														
                                                             <td class="text-center">
@@ -114,7 +126,12 @@
 																
 																		<!--begin::Menu item-->
 																		<div class="menu-item px-3">
-																		<a href="{{ route('payment.show',1) }}" class="menu-link px-3">View </a>
+																		<a href="{{ route('lead.show',1) }}" class="menu-link px-3">View </a>
+																	</div>
+																	<!--end::Menu item-->
+																	<!--begin::Menu item-->
+																	<div class="menu-item px-3">
+																		<a href="" class="menu-link px-3">Approve</a>
 																	</div>
 																	<!--end::Menu item-->
 																	<!--begin::Menu item-->

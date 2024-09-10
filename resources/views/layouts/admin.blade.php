@@ -182,7 +182,8 @@
 							<div id="kt_app_sidebar_menu_wrapper" class="app-sidebar-wrapper hover-scroll-overlay-y my-5" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_logo, #kt_app_sidebar_footer" data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true">
 								<!--begin::Menu-->
 								<div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
-									<!--begin:Menu item-->
+								@if(Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
+								<!--begin:Menu item-->
 									<div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
 										<!--begin:Menu link-->
 										<a  href="{{route('dashboard')}}">
@@ -316,6 +317,7 @@
 									</div>
 									
 									<!--end:Menu item-->
+									@endif
 
 									<div class="menu-item pt-5">
 										<!--begin:Menu content-->
@@ -350,6 +352,7 @@
 												
 											</div>
 											<!--end:Menu item-->
+											@if(Auth::user()->isvendor())
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
@@ -362,14 +365,14 @@
 												<!--end:Menu link-->
 											</div>
 											<!--end:Menu item-->
-											
+											@endif
 										</div>
 										<!--end:Menu sub-->
 									</div>
 									
 									<!--end:Menu item-->
 							
-
+									@if(Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
 									<div class="menu-item pt-5">
 										<!--begin:Menu content-->
 										<div class="menu-content">
@@ -690,7 +693,7 @@
 									</div>
 									
 									<!--end:Menu item-->
-
+                                    @endif
 									
 									@if( !empty(Auth::user()->isAdmin()) )
 									<div class="menu-item pt-5">

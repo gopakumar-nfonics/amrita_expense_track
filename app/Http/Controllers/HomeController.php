@@ -28,7 +28,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        
+        if(Auth::user()->isvendor()){
+        return view('lead.index');
+        }else{
+
+            return view('home');
+        }
     }
 
      public function profile()
@@ -55,7 +61,6 @@ class HomeController extends Controller
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255',
                 'phone' => 'required|string|max:15',
-                'company' => 'required|string|max:255',
                 'address' => 'required|string|max:255',
                 'postcode' => 'required|string|max:10',
                 'city' => 'required|string|max:255',

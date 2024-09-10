@@ -46,6 +46,10 @@ class User extends Authenticatable
     {
         return $this->role === 'Expense Manager';
     }
+    public function isvendor()
+    {
+        return $this->role === 'Vendor';
+    }
 
     /**
      * The attributes that should be cast.

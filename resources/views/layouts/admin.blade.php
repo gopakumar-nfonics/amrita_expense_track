@@ -382,7 +382,7 @@
 									</div>
 
 <!--begin:Menu item-->
-<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('lead.index','lead.create'))) show  @endif">
+<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('invoice.index','invoice.create'))) show  @endif">
 										<!--begin:Menu link-->
 										<span class="menu-link">
 											<span class="menu-icon">
@@ -397,7 +397,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												
-												<a class="menu-link @if(in_array(Route::currentRouteName(),array('lead.index'))) active  @endif" href="{{route('lead.index')}}">
+												<a class="menu-link @if(in_array(Route::currentRouteName(),array('invoice.index'))) active  @endif" href="{{route('invoice.index')}}">
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>
@@ -410,7 +410,7 @@
 											<!--begin:Menu item-->
 											<div class="menu-item">
 												<!--begin:Menu link-->
-												<a class="menu-link @if(in_array(Route::currentRouteName(),array('lead.create'))) active  @endif" href="{{route('lead.create')}}">
+												<a class="menu-link @if(in_array(Route::currentRouteName(),array('invoice.create'))) active  @endif" href="{{route('invoice.create')}}">
 													<span class="menu-bullet">
 														<span class="bullet bullet-dot"></span>
 													</span>

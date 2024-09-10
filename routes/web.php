@@ -49,6 +49,7 @@ Route::resource('department',\App\Http\Controllers\resource\department::class);
 Route::resource('campus',\App\Http\Controllers\resource\campus::class);
 Route::get('campus/getdepartments/{campusId}', [\App\Http\Controllers\resource\campus::class, 'getdepartments'])->name('campus.getdepartments');
 Route::resource('lead',\App\Http\Controllers\resource\lead::class);
+Route::resource('invoice',\App\Http\Controllers\resource\invoice::class);
 
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 Route::put('/profileupdate', [App\Http\Controllers\HomeController::class, 'profileupdate'])->name('profileupdate');

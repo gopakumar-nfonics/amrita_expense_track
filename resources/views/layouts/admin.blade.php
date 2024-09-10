@@ -332,7 +332,7 @@
 										<!--begin:Menu link-->
 										<span class="menu-link">
 											<span class="menu-icon">
-											<i class="fa-solid fa-scale-balanced"></i>
+											<i class="fa-solid fa-file-word"></i>
 											</span>
 											<span class="menu-title">Manage Proposal</span>
 											<span class="menu-arrow"></span>
@@ -371,6 +371,61 @@
 									</div>
 									
 									<!--end:Menu item-->
+
+
+									<div class="menu-item pt-5">
+										<!--begin:Menu content-->
+										<div class="menu-content">
+											<span class="menu-heading fw-bold text-uppercase fs-7">Invoices</span>
+										</div>
+										<!--end:Menu content-->
+									</div>
+
+<!--begin:Menu item-->
+<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('lead.index','lead.create'))) show  @endif">
+										<!--begin:Menu link-->
+										<span class="menu-link">
+											<span class="menu-icon">
+										<i class="fa-solid fa-file-invoice-dollar"></i>
+											</span>
+											<span class="menu-title">Manage Invoice</span>
+											<span class="menu-arrow"></span>
+										</span>
+										<!--end:Menu link-->
+										<!--begin:Menu sub-->
+										<div class="menu-sub menu-sub-accordion">
+											<!--begin:Menu item-->
+											<div class="menu-item">
+												
+												<a class="menu-link @if(in_array(Route::currentRouteName(),array('lead.index'))) active  @endif" href="{{route('lead.index')}}">
+													<span class="menu-bullet">
+														<span class="bullet bullet-dot"></span>
+													</span>
+													<span class="menu-title">Invoice List</span>
+												</a>
+												
+											</div>
+											<!--end:Menu item-->
+											@if(Auth::user()->isvendor())
+											<!--begin:Menu item-->
+											<div class="menu-item">
+												<!--begin:Menu link-->
+												<a class="menu-link @if(in_array(Route::currentRouteName(),array('lead.create'))) active  @endif" href="{{route('lead.create')}}">
+													<span class="menu-bullet">
+														<span class="bullet bullet-dot"></span>
+													</span>
+													<span class="menu-title">Submit Invoice</span>
+												</a>
+												<!--end:Menu link-->
+											</div>
+											<!--end:Menu item-->
+											@endif
+										</div>
+										<!--end:Menu sub-->
+									</div>
+									
+									<!--end:Menu item-->
+
 							
 									@if(Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
 									<div class="menu-item pt-5">

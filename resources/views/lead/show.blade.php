@@ -49,7 +49,7 @@
 									<div class="card-toolbar">
 
 										<!-- begin::Pint-->
-										<button type="button" class="btn btn-sm btn-success me-5" onclick="window.print();"><i class="fa-solid fa-check "></i> Approve & Generate RO</button>
+										<button type="button" class="btn btn-sm btn-success me-5" onclick="approve('{{$proposal->id}}')"><i class="fa-solid fa-check "></i> Approve & Generate RO</button>
 														<!-- end::Pint-->
 								
 														<!-- begin::Pint-->
@@ -174,11 +174,11 @@
 																	<!--begin::Grand total-->
 																		<tr>
 																			<td colspan="4" class="fs-2 text-dark fw-bold text-end" style="font-size:18px !important;">Grand Total</td>
-																			<td class="text-dark fw-bolder text-end fs-2 " style="font-size:18px !important;">&#x20b9;9,207.00</td>
+																			<td class="text-dark fw-bolder text-end fs-2 " style="font-size:18px !important;">&#x20b9;{{$proposal->proposal_total_cost}}</td>
 																		</tr>
 																		
 																		<tr>
-																			<td colspan="5" class="fw-bold text-end" style="font-size:14px !important;text-transform: uppercase; color:#009ef7 !important;" >AMOUNT IN WORDS : RUPEES Nine thousand two hundred seven rupees only </td>
+																			<td colspan="5" class="fw-bold text-end" style="font-size:14px !important;text-transform: uppercase; color:#009ef7 !important;" >AMOUNT IN WORDS : RUPEES {{$amounwords}} rupees only </td>
 																			</tr>
 																		<!--end::Grand total-->
 																		
@@ -204,4 +204,56 @@
 							</div>
 							<!--end::Content-->
 						</div>
+@endsection
+@section('pageScripts')
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+	function approve(proid) {
+		swal({
+				title: "Are you sure?",
+				text: "You want to approve this proposal",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+			.then((willDelete) => {
+				if (willDelete) {
+					$.ajax({
+						url: "{{ route('lead.approve') }}",
+						type: 'POST',
+						data: {
+							_token: '{{ csrf_token() }}',
+							id: proid,
+						},
+						success: function(response) {
+							if (response.success) {
+								swal(response.success, {
+									icon: "success",
+									buttons: false,
+								});
+								setTimeout(() => {
+									location.reload();
+								}, 1000);
+							} else {
+								swal(response.error || 'Something went wrong.', {
+									icon: "warning",
+									buttons: false,
+								});
+								setTimeout(() => {
+									location.reload();
+								}, 1000);
+							}
+						},
+						error: function(xhr) {
+							swal('Error: Something went wrong.', {
+								icon: "error",
+							}).then(() => {
+								location.reload();
+							});
+						}
+					});
+				}
+			});
+	}
+</script>
 @endsection

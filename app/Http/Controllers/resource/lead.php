@@ -9,6 +9,8 @@ use App\Models\Vendor;
 use App\Models\Stream;
 use App\Models\Proposal;
 use App\Models\PaymentMilestone;
+use Numbers_Words;
+use App\Models\ProposalRo;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -21,9 +23,13 @@ class lead extends Controller
      */
     public function index()
     {
+        if(Auth::user()->isvendor()){
         $userId = Auth::user()->id;
         $vendor = Vendor::where('user_id', $userId)->first();
         $proposal = Proposal::where('vendor_id', $vendor->id)->orderBy('id')->get();
+        }else{
+          $proposal = Proposal::orderBy('id')->get();
+        }
         return view('lead.index',compact('proposal'));
     }
 
@@ -64,8 +70,9 @@ class lead extends Controller
         ]);
     
         try {
-
-            $prefix = '2324-PL-';
+              
+            $financialYear = $this->getShortFinancialYear();
+            $prefix = $financialYear.'-PL-';
     // Retrieve the highest existing code
     $latestCode = Proposal::where('proposal_id', 'like', $prefix . '%')
         ->orderByRaw('CAST(SUBSTRING(proposal_id, LENGTH(?) + 1) AS UNSIGNED) DESC', [$prefix])
@@ -138,7 +145,12 @@ class lead extends Controller
     public function show($id)
     {
         $proposal = Proposal::with(['paymentMilestones', 'vendor'])->find($id);
-        return view('lead.show',compact('proposal'));
+        
+        $number = $proposal->proposal_total_cost;
+        $numbersWords = new Numbers_Words();
+        $amounwords = $numbersWords->toWords($number);
+
+        return view('lead.show',compact('proposal','amounwords'));
     }
 
     /**
@@ -174,4 +186,72 @@ class lead extends Controller
     {
         //
     }
+
+    public function getShortFinancialYear()
+    {
+        $currentDate = new \DateTime();
+        $currentYear = (int)$currentDate->format('Y');
+        $currentMonth = (int)$currentDate->format('m');
+
+        // Define the start month of the financial year
+        $financialYearStartMonth = 4; // April
+
+        if ($currentMonth >= $financialYearStartMonth) {
+            // If current month is from April onwards, the financial year is current year to next year
+            $startYear = $currentYear;
+            $endYear = $currentYear + 1;
+        } else {
+            // If current month is before April, the financial year is previous year to current year
+            $startYear = $currentYear - 1;
+            $endYear = $currentYear;
+        }
+
+        // Extract the last two digits of each year and concatenate
+        $startYearShort = substr($startYear, -2);
+        $endYearShort = substr($endYear, -2);
+
+        return "{$startYearShort}{$endYearShort}";
+    }
+
+    public function approve(Request $request)
+    {
+        $currentDate = new \DateTime();
+        $currentMonth = $currentDate->format('m'); 
+        $currentYear = $currentDate->format('y');
+
+        $proposal = Proposal::findOrFail($request->input('id'));
+        if (!$proposal) {
+        return response()->json(['error' => 'Proposal not found.'], 404);
+        }
+        $proposal->proposal_status = 1;
+        $proposal->save();
+
+        $financialYear = $this->getShortFinancialYear();
+            $prefix = 'AVV-'.$currentMonth.$currentYear.'-RO-';
+    // Retrieve the highest existing code
+    $latestCode = ProposalRo::where('proposal_ro', 'like', $prefix . '%')
+        ->orderByRaw('CAST(SUBSTRING(proposal_ro, LENGTH(?) + 1) AS UNSIGNED) DESC', [$prefix])
+        ->pluck('proposal_ro')
+        ->first();
+
+    $latestNumber = 0;
+    if ($latestCode) {
+        $latestNumber = (int)substr($latestCode, strlen($prefix));
+    }
+
+    $nextNumber = str_pad($latestNumber + 1, 3, '0', STR_PAD_LEFT); // Adjust to 3 digits
+    $proposal_ro  = $prefix . $nextNumber;
+
+
+            $proposalro = new ProposalRo();
+            $proposalro->proposal_id    = $request->input('id');
+            $proposalro->proposal_ro = $proposal_ro;
+            $proposalro->save();
+
+        return response()->json(['success' => 'The Proposal has been approved!']);
+        
+    }
+    
+    
+    
 }

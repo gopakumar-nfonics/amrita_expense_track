@@ -21,3 +21,25 @@
         // Initial state check
         updateDivState();
     });
+
+
+ // Function to format a number as INR currency without the rupee symbol
+function formatCurrency(value) {
+    const amount = parseFloat(value.replace(/[^\d.-]/g, '')); // Remove non-numeric characters
+    if (isNaN(amount)) {
+      return ''; // If invalid number, return empty string
+    }
+    // Format to INR (Indian Rupee) without currency symbol
+    return new Intl.NumberFormat('en-IN', { 
+        style: 'decimal', // Use decimal style instead of currency
+        minimumFractionDigits: 2, // Ensure two decimal places
+        maximumFractionDigits: 2 // Ensure two decimal places
+    }).format(amount);
+}
+      function setCurrencyFormatting(inputElement) {
+       
+          const value = $(inputElement).val(); // Get the input value
+          const formattedValue = formatCurrency(value); // Format as currency
+          $(inputElement).val(formattedValue); // Set the formatted value to the target input
+       
+      }

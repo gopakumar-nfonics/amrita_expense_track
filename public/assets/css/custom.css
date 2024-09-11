@@ -493,6 +493,18 @@ table th {
 
 }
 
+.note-editor.note-airframe, .note-editor.note-frame
+{
+    border: 1px solid var(--kt-input-border-color) !important;
+    border-radius: 5px;
+}
+
+.note-editor.note-airframe .note-statusbar, .note-editor.note-frame .note-statusbar {
+    background-color: hsl(0deg 0% 96.06% / 11%) !important;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top: 1px solid var(--kt-input-border-color) !important;
+}
 
 @media (min-width: 1400px) {
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {

@@ -386,11 +386,11 @@
                                                         </tfoot>
                                                         <!--end::Table foot-->
                                                     </table>
-                                                 <span class="invalid-feedback" id="error-message"></span>
+                                                    <span class="invalid-feedback" id="error-message"></span>
 
                                                 </div>
                                                 <!--end::Order details-->
-                                                <div class="d-flex justify-content-end border-top mt-5 pt-5">
+                                                <div class="d-flex justify-content-end border-top mt-0 pt-5 me-10">
                                                     <!--begin::Button-->
                                                     <a href="../../demo1/dist/apps/ecommerce/catalog/products.html"
                                                         id="kt_ecommerce_edit_order_cancel"

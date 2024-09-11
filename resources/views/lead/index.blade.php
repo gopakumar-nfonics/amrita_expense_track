@@ -58,12 +58,14 @@
 													<!--end::Table head-->
 													<!--begin::Table body-->
 													<tbody>
+
+													@forelse($proposal as $key => $pro)
                                                         
 														<tr>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-                                                                        #2324-569
+																	{{$pro->proposal_id}}
 																		<div class="text-gray-400 fw-semibold fs-9">
 																	<span class="badge badge-light-success fs-8">
 																	<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
@@ -79,7 +81,7 @@
 															<div class="d-flex align-items-center">
 																
 																	<div class="d-flex justify-content-start flex-column">
-																		<a href="{{ route('lead.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">Web Development</a>
+																		<a href="{{ route('lead.show',$pro->id) }}" class="text-dark fw-bold text-hover-primary fs-6">{{$pro->proposal_title}}</a>
 																		<span class="text-muted fw-semibold text-muted d-block fs-7">Submitted On :   25-July-2024</span>
 																	</div>
 																</div>
@@ -109,7 +111,7 @@
                                                             <td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																		&#x20b9;210,000
+																		&#x20b9;{{$pro->proposal_total_cost}}
 																	</div>
 																</div>
 															</td>
@@ -152,7 +154,11 @@
                                                         <!-- <tr>
                                                             <td colspan="4">No data found</td>
                                                         </tr> -->
-                                                    
+														@empty
+								<tr>
+									<td colspan="4">No data found</td>
+								</tr>
+								@endforelse
 													</tbody>
 													<!--end::Table body-->
 												</table>

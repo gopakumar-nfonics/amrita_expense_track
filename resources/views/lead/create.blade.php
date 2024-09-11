@@ -27,6 +27,16 @@
 						<!--end::Item-->
 						<!--begin::Item-->
 						<li class="breadcrumb-item text-muted">Create Proposal</li>
+
+						@if ($errors->any())
+						<div class="alert alert-danger">
+							<ul>
+								@foreach ($errors->all() as $error)
+								<li>{{ $error }}</li>
+								@endforeach
+							</ul>
+						</div>
+						@endif
 						<!--end::Item-->
 					</ul>
 					<!--end::Breadcrumb-->
@@ -51,84 +61,88 @@
 							<!--begin::Card body-->
 							<div class="card-body p-12">
 								<!--begin::Form-->
-								<form action="" id="kt_invoice_form">
+								<form id="kt_invoice_form" method="POST" action="{{route('lead.store')}}" enctype="multipart/form-data">
+									@csrf
 
-								
 									<!--begin::Wrapper-->
 									<div class="mb-0">
 										<!--begin::Row-->
 										<div class="row gx-10 mb-5">
-										<div class="row ps-15 pe-0 pb-5">
-										<div class="col-lg-12">
-										<div class="fv-row  d-flex justify-content-between">
-																<div class="fs-6 fw-bold text-gray-700 col-lg-3">
-																<!--begin::Input group-->
-													
-																	<!--begin::Label-->
-																	<label class="required form-label">Date</label>
-																	<!--end::Label-->
-																	<!--begin::Editor-->
-																	<!--begin::Input group-->
-																	<div class="d-flex align-items-center justify-content-start flex-equal order-3 fw-row" data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">
-																		<!--begin::Date-->
-																		<!--end::Date-->
-																		<!--begin::Input-->
-																		<div class="position-relative d-flex align-items-center">
-																			<!--begin::Datepicker-->
-																			<input class="form-control fw-bold pe-5 flatpickr-input" placeholder="Select date" name="invoice_due_date" type="text" readonly="readonly">
-																			<!--end::Datepicker-->
-																			<!--begin::Icon-->
-																			<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
-																			<span class="svg-icon svg-icon-2 position-absolute end-0 me-4">
-																				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																					<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
-																				</svg>
-																			</span>
-																			<!--end::Svg Icon-->
-																			<!--end::Icon-->
-																		</div>
-																		<!--end::Input-->
-																	</div>
-																	<!--end::Input group-->
+											<div class="row ps-15 pe-0 pb-5">
+												<div class="col-lg-12">
+													<div class="fv-row  d-flex justify-content-between">
+														<div class="fs-6 fw-bold text-gray-700 col-lg-3">
+															<!--begin::Input group-->
 
-																
+															<!--begin::Label-->
+															<label class="required form-label">Date</label>
+															<!--end::Label-->
+															<!--begin::Editor-->
+															<!--begin::Input group-->
+															<div class="d-flex align-items-center justify-content-start flex-equal order-3 fw-row" data-bs-toggle="tooltip" data-bs-trigger="hover" data-kt-initialized="1">
+																<!--begin::Date-->
+																<!--end::Date-->
+																<!--begin::Input-->
+																<div class="position-relative d-flex align-items-center">
+																	<!--begin::Datepicker-->
+																	<input class="form-control fw-bold pe-5 @error('invoice_due_date') is-invalid @enderror" placeholder="Select date" id="invoice_due_date" name="invoice_due_date" value="{{ old('invoice_due_date') }}" type="text">
+																	@error('invoice_due_date')<div class="invalid-feedback">{{ $message }}</div> @enderror
+																	<!--end::Datepicker-->
+																	<!--begin::Icon-->
+																	<!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
+																	<span class="svg-icon svg-icon-2 position-absolute end-0 me-4">
+																		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																			<path d="M11.4343 12.7344L7.25 8.55005C6.83579 8.13583 6.16421 8.13584 5.75 8.55005C5.33579 8.96426 5.33579 9.63583 5.75 10.05L11.2929 15.5929C11.6834 15.9835 12.3166 15.9835 12.7071 15.5929L18.25 10.05C18.6642 9.63584 18.6642 8.96426 18.25 8.55005C17.8358 8.13584 17.1642 8.13584 16.75 8.55005L12.5657 12.7344C12.2533 13.0468 11.7467 13.0468 11.4343 12.7344Z" fill="currentColor"></path>
+																		</svg>
+																	</span>
+																	<!--end::Svg Icon-->
+																	<!--end::Icon-->
 																</div>
-																<div class="fs-6 fw-bold text-gray-700 col-lg-9">
 
-																
-																	<!--begin::Label-->
-																	<label class="required form-label">Title</label>
-																	<!--end::Label-->
-																	<!--begin::Select2-->
-																	<!--begin::Editor-->
-																	<input id="" name="order_date" placeholder="Proposal Title" class="form-control mb-2" value="" />
-																	<!--end::Editor-->
-																	<!--end::Select2-->
-																	
-																</div>
-																</div>
-																<div class="fv-row mt-5">
-																<div class="fs-6 fw-bold text-gray-700 col-lg-12">
+																<!--end::Input-->
+															</div>
+															<!--end::Input group-->
 
-																													
-													<!--begin::Label-->
-													<label class="required form-label">Scope & Service Description</label>
-													<!--end::Label-->
-											
-													<!--begin::Editor-->
-													<textarea id="summernote" class="form-control mb-2"></textarea>
-													<!--end::Editor-->
-												
-													
+
+														</div>
+														<div class="fs-6 fw-bold text-gray-700 col-lg-9">
+
+
+															<!--begin::Label-->
+															<label class="required form-label">Title</label>
+															<!--end::Label-->
+															<!--begin::Select2-->
+															<!--begin::Editor-->
+															<input id="" name="ptitle" placeholder="Proposal Title" class="form-control mb-2 @error('ptitle') is-invalid @enderror" value="{{ old('ptitle') }}" />
+															@error('ptitle')<div class="invalid-feedback">{{ $message }}</div> @enderror
+															<!--end::Editor-->
+															<!--end::Select2-->
+
+														</div>
 													</div>
+													<div class="fv-row mt-5">
+														<div class="fs-6 fw-bold text-gray-700 col-lg-12">
+
+
+															<!--begin::Label-->
+															<label class="required form-label">Scope & Service Description</label>
+															<!--end::Label-->
+
+															<!--begin::Editor-->
+															<textarea id="summernote" name="description" class="form-control mb-2 @error('description') is-invalid @enderror"></textarea>
+															@error('description')<div class="invalid-feedback">{{ $message }}</div> @enderror
+															<!--end::Editor-->
+
+
+														</div>
 													</div>
-																							
+
+												</div>
+
+
+												<div class="separator separator-solid mt-14 mb-4 blue-border-bottom"><label class="form-label legend-label">Cost & Payments</label></div>
 											</div>
-																	
-											
-																	<div class="separator separator-solid mt-14 mb-4 blue-border-bottom"><label class="form-label legend-label">Cost & Payments</label></div>
-																	</div>
-																
+
 											<!--end::Row-->
 											<div class="col-lg-3">
 												<div class="w-100 flex-lg-row-auto mb-7 me-7 me-lg-10">
@@ -137,16 +151,17 @@
 														<!--begin::Card body-->
 														<div class="card-body pt-0">
 															<div class="d-flex flex-column gap-6">
-																
+
 																<!--begin::Input group-->
 																<div class="fv-row">
 																	<!--begin::Label-->
 																	<label class="required form-label">Cost (INR)</label>
 																	<!--end::Label-->
 																	<!--begin::Editor-->
-																	<input id="" name="order_date" placeholder="Cost" class="form-control mb-2" value="" />
+																	<input id="order_cost" name="order_cost" placeholder="Cost" class="form-control mb-2 @error('order_cost') is-invalid @enderror" value="{{ old('order_cost') }}" oninput="calculateTotalCost()" />
+																	@error('order_cost')<div class="invalid-feedback">{{ $message }}</div> @enderror
 																	<!--end::Editor-->
-																	
+
 																</div>
 																<!--end::Input group-->
 
@@ -156,11 +171,12 @@
 																	<label class="required form-label">GST (%)</label>
 																	<!--end::Label-->
 																	<!--begin::Editor-->
-																	<input id="" name="order_date" placeholder="GST %" class="form-control mb-2" value="" />
+																	<input id="order_gst" name="order_gst" placeholder="GST %" class="form-control mb-2 @error('order_gst') is-invalid @enderror" value="{{ old('order_gst') }}" oninput="calculateTotalCost()" />
+																	@error('order_gst')<div class="invalid-feedback">{{ $message }}</div> @enderror
 																	<!--end::Editor-->
 																</div>
 																<!--end::Input group-->
-																
+
 
 																<!--begin::Input group-->
 																<div class="fv-row pt-0">
@@ -168,170 +184,137 @@
 																	<label class="required form-label">Total Cost (INR)</label>
 																	<!--end::Label-->
 																	<!--begin::Editor-->
-																	<input id="" name="order_date" placeholder="Total Cost" class="form-control mb-2" value="" />
+																	<input id="total_cost" name="total_cost" placeholder="Total Cost" class="form-control mb-2 @error('total_cost') is-invalid @enderror" value="{{ old('total_cost') }}" readonly />
+																	@error('total_cost')<div class="invalid-feedback">{{ $message }}</div> @enderror
 																	<!--end::Editor-->
 																</div>
 
 																<!--begin::Input group-->
 																<div class="fv-row border-top pt-0">
 																	<div class="text-center">
-																		<button type="button" class="btn btn-sm btn-info w-100 mt-5 mb-1" data-bs-toggle="modal" data-bs-target="#kt_modal_upload">
+																		<label for="file-upload" class="btn btn-sm btn-info w-100 mt-5 mb-1">
 																			<!--begin::Svg Icon | path: icons/duotune/files/fil018.svg-->
 																			<span class="svg-icon svg-icon-2">
 																				<i class="fa-solid fa-upload"></i>
 																			</span>
-																			<!--end::Svg Icon-->Upload File</button>
+																			<!--end::Svg Icon-->Upload File
+																			<input type="file" id="file-upload" name="file" class="d-none @error('file') is-invalid @enderror" onchange="updateFileName()" />
+																		</label>
 																	</div>
 
-																	<!--begin::Description-->
-																	<div class="text-muted fs-7">Upload reference document.</div>
+																	<!-- Display the selected file name here -->
+																	<div class="text-muted fs-7" id="file-name">Upload reference document.</div>
+																	@error('file')<div class="invalid-feedback">{{ $message }}</div> @enderror
 																	<!--end::Description-->
 																</div>
+
 																<!--end::Input group-->
 															</div>
 														</div>
 														<!--end::Card header-->
 													</div>
 													<!--end::Order details-->
-													
+
 												</div>
 											</div>
 											<!--begin::Table wrapper-->
 											<div class="table-responsive mb-10 col-lg-9">
 
 												<!--begin::Input group-->
-												
+
 												<!--begin::Table-->
 												<div class="min-h-300px">
-												<label class="form-label color-blue">Payment Milestones</label>
-												<table class="table g-5 gs-0 mb-0 fw-bold text-gray-700" data-kt-element="items">
-													<!--begin::Table head-->
-													<thead>
-														<tr class="border-bottom fs-7 fw-bold text-gray-700 text-uppercase">
-															<th class="min-w-300px w-475px">Milestone</th>
-															<th class="min-w-150px w-175px">Date</th>
-															<th class="min-w-200px w-200px">Amount</th>
-															<th class="min-w-100px w-100px">GST (%) </th>
-															<th class="min-w-200px w-250px text-end">Total</th>
-															<th class="min-w-75px w-75px text-end">Remove</th>
-														</tr>
-													</thead>
-													<!--end::Table head-->
-													<!--begin::Table body-->
-													<tbody>
-														<tr class="border-bottom border-bottom-dashed" data-kt-element="item">
-															<td class="pe-7">
-																<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Milestone Title">
-																
-															</td>
-															<td class="pe-7">
-																<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Date">
-																
-															</td>
-															<td>
-																<input type="text" class="form-control form-control-solid text-end" name="price[]"  data-kt-element="price">
-															</td>
-															<td class="ps-0">
-																<input class="form-control form-control-solid" type="decimal"  name="quantity[]" data-kt-element="quantity">
-															</td>
-															
-															<td class="pt-8 text-end text-nowrap">&#x20b9;
-																<span data-kt-element="total">0.00</span>
-															</td>
-															<td class="pt-5 text-end">
-																<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">
-																	<!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-																	<span class="svg-icon svg-icon-3">
-																		<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																			<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
-																			<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
-																			<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
-																		</svg>
-																	</span>
-																	<!--end::Svg Icon-->
-																</button>
-															</td>
-														</tr>
-													</tbody>
-													<!--end::Table body-->
-													<!--begin::Table foot-->
-													<tfoot>
-														<tr class="border-top border-top-dashed align-top fs-6 fw-bold text-gray-700">
-															<th class="text-primary">
-																<button class="btn btn-sm btn-success w-150px mt-0 mb-1" data-kt-element="add-item">Add  Milestone</button>
-															</th>
-															<th colspan="4" class="border-bottom border-bottom-dashed ps-0">
-																<div class="d-flex flex-column align-items-end">
-																	<div class="fs-6 color-blue">Total : &#x20b9; <span data-kt-element="sub-total">0.00</span></div>
-																	
-																	
-																</div>
-															</th>
-															<!-- <th colspan="2" class="border-bottom border-bottom-dashed text-end">
+													<label class="form-label color-blue">Payment Milestones</label>
+													<table class="table g-5 gs-0 mb-0 fw-bold text-gray-700" data-kt-element="items">
+														<!--begin::Table head-->
+														<thead>
+															<tr class="border-bottom fs-7 fw-bold text-gray-700 text-uppercase">
+																<th class="min-w-300px w-475px">Milestone</th>
+																<th class="min-w-150px w-175px">Date</th>
+																<th class="min-w-200px w-200px">Amount</th>
+																<th class="min-w-100px w-100px">GST (%) </th>
+																<th class="min-w-200px w-250px text-end">Total</th>
+																<th class="min-w-75px w-75px text-end">Remove</th>
+															</tr>
+														</thead>
+														<!--end::Table head-->
+														<!--begin::Table body-->
+														<tbody data-kt-element="item-template">
+															<tr class="border-bottom border-bottom-dashed" data-kt-element="item">
+																<td class="pe-7">
+																	<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Milestone Title">
+
+																</td>
+																<td class="pe-7">
+																	<input type="text" class="form-control form-control-solid mb-2 mdate" name="mdate[]" placeholder="Date">
+
+																</td>
+																<td>
+																	<input type="text" class="form-control form-control-solid text-end" name="amount[]" data-kt-element="price" placeholder="Amount">
+																</td>
+																<td class="ps-0">
+																	<input class="form-control form-control-solid" type="decimal" name="gst[]" data-kt-element="quantity" placeholder="GST %">
+																</td>
+
+																<td class="pt-8 text-end text-nowrap">&#x20b9;
+																	<span data-kt-element="total">0.00</span>
+																</td>
+																<td class="pt-5 text-end">
+																	<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">
+																		<!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+																		<span class="svg-icon svg-icon-3">
+																			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																				<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
+																				<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
+																				<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
+																			</svg>
+																		</span>
+																		<!--end::Svg Icon-->
+																	</button>
+																</td>
+															</tr>
+														</tbody>
+														<!--end::Table body-->
+														<!--begin::Table foot-->
+														<tfoot>
+															<tr class="border-top border-top-dashed align-top fs-6 fw-bold text-gray-700">
+																<th class="text-primary">
+																	<button class="btn btn-sm btn-success w-150px mt-0 mb-1" data-kt-element="add-item">Add Milestone</button>
+																</th>
+																<th colspan="4" class="border-bottom border-bottom-dashed ps-0">
+																	<div class="d-flex flex-column align-items-end">
+																		<div class="fs-6 color-blue">Total : &#x20b9; <span data-kt-element="sub-total">0.00</span></div>
+
+
+																	</div>
+																</th>
+																<!-- <th colspan="2" class="border-bottom border-bottom-dashed text-end">
 																<span data-kt-element="sub-total">0.00</span>
 															</th> -->
-														</tr>
-														
-													</tfoot>
-													<!--end::Table foot-->
-												</table>
+															</tr>
+
+														</tfoot>
+														<!--end::Table foot-->
+													</table>
 												</div>
 												<!--end::Order details-->
-											<div class="d-flex justify-content-end border-top mt-5 pt-5">
-												<!--begin::Button-->
-												<a href="../../demo1/dist/apps/ecommerce/catalog/products.html" id="kt_ecommerce_edit_order_cancel" class="btn btn-light me-5">Cancel</a>
-												<!--end::Button-->
-												<!--begin::Button-->
-												<button type="submit" id="kt_ecommerce_edit_order_submit" class="btn btn-primary">
-													<span class="indicator-label">Submit Proposal</span>
-													<span class="indicator-progress">Please wait...
-													<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-												</button>
-												<!--end::Button-->
-											</div>
+												<div class="d-flex justify-content-end border-top mt-5 pt-5">
+													<!--begin::Button-->
+													<a href="../../demo1/dist/apps/ecommerce/catalog/products.html" id="kt_ecommerce_edit_order_cancel" class="btn btn-light me-5">Cancel</a>
+													<!--end::Button-->
+													<!--begin::Button-->
+													<button type="submit" id="kt_ecommerce_edit_order_submit" class="btn btn-primary">
+														<span class="indicator-label">Submit Proposal</span>
+														<span class="indicator-progress">Please wait...
+															<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+													</button>
+													<!--end::Button-->
+												</div>
 											</div>
 
 											<!--end::Table-->
 											<!--begin::Item template-->
-											<table class="table d-none" data-kt-element="item-template">
-												<tbody>
-													<tr class="border-bottom border-bottom-dashed" data-kt-element="item">
-														<td class="pe-7">
-															<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Milestone Title">
-															
-														</td>
-														
-														<td class="pe-7">
-																<input type="text" class="form-control form-control-solid mb-2" name="name[]" placeholder="Date">
-																
-															</td>
-														<td>
-															<input type="text" class="form-control form-control-solid text-end" name="price[]" placeholder="0.00" data-kt-element="price">
-														</td>
 
-
-														<td class="ps-0">
-															<input class="form-control form-control-solid"  name="quantity[]"  data-kt-element="quantity">
-														</td>
-														<td class="pt-8 text-end">$
-															<span data-kt-element="total">0.00</span>
-														</td>
-														<td class="pt-5 text-end">
-															<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-kt-element="remove-item">
-																<!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
-																<span class="svg-icon svg-icon-3">
-																	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-																		<path d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z" fill="currentColor"></path>
-																		<path opacity="0.5" d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z" fill="currentColor"></path>
-																		<path opacity="0.5" d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z" fill="currentColor"></path>
-																	</svg>
-																</span>
-																<!--end::Svg Icon-->
-															</button>
-														</td>
-													</tr>
-												</tbody>
-											</table>
 											<table class="table d-none" data-kt-element="empty-template">
 												<tbody>
 													<tr data-kt-element="empty">
@@ -344,10 +327,10 @@
 
 
 										</div>
-										
+
 									</div>
 									<!--end::Wrapper-->
-									
+
 								</form>
 								<!--end::Form-->
 							</div>
@@ -406,23 +389,51 @@
 <script src="{{ asset('assets/js/custom/utilities/modals/upgrade-plan.js') }}"></script>
 <script src="{{ asset('assets/js/custom/utilities/modals/create-app.js') }}"></script>
 <script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
- <!-- Summernote CSS & JS -->
- <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<!-- Summernote CSS & JS -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+
 <script>
-    $(document).ready(function() {
-      $('#summernote').summernote({
-        height: 125, // Set the editor height
-        placeholder: 'Add service description...',
-        tabsize: 2,
-		toolbar: [
-        // [groupName, [list of buttons]]
-        ['style', ['bold', 'italic', 'underline', 'clear']],
-        ['font', ['superscript', 'subscript']],
-		['para', ['ul', 'ol']], 
-        ['insert', ['link']],       
-      ]
-      });
-    });
-  </script>
+	$(document).ready(function() {
+		$('#summernote').summernote({
+			height: 125, // Set the editor height
+			placeholder: 'Add service description...',
+			tabsize: 2,
+			toolbar: [
+				// [groupName, [list of buttons]]
+				['style', ['bold', 'italic', 'underline', 'clear']],
+				['font', ['superscript', 'subscript']],
+				['para', ['ul', 'ol']],
+				['insert', ['link']],
+			]
+		});
+	});
+
+
+
+
+	function calculateTotalCost() {
+		const costInput = document.getElementById('order_cost');
+		const gstInput = document.getElementById('order_gst');
+		const totalCostInput = document.getElementById('total_cost');
+
+		// Get values from the input fields
+		const cost = parseFloat(costInput.value) || 0;
+		const gstPercentage = parseFloat(gstInput.value) || 0;
+
+		// Calculate the total cost
+		const totalCost = cost + (cost * gstPercentage) / 100;
+
+		// Update the total cost field
+		totalCostInput.value = totalCost.toFixed(2); // Set the value with two decimal places
+	}
+</script>
+<script>
+function updateFileName() {
+    var input = document.getElementById('file-upload');
+    var fileName = input.files.length > 0 ? input.files[0].name : 'Upload reference document.';
+    document.getElementById('file-name').textContent = fileName;
+}
+</script>
 @endsection

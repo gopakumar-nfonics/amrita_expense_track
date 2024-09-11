@@ -40,7 +40,7 @@
 											<!--end::Item-->
 								
 											<!--begin::Item-->
-											<li class="breadcrumb-item text-muted">#2324-569</li>
+											<li class="breadcrumb-item text-muted">{{$proposal->proposal_id}}</li>
 											<!--end::Item-->
 										</ul>
 										<!--end::Breadcrumb-->
@@ -58,7 +58,7 @@
 														
 										
 													<!-- end::Actions-->
-										<a href="{{ route('payment.index') }}" class="btn btn-sm btn-primary">
+										<a href="{{ route('lead.index') }}" class="btn btn-sm btn-primary">
 											Back to List
 										</a>
 										
@@ -83,7 +83,7 @@
 													<div class="text-sm-start">
 														<!--begin::Logo-->
 														<a href="#" class="d-block w-100 fs-1 ms-sm-auto mb-2">
-														#2324-569 | Web Development : FureStibe branding proposal
+														{{$proposal->proposal_id}} | {{$proposal->proposal_title}}
 														</a>
 														<!--end::Logo-->
 													
@@ -91,7 +91,7 @@
 														<!--begin::Text-->
 														<div class="d-flex  justify-content-between text-sm-start fw-semibold fs-7 text-muted">
 																<div  class="d-flex flex-column">
-																<span class="fs-5 text-gray-900">NFONICS Solutions (P) Ltd</span>
+																<span class="fs-5 text-gray-900">{{$proposal->vendor->vendor_name}}</span>
 																<span class="fs-7">Unit 1/23 Hastings Road,	Banglore 3000,Karnataka-677593
 																<br>info@nfonics.com | +91-999-345-4565</span>	
 																GSTIN : 32AAN0826C1Z4 | PAN NO: A46CN0826C</span>
@@ -117,8 +117,7 @@
 														<div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
 															<div class="flex-root d-flex flex-column">
 																<span class="text-gray-900 fs-4">Scope & Services</span>
-																<p class="text-gray-600">What is Lorem Ipsum?
-																Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+																{!! $proposal->proposal_description !!}
 															</div>
 															
 														</div>
@@ -139,6 +138,7 @@
 																		</tr>
 																	</thead>
 																	<tbody class="fw-semibold text-gray-600">
+																	@foreach ($proposal->paymentMilestones as $milestone)
 																		<!--begin::Products-->
 																		<tr>
 																			<!--begin::Product-->
@@ -147,29 +147,29 @@
 																				
 																					<!--begin::Title-->
 																					<div class="ms-0">
-																						<div class="fw-bold">Milestone-1</div>																						
+																						<div class="fw-bold">{{ $milestone->milestone_title }}</div>																						
 																					</div>
 																					<!--end::Title-->
 																				</div>
 																			</td>
 																			<!--end::Product-->
 																			<!--begin::Date-->
-																			<td class="text-start">23-July-2024</td>
+																			<td class="text-start">{{ \Carbon\Carbon::parse($milestone->milestone_date)->format('d-M-Y') }}</td>
 																			<!--end::SKU-->
 																			<!--begin::SKU-->
-																			<td class="text-end">&#x20b9;2,400.00</td>
+																			<td class="text-end">&#x20b9;{{ $milestone->milestone_amount }}</td>
 																			<!--end::SKU-->
 																			<!--begin::Quantity-->
-																			<td class="text-end">2</td>
+																			<td class="text-end">{{ $milestone->milestone_gst }}</td>
 																			<!--end::Quantity-->
 																			<!--begin::Total-->
-																			<td class="text-end">&#x20b9;4,800.00</td>
+																			<td class="text-end">&#x20b9;{{ $milestone->milestone_total_amount }}</td>
 																			<!--end::Total-->
 																		</tr>
 																		
 																		<!--end::Products-->
 
-																		
+																		@endforeach
 																		
 																	<!--begin::Grand total-->
 																		<tr>
@@ -181,6 +181,7 @@
 																			<td colspan="5" class="fw-bold text-end" style="font-size:14px !important;text-transform: uppercase; color:#009ef7 !important;" >AMOUNT IN WORDS : RUPEES Nine thousand two hundred seven rupees only </td>
 																			</tr>
 																		<!--end::Grand total-->
+																		
 																	</tbody>
 																</table>
 															</div>

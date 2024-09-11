@@ -5,6 +5,8 @@ use App\Models\User;
 use App\Models\vendor;
 use App\Models\Company;
 use App\Models\State;
+use App\Models\Proposal;
+use App\Models\PaymentMilestone;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -30,7 +32,10 @@ class HomeController extends Controller
     {
         
         if(Auth::user()->isvendor()){
-        return view('lead.index');
+            $userId = Auth::user()->id;
+            $vendor = Vendor::where('user_id', $userId)->first();
+            $proposal = Proposal::where('vendor_id', $vendor->id)->orderBy('id')->get();
+            return view('lead.index',compact('proposal'));
         }else{
 
             return view('home');

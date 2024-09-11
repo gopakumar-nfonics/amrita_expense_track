@@ -9,6 +9,7 @@ use App\Models\Vendor;
 use App\Models\Stream;
 use App\Models\Proposal;
 use App\Models\PaymentMilestone;
+use Numbers_Words;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -138,7 +139,12 @@ class lead extends Controller
     public function show($id)
     {
         $proposal = Proposal::with(['paymentMilestones', 'vendor'])->find($id);
-        return view('lead.show',compact('proposal'));
+        
+        $number = $proposal->proposal_total_cost;
+        $numbersWords = new Numbers_Words();
+        $amounwords = $numbersWords->toWords($number);
+
+        return view('lead.show',compact('proposal','amounwords'));
     }
 
     /**

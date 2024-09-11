@@ -174,11 +174,11 @@
 																	<!--begin::Grand total-->
 																		<tr>
 																			<td colspan="4" class="fs-2 text-dark fw-bold text-end" style="font-size:18px !important;">Grand Total</td>
-																			<td class="text-dark fw-bolder text-end fs-2 " style="font-size:18px !important;">&#x20b9;9,207.00</td>
+																			<td class="text-dark fw-bolder text-end fs-2 " style="font-size:18px !important;">&#x20b9;{{$proposal->proposal_total_cost}}</td>
 																		</tr>
 																		
 																		<tr>
-																			<td colspan="5" class="fw-bold text-end" style="font-size:14px !important;text-transform: uppercase; color:#009ef7 !important;" >AMOUNT IN WORDS : RUPEES Nine thousand two hundred seven rupees only </td>
+																			<td colspan="5" class="fw-bold text-end" style="font-size:14px !important;text-transform: uppercase; color:#009ef7 !important;" >AMOUNT IN WORDS : RUPEES {{$amounwords}} rupees only </td>
 																			</tr>
 																		<!--end::Grand total-->
 																		

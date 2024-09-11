@@ -252,6 +252,29 @@ class lead extends Controller
         
     }
     
-    
+    public function getMilestones($proposal_id)
+    {
+        // Fetch milestones based on the proposal ID
+        $milestones = PaymentMilestone::where('proposal_id', $proposal_id)->get();
+
+        $proposalRo = ProposalRo::where('proposal_id', $proposal_id)->first();
+
+        // Return milestones as JSON
+        return response()->json([
+            'milestones' => $milestones,
+            'proposalRo' => $proposalRo,
+        ]);
+    }
+
+    public function getMilestonesdetails($milestone_id)
+    {
+        // Fetch milestones based on the proposal ID
+        $milestones = PaymentMilestone::where('id', $milestone_id)->first();
+
+       
+
+        // Return milestones as JSON
+        return response()->json($milestones);
+    }
     
 }

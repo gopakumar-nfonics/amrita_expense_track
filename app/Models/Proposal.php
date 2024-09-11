@@ -33,4 +33,9 @@ class Proposal extends Model
     {
         return $this->belongsTo(Vendor::class);
     }
+
+    public function proposalro()
+    {
+        return $this->belongsTo(ProposalRo::class);
+    }
 }

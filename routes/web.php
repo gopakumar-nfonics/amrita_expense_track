@@ -51,6 +51,8 @@ Route::get('campus/getdepartments/{campusId}', [\App\Http\Controllers\resource\c
 Route::resource('lead',\App\Http\Controllers\resource\lead::class);
 Route::post('/lead/approve', [\App\Http\Controllers\resource\lead::class, 'approve'])->name('lead.approve');
 Route::resource('invoice',\App\Http\Controllers\resource\invoice::class);
+Route::get('lead/get-milestones/{proposal_id}', [\App\Http\Controllers\resource\lead::class, 'getMilestones']);
+Route::get('lead/milestone-details/{milestone_id}', [\App\Http\Controllers\resource\lead::class, 'getMilestonesdetails']);
 
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 Route::put('/profileupdate', [App\Http\Controllers\HomeController::class, 'profileupdate'])->name('profileupdate');

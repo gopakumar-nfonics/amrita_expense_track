@@ -43,3 +43,12 @@ function formatCurrency(value) {
           $(inputElement).val(formattedValue); // Set the formatted value to the target input
        
       }
+
+      function setCurrencyFormattingHTML(inputElement) {
+       
+        const totalCostSpan = $(inputElement); // Get the span element
+        const rawValue = totalCostSpan.text(); // Get the current text content
+        const formattedValue = formatCurrency(rawValue); // Format the value
+        totalCostSpan.text(formattedValue); // Set the formatted value back to the span
+     
+    }

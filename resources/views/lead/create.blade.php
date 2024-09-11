@@ -527,7 +527,7 @@ function calculateTotalCost() {
     // Update the total cost field
     totalCostInput.value = totalCost.toFixed(2); // Set the value with two decimal places
 
-    setCurrencyFormatting('#total_cost');
+    //setCurrencyFormatting('#total_cost');
 }
 </script>
 <script>

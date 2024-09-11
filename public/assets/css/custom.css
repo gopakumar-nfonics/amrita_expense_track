@@ -411,6 +411,23 @@ button.btn-close:hover{
     cursor: no-drop;
     pointer-events: none;
 }
+
+.disabled-input
+{
+    cursor: no-drop;
+    pointer-events: none;
+}
+
+/* Hide focus outline */
+.disabled-input:focus {
+    outline: none;
+  }
+
+  /* Optional: Prevent the input from being focusable via keyboard */
+  .disabled-input:focus-visible {
+    outline: none;
+  }
+
 .disabled-links li a i
 {
     color: #c9c9c9 !important;

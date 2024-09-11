@@ -69,16 +69,20 @@
 
                                                             <!--begin::Label-->
                                                             <label class="required form-label">Proposal</label>
-                                                            <select class="form-control form-control-lg @error('proposal') is-invalid @enderror" id="proposal"
-                                                                name="proposal" >
-                                                                <option >--Select Proposal--</option>
+                                                            <select
+                                                                class="form-control form-control-lg @error('proposal') is-invalid @enderror"
+                                                                id="proposal" name="proposal">
+                                                                <option>--Select Proposal--</option>
                                                                 @foreach($proposal as $prsl)
-                                                                    <option value="{{ $prsl->id }}" @if(old('proposal') == $prsl->id) selected @endif>{{ $prsl->proposal_title }}</option>
+                                                                <option value="{{ $prsl->id }}"
+                                                                    @if(old('proposal')==$prsl->id) selected
+                                                                    @endif>{{ $prsl->proposal_title }}</option>
                                                                 @endforeach
 
 
                                                             </select>
-                                                            @error('proposal')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                                            @error('proposal')<div class="invalid-feedback">
+                                                                {{ $message }}</div>@enderror
 
                                                         </div>
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-4">
@@ -86,13 +90,15 @@
 
                                                             <!--begin::Label-->
                                                             <label class="required form-label">Milestone</label>
-                                                            <select class="form-control form-control-lg  @error('milestone') is-invalid @enderror" id="milestone"
-                                                                name="milestone">
+                                                            <select
+                                                                class="form-control form-control-lg  @error('milestone') is-invalid @enderror"
+                                                                id="milestone" name="milestone">
                                                                 <option value="">--Select Milestone--</option>
-                                                                 
+
 
                                                             </select>
-                                                            @error('milestone')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                                            @error('milestone')<div class="invalid-feedback">
+                                                                {{ $message }}</div>@enderror
 
                                                         </div>
 
@@ -110,9 +116,12 @@
                                                                 <label class="required form-label">Cost (INR)</label>
                                                                 <!--end::Label-->
                                                                 <!--begin::Editor-->
-                                                                <input id="milestone_cost" name="milestone_cost" placeholder="Cost"
-                                                                    class="form-control mb-2 @error('milestone_cost') is-invalid @enderror"  value="{{ old('milestone_cost') }}" />
-                                                                    @error('milestone_cost')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                                                <input id="milestone_cost" name="milestone_cost"
+                                                                    placeholder="Cost"
+                                                                    class="form-control mb-2 @error('milestone_cost') is-invalid @enderror"
+                                                                    value="{{ old('milestone_cost') }}" />
+                                                                @error('milestone_cost')<div class="invalid-feedback">
+                                                                    {{ $message }}</div>@enderror
                                                                 <!--end::Editor-->
 
                                                             </div>
@@ -124,9 +133,12 @@
                                                                 <label class="required form-label">GST (%)</label>
                                                                 <!--end::Label-->
                                                                 <!--begin::Editor-->
-                                                                <input id="milestone_gst" name="milestone_gst" placeholder="GST %"
-                                                                    class="form-control mb-2 @error('milestone_gst') is-invalid @enderror" value="{{ old('milestone_gst') }}"  />
-                                                                    @error('milestone_gst')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                                                <input id="milestone_gst" name="milestone_gst"
+                                                                    placeholder="GST %"
+                                                                    class="form-control mb-2 @error('milestone_gst') is-invalid @enderror"
+                                                                    value="{{ old('milestone_gst') }}" />
+                                                                @error('milestone_gst')<div class="invalid-feedback">
+                                                                    {{ $message }}</div>@enderror
                                                                 <!--end::Editor-->
                                                             </div>
                                                             <!--end::Input group-->
@@ -148,7 +160,8 @@
                                                                     <!--end::Currency-->
                                                                     <!--begin::Value-->
                                                                     <span
-                                                                        class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2" id="total_cost">00.00</span>
+                                                                        class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2"
+                                                                        id="total_cost">00.00</span>
                                                                     <!--end::Value-->
 
                                                                 </div>
@@ -165,8 +178,10 @@
                                                                 <!--end::Label-->
                                                                 <!--begin::Editor-->
                                                                 <input id="proposalro" placeholder="RO #"
-                                                                    class="form-control mb-2 @error('proposalro') is-invalid @enderror" name="proposalro"  value="{{ old('proposalro') }}" />
-                                                                    @error('proposalro')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                                                    class="form-control mb-2 @error('proposalro') is-invalid @enderror"
+                                                                    name="proposalro" value="{{ old('proposalro') }}" />
+                                                                @error('proposalro')<div class="invalid-feedback">
+                                                                    {{ $message }}</div>@enderror
                                                                 <!--end::Editor-->
 
                                                             </div>
@@ -178,9 +193,12 @@
                                                                 <label class="required form-label">Invoice #</label>
                                                                 <!--end::Label-->
                                                                 <!--begin::Editor-->
-                                                                <input id="invoice_number" name="invoice_number" placeholder="Invoice #"
-                                                                    class="form-control mb-2  @error('invoice_number') is-invalid @enderror" value="{{ old('invoice_number') }}" />
-                                                                    @error('invoice_number')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                                                <input id="invoice_number" name="invoice_number"
+                                                                    placeholder="Invoice #"
+                                                                    class="form-control mb-2  @error('invoice_number') is-invalid @enderror"
+                                                                    value="{{ old('invoice_number') }}" />
+                                                                @error('invoice_number')<div class="invalid-feedback">
+                                                                    {{ $message }}</div>@enderror
                                                                 <!--end::Editor-->
                                                             </div>
                                                             <!--end::Input group-->
@@ -193,9 +211,11 @@
                                                                 <!--end::Label-->
                                                                 <!--begin::Editor-->
                                                                 <input id="invoice_date" name="invoice_date"
-                                                                    placeholder="Invoice Date" class="form-control mb-2  @error('invoice_date') is-invalid @enderror"
+                                                                    placeholder="Invoice Date"
+                                                                    class="form-control mb-2  @error('invoice_date') is-invalid @enderror"
                                                                     value="{{ old('invoice_date') }}" />
-                                                                    @error('invoice_date')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                                                @error('invoice_date')<div class="invalid-feedback">
+                                                                    {{ $message }}</div>@enderror
                                                                 <!--end::Editor-->
                                                             </div>
                                                         </div>
@@ -203,24 +223,25 @@
                                                             <!--begin::Input group-->
                                                             <div class="fv-row pt-0">
                                                                 <div class="text-center">
-                                                                <label for="file-upload"
-                                                                            class="btn btn-sm btn-info w-100 mt-5 mb-1">
-                                                                            <!--begin::Svg Icon | path: icons/duotune/files/fil018.svg-->
-                                                                            <span class="svg-icon svg-icon-2">
-                                                                                <i class="fa-solid fa-upload"></i>
-                                                                            </span>
-                                                                            <!--end::Svg Icon-->Upload File
-                                                                            <input type="file" id="file-upload"
-                                                                                name="file"
-                                                                                class="d-none @error('file') is-invalid @enderror"
-                                                                                onchange="updateFileName()" />
-                                                                        </label>
+                                                                    <label for="file-upload"
+                                                                        class="btn btn-sm btn-info w-100 mt-5 mb-1">
+                                                                        <!--begin::Svg Icon | path: icons/duotune/files/fil018.svg-->
+                                                                        <span class="svg-icon svg-icon-2">
+                                                                            <i class="fa-solid fa-upload"></i>
+                                                                        </span>
+                                                                        <!--end::Svg Icon-->Upload File
+                                                                        <input type="file" id="file-upload" name="file"
+                                                                            class="d-none @error('file') is-invalid @enderror"
+                                                                            onchange="updateFileName()" />
+                                                                    </label>
                                                                 </div>
 
                                                                 <!--begin::Description-->
-                                                                <div class="text-muted fs-7" id="file-name">Upload reference Invoice.
+                                                                <div class="text-muted fs-7" id="file-name">Upload
+                                                                    reference Invoice.
                                                                 </div>
-                                                                @error('file')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                                                @error('file')<div class="invalid-feedback">
+                                                                    {{ $message }}</div>@enderror
                                                                 <!--end::Description-->
                                                             </div>
                                                             <!--end::Input group-->
@@ -242,8 +263,10 @@
                                                         <!--end::Label-->
 
                                                         <!--begin::Editor-->
-                                                        <textarea name="invoice_note" class="form-control mb-2"></textarea>
-                                                        @error('invoice_note')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                                        <textarea name="invoice_note"
+                                                            class="form-control mb-2"></textarea>
+                                                        @error('invoice_note')<div class="invalid-feedback">
+                                                            {{ $message }}</div>@enderror
                                                         <!--end::Editor-->
 
 
@@ -357,90 +380,96 @@ var hostUrl = "{{ asset('assets/') }}";
 
 
 <script>
-    $(document).ready(function() {
-        // Listen for changes to the proposal dropdown
-        $('#proposal').change(function() {
-            var proposalId = $(this).val(); // Get the selected proposal ID
+$(document).ready(function() {
+    // Listen for changes to the proposal dropdown
+    $('#proposal').change(function() {
+        var proposalId = $(this).val(); // Get the selected proposal ID
 
-            // Check if a proposal is selected
-            if (proposalId) {
-                $.ajax({
-                    url: '/lead/get-milestones/' + proposalId, // The URL to send the AJAX request to
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        // Clear the milestone dropdown
-                        $('#milestone').empty();
-                        $('#milestone').append('<option value="">--Select Milestone--</option>');
+        // Check if a proposal is selected
+        if (proposalId) {
+            $.ajax({
+                url: '/lead/get-milestones/' +
+                    proposalId, // The URL to send the AJAX request to
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // Clear the milestone dropdown
+                    $('#milestone').empty();
+                    $('#milestone').append(
+                        '<option value="">--Select Milestone--</option>');
 
-                        // Populate the milestone dropdown with options
-                        $.each(data.milestones, function(key, value) {
-                            $('#milestone').append('<option value="' + value.id + '">' + value.milestone_title + '</option>');
-                        });
+                    // Populate the milestone dropdown with options
+                    $.each(data.milestones, function(key, value) {
+                        $('#milestone').append('<option value="' + value.id + '">' +
+                            value.milestone_title + '</option>');
+                    });
 
-                        if (data.proposalRo) {
-                            $('#proposalro').val(data.proposalRo.proposal_ro);
-                        } else {
-                            $('#proposalRoDetails').html('<p>No Proposal RO details available.</p>');
-                        }
-                    
-                    },
-                    
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText); // Log errors to console
+                    if (data.proposalRo) {
+                        $('#proposalro').val(data.proposalRo.proposal_ro);
+                    } else {
+                        $('#proposalRoDetails').html(
+                            '<p>No Proposal RO details available.</p>');
                     }
-                });
-            } else {
-                // Clear the milestone dropdown if no proposal is selected
-                $('#milestone').empty();
-                $('#milestone').append('<option value="">--Select Milestone--</option>');
-            }
-        });
 
+                },
 
-        $('#milestone').change(function() {
-            var milestoneid = $(this).val(); 
-
-            // Check if a proposal is selected
-            if (milestoneid) {
-                $.ajax({
-                    url: '/lead/milestone-details/' + milestoneid, // The URL to send the AJAX request to
-                    type: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                       
-                        $('#milestone_gst').empty();
-                        $('#milestone_cost').empty();
-
-                        $('#milestone_cost').val(data.milestone_amount);
-                        $('#milestone_gst').val(data.milestone_gst);
-                        $('#total_cost').text(data.milestone_total_amount);
-
-                        
-                    
-                    },
-                    
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText); // Log errors to console
-                    }
-                });
-            } else {
-               
-                $('#milestone_gst').empty();
-                $('#milestone_cost').empty();
-            }
-        });
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText); // Log errors to console
+                }
+            });
+        } else {
+            // Clear the milestone dropdown if no proposal is selected
+            $('#milestone').empty();
+            $('#milestone').append('<option value="">--Select Milestone--</option>');
+        }
     });
 
 
-    document.addEventListener('DOMContentLoaded', function() {
+    $('#milestone').change(function() {
+        var milestoneid = $(this).val();
+
+        // Check if a proposal is selected
+        if (milestoneid) {
+            $.ajax({
+                url: '/lead/milestone-details/' +
+                    milestoneid, // The URL to send the AJAX request to
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+
+                    $('#milestone_gst').empty();
+                    $('#milestone_cost').empty();
+
+                    $('#milestone_cost').val(data.milestone_amount);
+                    $('#milestone_gst').val(data.milestone_gst);
+                    $('#total_cost').text(data.milestone_total_amount);
+                    setCurrencyFormattingHTML('#total_cost');
+
+
+                },
+
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText); // Log errors to console
+                }
+            });
+        } else {
+
+            $('#milestone_gst').empty();
+            $('#milestone_cost').empty();
+        }
+
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
     flatpickr("#invoice_date", {
         defaultDate: new Date(), // Sets the default date to the current date
         dateFormat: "Y-m-d", // Use a standard format for backend compatibility
         placeholder: "Select date" // Placeholder text
     });
 });
-    
+
 
 function updateFileName() {
     var input = document.getElementById('file-upload');

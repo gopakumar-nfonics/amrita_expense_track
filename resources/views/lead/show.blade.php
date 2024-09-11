@@ -171,7 +171,8 @@
                                                         </td>
                                                         <!--end::SKU-->
                                                         <!--begin::SKU-->
-                                                        <td class="text-end">&#x20b9;{{ $milestone->milestone_amount }}
+                                                        <td class="text-end">&#x20b9;<span
+                                                                class="total-cost-span">{{ $milestone->milestone_amount }}</span>
                                                         </td>
                                                         <!--end::SKU-->
                                                         <!--begin::Quantity-->
@@ -179,7 +180,10 @@
                                                         <!--end::Quantity-->
                                                         <!--begin::Total-->
                                                         <td class="text-end">
-                                                            &#x20b9;{{ $milestone->milestone_total_amount }}</td>
+                                                            &#x20b9;<span
+                                                                class="total-cost-span">{{ $milestone->milestone_total_amount }}</span>
+                                                        </td>
+                                                        span
                                                         <!--end::Total-->
                                                     </tr>
 
@@ -290,6 +294,9 @@ function approve(proid) {
 $(document).ready(function() {
 
     setCurrencyFormattingHTML('#total-cost-span');
+
+
+
 
 });
 </script>

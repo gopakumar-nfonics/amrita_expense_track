@@ -20,6 +20,12 @@
 
         // Initial state check
         updateDivState();
+
+        $('.total-cost-span').each(function() {
+            const rawValue = $(this).text(); // Get the current text content
+            const formattedValue = formatCurrency(rawValue); // Format the value
+            $(this).text(formattedValue); // Set the formatted value back to the span
+        });
     });
 
 

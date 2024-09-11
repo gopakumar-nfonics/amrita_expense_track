@@ -61,7 +61,7 @@
                                     <div class="mb-0">
                                         <!--begin::Row-->
                                         <div class="row gx-10 mb-5">
-                                            <div class="row ps-15 pe-0 pb-5">
+                                            <div class="row pe-0 pb-5">
                                                 <div class="col-lg-12">
                                                     <div class="fv-row  d-flex justify-content-between">
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-3">
@@ -165,114 +165,104 @@
                                             <!--end::Row-->
                                             <div class="col-lg-12">
                                                 <div class="w-100 flex-lg-row-auto mb-7 me-7 me-lg-10">
-                                                    <!--begin::Order details-->
-                                                    <div class="card card-flush py-4">
-                                                        <!--begin::Card body-->
-                                                        <div class="card-body py-0">
-                                                            <div class="d-flex flex-row gap-6">
 
-                                                                <!--begin::Input group-->
-                                                                <div class="fv-row">
-                                                                    <!--begin::Label-->
-                                                                    <label class="required form-label">Cost
-                                                                        (INR)</label>
-                                                                    <!--end::Label-->
-                                                                    <!--begin::Editor-->
-                                                                    <input id="order_cost" name="order_cost"
-                                                                        placeholder="Cost"
-                                                                        class="form-control mb-2 @error('order_cost') is-invalid @enderror"
-                                                                        value="{{ old('order_cost') }}"
-                                                                        oninput="calculateTotalCost()" />
-                                                                    @error('order_cost')<div class="invalid-feedback">
-                                                                        {{ $message }}</div> @enderror
-                                                                    <!--end::Editor-->
+                                                    <div class="d-flex flex-row gap-6">
+
+                                                        <!--begin::Input group-->
+                                                        <div class="fv-row">
+                                                            <!--begin::Label-->
+                                                            <label class="required form-label">Cost
+                                                                (INR)</label>
+                                                            <!--end::Label-->
+                                                            <!--begin::Editor-->
+                                                            <input id="order_cost" name="order_cost" placeholder="Cost"
+                                                                class="form-control mb-2 @error('order_cost') is-invalid @enderror"
+                                                                value="{{ old('order_cost') }}"
+                                                                oninput="calculateTotalCost()" />
+                                                            @error('order_cost')<div class="invalid-feedback">
+                                                                {{ $message }}</div> @enderror
+                                                            <!--end::Editor-->
 
 
-                                                                </div>
-                                                                <!--end::Input group-->
-
-                                                                <!--begin::Input group-->
-                                                                <div class="fv-row">
-                                                                    <!--begin::Label-->
-                                                                    <label class="required form-label">GST (%)</label>
-                                                                    <!--end::Label-->
-                                                                    <!--begin::Editor-->
-                                                                    <input id="order_gst" name="order_gst"
-                                                                        placeholder="GST %"
-                                                                        class="form-control mb-2 @error('order_gst') is-invalid @enderror"
-                                                                        value="{{ old('order_gst') }}"
-                                                                        oninput="calculateTotalCost()" />
-                                                                    @error('order_gst')<div class="invalid-feedback">
-                                                                        {{ $message }}</div> @enderror
-                                                                    <!--end::Editor-->
-                                                                </div>
-                                                                <!--end::Input group-->
-
-
-                                                                <!--begin::Input group-->
-                                                                <div class="fv-row pt-0">
-                                                                    <!--begin::Label-->
-                                                                    <label class="required form-label">Total Cost
-                                                                        (INR)</label>
-                                                                    <!--end::Label-->
-                                                                    <!--begin::Editor-->
-
-                                                                    <div class="d-flex align-items-center mb-2">
-                                                                        <!--begin::Currency-->
-                                                                        <span
-                                                                            class="fs-2 fw-semibold text-gray-500 align-self-start me-1">&#x20b9;</span>
-                                                                        <!--end::Currency-->
-                                                                        <!--begin::Value-->
-                                                                        <input id="total_cost" name="total_cost"
-                                                                            placeholder="0.00"
-                                                                            class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2 border-0 w-100 disabled-input @error('total_cost') is-invalid @enderror"
-                                                                            value="{{ old('total_cost') }}" readonly />
-                                                                        @error('total_cost')<div
-                                                                            class="invalid-feedback">
-                                                                            {{ $message }}</div> @enderror
-                                                                        <!--end::Editor-->
-                                                                        <!--end::Value-->
-
-                                                                    </div>
-
-                                                                </div>
-
-                                                                <!--begin::Input group-->
-                                                                <div class="fv-row pt-0">
-                                                                    <div class="text-center">
-                                                                        <label for="file-upload"
-                                                                            class="btn btn-sm btn-info w-100 mt-5 mb-1">
-                                                                            <!--begin::Svg Icon | path: icons/duotune/files/fil018.svg-->
-                                                                            <span class="svg-icon svg-icon-2">
-                                                                                <i class="fa-solid fa-upload"></i>
-                                                                            </span>
-                                                                            <!--end::Svg Icon-->Upload File
-                                                                            <input type="file" id="file-upload"
-                                                                                name="file"
-                                                                                class="d-none @error('file') is-invalid @enderror"
-                                                                                onchange="updateFileName()" />
-                                                                        </label>
-                                                                    </div>
-
-                                                                    <!-- Display the selected file name here -->
-                                                                    <div class="text-muted fs-7" id="file-name">Upload
-                                                                        reference document.</div>
-                                                                    @error('file')<div class="invalid-feedback">
-                                                                        {{ $message }}</div> @enderror
-                                                                    <!--end::Description-->
-                                                                </div>
-
-                                                                <!--end::Input group-->
-                                                            </div>
                                                         </div>
-                                                        <!--end::Card header-->
+                                                        <!--end::Input group-->
+
+                                                        <!--begin::Input group-->
+                                                        <div class="fv-row">
+                                                            <!--begin::Label-->
+                                                            <label class="required form-label">GST (%)</label>
+                                                            <!--end::Label-->
+                                                            <!--begin::Editor-->
+                                                            <input id="order_gst" name="order_gst" placeholder="GST %"
+                                                                class="form-control mb-2 @error('order_gst') is-invalid @enderror"
+                                                                value="{{ old('order_gst') }}"
+                                                                oninput="calculateTotalCost()" />
+                                                            @error('order_gst')<div class="invalid-feedback">
+                                                                {{ $message }}</div> @enderror
+                                                            <!--end::Editor-->
+                                                        </div>
+                                                        <!--end::Input group-->
+
+
+                                                        <!--begin::Input group-->
+                                                        <div class="fv-row pt-0">
+                                                            <!--begin::Label-->
+                                                            <label class="required form-label">Total Cost
+                                                                (INR)</label>
+                                                            <!--end::Label-->
+                                                            <!--begin::Editor-->
+
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <!--begin::Currency-->
+                                                                <span
+                                                                    class="fs-2 fw-semibold text-gray-500 align-self-start me-1">&#x20b9;</span>
+                                                                <!--end::Currency-->
+                                                                <!--begin::Value-->
+                                                                <input id="total_cost" name="total_cost"
+                                                                    placeholder="0.00"
+                                                                    class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2 border-0 w-100 disabled-input @error('total_cost') is-invalid @enderror"
+                                                                    value="{{ old('total_cost') }}" readonly />
+                                                                @error('total_cost')<div class="invalid-feedback">
+                                                                    {{ $message }}</div> @enderror
+                                                                <!--end::Editor-->
+                                                                <!--end::Value-->
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <!--begin::Input group-->
+                                                        <div class="fv-row pt-0">
+                                                            <div class="text-center">
+                                                                <label for="file-upload"
+                                                                    class="btn btn-sm btn-info w-100 mt-5 mb-1">
+                                                                    <!--begin::Svg Icon | path: icons/duotune/files/fil018.svg-->
+                                                                    <span class="svg-icon svg-icon-2">
+                                                                        <i class="fa-solid fa-upload"></i>
+                                                                    </span>
+                                                                    <!--end::Svg Icon-->Upload File
+                                                                    <input type="file" id="file-upload" name="file"
+                                                                        class="d-none @error('file') is-invalid @enderror"
+                                                                        onchange="updateFileName()" />
+                                                                </label>
+                                                            </div>
+
+                                                            <!-- Display the selected file name here -->
+                                                            <div class="text-muted fs-7" id="file-name">Upload
+                                                                reference document.</div>
+                                                            @error('file')<div class="invalid-feedback">
+                                                                {{ $message }}</div> @enderror
+                                                            <!--end::Description-->
+                                                        </div>
+
+                                                        <!--end::Input group-->
                                                     </div>
-                                                    <!--end::Order details-->
+
 
                                                 </div>
                                             </div>
                                             <!--begin::Table wrapper-->
-                                            <div class="table-responsive mb-10 col-lg-12 mx-10">
+                                            <div class="table-responsive mb-10 col-lg-12">
 
                                                 <!--begin::Input group-->
 
@@ -390,7 +380,7 @@
 
                                                 </div>
                                                 <!--end::Order details-->
-                                                <div class="d-flex justify-content-end border-top mt-0 pt-5 me-10">
+                                                <div class="d-flex justify-content-end border-top mt-0 pt-5">
                                                     <!--begin::Button-->
                                                     <a href="../../demo1/dist/apps/ecommerce/catalog/products.html"
                                                         id="kt_ecommerce_edit_order_cancel"

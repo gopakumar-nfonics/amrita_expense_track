@@ -163,19 +163,22 @@
                                                 </div>
 
 
-                                                <div class="separator separator-solid mt-14 mb-4 blue-border-bottom">
-                                                    <label class="form-label legend-label">Cost & Payments</label>
+                                                <div class="mt-10 border-bottom">
+                                                    <label class="form-label color-blue">Cost and Tax</label>
+                                                    <div class="text-muted fs-7">Mention Cost and Tax associated with
+                                                        this proposal. Also upload the reference document, if any</div>
+
                                                 </div>
                                             </div>
 
                                             <!--end::Row-->
-                                            <div class="col-lg-3">
+                                            <div class="col-lg-12">
                                                 <div class="w-100 flex-lg-row-auto mb-7 me-7 me-lg-10">
                                                     <!--begin::Order details-->
-                                                    <div class="card card-flush py-4 br-right">
+                                                    <div class="card card-flush py-4">
                                                         <!--begin::Card body-->
-                                                        <div class="card-body pt-0">
-                                                            <div class="d-flex flex-column gap-6">
+                                                        <div class="card-body py-0">
+                                                            <div class="d-flex flex-row gap-6">
 
                                                                 <!--begin::Input group-->
                                                                 <div class="fv-row">
@@ -192,6 +195,7 @@
                                                                     @error('order_cost')<div class="invalid-feedback">
                                                                         {{ $message }}</div> @enderror
                                                                     <!--end::Editor-->
+
 
                                                                 </div>
                                                                 <!--end::Input group-->
@@ -229,7 +233,7 @@
                                                                         <!--end::Currency-->
                                                                         <!--begin::Value-->
                                                                         <input id="total_cost" name="total_cost"
-                                                                            placeholder="0.0"
+                                                                            placeholder="0.00"
                                                                             class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2 border-0 w-100 disabled-input @error('total_cost') is-invalid @enderror"
                                                                             value="{{ old('total_cost') }}" readonly />
                                                                         @error('total_cost')<div
@@ -243,7 +247,7 @@
                                                                 </div>
 
                                                                 <!--begin::Input group-->
-                                                                <div class="fv-row border-top pt-0">
+                                                                <div class="fv-row pt-0">
                                                                     <div class="text-center">
                                                                         <label for="file-upload"
                                                                             class="btn btn-sm btn-info w-100 mt-5 mb-1">
@@ -277,24 +281,27 @@
                                                 </div>
                                             </div>
                                             <!--begin::Table wrapper-->
-                                            <div class="table-responsive mb-10 col-lg-9">
+                                            <div class="table-responsive mb-10 col-lg-12 mx-10">
 
                                                 <!--begin::Input group-->
 
                                                 <!--begin::Table-->
-                                                <div class="min-h-300px">
+                                                <div class="min-h-300px me-10 ">
                                                     <label class="form-label color-blue">Payment Milestones</label>
+                                                    <div class="text-muted fs-7 border-bottom">Mention the
+                                                        specific points where payments are made, typically aligned with
+                                                        the completion of key deliverables or phases.</div>
                                                     <table class="table g-5 gs-0 mb-0 fw-bold text-gray-700"
                                                         data-kt-element="items">
                                                         <!--begin::Table head-->
                                                         <thead>
                                                             <tr
                                                                 class="border-bottom fs-7 fw-bold text-gray-700 text-uppercase">
-                                                                <th class="min-w-300px w-475px">Milestone</th>
-                                                                <th class="min-w-150px w-175px">Date</th>
+                                                                <th class="min-w-200px w-275px">Milestone</th>
+                                                                <th class="min-w-150px w-150px">Date</th>
                                                                 <th class="min-w-200px w-200px">Amount</th>
                                                                 <th class="min-w-100px w-100px">GST (%) </th>
-                                                                <th class="min-w-200px w-250px text-end">Total</th>
+                                                                <th class="min-w-200px w-200px text-end">Total</th>
                                                                 <th class="min-w-75px w-75px text-end">Remove</th>
                                                             </tr>
                                                         </thead>
@@ -369,8 +376,11 @@
                                                                 <th colspan="4"
                                                                     class="border-bottom border-bottom-dashed ps-0">
                                                                     <div class="d-flex flex-column align-items-end">
-                                                                        <div class="fs-6 color-blue">Total : &#x20b9;
+                                                                        <div>
                                                                             <span
+                                                                                class="fs-2 fw-semibold text-gray-500 align-self-start me-1">&#x20b9;</span>
+                                                                            <span
+                                                                                class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2"
                                                                                 data-kt-element="sub-total">0.00</span>
                                                                         </div>
 
@@ -502,6 +512,7 @@ $(document).ready(function() {
             ['insert', ['link']],
         ]
     });
+
 });
 
 
@@ -519,8 +530,11 @@ function calculateTotalCost() {
     // Calculate the total cost
     const totalCost = cost + (cost * gstPercentage) / 100;
 
+
     // Update the total cost field
     totalCostInput.value = totalCost.toFixed(2); // Set the value with two decimal places
+
+    setCurrencyFormatting('#total_cost');
 }
 </script>
 <script>

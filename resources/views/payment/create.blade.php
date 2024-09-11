@@ -188,10 +188,11 @@
                                                                                         class="d-flex justify-content-end">
                                                                                         <div
                                                                                             class="fw-400 d-block fs-6">
+
                                                                                             <span
-                                                                                                class="fs-2 fw-semibold text-gray-500 me-0">&#x20b9;</span>
-                                                                                            <span
-                                                                                                class="total-cost-span fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">18</span>
+                                                                                                class=" fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">18
+                                                                                                %</span>
+
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>

@@ -49,7 +49,7 @@
 									<div class="card-toolbar">
 
 										<!-- begin::Pint-->
-										<button type="button" class="btn btn-sm btn-success me-5" onclick="window.print();"><i class="fa-solid fa-check "></i> Approve & Generate RO</button>
+										<button type="button" class="btn btn-sm btn-success me-5" onclick="approve('{{$proposal->id}}')"><i class="fa-solid fa-check "></i> Approve & Generate RO</button>
 														<!-- end::Pint-->
 								
 														<!-- begin::Pint-->
@@ -204,4 +204,56 @@
 							</div>
 							<!--end::Content-->
 						</div>
+@endsection
+@section('pageScripts')
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+	function approve(proid) {
+		swal({
+				title: "Are you sure?",
+				text: "You want to approve this proposal",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+			.then((willDelete) => {
+				if (willDelete) {
+					$.ajax({
+						url: "{{ route('lead.approve') }}",
+						type: 'POST',
+						data: {
+							_token: '{{ csrf_token() }}',
+							id: proid,
+						},
+						success: function(response) {
+							if (response.success) {
+								swal(response.success, {
+									icon: "success",
+									buttons: false,
+								});
+								setTimeout(() => {
+									location.reload();
+								}, 1000);
+							} else {
+								swal(response.error || 'Something went wrong.', {
+									icon: "warning",
+									buttons: false,
+								});
+								setTimeout(() => {
+									location.reload();
+								}, 1000);
+							}
+						},
+						error: function(xhr) {
+							swal('Error: Something went wrong.', {
+								icon: "error",
+							}).then(() => {
+								location.reload();
+							});
+						}
+					});
+				}
+			});
+	}
+</script>
 @endsection

@@ -33,6 +33,9 @@ var KTAppInvoicesCreate = (function () {
       // Calculate and display the total for this item
       totalElement.innerText = numberFormat.to(totalAmount);
 
+      // Debugging line to check values
+      console.log(`Item total for ${itemElement.dataset.item}: ${totalAmount}`);
+
       // Update subtotal
       subTotal += totalAmount;
     });
@@ -56,21 +59,33 @@ var KTAppInvoicesCreate = (function () {
     }
   };
 
-  // Function to display error message
+  // Function to display error message and disable submit button
   var displayErrorMessage = function (message) {
     var errorMessageElement = invoiceFormElement.querySelector('#error-message');
+    var submitButton = invoiceFormElement.querySelector('[id="kt_ecommerce_edit_order_submit"]'); // Adjust selector as needed
+
     if (errorMessageElement) {
       errorMessageElement.innerText = message;
       errorMessageElement.style.display = 'block';
     }
+
+    if (submitButton) {
+      submitButton.disabled = true; // Disable the submit button
+    }
   };
 
-  // Function to clear error message
+  // Function to clear error message and enable submit button
   var clearErrorMessage = function () {
     var errorMessageElement = invoiceFormElement.querySelector('#error-message');
+    var submitButton = invoiceFormElement.querySelector('[id="kt_ecommerce_edit_order_submit"]'); // Adjust selector as needed
+
     if (errorMessageElement) {
       errorMessageElement.innerText = '';
       errorMessageElement.style.display = 'none';
+    }
+
+    if (submitButton) {
+      submitButton.disabled = false; // Re-enable the submit button
     }
   };
 
@@ -128,9 +143,16 @@ var KTAppInvoicesCreate = (function () {
   // Function to handle input events and clear default values
   var handleInput = function (event) {
     var input = event.target;
-    if (input.value === "0.00") {
-      input.value = ""; // Clear the input value if it's "0.00"
+    
+    // If the value is "0.00", clear it
+    if (input.matches('[data-kt-element="price"], [data-kt-element="quantity"]')) {
+      if (input.value === "0.00") {
+        input.value = ""; // Clear the input value if it's "0.00"
+      }
     }
+    
+    // Debugging line to check the value being processed
+    console.log(`Input value for ${input.name}: ${input.value}`);
   };
 
   return {

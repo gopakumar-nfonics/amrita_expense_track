@@ -29,15 +29,6 @@
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">Create Proposal</li>
 
-                        @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        @endif
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -385,6 +376,8 @@
                                                         </tfoot>
                                                         <!--end::Table foot-->
                                                     </table>
+                                                 <span class="invalid-feedback" id="error-message"></span>
+
                                                 </div>
                                                 <!--end::Order details-->
                                                 <div class="d-flex justify-content-end border-top mt-5 pt-5">

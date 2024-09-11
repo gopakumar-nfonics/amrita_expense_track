@@ -49,7 +49,7 @@
 							@csrf
 							@method('PUT')
 
-							<input type="hidden" name="vid"  value="{{ old('vid', $vendor['id']) }}" />
+							<input type="hidden" name="vid" value="{{ old('vid', $vendor['id']) }}" />
 							<!--begin::Card body-->
 							<div class="card-body border-top p-9">
 								<div class="d-flex flex-column gap-5 gap-md-7">
@@ -57,7 +57,7 @@
 									<div class="separator separator-solid mt-5 mb-4 blue-border-bottom"><label class="form-label legend-label">Business Information</label></div>
 									<!--end::Title-->
 
-									
+
 									<!--begin::Input group-->
 									<div class="row mb-6">
 
@@ -162,7 +162,7 @@
 											<!--begin::Input-->
 											<input class="form-control @error('address') is-invalid @enderror" name="address" placeholder="Address Line 1"
 												value="{{ old('address', $vendor['address']) }}" />
-												@error('address')<div class="invalid-feedback">{{ $message }}</div> @enderror
+											@error('address')<div class="invalid-feedback">{{ $message }}</div> @enderror
 											<!--end::Input-->
 										</div>
 										<div class="flex-row-fluid">
@@ -172,7 +172,7 @@
 											<!--begin::Input-->
 											<input class="form-control @error('address_2') is-invalid @enderror" name="address_2" placeholder="Address Line 2"
 												value="{{ old('address_2', $vendor['address_2']) }}" />
-												@error('address_2')<div class="invalid-feedback">{{ $message }}</div> @enderror
+											@error('address_2')<div class="invalid-feedback">{{ $message }}</div> @enderror
 											<!--end::Input-->
 										</div>
 									</div>
@@ -185,26 +185,26 @@
 											<!--end::Label-->
 											<!--begin::Input-->
 											<input class="form-control @error('city') is-invalid @enderror
-" name="city" placeholder="" value="{{ old('city', $vendor['city']) }}"  />
+" name="city" placeholder="" value="{{ old('city', $vendor['city']) }}" />
 
-@error('city')<div class="invalid-feedback">{{ $message }}</div> @enderror
+											@error('city')<div class="invalid-feedback">{{ $message }}</div> @enderror
 
 											<!--end::Input-->
 										</div>
-										
+
 										<div class="fv-row flex-row-fluid">
 											<!--begin::Label-->
 											<label class="required form-label">State</label>
 											<!--end::Label-->
 											<select class="form-control form-control-lg form-control-solid @error('state') is-invalid @enderror" id="state" name="state">
-											<option value="">--Select State--</option>
-											@foreach($states as $state)
-											<option value="{{ $state->id }}"
-												@if(old('state',$vendor->state) == $state->id) selected @endif>{{ $state->name }}</option>
-											@endforeach
-											
-										</select>
-										@error('state')<div class="invalid-feedback">{{ $message }}</div>@enderror
+												<option value="">--Select State--</option>
+												@foreach($states as $state)
+												<option value="{{ $state->id }}"
+													@if(old('state',$vendor->state) == $state->id) selected @endif>{{ $state->name }}</option>
+												@endforeach
+
+											</select>
+											@error('state')<div class="invalid-feedback">{{ $message }}</div>@enderror
 										</div>
 
 										<div class="fv-row flex-row-fluid w-100px">
@@ -213,9 +213,84 @@
 											<!--end::Label-->
 											<!--begin::Input-->
 											<input class="form-control @error('postcode') is-invalid @enderror
-" name="postcode" placeholder="" value="{{ old('postcode', $vendor['postcode']) }}"  />
+" name="postcode" placeholder="" value="{{ old('postcode', $vendor['postcode']) }}" />
 
-@error('postcode')<div class="invalid-feedback">{{ $message }}</div> @enderror
+											@error('postcode')<div class="invalid-feedback">{{ $message }}</div> @enderror
+											<!--end::Input-->
+										</div>
+									</div>
+
+
+
+
+								</div>
+
+
+								<div class="d-flex flex-column gap-5 gap-md-7 mt-5">
+									<!--begin::Title-->
+									<div class="separator separator-solid mt-10 mb-6 blue-border-bottom"><label class="form-label legend-label">Bank Account Details</label></div>
+									<!--end::Title-->
+									<!--begin::Input group-->
+									<div class="d-flex flex-column flex-md-row gap-5">
+										<div class="fv-row flex-row-fluid">
+											<!--begin::Label-->
+											<label class="required form-label">Bank Name</label>
+											<!--end::Label-->
+											<!--begin::Input-->
+											<input class="form-control @error('bank_name') is-invalid @enderror" name="bank_name" placeholder="Bank Name"
+												value="{{ old('bank_name', $account_details['bank_name'] ?? '') }}" />
+											@error('bank_name')<div class="invalid-feedback">{{ $message }}</div> @enderror
+											<!--end::Input-->
+										</div>
+										<div class="flex-row-fluid">
+											<!--begin::Label-->
+											<label class="form-label required">Branch Name</label>
+											<!--end::Label-->
+											<!--begin::Input-->
+											<input class="form-control @error('branch_name') is-invalid @enderror" name="branch_name" placeholder="Branch Name"
+												value="{{ old('branch_name', $account_details['branch_name'] ?? '') }}" />
+											@error('branch_name')<div class="invalid-feedback">{{ $message }}</div> @enderror
+											<!--end::Input-->
+										</div>
+									</div>
+									<!--end::Input group-->
+									<!--begin::Input group-->
+									<div class="d-flex flex-column flex-md-row gap-5">
+										<div class="flex-row-fluid">
+											<!--begin::Label-->
+											<label class="required form-label">Beneficiary Name</label>
+											<!--end::Label-->
+											<!--begin::Input-->
+											<input class="form-control @error('beneficiary_name') is-invalid @enderror
+" name="beneficiary_name" placeholder="Beneficiary Name" value="{{ old('beneficiary_name', $account_details['beneficiary_name'] ?? '') }}" />
+
+											@error('beneficiary_name')<div class="invalid-feedback">{{ $message }}</div> @enderror
+
+											<!--end::Input-->
+										</div>
+
+										<div class="flex-row-fluid">
+											<!--begin::Label-->
+											<label class="required form-label">Account Number</label>
+											<!--end::Label-->
+											<!--begin::Input-->
+											<input class="form-control @error('account_no') is-invalid @enderror
+" name="account_no" placeholder="Account Number" value="{{ old('account_no', $account_details['account_no'] ?? '') }}" />
+
+											@error('account_no')<div class="invalid-feedback">{{ $message }}</div> @enderror
+
+											<!--end::Input-->
+										</div>
+
+										<div class="fv-row flex-row-fluid w-100px">
+											<!--begin::Label-->
+											<label class="required form-label">IFSC Code</label>
+											<!--end::Label-->
+											<!--begin::Input-->
+											<input class="form-control @error('ifsc_code') is-invalid @enderror
+" name="ifsc_code" placeholder="IFSC Code" value="{{ old('ifsc_code', $account_details['ifsc_code'] ?? '') }}" />
+
+											@error('ifsc_code')<div class="invalid-feedback">{{ $message }}</div> @enderror
 											<!--end::Input-->
 										</div>
 									</div>

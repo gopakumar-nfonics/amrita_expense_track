@@ -226,9 +226,9 @@
 								</div>
 
 
-								<div class="d-flex flex-column gap-5 gap-md-7">
+								<div class="d-flex flex-column gap-5 gap-md-7 mt-5">
 									<!--begin::Title-->
-									<div class="separator separator-solid mt-10 mb-6 blue-border-bottom"><label class="form-label legend-label">Account Details</label></div>
+									<div class="separator separator-solid mt-10 mb-6 blue-border-bottom"><label class="form-label legend-label">Bank Account Details</label></div>
 									<!--end::Title-->
 									<!--begin::Input group-->
 									<div class="d-flex flex-column flex-md-row gap-5">

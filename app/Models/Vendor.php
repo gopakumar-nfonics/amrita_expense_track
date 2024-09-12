@@ -29,4 +29,8 @@ class Vendor extends Model
     {
         return $this->hasMany(State::class,'id','state');
     }
+    public function banckaccount()
+    {
+        return $this->belongsTo(VendorBankAccount::class,'id','vendor_id');
+    }
 }

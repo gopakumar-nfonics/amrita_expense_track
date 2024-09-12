@@ -10,6 +10,7 @@ class Invoice extends Model
     use HasFactory;
 
     protected $fillable = [
+        'invoice_id',
         'proposal_id',
         'milestone_id',
         'vendor_id', // Add this line
@@ -32,5 +33,10 @@ class Invoice extends Model
     public function vendor()
     {
         return $this->belongsTo(Vendor::class);
+    }
+
+    public function proposalro()
+    {
+        return $this->belongsTo(ProposalRo::class, 'proposal_id','proposal_id');
     }
 }

@@ -17,4 +17,9 @@ class VendorBankAccount extends Model
         'bank_name',
         'branch_name',
     ];
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
+    }
 }

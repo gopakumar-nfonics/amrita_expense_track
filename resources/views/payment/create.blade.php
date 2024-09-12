@@ -52,7 +52,9 @@
                             <!--begin::Card body-->
                             <div class="card-body p-12">
                                 <!--begin::Form-->
-                                <form action="" id="kt_invoice_form">
+                                <form id="kt_invoice_form" method="POST" action="{{route('payment.store')}}"
+                                    enctype="multipart/form-data">
+                                    @csrf
 
 
                                     <!--begin::Wrapper-->
@@ -69,9 +71,9 @@
                                                         <div class="d-flex flex-column">
 
                                                             <div class="d-block w-100 fs-1 ms-sm-auto mb-2 color-blue">
-                                                                Expense
-                                                                Tracker Web Application</div>
-                                                            <div class="text-muted fs-5">NFONICS Solutions (P) Ltd</div>
+                                                                {{$invoice->proposal->proposal_title}}
+                                                            </div>
+                                                            <div class="text-muted fs-5">{{$invoice->vendor->vendor_name}}</div>
 
                                                             <!--begin::Separator-->
                                                             <div class="separator my-5"></div>
@@ -81,24 +83,22 @@
                                                                 class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
                                                                 <div class="flex-root d-flex flex-column">
                                                                     <span class="text-muted">RO#</span>
-                                                                    <span class="fs-5">#2324-569</span>
+                                                                    <span class="fs-5">#{{$invoice->proposalro->proposal_ro}}</span>
                                                                 </div>
                                                                 <div class="flex-root d-flex flex-column">
                                                                     <span class="text-muted">Invoice Date</span>
-                                                                    <span class="fs-5">06 October, 2024</span>
+                                                                    <span class="fs-5">{{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d F, Y') }}</span>
                                                                 </div>
                                                                 <div class="flex-root d-flex flex-column">
                                                                     <span class="text-muted">Invoice #</span>
-                                                                    <span class="fs-5">#INV-000414</span>
+                                                                    <span class="fs-5">#{{$invoice->invoice_id}}</span>
                                                                 </div>
                                                                 <div class="flex-root d-flex flex-column">
                                                                     <div class="symbol symbol-30px me-5">
                                                                         <img alt="Icon"
                                                                             src="{{ url('/') }}/assets/media/svg/files/pdf.svg">
                                                                         <a class="fs-7 text-muted border-bottom color-blue ms-2"
-                                                                            href="#">Milestone 1:
-                                                                            Project
-                                                                            Kick-off</a>
+                                                                            href="{{ Storage::url($invoice->invoice_file) }}" download="{{ basename($invoice->invoice_file) }}">{{$invoice->milestone->milestone_title}}</a>
                                                                     </div>
 
                                                                 </div>
@@ -110,19 +110,18 @@
                                                                 class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold my-5">
                                                                 <div class="flex-root d-flex flex-column">
                                                                     <span class="text-muted">Vendor Details</span>
-                                                                    <span class="fs-5">NFONICS Solutions (P) Ltd</span>
-                                                                    <span class="fs-7">Unit 1/23 Hastings Road,
-                                                                        <br>Banglore 3000,Karnataka | 677593
-                                                                        <br>GSTIN : 32AAN0826C1Z4 | PAN NO:
-                                                                        A46CN0826C</span>
+                                                                    <span class="fs-5">{{$invoice->vendor->vendor_name}}</span>
+                                                                    <span class="fs-7">{{$invoice->vendor->address}},
+                                                                        <br>{{$invoice->vendor->city}},{{$invoice->vendor->states[0]->name}} | {{$invoice->vendor->postcode}}
+                                                                        <br>GSTIN : {{$invoice->vendor->gst}} | PAN NO:
+                                                                        {{$invoice->vendor->pan}}</span>
                                                                 </div>
                                                                 <div class="flex-root d-flex flex-column">
                                                                     <span class="text-muted">Bank Details</span>
-                                                                    <span class="fs-5">NFONICS Solutions (P) Ltd</span>
-                                                                    <span class="fs-7">Account NO. : 17020200000221
-                                                                        <br>IFSC Code : FDRL0001702
-                                                                        <br> Federal Bank, MG Road Branch, Banglore
-                                                                        3000,Karnataka </span>
+                                                                    <span class="fs-5">{{$invoice->vendor->banckaccount->beneficiary_name}}</span>
+                                                                    <span class="fs-7">Account NO. : {{$invoice->vendor->banckaccount->account_no}}
+                                                                        <br>IFSC Code : {{$invoice->vendor->banckaccount->ifsc_code}}
+                                                                        <br> {{$invoice->vendor->banckaccount->bank_name}}, {{$invoice->vendor->banckaccount->branch_name}} </span>
                                                                 </div>
                                                             </div>
                                                             <!--end::Billing & shipping-->
@@ -142,7 +141,7 @@
                                                                                 <th class="min-w-80px text-end pb-2">
                                                                                     GST(%)
                                                                                 </th>
-                                                                                <th class="min-w-80px text-end pb-2">GST
+                                                                                <th class="min-w-80px text-end pb-2">GST Amount
                                                                                 </th>
                                                                                 <th class="min-w-100px text-end pb-2">
                                                                                     Total</th>
@@ -160,8 +159,7 @@
                                                                                         <div class="ms-0">
                                                                                             <div
                                                                                                 class="fw-bold fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">
-                                                                                                Milestone 1: Project
-                                                                                                Kick-off
+                                                                                                {{$invoice->milestone->milestone_title}}
                                                                                             </div>
                                                                                         </div>
                                                                                         <!--end::Title-->
@@ -177,7 +175,7 @@
                                                                                             <span
                                                                                                 class="fs-2 fw-semibold text-gray-500 me-0">&#x20b9;</span>
                                                                                             <span
-                                                                                                class="total-cost-span fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">11,400.00</span>
+                                                                                                class="total-cost-span fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$invoice->milestone->milestone_amount}}</span>
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
@@ -190,7 +188,11 @@
                                                                                             class="fw-400 d-block fs-6">
 
                                                                                             <span
-                                                                                                class=" fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">18
+                                                                                                class=" fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">@if($invoice->milestone->milestone_gst == floor($invoice->milestone->milestone_gst))
+                                                                                                {{ number_format($invoice->milestone->milestone_gst, 0) }} {{-- No decimal places --}}
+                                                                                                @else
+                                                                                                {{ number_format($invoice->milestone->milestone_gst, 2) }} {{-- Two decimal places --}}
+                                                                                                @endif
                                                                                                 %</span>
 
                                                                                         </div>
@@ -205,8 +207,15 @@
                                                                                             class="fw-400 d-block fs-6">
                                                                                             <span
                                                                                                 class="fs-2 fw-semibold text-gray-500 me-0">&#x20b9;</span>
+                                                                                            @php
+                                                                                            $milestoneAmount=$invoice->milestone->milestone_amount; // Base amount before GST
+                                                                                            $milestoneGstRate = $invoice->milestone->milestone_gst; // GST rate (percentage)
+
+                                                                                            // Calculate GST Amount
+                                                                                            $gstAmount = $milestoneAmount * ($milestoneGstRate / 100);
+                                                                                            @endphp
                                                                                             <span
-                                                                                                class="total-cost-span fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">1,400.00</span>
+                                                                                                class="total-cost-span fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$gstAmount}}</span>
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
@@ -220,7 +229,7 @@
                                                                                             <span
                                                                                                 class="fs-2 fw-semibold text-gray-500 me-0">&#x20b9;</span>
                                                                                             <span
-                                                                                                class="total-cost-span fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">21,400.00</span>
+                                                                                                class="total-cost-span fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$invoice->milestone->milestone_total_amount}}</span>
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
@@ -248,9 +257,9 @@
                                                                                     <div
                                                                                         class="text-muted fs-5 text-gray-600">
                                                                                         Rupees
-                                                                                        nine thousand four hundred
-                                                                                        forty-eight rupees
-                                                                                        rupees only.</div>
+                                                                                        {{$amounwords}}
+                                                                                        rupees only.
+                                                                                    </div>
 
                                                                                 </td>
                                                                             </tr>
@@ -273,23 +282,27 @@
                                                         <label class="form-label">Request ID</label>
                                                         <!--end::Label-->
                                                         <!--begin::Auto-generated ID-->
-                                                        <div class="fw-bold fs-3">#2324-569</div>
+                                                        <div class="fw-bold fs-3">#{{$paymentrequest->payment_request_id}}</div>
                                                         <!--end::Input-->
                                                     </div>
                                                     <div class="fs-6 fw-bold text-gray-700 col-lg-4 me-15">
+
+                                                    <input type="hidden" value="{{$invoice->id}}" name="invoid">
                                                         <!--begin::Label-->
                                                         <label class="required form-label">Stream</label>
                                                         <!--end::Label-->
                                                         <!--begin::Select2-->
-                                                        <select class="form-select mb-2" data-control="select2"
+                                                        <select class="form-select mb-2 @error('stream') is-invalid @enderror" data-control="select2"
                                                             data-hide-search="true" data-placeholder="Select Stream"
                                                             name="stream" id="stream">
                                                             <option></option>
                                                             @foreach ($stream as $strm)
-                                                            <option value="{{$strm->id}}">{{$strm->stream_name}}
+                                                            <option value="{{$strm->id}}"  @if(old('stream')==$strm->id) selected
+                                                                    @endif>{{$strm->stream_name}}
                                                             </option>
                                                             @endforeach
                                                         </select>
+                                                        @error('stream')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                                         <!--end::Select2-->
                                                     </div>
                                                     <div class="fs-6 fw-bold text-gray-700 col-lg-4">
@@ -299,9 +312,9 @@
                                                         <label class="required form-label">Category</label>
                                                         <!--end::Label-->
                                                         <!--begin::Select2-->
-                                                        <select class="form-select mb-2" data-control="select2"
+                                                        <select class="form-select mb-2 @error('pay_category') is-invalid @enderror" data-control="select2"
                                                             data-hide-search="true" data-placeholder="Select Category"
-                                                            name="payment_method" id="pay_category"
+                                                            name="pay_category" id="pay_category"
                                                             onchange="getallocatedbudget()">
                                                             <option></option>
                                                             @foreach ($main_categories as $main_category)
@@ -309,15 +322,19 @@
                                                             <optgroup label="{{ $main_category->category_name }}">
                                                                 @foreach ($main_category->children as $subcategory)
                                                                 <option class="sub-category"
-                                                                    value="{{ $subcategory->id }}">
-                                                                    {{ $subcategory->category_name }}</option>
+                                                                    value="{{ $subcategory->id }}" @if(old('pay_category')==$subcategory->id) selected
+                                                                    @endif>
+                                                                    {{ $subcategory->category_name }}
+                                                                </option>
                                                                 @endforeach
                                                             </optgroup>
                                                             @else
                                                             <!-- Print the main category as a standalone option if no children exist -->
                                                             <option class="main-category"
-                                                                value="{{ $main_category->id }}">
-                                                                {{ $main_category->category_name }}</option>
+                                                                value="{{ $main_category->id }}"  @if(old('pay_category')==$main_category->id) selected
+                                                                    @endif>
+                                                                {{ $main_category->category_name }}
+                                                            </option>
                                                             @endif
                                                             @endforeach
                                                         </select>
@@ -415,7 +432,7 @@
 <!--end::Global Stylesheets Bundle-->
 
 <script>
-var hostUrl = "{{ asset('assets/') }}";
+    var hostUrl = "{{ asset('assets/') }}";
 </script>
 
 <!--begin::Global Javascript Bundle(mandatory for all pages)-->
@@ -437,23 +454,23 @@ var hostUrl = "{{ asset('assets/') }}";
 <script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
 
 <script>
-function getallocatedbudget() {
-    $('#allocate_status').show();
-    const selectElement = document.getElementById("pay_category");
-    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    function getallocatedbudget() {
+        $('#allocate_status').show();
+        const selectElement = document.getElementById("pay_category");
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
 
-    // Find the optgroup (parent category)
-    const optgroupElement = selectedOption.closest('optgroup');
-    let parentCategoryName = '';
+        // Find the optgroup (parent category)
+        const optgroupElement = selectedOption.closest('optgroup');
+        let parentCategoryName = '';
 
-    // Check if the option belongs to an optgroup (subcategory)
-    if (optgroupElement) {
-        parentCategoryName = optgroupElement.label; // Get the parent category name
-    } else {
-        parentCategoryName = selectedOption.text; // If no parent, it's a main category
+        // Check if the option belongs to an optgroup (subcategory)
+        if (optgroupElement) {
+            parentCategoryName = optgroupElement.label; // Get the parent category name
+        } else {
+            parentCategoryName = selectedOption.text; // If no parent, it's a main category
+        }
+
+        document.getElementById("catname").innerText = parentCategoryName;
     }
-
-    document.getElementById("catname").innerText = parentCategoryName;
-}
 </script>
 @endsection

@@ -57,3 +57,5 @@ Route::get('lead/ro/{id}', [\App\Http\Controllers\resource\lead::class, 'ro'])->
 
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 Route::put('/profileupdate', [App\Http\Controllers\HomeController::class, 'profileupdate'])->name('profileupdate');
+
+Route::get('/payment/create/{id?}', [\App\Http\Controllers\resource\payment::class, 'create'])->name('payment.create');

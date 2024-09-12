@@ -71,11 +71,12 @@
                                             <div class="fw-400 d-block fs-6">
                                                 {{$pro->proposal_id}}
                                                 <div class="text-gray-400 fw-semibold fs-9">
-                                                @if($pro->proposal_status == 0)
-                                                    <span class="badge badge-info fs-8">
+                                                    @if($pro->proposal_status == 0)
+                                                    <span class="badge badge-light-info fs-8">
                                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                                         <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
-                                                            <i class="fa-solid fa-check light-green fs-8 me-1 "></i>
+                                                            <i
+                                                                class="fa-regular fa-circle-dot color-blue fs-8 me-1 "></i>
                                                         </span>
                                                         <!--end::Svg Icon-->Pending
                                                     </span>
@@ -99,19 +100,20 @@
                                                 <a href="{{ route('lead.show',$pro->id) }}"
                                                     class="text-dark fw-bold text-hover-primary fs-6 color-blue txt-capitalcase">{{$pro->proposal_title}}</a>
                                                 <span class="text-muted fw-semibold text-muted d-block fs-7">Submitted
-                                                    On : {{ \Carbon\Carbon::parse($pro->created_at)->format('d-M-Y') }}</span>
+                                                    On :
+                                                    {{ \Carbon\Carbon::parse($pro->created_at)->format('d-M-Y') }}</span>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                    @if($pro->proposalro)
+                                        @if($pro->proposalro)
                                         <div class="d-flex align-items-center">
 
                                             <div class="d-flex justify-content-start flex-column">
                                                 <a href="{{ route('lead.ro',$pro->id) }}"
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$pro->proposalro->proposal_ro}}</a>
                                                 <span class="text-muted fw-semibold text-muted d-block fs-7">Issued On :
-                                                {{ \Carbon\Carbon::parse($pro->proposalro->created_at)->format('d-M-Y') }}</span>
+                                                    {{ \Carbon\Carbon::parse($pro->proposalro->created_at)->format('d-M-Y') }}</span>
                                             </div>
                                         </div>
                                         @else

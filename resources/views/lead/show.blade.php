@@ -51,12 +51,12 @@
             </div>
             <!--end::Page title-->
             <div class="card-toolbar">
-            @if(!Auth::user()->isvendor() && $proposal->proposal_status ==0)
+                @if(!Auth::user()->isvendor() && $proposal->proposal_status ==0)
                 <!-- begin::Pint-->
                 <button type="button" class="btn btn-sm btn-success me-5" onclick="approve('{{$proposal->id}}')"><i
                         class="fa-solid fa-check "></i> Approve & Generate RO</button>
                 <!-- end::Pint-->
-              @endif
+                @endif
                 <!-- begin::Pint-->
                 <button type="button" class="btn btn-sm btn-info me-5" onclick="window.print();"><i
                         class="fa-solid fa-print"></i> Print</button>
@@ -98,13 +98,16 @@
                             <div class="d-flex  justify-content-between text-sm-start fw-semibold fs-7 text-muted">
                                 <div class="d-flex flex-column">
                                     <span class="fs-5 text-gray-900">{{$proposal->vendor->vendor_name}}</span>
-                                    <span class="fs-7 text-gray-700">{{$proposal->vendor->address}}, {{$proposal->vendor->city}},{{$proposal->vendor->states ? $proposal->vendor->states[0]['name'] : ''}}-{{$proposal->vendor->postcode}}
+                                    <span class="fs-7 text-gray-700">{{$proposal->vendor->address}},
+                                        {{$proposal->vendor->city}},{{$proposal->vendor->states ? $proposal->vendor->states[0]['name'] : ''}}-{{$proposal->vendor->postcode}}
                                         <br>{{$proposal->vendor->email}} | {{$proposal->vendor->phone}}
-                                        <br>GSTIN : {{$proposal->vendor->gst}} | PAN NO: {{$proposal->vendor->pan}}</span>
+                                        <br>GSTIN : {{$proposal->vendor->gst}} | PAN NO:
+                                        {{$proposal->vendor->pan}}</span>
                                 </div>
                                 <div class="d-flex flex-column">
                                     <span class="text-muted">Date</span>
-                                    <span class="fs-5 text-gray-700">{{ \Carbon\Carbon::parse($proposal->proposal_date)->format('d F, Y') }}</span>
+                                    <span
+                                        class="fs-5 text-gray-700">{{ \Carbon\Carbon::parse($proposal->proposal_date)->format('d F, Y') }}</span>
                                 </div>
                             </div>
                             <!--end::Text-->
@@ -124,7 +127,7 @@
                                     <div class="flex-root d-flex flex-column">
                                         <span class="fs-6 text-gray-700 fw-bold txt-uppercase">Scope &
                                             Services</span>
-                                        <div class="m-5" {!! $proposal->proposal_description !!}
+                                        <div class="m-5"> {!! $proposal->proposal_description !!}
                                         </div>
                                     </div>
 

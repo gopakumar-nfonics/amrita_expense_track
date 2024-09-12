@@ -105,7 +105,7 @@
                             <div class="d-flex  justify-content-between text-sm-start fw-semibold fs-7 text-muted">
                                 <div class="d-flex flex-column">
                                     <span class="text-dark fw-bold text-hover-primary fs-4">RO#:
-                                        AVV-0924-RO-003</span>
+                                        {{$proposal->proposalro->proposal_ro}}</span>
 
                                 </div>
                                 <div class="d-flex flex-column">
@@ -131,7 +131,7 @@
                                 <div class="d-flex flex-column flex-sm-row  fw-bold">
                                     <div class="flex-root d-flex flex-column txt-uppercase">
                                         <span class="fs-6 text-gray-700 fw-bold ">To</span>
-                                        <div class="m-5"><span>Mr. Arunraj</span>
+                                        <div class="m-5"><span>{{$proposal->vendor->contact_person}}</span>
                                             </br>{{$proposal->vendor->vendor_name}}
                                         </div>
                                     </div>

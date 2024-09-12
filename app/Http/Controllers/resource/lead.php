@@ -283,7 +283,7 @@ class lead extends Controller
 
     public function ro($id)
     {
-        $proposal = Proposal::with(['paymentMilestones', 'vendor.states'])->find($id);
+        $proposal = Proposal::with(['paymentMilestones', 'vendor.states','proposalro'])->find($id);
 
        
         

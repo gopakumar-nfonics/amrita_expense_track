@@ -10,6 +10,7 @@ use App\Models\PaymentMilestone;
 use App\Models\ProposalRo;
 use App\Models\Invoice as Invoices;
 use Illuminate\Support\Facades\Auth;
+use Numbers_Words;
 
 class invoice extends Controller
 {
@@ -117,7 +118,11 @@ class invoice extends Controller
      */
     public function show($id)
     {
-        return view('invoice.show');
+        $invoice = Invoices::with(['proposal','milestone','vendor.banckaccount','vendor.states', 'proposalro'])->where('id', $id)->first();
+        $number = $invoice->milestone->milestone_total_amount;
+       $numbersWords = new Numbers_Words();
+       $amounwords = $numbersWords->toWords($number);
+        return view('invoice.show',compact('invoice','amounwords'));
     }
 
     /**

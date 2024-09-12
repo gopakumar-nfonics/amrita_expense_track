@@ -49,29 +49,40 @@
 														<tr class="fw-bold">
 															<th class="min-w-100px">ID</th>
 															<th class="min-w-200px">Vendor</th>
-															<th class="min-w-100px">Date</th>														
-															<th class="min-w-100px">Total</th>
-															<th class="min-w-100px">Paid</th>
-															<th class="min-w-100px">Balance</th>
+															<th class="min-w-100px">Proposal</th>														
+															<th class="min-w-100px">Milestone</th>
+															<th class="min-w-100px">Amount</th>
                                                             <th class="min-w-150px text-center">Actions</th>
 														</tr>
 													</thead>
 													<!--end::Table head-->
 													<!--begin::Table body-->
 													<tbody>
+
+													@forelse($payrequest as $key => $request)
                                                         
 														<tr>
 															<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-                                                                        #2324-569
+                                                                        #{{$request->payment_request_id}}
 																		<div class="text-gray-400 fw-semibold fs-9">
-																	<span class="badge badge-light-success fs-8">
-																	<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-																	<span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
-																	<i class="fa-solid fa-arrow-up light-green fs-8 me-1 "></i>
-																	</span>
-																	<!--end::Svg Icon-->32.6%</span>
+																		@if($request->payment_status == "Pending")
+													<span class="badge badge-light-info fs-8">
+														<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+														<span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+															<i class="fa-regular fa-circle-dot color-blue fs-8 me-1 "></i>
+														</span>
+														<!--end::Svg Icon-->Payment Pending</span>
+														@elseif($request->payment_status == "completed")
+
+														<span class="badge badge-light-success fs-8">
+														<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+														<span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+															<i class="fa-solid fa-check light-green fs-8 me-1 "></i>
+														</span>
+														<!--end::Svg Icon-->Processed</span>
+														@endif
 																</div>
 																	</div>
 																</div>
@@ -79,43 +90,37 @@
 															<td>
 															<div class="d-flex align-items-center">
 																	<div class="symbol symbol-35px me-2">
-																		<span class="symbol-label bg-blue text-white"> AS</span>
+																		<span class="symbol-label bg-blue text-white"> {{$request->invoice->vendor->vendor_name[0]}}{{$request->invoice->vendor->vendor_name[strlen($request->invoice->vendor->vendor_name) - 1]}}</span>
 																
 																	</div>
 																	<div class="d-flex justify-content-start flex-column">
-																		<a href="{{ route('vendor.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">Ana Simmons</a>
-																		<span class="text-muted fw-semibold text-muted d-block fs-7">NFONICS Solutions</span>
+																		<a href="{{ route('vendor.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">{{$request->invoice->vendor->vendor_name}}</a>
+																		<span class="text-muted fw-semibold text-muted d-block fs-7">{{$request->invoice->vendor->phone}}</span>
 																	</div>
 																</div>
 																</td>
 																<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-                                                                        25-July-2024
+																	{{$request->invoice->proposal->proposal_title}}
 																	</div>
 																</div>
 															</td>
                                                             <td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																		&#x20b9;210,000
+																		{{$request->invoice->milestone->milestone_title}}
 																	</div>
 																</div>
 															</td>
 															<td>
 															<div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																		&#x20b9;1,60,000
+																	&#x20b9;{{$request->invoice->milestone->milestone_total_amount}}
 																	</div>
 																</div>
 															</td>
-															<td>
-															<div class="d-flex align-items-center">
-																	<div class="fw-400 d-block fs-6">
-																		&#x20b9;50,000
-																	</div>
-																</div>
-															</td>
+															
                                                             <td class="text-center">
 																<a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
 																<i class="fa-solid fa-angle-down"></i></a>
@@ -151,9 +156,11 @@
 															</td>
 														</tr>
 														
-                                                        <!-- <tr>
-                                                            <td colspan="4">No data found</td>
-                                                        </tr> -->
+                                                        @empty
+                                <tr>
+                                    <td colspan="4">No data found</td>
+                                </tr>
+                                @endforelse
                                                     
 													</tbody>
 													<!--end::Table body-->

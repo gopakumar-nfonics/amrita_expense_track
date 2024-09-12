@@ -519,6 +519,11 @@ table th {
     list-style:disc;
 
 }
+.border-top-grey
+{
+    border-top: 1px solid #454545 !important;
+}
+
 @media (min-width: 1400px) {
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
         max-width: 100% !important;

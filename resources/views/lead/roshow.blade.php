@@ -142,7 +142,7 @@
                                 <div class="d-flex flex-column flex-sm-row  fw-bold mt-5">
                                     <div class="flex-root d-flex flex-column txt-uppercase">
                                         <span class="fs-6 text-gray-700 fw-bold ">SUBJECT</span>
-                                        <div class="m-5 text-gray-500 ">Isuus of Release order for <span
+                                        <div class="m-5 text-gray-500 ">Issue of Release order for <span
                                                 class="fs-5 text-gray-800 ">{{$proposal->proposal_title}}</span>
                                         </div>
                                     </div>

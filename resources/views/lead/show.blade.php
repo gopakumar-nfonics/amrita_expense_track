@@ -88,7 +88,7 @@
                             <!--end::Logo-->
                             <div class="text-sm-start">
                                 <!--begin::Logo-->
-                                <a href="#" class="d-block w-100 fs-1 ms-sm-auto mb-2 color-blue">
+                                <a href="#" class="d-block w-100 fs-1 ms-sm-auto mb-2 color-blue txt-uppercase">
                                     {{$proposal->proposal_id}} | {{$proposal->proposal_title}}
                                 </a>
                                 <!--end::Logo-->

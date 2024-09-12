@@ -81,7 +81,7 @@
 																	</div>
 																	<div class="d-flex justify-content-start flex-column">
 																		<a href="{{ route('vendor.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">{{$vendor->vendor_name}}</a>
-																		<span class="color-blue fw-semibold d-block fs-7">{{$vendor->company->company_name}}</span>
+																		<span class="color-blue fw-semibold d-block fs-7">{{ $vendor->company->company_name ?? '' }}</span>
 																		<span class="text-muted fw-semibold text-muted d-block fs-7">{{$vendor->email}}</span>
 																		<span class="text-muted fw-semibold text-muted d-block fs-7">{{$vendor->phone}}</span>
 																	</div>
@@ -89,8 +89,8 @@
 															</td>
 															<td>
 																<div class="d-flex justify-content-start flex-column">
-																	<span class="text-dark fw-semibold text-dark d-block fs-7">GST : {{$vendor->gst}}</span>
-																	<span class="text-dark fw-semibold text-dark d-block fs-7">PAN : {{$vendor->pan}}</span>
+																	<span class="text-dark fw-semibold text-dark d-block fs-7">@if(!empty($vendor->gst))GST : {{$vendor->gst}}@endif</span>
+																	<span class="text-dark fw-semibold text-dark d-block fs-7">@if(!empty($vendor->pan))PAN : {{$vendor->pan}}@endif</span>
 																</div>
 															</td>
 															<td>

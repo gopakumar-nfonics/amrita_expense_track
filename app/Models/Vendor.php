@@ -11,7 +11,7 @@ class Vendor extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'vendor';
-    protected $fillable = ['vendor_name', 'vendor_code', 'email', 'phone', 'company_id', 'gst', 'pan', 'address','user_id'];
+    protected $fillable = ['vendor_name', 'vendor_code', 'email', 'phone', 'company_id', 'gst', 'pan', 'address','user_id','contact_person'];
 
     public function company()
     {

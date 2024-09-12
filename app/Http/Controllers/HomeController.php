@@ -67,7 +67,6 @@ class HomeController extends Controller
         // Validate the request data
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
             'phone' => 'required|string|max:15',
             'address' => 'required|string|max:255',
             'postcode' => 'required|string|max:10',
@@ -81,6 +80,8 @@ class HomeController extends Controller
             'ifsc_code' => 'required|string|max:11',
             'bank_name' => 'required|string|max:255',
             'branch_name' => 'required|string|max:255',
+            'cn_person' => 'required|string|max:255',
+
         ]);
 
         try {
@@ -103,8 +104,8 @@ class HomeController extends Controller
 
             // Update vendor details
             $vendor->vendor_name = $request->name;
-            $vendor->email = $request->email;
             $vendor->phone = $request->phone;
+            $vendor->contact_person = $request->cn_person;
             $vendor->gst = $request->gst ?? $vendor->gst;
             $vendor->pan = $request->pan ?? $vendor->pan;
             $vendor->address = $request->address;

@@ -108,7 +108,14 @@
                                     <span class="text-muted">Date</span>
                                     <span
                                         class="fs-5 text-gray-700">{{ \Carbon\Carbon::parse($proposal->proposal_date)->format('d F, Y') }}</span>
-                                </div>
+                                    
+                                        @if($proposal->file_path)
+                                                <a href="{{ Storage::url($proposal->file_path) }}" download="{{ basename($proposal->file_path) }}" class="fw-semibold d-block fs-7 mt-5">
+                                                    <i class="fa-solid fa-file-arrow-down"></i> Download reference document
+                                                </a>
+                                                @endif
+                                    </div>
+                                    
                             </div>
                             <!--end::Text-->
                         </div>

@@ -60,7 +60,7 @@ class lead extends Controller
             'description' => 'required|string',
             'order_cost' => 'required|numeric|min:0',
             'order_gst' => 'required|numeric|min:0',
-            'total_cost' => 'required|numeric|min:0',
+            'total_cost' => 'required',
             'invoice_due_date' => 'required|date',
             'name.*' => 'required|string',
             'mdate.*' => 'required|date',
@@ -100,12 +100,13 @@ class lead extends Controller
             $proposal->proposal_description = $request->description;
             $proposal->proposal_cost  = $request->order_cost;
             $proposal->proposal_gst  = $request->order_gst;
-            $proposal->proposal_total_cost  = $request->total_cost;
+            $proposal->proposal_total_cost  =  $request->order_cost * (1 + ($request->order_gst / 100));
             $proposal->vendor_id  = $vendor->id;
 
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
-                $path = $file->store('proposals', 'public'); // Store file in 'public/proposals'
+                $customFilename = $proposal_id.'.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('proposals', $customFilename, 'public'); // Store file in 'public/proposals'
                 $proposal->file_path = $path; // Save file path to the Proposal model
             }
     

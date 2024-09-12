@@ -94,13 +94,13 @@
 
 									<div class="row mb-6">
 										<!--begin::Label-->
-										<label class="col-lg-2 col-form-label required fw-semibold fs-6">Email</label>
+										<label class="col-lg-2 col-form-label fw-semibold fs-6">Email</label>
 										<!--end::Label-->
 										<!--begin::Col-->
 										<div class="col-lg-4 fv-row">
 											<!--begin::Col-->
 											<div class="col-lg-12 fv-row">
-												<input type="text" name="email" class="form-control form-control-lg form-control-solid @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email', $vendor['email']) }}" />
+												<input type="text" name="email" class=" border-0 w-100 disabled-input @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email', $vendor['email']) }}" readonly />
 												@error('email')<div class="invalid-feedback">{{ $message }}</div> @enderror
 											</div>
 											<!--end::Col-->
@@ -151,10 +151,20 @@
 								</div>
 								<div class="d-flex flex-column gap-5 gap-md-7">
 									<!--begin::Title-->
-									<div class="separator separator-solid mt-10 mb-6 blue-border-bottom"><label class="form-label legend-label">Address Information</label></div>
+									<div class="separator separator-solid my-10 blue-border-bottom"><label class="form-label legend-label">Address Information</label></div>
 									<!--end::Title-->
 									<!--begin::Input group-->
 									<div class="d-flex flex-column flex-md-row gap-5">
+									<div class="fv-row flex-row-fluid">
+											<!--begin::Label-->
+											<label class="required form-label">Contact Person</label>
+											<!--end::Label-->
+											<!--begin::Input-->
+											<input class="form-control @error('cn_person') is-invalid @enderror" name="cn_person" placeholder="Contact Person"
+												value="{{ old('cn_person', $vendor['contact_person']) }}" />
+											@error('cn_person')<div class="invalid-feedback">{{ $message }}</div> @enderror
+											<!--end::Input-->
+										</div>
 										<div class="fv-row flex-row-fluid">
 											<!--begin::Label-->
 											<label class="required form-label">Address Line 1</label>
@@ -228,7 +238,7 @@
 
 								<div class="d-flex flex-column gap-5 gap-md-7 mt-5">
 									<!--begin::Title-->
-									<div class="separator separator-solid mt-10 mb-6 blue-border-bottom"><label class="form-label legend-label">Bank Account Details</label></div>
+									<div class="separator separator-solid my-10 blue-border-bottom"><label class="form-label legend-label">Bank Account Details</label></div>
 									<!--end::Title-->
 									<!--begin::Input group-->
 									<div class="d-flex flex-column flex-md-row gap-5">
@@ -303,6 +313,9 @@
 							<!--end::Card body-->
 							<!--begin::Actions-->
 							<div class="card-footer d-flex justify-content-end py-6 px-9">
+							<a href="{{ route('dashboard') }}"
+                                                        id="kt_ecommerce_edit_order_cancel"
+                                                        class="btn btn-light me-5">Cancel</a>
 								<button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save</button>
 							</div>
 							<!--end::Actions-->

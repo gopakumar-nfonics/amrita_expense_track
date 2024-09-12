@@ -316,7 +316,7 @@
                                                                 </td>
 
                                                                 <td class="pt-8 text-end text-nowrap">&#x20b9;
-                                                                    <span data-kt-element="total">0.00</span>
+                                                                    <span class="total-cost-span" data-kt-element="total">0.00</span>
                                                                 </td>
                                                                 <td class="pt-5 text-end">
                                                                     <button type="button"
@@ -517,7 +517,7 @@ function calculateTotalCost() {
     // Update the total cost field
     totalCostInput.value = totalCost.toFixed(2); // Set the value with two decimal places
 
-    //setCurrencyFormatting('#total_cost');
+    setCurrencyFormatting('#total_cost');
 }
 </script>
 <script>

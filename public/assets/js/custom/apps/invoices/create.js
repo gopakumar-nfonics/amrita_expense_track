@@ -27,8 +27,8 @@ var KTAppInvoicesCreate = (function () {
       var totalAmount = amount + gstAmount;
 
       // Update formatted values back to the fields
-      amountElement.value = amount.toFixed(2);
-      gstElement.value = gstRate.toFixed(2);
+      //amountElement.value = amount.toFixed(2);
+      //gstElement.value = gstRate.toFixed(2);
 
       // Calculate and display the total for this item
       totalElement.innerText = numberFormat.to(totalAmount);

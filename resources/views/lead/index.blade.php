@@ -101,7 +101,12 @@
                                                     class="text-dark fw-bold text-hover-primary fs-6 color-blue txt-capitalcase">{{$pro->proposal_title}}</a>
                                                 <span class="text-muted fw-semibold text-muted d-block fs-7">Submitted
                                                     On :
-                                                    {{ \Carbon\Carbon::parse($pro->created_at)->format('d-M-Y') }}</span>
+                                                    {{ \Carbon\Carbon::parse($pro->created_at)->format('d-M-Y') }} </span>
+                                                    @if($pro->file_path)
+                                                <a href="{{ Storage::url($pro->file_path) }}" download="{{ basename($pro->file_path) }}" class="fw-semibold d-block fs-7">
+                                                    <i class="fa-solid fa-file-arrow-down"></i> Download reference document
+                                                </a>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>
@@ -216,64 +221,64 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    $('#budgettable').DataTable({
-        "iDisplayLength": 10,
-        "searching": true,
-        "recordsTotal": 3615,
-        "pagingType": "full_numbers"
+    $(document).ready(function() {
+        $('#budgettable').DataTable({
+            "iDisplayLength": 10,
+            "searching": true,
+            "recordsTotal": 3615,
+            "pagingType": "full_numbers"
+        });
     });
-});
 </script>
 
 <script>
-function approve(proid) {
-    swal({
-            title: "Are you sure?",
-            text: "You want to approve this proposal",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                $.ajax({
-                    url: "{{ route('lead.approve') }}",
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: proid,
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            swal(response.success, {
-                                icon: "success",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
+    function approve(proid) {
+        swal({
+                title: "Are you sure?",
+                text: "You want to approve this proposal",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "{{ route('lead.approve') }}",
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: proid,
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                swal(response.success, {
+                                    icon: "success",
+                                    buttons: false,
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            } else {
+                                swal(response.error || 'Something went wrong.', {
+                                    icon: "warning",
+                                    buttons: false,
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            }
+                        },
+                        error: function(xhr) {
+                            swal('Error: Something went wrong.', {
+                                icon: "error",
+                            }).then(() => {
                                 location.reload();
-                            }, 1000);
-                        } else {
-                            swal(response.error || 'Something went wrong.', {
-                                icon: "warning",
-                                buttons: false,
                             });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
                         }
-                    },
-                    error: function(xhr) {
-                        swal('Error: Something went wrong.', {
-                            icon: "error",
-                        }).then(() => {
-                            location.reload();
-                        });
-                    }
-                });
-            }
-        });
-}
+                    });
+                }
+            });
+    }
 </script>
 
 @endsection

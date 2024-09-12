@@ -113,7 +113,11 @@
 										<!--end::Menu separator-->
 										<!--begin::Menu item-->
 										<div class="menu-item px-5">
+										@if(Auth::user()->isvendor())
+											<a href="{{ route('profile') }}" class="menu-link px-5">My Profile</a>
+											@else
 											<a href="" class="menu-link px-5">My Profile</a>
+										@endif
 										</div>
 										<!--end::Menu item-->							
 																		

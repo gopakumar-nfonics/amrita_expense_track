@@ -27,7 +27,7 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">#{{$invoice->invoice_number}}</li>
+                        <li class="breadcrumb-item text-muted">#{{$invoice->invoice_id}}</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
@@ -103,7 +103,7 @@
                                                                 </div>
                                                                 <div class="flex-root d-flex flex-column">
                                                                     <span class="text-muted">Invoice #</span>
-                                                                    <span class="fs-5">#{{$invoice->invoice_id}}</span>
+                                                                    <span class="fs-5">#{{$invoice->invoice_number}}</span>
                                                                 </div>
                                                                 <div class="flex-root d-flex flex-column">
                                                                     <div class="symbol symbol-30px me-5">

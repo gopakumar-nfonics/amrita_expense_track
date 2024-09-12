@@ -108,14 +108,20 @@
                                     <span class="text-muted">Date</span>
                                     <span
                                         class="fs-5 text-gray-700">{{ \Carbon\Carbon::parse($proposal->proposal_date)->format('d F, Y') }}</span>
-                                    
-                                        @if($proposal->file_path)
-                                                <a href="{{ Storage::url($proposal->file_path) }}" download="{{ basename($proposal->file_path) }}" class="fw-semibold d-block fs-7 mt-5">
-                                                    <i class="fa-solid fa-file-arrow-down"></i> Download reference document
-                                                </a>
-                                                @endif
+
+                                    @if($proposal->file_path)
+
+                                    <div class="symbol symbol-20px mt-5">
+                                        <img alt="Icon" src="{{ url('/') }}/assets/media/svg/files/pdf.svg">
+                                        <a href="{{ Storage::url($proposal->file_path) }}"
+                                            download="{{ basename($proposal->file_path) }}" class="fw-semibold ms-2">
+                                            <u>Reference Document</u>
+                                        </a>
                                     </div>
-                                    
+
+                                    @endif
+                                </div>
+
                             </div>
                             <!--end::Text-->
                         </div>
@@ -192,7 +198,6 @@
                                                             &#x20b9;<span
                                                                 class="total-cost-span">{{ $milestone->milestone_total_amount }}</span>
                                                         </td>
-                                                        span
                                                         <!--end::Total-->
                                                     </tr>
 

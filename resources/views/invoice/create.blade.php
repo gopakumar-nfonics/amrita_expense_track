@@ -85,7 +85,7 @@
                                                                 {{ $message }}</div>@enderror
 
                                                         </div>
-                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-4">
+                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-5">
 
 
                                                             <!--begin::Label-->
@@ -103,27 +103,51 @@
                                                         </div>
 
 
+
+
                                                     </div>
 
 
 
 
                                                     <div class="fv-row d-flex justify-content-between mt-10">
-                                                        <div class="d-flex justify-content-between col-lg-7 me-5">
+
+                                                        <!--begin::Input group-->
+                                                        <div class="fv-row col-lg-3 align-items-end">
+                                                            <!--begin::Label-->
+                                                            <label class=" form-label">RO #</label>
+                                                            <!--end::Label-->
+                                                            <!--begin::Editor-->
+                                                            <input id="proposalro" placeholder="RO #"
+                                                                class="form-control border-0 disabled-input px-0 fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2  @error('proposalro') is-invalid @enderror"
+                                                                name="proposalro" value="{{ old('proposalro') }}" />
+                                                            @error('proposalro')<div class="invalid-feedback">
+                                                                {{ $message }}</div>@enderror
+                                                            <!--end::Editor-->
+
+                                                        </div>
+                                                        <!--end::Input group-->
+                                                        <div class="d-flex justify-content-between col-lg-4 me-5">
                                                             <!--begin::Input group-->
-                                                            <div class="fv-row w-50">
+                                                            <div class="fv-row">
                                                                 <!--begin::Label-->
-                                                                <label class=" form-label">Cost (INR)</label>
+                                                                <label class=" form-label">Cost</label>
                                                                 <!--end::Label-->
                                                                 <!--begin::Editor-->
-                                                                <input id="milestone_cost" name="milestone_cost"
-                                                                    placeholder="00.00"
-                                                                    class="form-control disabled-input mb-2 @error('milestone_cost') is-invalid @enderror"
-                                                                    value="{{ old('milestone_cost') }}" />
-                                                                @error('milestone_cost')<div class="invalid-feedback">
-                                                                    {{ $message }}</div>@enderror
-                                                                <!--end::Editor-->
-
+                                                                <div class="d-flex">
+                                                                    <!--begin::Currency-->
+                                                                    <span
+                                                                        class="fs-2 fw-semibold text-gray-500 align-self-start me-1 mt-1">&#x20b9;</span>
+                                                                    <!--end::Currency-->
+                                                                    <input id="milestone_cost" name="milestone_cost"
+                                                                        placeholder="00.00"
+                                                                        class="form-control border-0 disabled-input p-0 fs-1 fw-bold text-gray-800 me-2 lh-1 ls-n2  @error('milestone_cost') is-invalid @enderror"
+                                                                        value="{{ old('milestone_cost') }}" />
+                                                                    @error('milestone_cost')<div
+                                                                        class="invalid-feedback">
+                                                                        {{ $message }}</div>@enderror
+                                                                    <!--end::Editor-->
+                                                                </div>
                                                             </div>
                                                             <!--end::Input group-->
 
@@ -133,20 +157,23 @@
                                                                 <label class=" form-label">GST (%)</label>
                                                                 <!--end::Label-->
                                                                 <!--begin::Editor-->
-                                                                <input id="milestone_gst" name="milestone_gst"
-                                                                    placeholder="00.00"
-                                                                    class="form-control disabled-input  mb-2 @error('milestone_gst') is-invalid @enderror"
-                                                                    value="{{ old('milestone_gst') }}" />
-                                                                @error('milestone_gst')<div class="invalid-feedback">
-                                                                    {{ $message }}</div>@enderror
-                                                                <!--end::Editor-->
+                                                                <div class="d-flex">
+                                                                    <input id="milestone_gst" name="milestone_gst"
+                                                                        placeholder="0"
+                                                                        class="form-control border-0 disabled-input p-0 fs-1 fw-bold text-gray-800 me-2 lh-1 ls-n2  @error('milestone_gst') is-invalid @enderror"
+                                                                        value="{{ old('milestone_gst') }}" />
+                                                                    @error('milestone_gst')<div
+                                                                        class="invalid-feedback">
+                                                                        {{ $message }}</div>@enderror
+                                                                    <!--end::Editor-->
+                                                                </div>
                                                             </div>
                                                             <!--end::Input group-->
 
 
 
                                                         </div>
-                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-4">
+                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-5">
                                                             <!--begin::Input group-->
                                                             <div class="fv-row pt-0">
                                                                 <!--begin::Label-->
@@ -169,26 +196,16 @@
                                                         </div>
                                                     </div>
 
+                                                    <!--begin::Separator-->
+                                                    <div class="separator my-5"></div>
+                                                    <!--begin::Separator-->
+
                                                     <div class="fv-row d-flex justify-content-between mt-10">
-                                                        <div class="d-flex justify-content-between col-lg-7 me-5">
-                                                            <!--begin::Input group-->
-                                                            <div class="fv-row">
-                                                                <!--begin::Label-->
-                                                                <label class=" form-label">RO #</label>
-                                                                <!--end::Label-->
-                                                                <!--begin::Editor-->
-                                                                <input id="proposalro" placeholder="RO #"
-                                                                    class="form-control disabled-input  mb-2 @error('proposalro') is-invalid @enderror"
-                                                                    name="proposalro" value="{{ old('proposalro') }}" />
-                                                                @error('proposalro')<div class="invalid-feedback">
-                                                                    {{ $message }}</div>@enderror
-                                                                <!--end::Editor-->
+                                                        <div class="d-flex justify-content-start col-lg-7">
 
-                                                            </div>
-                                                            <!--end::Input group-->
 
                                                             <!--begin::Input group-->
-                                                            <div class="fv-row">
+                                                            <div class="fv-row w-50 me-10">
                                                                 <!--begin::Label-->
                                                                 <label class="required form-label">Invoice #</label>
                                                                 <!--end::Label-->
@@ -222,7 +239,8 @@
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-4">
                                                             <!--begin::Input group-->
                                                             <div class="fv-row pt-0">
-                                                                <div class="text-center @error('file') is-invalid @enderror">
+                                                                <div
+                                                                    class="text-center @error('file') is-invalid @enderror">
                                                                     <label for="file-upload"
                                                                         class="btn btn-sm btn-info w-100 mt-5 mb-1">
                                                                         <!--begin::Svg Icon | path: icons/duotune/files/fil018.svg-->
@@ -235,7 +253,7 @@
                                                                             onchange="updateFileName()" />
                                                                     </label>
                                                                 </div>
-                                                               
+
                                                                 <!--begin::Description-->
                                                                 <div class="text-muted fs-7" id="file-name">Upload
                                                                     reference Invoice.
@@ -441,10 +459,10 @@ $(document).ready(function() {
                     $('#milestone_cost').empty();
 
                     $('#milestone_cost').val(data.milestone_amount);
-                    $('#milestone_gst').val(data.milestone_gst);
+                    $('#milestone_gst').val(data.milestone_gst + '%');
                     $('#total_cost').text(data.milestone_total_amount);
                     setCurrencyFormattingHTML('#total_cost');
-
+                    setCurrencyFormatting('#milestone_cost');
 
                 },
 

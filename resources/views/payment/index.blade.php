@@ -67,7 +67,7 @@
 																	<div class="fw-400 d-block fs-6">
                                                                         #{{$request->payment_request_id}}
 																		<div class="text-gray-400 fw-semibold fs-9">
-																		@if($request->payment_status == "Pending")
+																		@if($request->payment_status == "pending")
 													<span class="badge badge-light-info fs-8">
 														<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
 														<span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
@@ -102,14 +102,18 @@
 																<td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																	{{$request->invoice->proposal->proposal_title}}
+																	<a href="{{ route('lead.show',$request->invoice->proposal->id) }}"
+                                                    class="text-dark fw-bold text-hover-primary fs-6">
+																	{{$request->invoice->proposal->proposal_title}}</a>
 																	</div>
 																</div>
 															</td>
                                                             <td>
                                                                 <div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																		{{$request->invoice->milestone->milestone_title}}
+																	<a href="{{ route('invoice.show',$request->invoice->id) }}"
+                                                    class="text-dark fw-bold text-hover-primary fs-6">
+																		{{$request->invoice->milestone->milestone_title}}</a>
 																	</div>
 																</div>
 															</td>

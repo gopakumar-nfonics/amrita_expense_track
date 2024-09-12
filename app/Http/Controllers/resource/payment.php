@@ -88,16 +88,16 @@ class payment extends Controller
     {
         $request->validate([
             'invoid' => 'required|exists:invoices,id',
-            'pay_category' => 'required|exists:tbl_category,id',
-            'stream' => 'required|exists:stream,id', 
+            'category' => 'required|exists:tbl_category,id',
+            'programme' => 'required|exists:stream,id', 
         ]);
 
         try {
 
            
             $paymentrequest = PaymentRequest::where('invoice_id', $request->invoid)->first();
-            $paymentrequest->stream_id  = $request->stream;
-            $paymentrequest->category_id  = $request->pay_category;
+            $paymentrequest->stream_id  = $request->programme;
+            $paymentrequest->category_id  = $request->category;
             $paymentrequest->payment_status  = 'completed';
               $paymentrequest->save();
 

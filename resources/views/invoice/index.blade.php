@@ -91,7 +91,7 @@
 										<div class="d-flex align-items-center">
 
 											<div class="d-flex justify-content-start flex-column">
-												<a href="{{ route('lead.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">{{$inv->milestone->milestone_title}}</a>
+												<a href="{{ route('invoice.show',$inv->id) }}" class="text-dark fw-bold text-hover-primary fs-6">{{$inv->milestone->milestone_title}}</a>
 												<span class="text-muted fw-semibold text-muted d-block fs-7">Submitted On : {{ \Carbon\Carbon::parse($inv->created_at)->format('d-M-Y') }}</span>
 											</div>
 										</div>
@@ -100,7 +100,7 @@
 										<div class="d-flex align-items-center">
 
 											<div class="d-flex justify-content-start flex-column">
-												<a href="{{ route('lead.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">{{$inv->proposalro->proposal_ro}}</a>
+												<a href="{{ route('lead.ro',$inv->proposalro->proposal_id) }}" class="text-dark fw-bold text-hover-primary fs-6">{{$inv->proposalro->proposal_ro}}</a>
 												<span class="text-muted fw-semibold text-muted d-block fs-7">Issued On : {{ \Carbon\Carbon::parse($inv->proposalro->created_at)->format('d-M-Y') }}</span>
 											</div>
 										</div>

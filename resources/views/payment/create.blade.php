@@ -289,20 +289,20 @@
 
                                                     <input type="hidden" value="{{$invoice->id}}" name="invoid">
                                                         <!--begin::Label-->
-                                                        <label class="required form-label">Stream</label>
+                                                        <label class="required form-label">Programme</label>
                                                         <!--end::Label-->
                                                         <!--begin::Select2-->
-                                                        <select class="form-select mb-2 @error('stream') is-invalid @enderror" data-control="select2"
+                                                        <select class="form-select mb-2 @error('programme') is-invalid @enderror" data-control="select2"
                                                             data-hide-search="true" data-placeholder="Select Stream"
-                                                            name="stream" id="stream">
+                                                            name="programme" id="programme">
                                                             <option></option>
                                                             @foreach ($stream as $strm)
-                                                            <option value="{{$strm->id}}"  @if(old('stream')==$strm->id) selected
+                                                            <option value="{{$strm->id}}"  @if(old('programme')==$strm->id) selected
                                                                     @endif>{{$strm->stream_name}}
                                                             </option>
                                                             @endforeach
                                                         </select>
-                                                        @error('stream')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                                        @error('programme')<div class="invalid-feedback">{{ $message }}</div>@enderror
                                                         <!--end::Select2-->
                                                     </div>
                                                     <div class="fs-6 fw-bold text-gray-700 col-lg-4">
@@ -312,9 +312,9 @@
                                                         <label class="required form-label">Category</label>
                                                         <!--end::Label-->
                                                         <!--begin::Select2-->
-                                                        <select class="form-select mb-2 @error('pay_category') is-invalid @enderror" data-control="select2"
+                                                        <select class="form-select mb-2 @error('category') is-invalid @enderror" data-control="select2"
                                                             data-hide-search="true" data-placeholder="Select Category"
-                                                            name="pay_category" id="pay_category"
+                                                            name="category" id="category"
                                                             onchange="getallocatedbudget()">
                                                             <option></option>
                                                             @foreach ($main_categories as $main_category)
@@ -322,7 +322,7 @@
                                                             <optgroup label="{{ $main_category->category_name }}">
                                                                 @foreach ($main_category->children as $subcategory)
                                                                 <option class="sub-category"
-                                                                    value="{{ $subcategory->id }}" @if(old('pay_category')==$subcategory->id) selected
+                                                                    value="{{ $subcategory->id }}" @if(old('category')==$subcategory->id) selected
                                                                     @endif>
                                                                     {{ $subcategory->category_name }}
                                                                 </option>
@@ -331,7 +331,7 @@
                                                             @else
                                                             <!-- Print the main category as a standalone option if no children exist -->
                                                             <option class="main-category"
-                                                                value="{{ $main_category->id }}"  @if(old('pay_category')==$main_category->id) selected
+                                                                value="{{ $main_category->id }}"  @if(old('category')==$main_category->id) selected
                                                                     @endif>
                                                                 {{ $main_category->category_name }}
                                                             </option>
@@ -339,6 +339,7 @@
                                                             @endforeach
                                                         </select>
                                                         <!--end::Select2-->
+                                                        @error('category')<div class="invalid-feedback">{{ $message }}</div>@enderror
 
                                                     </div>
 

@@ -50,7 +50,7 @@ class invoice extends Controller
             'milestone' => 'required|exists:payment_milestones,id',
             'invoice_number' => 'required|string|max:255',
             'invoice_date' => 'required|date',
-            'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048', // Adjust file validation as needed
+            'file' => 'required|file|mimes:pdf,doc,docx|max:2048', // Adjust file validation as needed
         ]);
 
         try {

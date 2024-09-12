@@ -113,12 +113,12 @@
                                                             <!--begin::Input group-->
                                                             <div class="fv-row w-50">
                                                                 <!--begin::Label-->
-                                                                <label class="required form-label">Cost (INR)</label>
+                                                                <label class=" form-label">Cost (INR)</label>
                                                                 <!--end::Label-->
                                                                 <!--begin::Editor-->
                                                                 <input id="milestone_cost" name="milestone_cost"
-                                                                    placeholder="Cost"
-                                                                    class="form-control mb-2 @error('milestone_cost') is-invalid @enderror"
+                                                                    placeholder="00.00"
+                                                                    class="form-control disabled-input mb-2 @error('milestone_cost') is-invalid @enderror"
                                                                     value="{{ old('milestone_cost') }}" />
                                                                 @error('milestone_cost')<div class="invalid-feedback">
                                                                     {{ $message }}</div>@enderror
@@ -130,12 +130,12 @@
                                                             <!--begin::Input group-->
                                                             <div class="fv-row">
                                                                 <!--begin::Label-->
-                                                                <label class="required form-label">GST (%)</label>
+                                                                <label class=" form-label">GST (%)</label>
                                                                 <!--end::Label-->
                                                                 <!--begin::Editor-->
                                                                 <input id="milestone_gst" name="milestone_gst"
-                                                                    placeholder="GST %"
-                                                                    class="form-control mb-2 @error('milestone_gst') is-invalid @enderror"
+                                                                    placeholder="00.00"
+                                                                    class="form-control disabled-input  mb-2 @error('milestone_gst') is-invalid @enderror"
                                                                     value="{{ old('milestone_gst') }}" />
                                                                 @error('milestone_gst')<div class="invalid-feedback">
                                                                     {{ $message }}</div>@enderror
@@ -174,11 +174,11 @@
                                                             <!--begin::Input group-->
                                                             <div class="fv-row">
                                                                 <!--begin::Label-->
-                                                                <label class="required form-label">RO #</label>
+                                                                <label class=" form-label">RO #</label>
                                                                 <!--end::Label-->
                                                                 <!--begin::Editor-->
                                                                 <input id="proposalro" placeholder="RO #"
-                                                                    class="form-control mb-2 @error('proposalro') is-invalid @enderror"
+                                                                    class="form-control disabled-input  mb-2 @error('proposalro') is-invalid @enderror"
                                                                     name="proposalro" value="{{ old('proposalro') }}" />
                                                                 @error('proposalro')<div class="invalid-feedback">
                                                                     {{ $message }}</div>@enderror
@@ -222,7 +222,7 @@
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-4">
                                                             <!--begin::Input group-->
                                                             <div class="fv-row pt-0">
-                                                                <div class="text-center">
+                                                                <div class="text-center @error('file') is-invalid @enderror">
                                                                     <label for="file-upload"
                                                                         class="btn btn-sm btn-info w-100 mt-5 mb-1">
                                                                         <!--begin::Svg Icon | path: icons/duotune/files/fil018.svg-->
@@ -231,11 +231,11 @@
                                                                         </span>
                                                                         <!--end::Svg Icon-->Upload File
                                                                         <input type="file" id="file-upload" name="file"
-                                                                            class="d-none @error('file') is-invalid @enderror"
+                                                                            class="d-none "
                                                                             onchange="updateFileName()" />
                                                                     </label>
                                                                 </div>
-
+                                                               
                                                                 <!--begin::Description-->
                                                                 <div class="text-muted fs-7" id="file-name">Upload
                                                                     reference Invoice.

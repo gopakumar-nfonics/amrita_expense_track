@@ -333,7 +333,7 @@
                                 <div class="menu-item pt-5">
                                     <!--begin:Menu content-->
                                     <div class="menu-content">
-                                        <span class="menu-heading fw-bold text-uppercase fs-7">Payments</span>
+                                        <span class="menu-heading fw-bold text-uppercase fs-7">Invoice & Payments</span>
                                     </div>
                                     <!--end:Menu content-->
                                 </div>
@@ -347,7 +347,7 @@
 
                                             <i class="fa-solid fa-money-check-dollar"></i>
                                         </span>
-                                        <span class="menu-title">Manage Payments</span>
+                                        <span class="menu-title">Payments</span>
                                         <span class="menu-arrow"></span>
                                     </span>
                                     <!--end:Menu link-->
@@ -387,13 +387,55 @@
                                 <!--end:Menu item-->
                                 @endif
 
-                                <div class="menu-item pt-5">
-                                    <!--begin:Menu content-->
-                                    <div class="menu-content">
-                                        <span class="menu-heading fw-bold text-uppercase fs-7">Proposals</span>
+
+
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="click"
+                                    class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('invoice.index','invoice.create'))) show  @endif">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="fa-solid fa-file-invoice-dollar"></i>
+                                        </span>
+                                        <span class="menu-title">Invoice</span>
+                                        <span class="menu-arrow"></span>
+                                    </span>
+                                    <!--end:Menu link-->
+                                    <!--begin:Menu sub-->
+                                    <div class="menu-sub menu-sub-accordion">
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+
+                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('invoice.index'))) active  @endif"
+                                                href="{{route('invoice.index')}}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Invoice List</span>
+                                            </a>
+
+                                        </div>
+                                        <!--end:Menu item-->
+                                        @if(Auth::user()->isvendor())
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
+                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('invoice.create'))) active  @endif"
+                                                href="{{route('invoice.create')}}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Submit Invoice</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
+                                        @endif
                                     </div>
-                                    <!--end:Menu content-->
+                                    <!--end:Menu sub-->
                                 </div>
+
+                                <!--end:Menu item-->
 
                                 <!--begin:Menu item-->
                                 <div data-kt-menu-trigger="click"
@@ -403,7 +445,7 @@
                                         <span class="menu-icon">
                                             <i class="fa-solid fa-file-word"></i>
                                         </span>
-                                        <span class="menu-title">Manage Proposal</span>
+                                        <span class="menu-title">Proposal</span>
                                         <span class="menu-arrow"></span>
                                     </span>
                                     <!--end:Menu link-->
@@ -444,69 +486,12 @@
                                 <!--end:Menu item-->
 
 
-                                <div class="menu-item pt-5">
-                                    <!--begin:Menu content-->
-                                    <div class="menu-content">
-                                        <span class="menu-heading fw-bold text-uppercase fs-7">Invoices</span>
-                                    </div>
-                                    <!--end:Menu content-->
-                                </div>
-
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('invoice.index','invoice.create'))) show  @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-file-invoice-dollar"></i>
-                                        </span>
-                                        <span class="menu-title">Manage Invoice</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-
-                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('invoice.index'))) active  @endif"
-                                                href="{{route('invoice.index')}}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Invoice List</span>
-                                            </a>
-
-                                        </div>
-                                        <!--end:Menu item-->
-                                        @if(Auth::user()->isvendor())
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('invoice.create'))) active  @endif"
-                                                href="{{route('invoice.create')}}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Submit Invoice</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-                                        @endif
-                                    </div>
-                                    <!--end:Menu sub-->
-                                </div>
-
-                                <!--end:Menu item-->
-
-
                                 @if(Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
 
 
 
                                 <!--end:Menu item-->
-                                <div class="menu-item">
+                                <div class="menu-item mt-5">
                                     <!--begin:Menu content-->
                                     <div class="menu-content">
                                         <span class="menu-heading fw-bold text-uppercase fs-7">Vendor</span>

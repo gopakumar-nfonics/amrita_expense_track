@@ -27,13 +27,24 @@
                         </li>
                         <!--end::Item-->
                         <!--begin::Item-->
-                        <li class="breadcrumb-item text-muted">#{{$invoice->invoice_id}}</li>
+                        <li class="breadcrumb-item text-muted">#{{$invoice->invoice_number}}</li>
                         <!--end::Item-->
                     </ul>
                     <!--end::Breadcrumb-->
+
+                   
                 </div>
                 <!--end::Page title-->
                 <!--begin::Actions-->
+                <div class="card-toolbar">
+               
+                <!-- end::Actions-->
+                <a href="{{ route('invoice.index') }}" class="btn btn-sm btn-primary">
+                    Back to List
+                </a>
+
+            </div>
+
                 <!--end::Actions-->
             </div>
             <!--end::Toolbar container-->

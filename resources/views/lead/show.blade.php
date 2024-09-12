@@ -279,7 +279,7 @@ function approve(proid) {
                                 buttons: false,
                             });
                             setTimeout(() => {
-                                location.reload();
+                                window.location.href = "{{ route('lead.index') }}";
                             }, 1000);
                         } else {
                             swal(response.error || 'Something went wrong.', {

@@ -53,7 +53,7 @@
                                     <th class="min-w-200px">Vendor</th>
                                     <th class="min-w-100px">Proposal</th>
                                     <th class="min-w-100px">RO#</th>
-                                    <th class="min-w-100px">Milestone</th>
+                                    <th class="min-w-100px">Invoice</th>
                                     <th class="min-w-100px">Amount</th>
                                     <th class="min-w-150px text-center">Actions</th>
                                 </tr>
@@ -114,6 +114,12 @@
                                                 <a href="{{ route('lead.show',$request->invoice->proposal->id) }}"
                                                     class="text-dark text-hover-primary fs-6">
                                                     {{$request->invoice->proposal->proposal_title}}</a>
+                                                    <span
+                                                    class="d-flex justify-content-start text-muted fw-semibold text-muted d-block fs-7">Submitted
+                                                    On :
+                                                    {{ \Carbon\Carbon::parse($request->invoice->proposal->created_at)->format('d-M-Y') }}
+
+                                                </span>
                                             </div>
                                         </div>
                                     </td>
@@ -136,6 +142,9 @@
                                                 <a href="{{ route('invoice.show',$request->invoice->id) }}"
                                                     class="text-dark text-hover-primary fs-6">
                                                     {{$request->invoice->milestone->milestone_title}}</a>
+                                                    <span class="text-muted fw-semibold text-muted d-block fs-7">Submitted
+                                                    On :
+                                                    {{ \Carbon\Carbon::parse($request->invoice->created_at)->format('d-M-Y') }}</span>
                                             </div>
                                         </div>
                                     </td>

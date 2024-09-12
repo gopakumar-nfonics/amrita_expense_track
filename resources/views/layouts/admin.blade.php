@@ -386,9 +386,16 @@
 
                                 <!--end:Menu item-->
                                 @endif
-
-
-
+                                @if(Auth::user()->isvendor())
+                                <div class="menu-item pt-5">
+                                    <!--begin:Menu content-->
+                                    <div class="menu-content">
+                                        <span class="menu-heading fw-bold text-uppercase fs-7">Invoice &
+                                            Proposals</span>
+                                    </div>
+                                    <!--end:Menu content-->
+                                </div>
+                                @endif
                                 <!--begin:Menu item-->
                                 <div data-kt-menu-trigger="click"
                                     class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('invoice.index','invoice.create'))) show  @endif">

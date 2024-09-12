@@ -82,7 +82,7 @@
                 <!-- begin::Body-->
                 <div class="card-body py-10">
                     <!-- begin::Wrapper-->
-                    <div class="mw-lg-950px mx-auto w-100" id="printableArea">
+                    <div class="mw-lg-950px mx-auto w-100 my-0 py-0" id="printableArea">
                         <!-- begin::Header-->
                         <div class="flex-sm-row mb-2">
                             <!--end::Logo-->
@@ -96,7 +96,7 @@
 
                             </div>
 
-                            <div class="text-center py-10">
+                            <div class="text-center py-0">
                                 <!--begin::Logo-->
                                 <span class="fs-3 text-gray-700"><u>RELEASE ORDER</u></span>
 
@@ -118,28 +118,39 @@
                         </div>
                         <!--end::Header-->
                         <!--begin::Body-->
-                        <div class="pb-12">
+                        <div class="pb-2">
                             <!--begin::Wrapper-->
-                            <div class="d-flex flex-column gap-7 gap-md-10">
+                            <div class="d-flex flex-column ">
 
                                 <!--begin::Separator-->
-                                <div class="separator"></div>
+                                <div class="separator mb-7"></div>
                                 <!--begin::Separator-->
 
 
                                 <!--begin::Billing & shipping-->
-                                <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
-                                    <div class="flex-root d-flex flex-column">
-                                        <span class="fs-6 text-gray-700 fw-bold txt-uppercase">To
-                                            <div class="m-5"><span>Mr. Arunraj</span>
-                                                </br>{{$proposal->vendor->vendor_name}}
-                                            </div>
+                                <div class="d-flex flex-column flex-sm-row  fw-bold">
+                                    <div class="flex-root d-flex flex-column txt-uppercase">
+                                        <span class="fs-6 text-gray-700 fw-bold ">To</span>
+                                        <div class="m-5"><span>Mr. Arunraj</span>
+                                            </br>{{$proposal->vendor->vendor_name}}
+                                        </div>
                                     </div>
 
                                 </div>
 
                                 <!--begin::Billing & shipping-->
-                                <div class="d-flex flex-column flex-sm-row gap-7 gap-md-10 fw-bold">
+                                <div class="d-flex flex-column flex-sm-row  fw-bold mt-5">
+                                    <div class="flex-root d-flex flex-column txt-uppercase">
+                                        <span class="fs-6 text-gray-700 fw-bold ">SUBJECT</span>
+                                        <div class="m-5 text-gray-500 ">Isuus of Release order for <span
+                                                class="fs-5 text-gray-800 ">{{$proposal->proposal_title}}</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!--begin::Billing & shipping-->
+                                <div class="d-flex flex-column flex-sm-row  fw-bold mt-5">
                                     <div class="flex-root d-flex flex-column">
                                         <span class="fs-6 text-gray-700 fw-bold txt-uppercase">Scope &
                                             Services</span>
@@ -152,12 +163,13 @@
                                 <!--begin:Order summary-->
                                 <div class="d-flex justify-content-between flex-column">
                                     <!--begin::Table-->
-                                    <div class="table-responsive border-bottom mb-9">
+                                    <div class="table-responsive border-bottom mb-5 pb-3">
                                         <div>
-                                            <span class="fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2 txt-uppercase">Total
-                                                Cost :</span>
                                             <span
-                                                class="fs-2 fw-semibold text-gray-500 align-self-start me-1">&#x20b9;</span>
+                                                class="fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2 txt-uppercase">Outlay
+                                                :</span>
+                                            <span
+                                                class="fs-1 fw-semibold text-gray-500 align-self-start me-1">&#x20b9;</span>
                                             <span id="total-cost-span"
                                                 class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2"
                                                 data-kt-element="sub-total">{{$proposal->proposal_total_cost}}
@@ -179,6 +191,54 @@
                         </div>
                         <!--end::Body-->
 
+
+                        <!--begin:Order summary-->
+                        <div class="d-flex justify-content-between flex-column">
+                            <!--begin::Table-->
+                            <div class="table-responsive mb-5">
+                                <span class="fs-5 text-gray-700 txt-uppercase pb-4"><u>Billing Address</u></span>
+                                <address class="mt-3">
+                                    DIRECTORATE OF ADMISSIONS,
+                                    <br>AMRITA SCHOOL OF ENGINEERING,
+                                    AMRITA VISHWA VIDYAPEETHAM, AMRITA NAGAR(PO),
+                                    ETTIMADAI, COIMBATORE - 641112
+
+                                </address>
+
+
+                            </div>
+                            <!--end::Table-->
+                        </div>
+
+                        <!--begin:Order summary-->
+                        <div class="d-flex justify-content-between flex-column">
+                            <!--begin::Table-->
+                            <div class="table-responsive mb-9">
+                                <span class="fs-5 text-gray-700 txt-uppercase "><u>Notes</u></span>
+                                <ul class="list-disc mt-4">
+                                    <li>Mandate to include RO No. and Bank details, billing address (mentioned above) on
+                                        the
+                                        invoice copies.</li>
+                                    <li>Payment will be release monthly, up on submission of the tax invoice.</li>
+                                    <li>Payout period is minimum of 14 working days</li>
+                                </ul>
+
+                            </div>
+                            <!--end::Table-->
+                        </div>
+
+
+                        <!--end:Order summary-->
+                        <div class="text-sm-start">
+                            <!--begin::Logo-->
+                            <a href="#" class="d-block w-100 fs-1 ms-sm-auto mb-2 color-blue">
+                                <img alt="Logo" src="{{ url('/') }}/assets/media/logos/avv-sign.jpg" class="w-100">
+                            </a>
+                            <!--end::Logo-->
+
+                        </div>
+
+                        <!--end:Order summary-->
                         <div class="text-sm-start">
                             <!--begin::Logo-->
                             <a href="#" class="d-block w-100 fs-1 ms-sm-auto mb-2 color-blue">

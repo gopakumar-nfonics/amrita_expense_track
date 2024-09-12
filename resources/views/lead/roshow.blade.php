@@ -96,7 +96,7 @@
 
                             </div>
 
-                            <div class="text-center py-0">
+                            <div class="text-center py-0 mb-5 mt-10">
                                 <!--begin::Logo-->
                                 <span class="fs-3 text-gray-700"><u>RELEASE ORDER</u></span>
 
@@ -163,7 +163,7 @@
                                 <!--begin:Order summary-->
                                 <div class="d-flex justify-content-between flex-column">
                                     <!--begin::Table-->
-                                    <div class="table-responsive border-bottom mb-5 pb-3">
+                                    <div class="table-responsive border-bottom mb-5 pb-3 mt-5">
                                         <div>
                                             <span
                                                 class="fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2 txt-uppercase">Outlay

@@ -121,7 +121,7 @@
                                         <div class="d-flex align-items-center">
                                             <div class="symbol symbol-35px me-2">
                                                 <span
-                                                    class="symbol-label bg-blue text-white">{{$inv->vendor->vendor_name[0]}}{{$inv->vendor->vendor_name[strlen($inv->vendor->vendor_name) - 1]}}</span>
+                                                    class="symbol-label bg-blue text-white">{{$inv->vendor->vendor_name[0]}}{{$inv->vendor->vendor_name[1]}}</span>
 
                                             </div>
                                             <div class="d-flex justify-content-start flex-column">
@@ -155,7 +155,7 @@
                                             data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                             <i class="fa-solid fa-angle-down"></i></a>
                                         <!--begin::Menu-->
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-150px py-4"
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-200px py-4"
                                             data-kt-menu="true">
 
 
@@ -169,7 +169,7 @@
                                             @if(!Auth::user()->isvendor() && $inv->invoice_status ==0)
                                             <div class="menu-item px-3">
                                                 <a href="{{ route('payment.create',$inv->id) }}"
-                                                    class="menu-link px-3">Proceed Payment</a>
+                                                    class="menu-link px-3">Process Payment</a>
                                             </div>
                                             @endif
                                             <!--end::Menu item-->

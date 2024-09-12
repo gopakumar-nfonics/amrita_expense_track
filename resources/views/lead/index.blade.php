@@ -127,7 +127,9 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="symbol symbol-35px me-2">
-                                                <span class="symbol-label bg-blue text-white"> NS</span>
+
+                                                <span class="symbol-label bg-blue text-white">
+                                                    {{$pro->vendor->vendor_name[0]}}{{$pro->vendor->vendor_name[1]}}</span>
 
                                             </div>
                                             <div class="d-flex justify-content-start flex-column">

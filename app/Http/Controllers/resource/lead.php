@@ -26,9 +26,10 @@ class lead extends Controller
         if(Auth::user()->isvendor()){
         $userId = Auth::user()->id;
         $vendor = Vendor::where('user_id', $userId)->first();
-        $proposal = Proposal::where('vendor_id', $vendor->id)->orderBy('id')->get();
+        $proposal = Proposal::with(['proposalro', 'vendor'])->where('vendor_id', $vendor->id)->orderBy('id')->get();
+        
         }else{
-          $proposal = Proposal::orderBy('id')->get();
+          $proposal = Proposal::with(['proposalro', 'vendor'])->orderBy('id')->get();
         }
         return view('lead.index',compact('proposal'));
     }
@@ -144,7 +145,9 @@ class lead extends Controller
      */
     public function show($id)
     {
-        $proposal = Proposal::with(['paymentMilestones', 'vendor'])->find($id);
+        $proposal = Proposal::with(['paymentMilestones', 'vendor.states'])->find($id);
+
+       
         
         $number = $proposal->proposal_total_cost;
         $numbersWords = new Numbers_Words();
@@ -275,6 +278,19 @@ class lead extends Controller
 
         // Return milestones as JSON
         return response()->json($milestones);
+    }
+
+    public function ro($id)
+    {
+        $proposal = Proposal::with(['paymentMilestones', 'vendor.states'])->find($id);
+
+       
+        
+        $number = $proposal->proposal_total_cost;
+        $numbersWords = new Numbers_Words();
+        $amounwords = $numbersWords->toWords($number);
+
+        return view('lead.roshow',compact('proposal','amounwords'));
     }
     
 }

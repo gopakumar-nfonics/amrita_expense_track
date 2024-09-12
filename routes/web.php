@@ -53,6 +53,7 @@ Route::post('/lead/approve', [\App\Http\Controllers\resource\lead::class, 'appro
 Route::resource('invoice',\App\Http\Controllers\resource\invoice::class);
 Route::get('lead/get-milestones/{proposal_id}', [\App\Http\Controllers\resource\lead::class, 'getMilestones']);
 Route::get('lead/milestone-details/{milestone_id}', [\App\Http\Controllers\resource\lead::class, 'getMilestonesdetails']);
+Route::get('lead/ro/{id}', [\App\Http\Controllers\resource\lead::class, 'ro'])->name('lead.ro');
 
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 Route::put('/profileupdate', [App\Http\Controllers\HomeController::class, 'profileupdate'])->name('profileupdate');

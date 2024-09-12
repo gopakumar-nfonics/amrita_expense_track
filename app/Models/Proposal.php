@@ -36,6 +36,6 @@ class Proposal extends Model
 
     public function proposalro()
     {
-        return $this->belongsTo(ProposalRo::class);
+        return $this->belongsTo(ProposalRo::class, 'id','proposal_id');
     }
 }

@@ -25,4 +25,8 @@ class Vendor extends Model
     {
         return $this->hasMany(Proposal::class);
     }
+    public function states()
+    {
+        return $this->hasMany(State::class,'id','state');
+    }
 }

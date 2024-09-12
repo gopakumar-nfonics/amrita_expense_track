@@ -52,7 +52,9 @@
                                     <th class="min-w-100px">ID</th>
                                     <th class="min-w-200px">Title</th>
                                     <th class="min-w-100px">RO #</th>
+                                    @if(!Auth::user()->isvendor())
                                     <th class="min-w-200px">Vendor</th>
+                                    @endif
                                     <th class="min-w-100px">Cost</th>
                                     <th class="min-w-150px text-center">Actions</th>
                                 </tr>
@@ -69,6 +71,15 @@
                                             <div class="fw-400 d-block fs-6">
                                                 {{$pro->proposal_id}}
                                                 <div class="text-gray-400 fw-semibold fs-9">
+                                                @if($pro->proposal_status == 0)
+                                                    <span class="badge badge-info fs-8">
+                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                        <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+                                                            <i class="fa-solid fa-check light-green fs-8 me-1 "></i>
+                                                        </span>
+                                                        <!--end::Svg Icon-->Pending
+                                                    </span>
+                                                    @else
                                                     <span class="badge badge-light-success fs-8">
                                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                                         <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
@@ -76,6 +87,7 @@
                                                         </span>
                                                         <!--end::Svg Icon-->Approved
                                                     </span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -87,21 +99,26 @@
                                                 <a href="{{ route('lead.show',$pro->id) }}"
                                                     class="text-dark fw-bold text-hover-primary fs-6 color-blue txt-capitalcase">{{$pro->proposal_title}}</a>
                                                 <span class="text-muted fw-semibold text-muted d-block fs-7">Submitted
-                                                    On : 25-July-2024</span>
+                                                    On : {{ \Carbon\Carbon::parse($pro->created_at)->format('d-M-Y') }}</span>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
+                                    @if($pro->proposalro)
                                         <div class="d-flex align-items-center">
 
                                             <div class="d-flex justify-content-start flex-column">
-                                                <a href="{{ route('lead.show',1) }}"
-                                                    class="text-dark fw-bold text-hover-primary fs-6">2324-RO-002</a>
+                                                <a href="{{ route('lead.ro',$pro->id) }}"
+                                                    class="text-dark fw-bold text-hover-primary fs-6">{{$pro->proposalro->proposal_ro}}</a>
                                                 <span class="text-muted fw-semibold text-muted d-block fs-7">Issued On :
-                                                    29-July-2024</span>
+                                                {{ \Carbon\Carbon::parse($pro->proposalro->created_at)->format('d-M-Y') }}</span>
                                             </div>
                                         </div>
+                                        @else
+                                        -
+                                        @endif
                                     </td>
+                                    @if(!Auth::user()->isvendor())
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="symbol symbol-35px me-2">
@@ -110,13 +127,14 @@
                                             </div>
                                             <div class="d-flex justify-content-start flex-column">
                                                 <a href="{{ route('vendor.show',1) }}"
-                                                    class="text-dark fw-bold text-hover-primary fs-6">NFONICS
-                                                    Solutions</a>
+                                                    class="text-dark fw-bold text-hover-primary fs-6">{{$pro->vendor->vendor_name}}
+                                                </a>
                                                 <span
-                                                    class="text-muted fw-semibold text-muted d-block fs-7">+91-999-590-4432</span>
+                                                    class="text-muted fw-semibold text-muted d-block fs-7">{{$pro->vendor->phone}}</span>
                                             </div>
                                         </div>
                                     </td>
+                                    @endif
 
                                     <td>
                                         <div class="d-flex align-items-center">
@@ -147,10 +165,12 @@
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
+                                            @if(!Auth::user()->isvendor() && $pro->proposal_status ==0)
                                             <div class="menu-item px-3">
                                                 <a href="javascript:void(0)" onclick="approve('{{$pro->id}}')"
                                                     class="menu-link px-3">Approve</a>
                                             </div>
+                                            @endif
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">

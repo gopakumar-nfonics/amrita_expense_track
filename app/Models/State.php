@@ -15,4 +15,9 @@ class State extends Model
         'name',
         'code',
     ];
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class);
+    }
 }

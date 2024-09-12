@@ -114,7 +114,7 @@
                                                 <a href="{{ route('lead.show',$request->invoice->proposal->id) }}"
                                                     class="text-dark text-hover-primary fs-6">
                                                     {{$request->invoice->proposal->proposal_title}}</a>
-                                                    <span
+                                                <span
                                                     class="d-flex justify-content-start text-muted fw-semibold text-muted d-block fs-7">Submitted
                                                     On :
                                                     {{ \Carbon\Carbon::parse($request->invoice->proposal->created_at)->format('d-M-Y') }}
@@ -124,7 +124,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        
+
                                         <div class="d-flex align-items-center">
 
                                             <div class="d-flex justify-content-start flex-column">
@@ -134,7 +134,7 @@
                                                     {{ \Carbon\Carbon::parse($request->invoice->proposalro->created_at)->format('d-M-Y') }}</span>
                                             </div>
                                         </div>
-                                       
+
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
@@ -142,7 +142,7 @@
                                                 <a href="{{ route('invoice.show',$request->invoice->id) }}"
                                                     class="text-dark text-hover-primary fs-6">
                                                     {{$request->invoice->milestone->milestone_title}}</a>
-                                                    <span class="text-muted fw-semibold text-muted d-block fs-7">Submitted
+                                                <span class="text-muted fw-semibold text-muted d-block fs-7">Submitted
                                                     On :
                                                     {{ \Carbon\Carbon::parse($request->invoice->created_at)->format('d-M-Y') }}</span>
                                             </div>
@@ -169,12 +169,7 @@
                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-150px py-4"
                                             data-kt-menu="true">
 
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="{{ route('payment.updatepayment',1) }}"
-                                                    class="menu-link px-3">Update Payment</a>
-                                            </div>
-                                            <!--end::Menu item-->
+
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
                                                 <a href="" class="menu-link px-3">Print</a>

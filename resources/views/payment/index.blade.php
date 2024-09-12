@@ -52,6 +52,7 @@
                                     <th class="min-w-100px">ID</th>
                                     <th class="min-w-200px">Vendor</th>
                                     <th class="min-w-100px">Proposal</th>
+                                    <th class="min-w-100px">RO#</th>
                                     <th class="min-w-100px">Milestone</th>
                                     <th class="min-w-100px">Amount</th>
                                     <th class="min-w-150px text-center">Actions</th>
@@ -115,6 +116,19 @@
                                                     {{$request->invoice->proposal->proposal_title}}</a>
                                             </div>
                                         </div>
+                                    </td>
+                                    <td>
+                                        
+                                        <div class="d-flex align-items-center">
+
+                                            <div class="d-flex justify-content-start flex-column">
+                                                <a href="{{ route('lead.ro',$request->invoice->proposal_id) }}"
+                                                    class="text-dark fw-bold text-hover-primary fs-6">{{$request->invoice->proposalro->proposal_ro}}</a>
+                                                <span class="text-muted fw-semibold text-muted d-block fs-7">Issued On :
+                                                    {{ \Carbon\Carbon::parse($request->invoice->proposalro->created_at)->format('d-M-Y') }}</span>
+                                            </div>
+                                        </div>
+                                       
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">

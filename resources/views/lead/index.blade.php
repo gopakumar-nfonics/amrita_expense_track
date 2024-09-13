@@ -234,7 +234,7 @@ $(document).ready(function() {
 <script>
 function approve(proid) {
     swal({
-            title: "Are you sure?",
+            title: "Are you sure, you want to approve this proposal?",
             text: "Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.",
             icon: "warning",
             buttons: true,

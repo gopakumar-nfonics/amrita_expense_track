@@ -523,7 +523,13 @@ table th {
 {
     border-top: 1px solid #454545 !important;
 }
-
+.swal-title
+{
+    font-size: 20px !important;
+}
+.swal-text {
+    text-align: center;
+}
 @media (min-width: 1400px) {
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
         max-width: 100% !important;

@@ -1,72 +1,99 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>User Created | {{config('app.name')}}</title>
 </head>
+
 <body>
-    <table role="presentation" style="box-sizing:border-box; background-color:#edf2f7; margin:0; padding:0; width:100%" width="100%" cellspacing="0" cellpadding="0">
-        <tbody>
-            <tr>
-                <td style="box-sizing:border-box" align="center">
-                    <table role="presentation" style="box-sizing:border-box; margin:0; padding:0; width:100%" width="100%" cellspacing="0" cellpadding="0">
-                        <tbody>
-                            <tr>
-                                <td style="box-sizing:border-box; padding:25px 0; text-align:center">
-                                  
-                                </td>
-                            </tr>
-                            <tr>
-                                <td cellpadding="0" cellspacing="0" style="box-sizing:border-box; background-color:#edf2f7; border-bottom:1px solid #edf2f7; border-top:1px solid #edf2f7; margin:0; padding:0; width:100%" width="100%">
-                                    <table class="x_m_-7621222466189922767inner-body" role="presentation" style="box-sizing:border-box; background-color:#ffffff; border-color:#e8e5ef; border-radius:2px; border-width:1px; margin:0 auto; padding:0; width:570px" width="570" cellspacing="0" cellpadding="0" align="center">
-                                        <tbody>
-												  <tr>
-                                <td style="box-sizing:border-box;padding: 25px 0 15px;text-align:center;border-bottom: 2px solid #ea0029;">
-                                   
-                                   <img class="brand-img" style="width: 75px;" src="http://friedchickenuniversity.com/assets/assets/images/logo.png" alt="...">
-           
-									 
-                                </td>
-                            </tr>
-                                            <tr>
-                                                <td style="box-sizing:border-box; max-width:100vw; padding:32px">
-                                                    <h1 style="box-sizing:border-box; color:#3d4852; font-size:14px; font-weight:bold; margin-top:0; text-align:left; text-transform:capitalize;">Hello Gopakumar,</h1>
+    <!--begin::Body-->
+    <div class="scroll-y flex-column-fluid px-10 py-10" data-kt-scroll="true" data-kt-scroll-activate="true"
+        data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_header_nav" data-kt-scroll-offset="5px"
+        data-kt-scroll-save-state="true"
+        style="background-color:#D5D9E2; --kt-scrollbar-color: #d9d0cc; --kt-scrollbar-hover-color: #d9d0cc">
+        <!--begin::Email template-->
+        <style>
+        html,
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: Inter, Helvetica, "sans-serif";
+        }
 
-                                                    <p style="box-sizing:border-box; line-height:1.5em; margin-top:0; text-align:left">Test</p>
-                                                    <table>
-                                                        <tr>
-                                                            <td style="box-sizing:border-box; max-width:100vw; padding:5px">Username :</td>
-                                                            <td style="box-sizing:border-box; max-width:100vw; padding:5px"><strong>Gkuser</strong></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td style="box-sizing:border-box; max-width:100vw; padding:5px">Password :</td>
-                                                            <td style="box-sizing:border-box; max-width:100vw; padding:5px"><strong>123123</strong></td>
-                                                        </tr>
-                                                    </table>
-                                                    <p style="box-sizing:border-box; line-height:1.5em; text-align:left">Testing</p>
+        a:hover {
+            color: #009ef7;
+        }
+        </style>
+        <div id="#kt_app_body_content"
+            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:0; width:100%;">
+            <div
+                style="background-color:#ffffff; padding: 45px 0 10px 0; border-radius: 0px; margin:40px auto; max-width: 600px;">
+                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
+                    style="border-collapse:collapse">
+                    <tbody>
+                        <tr>
+                            <td align="center" valign="center" style="text-align:center; padding-bottom: 10px">
+                                <!--begin:Email content-->
+                                <div style="text-align:center; margin:0 15px 0px 15px">
+                                    <!--begin:Logo-->
+                                    <div style="margin-bottom: 10px; border-bottom:1px solid #ccc">
+                                        <a href=" rel=" noopener" target="_blank">
+                                            <img alt="Logo" src="assets/media/logos/logo_purple.png"
+                                                style="height: 75px" />
+                                        </a>
+                                    </div>
+                                    <!--end:Logo-->
 
-                                                    <p style="box-sizing:border-box; font-weight:bold; line-height:1.5em; margin-top:0; text-align:left">Regards,<br aria-hidden="true">{{config('app.name')}}</p>
-                                                </td>
-                                            </tr>
-											<tr>
-                                             <td style="box-sizing:border-box; max-width:100vw; padding:22px; background:#002169;" align="center">
-                                                <p style="box-sizing:border-box; line-height:1.5em; margin-top:0; color:#b0adc5; font-size:12px; text-align:center">© {{date('Y')}} {{config('app.name')}}. All rights reserved.</p>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                </table>
+                                    <!--begin:Text-->
+                                    <div
+                                        style="font-size: 14px; font-weight: 500; margin-bottom: 7px; font-family:Arial,Helvetica,sans-serif;">
+                                        <p style="margin-bottom:20px; color:#181C32; font-size: 22px; font-weight:700;">
+                                            Hey Marcus, thanks for signing up!</p>
+                                        <p style="margin-bottom:20px; color:#777;margin-top:20px;">We are pleased to
+                                            inform you that
+                                            your vendor sign-up with Amrita – Budgeting & Expense Tracking Solution has
+                                            been successfully completed.</p>
+                                        <p style="margin-bottom:20px; color:#777">Our team will now review your
+                                            details. Once your registration is approved, we will notify you with further
+                                            instructions. Following approval, you will be able to sign in and access our
+                                            platform's features.</p>
+                                        <p style="margin-bottom:0px; color:#777">Thank you for joining us. We look
+                                            forward to collaborating with you.</p>
+                                    </div>
+                                    <!--end:Text-->
+
+                                </div>
+                                <!--end:Email content-->
                             </td>
                         </tr>
-                     <tr>
-                                <td style="box-sizing:border-box; padding:25px 0; text-align:center">
-                                   
-									 
-                                </td>
-                            </tr>
+
+                        <tr>
+                            <td align="center" valign="center"
+                                style="font-size: 13px; text-align:center; padding: 0 10px 20px 10px; font-weight: 500; color: #A1A5B7; font-family:Arial,Helvetica,sans-serif">
+
+                                <p style="margin-bottom:2px">Call our customer care number: +31 6 3344 55 56</p>
+                                <p style="margin-bottom:4px">You may reach us at
+                                    <a href="https://devs.keenthemes.com" rel="noopener" target="_blank"
+                                        style="font-weight: 600; padding-bottom:20px">info@doabuet.amrita.edu</a>.
+                                </p>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" valign="center"
+                                style="font-size: 13px; padding:0 15px; text-align:center; font-weight: 500; color: #A1A5B7;font-family:Arial,Helvetica,sans-serif;  border-top:1px solid #ccc;margin-top:20px">
+                                <p>&copy; 2024. Amrita Vishwa Vidyapeetham
+                                </p>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
-            </td>
-        </tr>
-    </tbody>
-</table>
+            </div>
+        </div>
+        <!--end::Email template-->
+    </div>
+    <!--end::Body-->
 </body>
+
 </html>

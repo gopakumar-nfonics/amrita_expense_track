@@ -134,4 +134,10 @@ class HomeController extends Controller
             return redirect()->back()->with('error', 'An error occurred while updating the vendor.');
         }
     }
+
+    public function email()
+    {
+        
+        return view('userCreate');
+    }
 }

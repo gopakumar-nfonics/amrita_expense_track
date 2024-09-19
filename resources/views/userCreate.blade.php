@@ -25,9 +25,9 @@
         }
         </style>
         <div id="#kt_app_body_content"
-            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:0; width:100%;">
+            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
             <div
-                style="background-color:#ffffff; padding: 45px 0 10px 0; border-radius: 0px; margin:40px auto; max-width: 600px;">
+                style="background-color:#ffffff; padding: 15px 0 10px 0; border-radius: 24px; margin:40px auto; max-width: 600px;">
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
                     style="border-collapse:collapse">
                     <tbody>
@@ -94,9 +94,9 @@
         </div>
 
         <div id="#kt_app_body_content"
-            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:0; width:100%;">
+            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
             <div
-                style="background-color:#ffffff; padding: 45px 0 10px 0; border-radius: 0px; margin:40px auto; max-width: 600px;">
+                style="background-color:#ffffff; padding: 15px 0 10px 0; border-radius: 24px; margin:40px auto; max-width: 600px;">
 
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
                     style="border-collapse:collapse">
@@ -171,9 +171,9 @@
 
 
         <div id="#kt_app_body_content"
-            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:0; width:100%;">
+            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
             <div
-                style="background-color:#ffffff; padding: 45px 0 10px 0; border-radius: 0px; margin:40px auto; max-width: 600px;">
+                style="background-color:#ffffff; padding: 15px 0 10px 0; border-radius: 24px; margin:40px auto; max-width: 600px;">
 
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
                     style="border-collapse:collapse">
@@ -248,9 +248,9 @@
 
 
         <div id="#kt_app_body_content"
-            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:0; width:100%;">
+            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
             <div
-                style="background-color:#ffffff; padding: 45px 0 10px 0; border-radius: 0px; margin:40px auto; max-width: 600px;">
+                style="background-color:#ffffff; padding: 15px 0 10px 0; border-radius: 24px; margin:40px auto; max-width: 600px;">
 
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
                     style="border-collapse:collapse">
@@ -325,9 +325,9 @@
 
 
         <div id="#kt_app_body_content"
-            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:0; width:100%;">
+            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
             <div
-                style="background-color:#ffffff; padding: 45px 0 10px 0; border-radius: 0px; margin:40px auto; max-width: 600px;">
+                style="background-color:#ffffff; padding: 15px 0 10px 0; border-radius: 24px; margin:40px auto; max-width: 600px;">
 
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
                     style="border-collapse:collapse">
@@ -404,9 +404,9 @@
 
 
         <div id="#kt_app_body_content"
-            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:0; width:100%;">
+            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
             <div
-                style="background-color:#ffffff; padding: 45px 0 10px 0; border-radius: 0px; margin:40px auto; max-width: 600px;">
+                style="background-color:#ffffff; padding: 15px 0 10px 0; border-radius: 24px; margin:40px auto; max-width: 600px;">
 
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
                     style="border-collapse:collapse">

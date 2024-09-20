@@ -10,6 +10,8 @@ use App\Models\Proposal;
 use App\Models\PaymentMilestone;
 use App\Models\VendorBankAccount;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\VendorRegistration;
+use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Http\Request;
 
@@ -132,6 +134,16 @@ class HomeController extends Controller
             $vendorBankAccount->branch_name = $request->branch_name;
             $vendorBankAccount->vendor_id = $vendor->id; // If you need to associate it with a vendor
             $vendorBankAccount->save();
+
+            $detailsvendor = [
+                'name' => $vendor->vendor_name,
+                
+            ];
+
+            $subject ="Welcome to Amrita - Vendor Sign-Up Successful!";
+
+            Mail::to($vendor->email)->send(new VendorRegistration($detailsvendor,$subject));
+
 
             return redirect()->route('profile')->with('success', 'Vendor Updated Successfully');
         } catch (\Exception $e) {

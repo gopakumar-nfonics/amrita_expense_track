@@ -18,5 +18,6 @@ return [
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'notverified' => 'Your vendor account is not approved. Once approved, we will notify you. After that, you can sign in and use the platform features.',
     'profileupdate' => 'Our team will review your details. Once approved, we will notify you. After that, you can sign in and use the platform features.',
+    'vendorrejected' => 'Your account is rejected.',
 
 ];

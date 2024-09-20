@@ -27,7 +27,7 @@ Route::get('/home', function(){
     if ( Auth::user()->isExpenseManager() ) {
         return redirect(route('dashboard'));
     }
-    if ( Auth::user()->isvenor() ) {
+    if ( Auth::user()->isvendor() ) {
         return redirect(route('dashboard'));
     }
 })->name('dashboard');

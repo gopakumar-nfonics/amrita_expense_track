@@ -34,10 +34,15 @@ class HomeController extends Controller
     {
 
         if (Auth::user()->isvendor()) {
+            if(Auth::user()->vendor_status == null){
+                return redirect()->route('profile');
+
+            }else{
             $userId = Auth::user()->id;
             $vendor = Vendor::where('user_id', $userId)->first();
             $proposal = Proposal::where('vendor_id', $vendor->id)->orderBy('id')->get();
             return view('lead.index', compact('proposal'));
+            }
         } else {
 
             return view('home');
@@ -113,6 +118,9 @@ class HomeController extends Controller
             $vendor->city = $request->city;
             $vendor->postcode = $request->postcode;
             $vendor->state = $request->state;
+            if($vendor->vendor_status != 'verified'){
+                $vendor->vendor_status = 'profile updated';
+            }
 
             $vendor->save();
 

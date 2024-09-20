@@ -3,6 +3,13 @@
 
 @section('content')
 
+<style>
+    .custom-popup {
+        width: 600px; /* Set the desired width */
+        max-width: 100%; /* Ensure it doesn't exceed the viewport */
+    }
+</style>
+
 <!--begin::Main-->
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
     <!--begin::Content wrapper-->
@@ -368,6 +375,10 @@
                             <!--end::Actions-->
                         </form>
                         <!--end::Form-->
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                           @csrf
+                        </form>
                     </div>
                     <!--end::Content-->
                 </div>
@@ -411,4 +422,24 @@
         });
     });
     </script>
+
+@if (session('success'))
+<script>
+    // Display the success message in a popup
+    Swal.fire({
+        icon: 'success',
+        title: 'Your vendor sign-up is successful',
+        text: "{{ trans('auth.profileupdate') }}",
+        timer: 7000,
+        showConfirmButton: false,
+        customClass: {
+            popup: 'custom-popup' // Apply the custom class here
+        }
+    }).then(() => {
+        // Submit the hidden logout form to perform POST request
+        document.getElementById('logout-form').submit();
+    });
+</script>
+@endif
+
     @endsection

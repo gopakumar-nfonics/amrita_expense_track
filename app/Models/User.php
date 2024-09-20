@@ -68,4 +68,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Vendor::class);
     }
+
+    public function getVendorStatusAttribute()
+    {
+        if ($this->vendor) {
+            return $this->vendor->vendor_status;
+        }
+        return null;
+    }
 }

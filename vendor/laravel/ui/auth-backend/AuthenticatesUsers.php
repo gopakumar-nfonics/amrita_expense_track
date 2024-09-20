@@ -81,6 +81,11 @@ trait AuthenticatesUsers
                 $this->username() => [trans('auth.notverified')],
             ]);
         }
+        if ($user && $user->isVendor() && $user->vendor_status === 'rejected') {
+            throw ValidationException::withMessages([
+                $this->username() => [trans('auth.vendorrejected')],
+            ]);
+        }
     }
 
     /**

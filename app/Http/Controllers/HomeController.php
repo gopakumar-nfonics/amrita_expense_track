@@ -11,6 +11,7 @@ use App\Models\PaymentMilestone;
 use App\Models\VendorBankAccount;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\VendorRegistration;
+use App\Mail\AdminVendorRegistration;
 use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Http\Request;
@@ -143,6 +144,11 @@ class HomeController extends Controller
             $subject ="Welcome to Amrita - Vendor Sign-Up Successful!";
 
             Mail::to($vendor->email)->send(new VendorRegistration($detailsvendor,$subject));
+
+            $adminsubject ="Vendor Sign-Up Notification - Review and Approval Required";
+            $adminemail = env('CONTACT_MAIL');
+            Mail::to($adminemail)->send(new AdminVendorRegistration($detailsvendor,$adminsubject));
+
 
 
             return redirect()->route('profile')->with('success', 'Vendor Updated Successfully');

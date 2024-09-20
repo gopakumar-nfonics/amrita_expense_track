@@ -1,8 +1,5 @@
-@if(Auth::user()->isVendor() && Auth::user()->vendor_status == 'verified')
-@extends('layouts.blank')
-@else
-@extends('layouts.login')
-@endif
+ @extends('layouts.blank')
+
 
 @section('content')
 

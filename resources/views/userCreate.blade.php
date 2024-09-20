@@ -27,7 +27,7 @@
         <div id="#kt_app_body_content"
             style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
             <div
-                style="background-color:#ffffff; padding: 15px 0 10px 0; border-radius: 24px; margin:40px auto; max-width: 600px;">
+                style="background-color:#ffffff; padding: 20px 0 10px 0; border-radius: 15px; margin:40px auto; max-width: 600px;">
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
                     style="border-collapse:collapse">
                     <tbody>
@@ -93,10 +93,80 @@
             </div>
         </div>
 
+
         <div id="#kt_app_body_content"
             style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
             <div
-                style="background-color:#ffffff; padding: 15px 0 10px 0; border-radius: 24px; margin:40px auto; max-width: 600px;">
+                style="background-color:#ffffff; padding: 20px 0 10px 0; border-radius: 15px; margin:40px auto; max-width: 600px;">
+                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
+                    style="border-collapse:collapse">
+                    <tbody>
+                        <tr>
+                            <td align="center" valign="center" style="text-align:center; padding-bottom: 10px">
+                                <p>Vendor Sign-Up Notification - Review and Approval Required</p>
+                                <!--begin:Email content-->
+                                <div style="text-align:center; margin:0 15px 0px 15px">
+                                    <!--begin:Logo-->
+                                    <div style="margin-bottom: 40px; border-bottom:1px solid #ccc">
+                                        <a href=" rel=" noopener" target="_blank">
+                                            <img alt="Logo" src="assets/media/logos/logo_purple.png"
+                                                style="height: 75px" />
+                                        </a>
+                                    </div>
+                                    <!--end:Logo-->
+
+                                    <!--begin:Text-->
+                                    <div
+                                        style="font-size: 14px; font-weight: 500; margin-bottom: 7px; font-family:Arial,Helvetica,sans-serif;">
+                                        <p
+                                            style="margin-bottom:20px; color:#181C32; font-weight:700;text-align: left;margin-left: 10px;">
+                                            Dear Admin,</p>
+                                        <p style="margin-bottom:20px; color:#777;margin-top:20px;">NFONICS has
+                                            successfully completed the vendor sign-up process for Amrita – Budgeting &
+                                            Expense Tracking Solution. Their profile is now available in the system for
+                                            your review.</p>
+                                        <p style="margin-bottom:20px; color:#777">Please take the necessary steps to
+                                            verify their details and approve the registration if everything is in order.
+                                            Once the approval is granted, the vendor will be able to access the
+                                            platform's features.</p>
+
+                                    </div>
+                                    <!--end:Text-->
+
+                                </div>
+                                <!--end:Email content-->
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" valign="center"
+                                style="font-size: 13px; text-align:center; padding: 0 10px 40px 10px; font-weight: 500; color: #93949b; font-family:Arial,Helvetica,sans-serif">
+
+                                <p style="margin-bottom:2px">For Inquiries or Support, Call Us: +91 94899 32973</p>
+                                <p style="margin-bottom:4px">You may reach us at
+                                    <a href="https://devs.keenthemes.com" rel="noopener" target="_blank"
+                                        style="font-weight: 600; padding-bottom:20px">directoradmissions@amrita.edu</a>.
+                                </p>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" valign="center"
+                                style="font-size: 13px; padding:0 15px; text-align:center; font-weight: 500; color: #93949b;font-family:Arial,Helvetica,sans-serif;  border-top:1px solid #ccc;margin-top:20px">
+                                <p>&copy; 2024. Amrita Vishwa Vidyapeetham
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="#kt_app_body_content"
+            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
+            <div
+                style="background-color:#ffffff; padding: 20px 0 10px 0; border-radius: 15px; margin:40px auto; max-width: 600px;">
 
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
                     style="border-collapse:collapse">
@@ -173,7 +243,7 @@
         <div id="#kt_app_body_content"
             style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
             <div
-                style="background-color:#ffffff; padding: 15px 0 10px 0; border-radius: 24px; margin:40px auto; max-width: 600px;">
+                style="background-color:#ffffff; padding: 20px 0 10px 0; border-radius: 15px; margin:40px auto; max-width: 600px;">
 
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
                     style="border-collapse:collapse">
@@ -247,10 +317,79 @@
         </div>
 
 
+
+
         <div id="#kt_app_body_content"
             style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
             <div
-                style="background-color:#ffffff; padding: 15px 0 10px 0; border-radius: 24px; margin:40px auto; max-width: 600px;">
+                style="background-color:#ffffff; padding: 20px 0 10px 0; border-radius: 15px; margin:40px auto; max-width: 600px;">
+                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
+                    style="border-collapse:collapse">
+                    <tbody>
+                        <tr>
+                            <td align="center" valign="center" style="text-align:center; padding-bottom: 10px">
+                                <p>Vendor Proposal Submission - Review and Approval Required</p>
+                                <!--begin:Email content-->
+                                <div style="text-align:center; margin:0 15px 0px 15px">
+                                    <!--begin:Logo-->
+                                    <div style="margin-bottom: 40px; border-bottom:1px solid #ccc">
+                                        <a href=" rel=" noopener" target="_blank">
+                                            <img alt="Logo" src="assets/media/logos/logo_purple.png"
+                                                style="height: 75px" />
+                                        </a>
+                                    </div>
+                                    <!--end:Logo-->
+
+                                    <!--begin:Text-->
+                                    <div
+                                        style="font-size: 14px; font-weight: 500; margin-bottom: 7px; font-family:Arial,Helvetica,sans-serif;">
+                                        <p
+                                            style="margin-bottom:20px; color:#181C32; font-weight:700;text-align: left;margin-left: 10px;">
+                                            Dear Admin,</p>
+                                        <p style="margin-bottom:20px; color:#777;margin-top:20px;">NFONICS has submitted
+                                            their proposal for the Seat Allocation Web Application to Amrita. The
+                                            proposal has been received and is now available for your review.</p>
+                                        <p style="margin-bottom:20px; color:#777">Kindly review the proposal and, if
+                                            everything is in order, approve it and proceed with generating the release
+                                            order. Once the release order is generated, the vendor will be notified
+                                            accordingly.</p>
+
+                                    </div>
+                                    <!--end:Text-->
+
+                                </div>
+                                <!--end:Email content-->
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" valign="center"
+                                style="font-size: 13px; text-align:center; padding: 0 10px 40px 10px; font-weight: 500; color: #93949b; font-family:Arial,Helvetica,sans-serif">
+
+                                <p style="margin-bottom:2px">For Inquiries or Support, Call Us: +91 94899 32973</p>
+                                <p style="margin-bottom:4px">You may reach us at
+                                    <a href="https://devs.keenthemes.com" rel="noopener" target="_blank"
+                                        style="font-weight: 600; padding-bottom:20px">directoradmissions@amrita.edu</a>.
+                                </p>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" valign="center"
+                                style="font-size: 13px; padding:0 15px; text-align:center; font-weight: 500; color: #93949b;font-family:Arial,Helvetica,sans-serif;  border-top:1px solid #ccc;margin-top:20px">
+                                <p>&copy; 2024. Amrita Vishwa Vidyapeetham
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="#kt_app_body_content"
+            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
+            <div
+                style="background-color:#ffffff; padding: 20px 0 10px 0; border-radius: 15px; margin:40px auto; max-width: 600px;">
 
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
                     style="border-collapse:collapse">
@@ -280,9 +419,16 @@
                                             been approved by our team. We appreciate the effort and detail you put into
                                             your submission.</p>
                                         <p style="margin-bottom:20px; color:#777">As part of this approval, we have
-                                            generated a Release Order, which is attached to this email. Please review
-                                            the document carefully, and let us know if you have any questions or need
-                                            further clarification.</p>
+                                            generated a Release Order, which you can download by clicking on the link
+                                            below. Please review the document carefully, and let us know if you have any
+                                            questions or need further clarification.</p>
+
+                                        <!--begin:Action-->
+                                        <a href='https://doabuet.amrita.edu/login' target="_blank"
+                                            style="background-color:#50cd89; border-radius:6px;display:inline-block; padding:11px 19px; color: #FFFFFF; font-size: 14px; font-weight:500;text-decoration: none;">Download
+                                            Release Order</a>
+                                        <!--begin:Action-->
+
                                         <p style="margin-bottom:20px; color:#777">
                                             Thank you for your cooperation, and we look forward to a successful
                                             collaboration.
@@ -327,7 +473,7 @@
         <div id="#kt_app_body_content"
             style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
             <div
-                style="background-color:#ffffff; padding: 15px 0 10px 0; border-radius: 24px; margin:40px auto; max-width: 600px;">
+                style="background-color:#ffffff; padding: 20px 0 10px 0; border-radius: 15px; margin:40px auto; max-width: 600px;">
 
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
                     style="border-collapse:collapse">
@@ -358,10 +504,7 @@
                                             inform you that your proposal for the Seat Allocation Web Application has
                                             been approved by our team. We appreciate the effort and detail you put into
                                             your submission.</p>
-                                        <p style="margin-bottom:20px; color:#777">As part of this approval, we have
-                                            generated a Release Order, which is attached to this email. Please review
-                                            the document carefully, and let us know if you have any questions or need
-                                            further clarification.</p>
+                                        <p style="margin-bottom:20px; color:#777"></p>
                                         <p style="margin-bottom:20px; color:#777">
                                             Thank you for your cooperation, and we look forward to a successful
                                             collaboration.
@@ -406,7 +549,75 @@
         <div id="#kt_app_body_content"
             style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
             <div
-                style="background-color:#ffffff; padding: 15px 0 10px 0; border-radius: 24px; margin:40px auto; max-width: 600px;">
+                style="background-color:#ffffff; padding: 20px 0 10px 0; border-radius: 15px; margin:40px auto; max-width: 600px;">
+                <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
+                    style="border-collapse:collapse">
+                    <tbody>
+                        <tr>
+                            <td align="center" valign="center" style="text-align:center; padding-bottom: 10px">
+                                <p>Subject: Vendor Invoice Submission – Review and Payment Processing Required</p>
+                                <!--begin:Email content-->
+                                <div style="text-align:center; margin:0 15px 0px 15px">
+                                    <!--begin:Logo-->
+                                    <div style="margin-bottom: 40px; border-bottom:1px solid #ccc">
+                                        <a href=" rel=" noopener" target="_blank">
+                                            <img alt="Logo" src="assets/media/logos/logo_purple.png"
+                                                style="height: 75px" />
+                                        </a>
+                                    </div>
+                                    <!--end:Logo-->
+
+                                    <!--begin:Text-->
+                                    <div
+                                        style="font-size: 14px; font-weight: 500; margin-bottom: 7px; font-family:Arial,Helvetica,sans-serif;">
+                                        <p
+                                            style="margin-bottom:20px; color:#181C32; font-weight:700;text-align: left;margin-left: 10px;">
+                                            Dear Admin,</p>
+                                        <p style="margin-bottom:20px; color:#777;margin-top:20px;">NFONICS has submitted
+                                            the invoice for Milestone-1 of the Seat Allocation Web Application. The
+                                            invoice is now available in the system for your review.</p>
+                                        <p style="margin-bottom:20px; color:#777">Please verify the details of the
+                                            invoice and proceed with processing the payment as per the agreed terms once
+                                            the review is complete.</p>
+
+                                    </div>
+                                    <!--end:Text-->
+
+                                </div>
+                                <!--end:Email content-->
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" valign="center"
+                                style="font-size: 13px; text-align:center; padding: 0 10px 40px 10px; font-weight: 500; color: #93949b; font-family:Arial,Helvetica,sans-serif">
+
+                                <p style="margin-bottom:2px">For Inquiries or Support, Call Us: +91 94899 32973</p>
+                                <p style="margin-bottom:4px">You may reach us at
+                                    <a href="https://devs.keenthemes.com" rel="noopener" target="_blank"
+                                        style="font-weight: 600; padding-bottom:20px">directoradmissions@amrita.edu</a>.
+                                </p>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td align="center" valign="center"
+                                style="font-size: 13px; padding:0 15px; text-align:center; font-weight: 500; color: #93949b;font-family:Arial,Helvetica,sans-serif;  border-top:1px solid #ccc;margin-top:20px">
+                                <p>&copy; 2024. Amrita Vishwa Vidyapeetham
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div id="#kt_app_body_content"
+            style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
+            <div
+                style="background-color:#ffffff; padding: 20px 0 10px 0; border-radius: 15px; margin:40px auto; max-width: 600px;">
 
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
                     style="border-collapse:collapse">

@@ -530,6 +530,16 @@ table th {
 .swal-text {
     text-align: center;
 }
+.bg-body-color
+{
+background-color: #f5f8fa !important;
+}
+
+div#swal2-html-container {
+    padding-bottom: 30px;
+    line-height: 23px;
+}
+
 @media (min-width: 1400px) {
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
         max-width: 100% !important;

@@ -39,6 +39,7 @@ Route::post('/user/deleteUser', [\App\Http\Controllers\resource\user::class, 'de
 Route::resource('stream',\App\Http\Controllers\resource\stream::class);
 Route::resource('company',\App\Http\Controllers\resource\company::class);
 Route::resource('vendor',\App\Http\Controllers\resource\vendor::class);
+Route::post('/vendor/approve', [\App\Http\Controllers\resource\vendor::class, 'approve'])->name('vendor.approve');
 Route::resource('category',\App\Http\Controllers\resource\category::class);
 Route::post('/category/deletecat', [\App\Http\Controllers\resource\category::class, 'deletecat'])->name('category.deletecat');
 Route::resource('budget',\App\Http\Controllers\resource\budget::class);

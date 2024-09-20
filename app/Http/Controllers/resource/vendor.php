@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vendor as vendors;
 use App\Models\Company;
+use App\Mail\VendorVerified;
+use Illuminate\Support\Facades\Mail;
 
 class vendor extends Controller
 {
@@ -16,7 +18,7 @@ class vendor extends Controller
      */
     public function index()
     {
-        $vendors=vendors::with('company')->orderBy('vendor_name')->get();
+        $vendors=vendors::with('company')->whereNotNull('vendor_status')->orderBy('vendor_name')->get();
         return view('vendor.index', compact('vendors'));
     }
 
@@ -160,5 +162,45 @@ class vendor extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function approve(Request $request)
+    {
+
+        $status = $request->input('status');
+
+       
+        
+        $vendor = vendors::findOrFail($request->input('id'));
+        if (!$vendor) {
+        return response()->json(['error' => 'Vendor not found.'], 404);
+        }
+
+        if($status == 'approve'){
+        $vendor->vendor_status = 'verified';
+        $vendor->save();
+
+        $detailsvendor = [
+            'name' => $vendor->vendor_name,
+            
+        ];
+
+        $subject ="Your Vendor Registration with Amrita - Approved!";
+
+        Mail::to($vendor->email)->send(new VendorVerified($detailsvendor,$subject));
+
+        return response()->json(['success' => 'The Vendor has been approved!']);
+
+    }
+    if($status == 'rejected'){
+        $vendor->vendor_status = 'rejected';
+        $vendor->save();
+
+        
+
+        return response()->json(['success' => 'The Vendor has been rejected!']);
+
+    }
+        
     }
 }

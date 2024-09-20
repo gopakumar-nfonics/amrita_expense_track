@@ -14,7 +14,7 @@ class AddVendorStatusToVendorTable extends Migration
     public function up()
     {
         Schema::table('vendor', function (Blueprint $table) {
-            $table->enum('vendor_status', ['profile updated', 'verified'])->nullable()->default(null)->after('state');
+            $table->enum('vendor_status', ['profile updated', 'verified','rejected'])->nullable()->default(null)->after('state');
         });
     }
 

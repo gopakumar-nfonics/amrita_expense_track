@@ -11,6 +11,11 @@ use App\Models\Proposal;
 use App\Models\PaymentMilestone;
 use Numbers_Words;
 use App\Models\ProposalRo;
+use App\Mail\ProposalSubmit;
+use App\Mail\AdminProposalSubmit;
+use App\Mail\ApproveVendorProposal;
+
+use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -112,7 +117,6 @@ class lead extends Controller
     
             $proposal->save();
             
-            $proposal->save();
 
             $milestones = [];
             foreach ($request->input('name') as $index => $name) {
@@ -129,6 +133,21 @@ class lead extends Controller
         
             // Insert data into the database
              PaymentMilestone::insert($milestones);
+
+             $detailsproposal = [
+                'name' => $vendor->vendor_name,
+                'proposal_title' => $proposal->proposal_title,
+                
+            ];
+
+            $subject = $proposal->proposal_title." Submission";
+
+            Mail::to($vendor->email)->send(new ProposalSubmit($detailsproposal,$subject));
+
+            $adminsubject ="Vendor Proposal Submission - Review and Approval Required";
+            $adminemail = env('CONTACT_MAIL');
+            Mail::to($adminemail)->send(new AdminProposalSubmit($detailsproposal,$adminsubject));
+
     
             return redirect()->route('lead.index')->with('success', 'Proposal Created Successfully');
         } catch (\Exception $e) {
@@ -251,6 +270,20 @@ class lead extends Controller
             $proposalro->proposal_id    = $request->input('id');
             $proposalro->proposal_ro = $proposal_ro;
             $proposalro->save();
+
+
+            $vendor = Vendor::where('id', $proposal->vendor_id)->first();
+
+
+            $detailsproposal = [
+                'name' => $vendor->vendor_name,
+                'proposal_title' => $proposal->proposal_title,
+                
+            ];
+
+            $subject = $proposal->proposal_title." Proposal Approval and Release Order";
+
+            Mail::to($vendor->email)->send(new ApproveVendorProposal($detailsproposal,$subject));
 
         return response()->json(['success' => 'The Proposal has been approved!']);
         

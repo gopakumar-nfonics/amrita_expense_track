@@ -16,6 +16,9 @@ use App\Mail\AdminProposalSubmit;
 use App\Mail\ApproveVendorProposal;
 use App\Mail\RejectVendorProposal;
 
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+
+
 use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Support\Facades\Auth;
@@ -302,6 +305,9 @@ class lead extends Controller
             $proposalro->save();
 
 
+            //$this->saveReleaseOrderAsPdf($request->input('id'));
+
+
             $vendor = Vendor::where('id', $proposal->vendor_id)->first();
 
 
@@ -357,6 +363,23 @@ class lead extends Controller
         $amounwords = $numbersWords->toWords($number);
 
         return view('lead.roshow',compact('proposal','amounwords'));
+    }
+
+    public function saveReleaseOrderAsPdf($id)
+    {
+        $proposal = Proposal::with('vendor', 'proposalro')->findOrFail($id);
+
+        $numbersWords = new Numbers_Words();
+        $amounwords = $numbersWords->toWords($proposal->proposal_total_cost);
+
+        $pdfName = 'Release_Order_' . $proposal->proposal_ro . '.pdf';
+    
+        $pdfPath = public_path('storage/pdf/' . $pdfName);
+
+        // return view('reports.questionslip', $data);
+
+        $pdf = PDF::loadView('lead.release_order', compact('proposal', 'amounwords'));
+        $pdf->save($pdfPath);
     }
     
 }

@@ -62,3 +62,7 @@ Route::put('/profileupdate', [App\Http\Controllers\HomeController::class, 'profi
 Route::get('/payment/create/{id?}', [\App\Http\Controllers\resource\payment::class, 'create'])->name('payment.create');
 
 Route::get('/email', [App\Http\Controllers\HomeController::class, 'email'])->name('email');
+
+use App\Http\Controllers\ProposalController;
+
+Route::get('/lead/{id}/save-pdf', [\App\Http\Controllers\resource\lead::class, 'saveReleaseOrderAsPdf'])->name('lead.save-pdf');

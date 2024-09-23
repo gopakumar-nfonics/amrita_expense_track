@@ -14,6 +14,7 @@ use App\Models\ProposalRo;
 use App\Mail\ProposalSubmit;
 use App\Mail\AdminProposalSubmit;
 use App\Mail\ApproveVendorProposal;
+use App\Mail\RejectVendorProposal;
 
 use Illuminate\Support\Facades\Mail;
 
@@ -238,6 +239,37 @@ class lead extends Controller
 
     public function approve(Request $request)
     {
+        $status = $request->input('status');
+
+        if($status == 'rejected'){
+
+            $proposal = Proposal::findOrFail($request->input('id'));
+        if (!$proposal) {
+        return response()->json(['error' => 'Proposal not found.'], 404);
+        }
+        $proposal->proposal_status = 2;
+        $proposal->save();
+
+        $vendor = Vendor::where('id', $proposal->vendor_id)->first();
+
+
+            $detailsproposal = [
+                'name' => $vendor->vendor_name,
+                'proposal_title' => $proposal->proposal_title,
+                
+            ];
+
+            $subject = $proposal->proposal_title." Proposal Rejected";
+
+            Mail::to($vendor->email)->send(new RejectVendorProposal($detailsproposal,$subject));
+
+        return response()->json(['success' => 'The Proposal has been rejected!']);
+
+
+        }
+        
+        else{
+
         $currentDate = new \DateTime();
         $currentMonth = $currentDate->format('m'); 
         $currentYear = $currentDate->format('y');
@@ -286,6 +318,8 @@ class lead extends Controller
             Mail::to($vendor->email)->send(new ApproveVendorProposal($detailsproposal,$subject));
 
         return response()->json(['success' => 'The Proposal has been approved!']);
+
+        }
         
     }
     

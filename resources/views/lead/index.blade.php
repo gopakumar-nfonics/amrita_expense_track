@@ -80,6 +80,12 @@
                                                         </span>
                                                         <!--end::Svg Icon-->Pending
                                                     </span>
+                                                    @elseif($pro->proposal_status == 2)
+                                                    <span class="badge badge-danger fs-8">
+                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                        
+                                                        <!--end::Svg Icon-->Rejected
+                                                    </span>
                                                     @else
                                                     <span class="badge badge-light-success fs-8">
                                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
@@ -172,10 +178,16 @@
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
+                                            @if(!Auth::user()->isvendor() && $pro->proposal_status !=1)
+                                            <div class="menu-item px-3">
+                                                <a href="javascript:void(0)" onclick="approve('{{$pro->id}}','approve')"
+                                                    class="menu-link px-3">Approve</a>
+                                            </div>
+                                            @endif
                                             @if(!Auth::user()->isvendor() && $pro->proposal_status ==0)
                                             <div class="menu-item px-3">
-                                                <a href="javascript:void(0)" onclick="approve('{{$pro->id}}')"
-                                                    class="menu-link px-3">Approve</a>
+                                                <a href="javascript:void(0)" onclick="approve('{{$pro->id}}','rejected')"
+                                                    class="menu-link px-3">Reject</a>
                                             </div>
                                             @endif
                                             <!--end::Menu item-->
@@ -232,10 +244,22 @@ $(document).ready(function() {
 </script>
 
 <script>
-function approve(proid) {
+function approve(proid,status) {
+  
+    if (status === 'rejected') {
+    var title = "Are you sure?"
+    var text = 'You want to reject this proposal?';
+     } else if (status === 'approve') {
+    var title = 'Are you sure, you want to approve this proposal?';
+    var text = "Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.";
+       } else {
+    var title = 'Invalid status';
+    }
+
+
     swal({
-            title: "Are you sure, you want to approve this proposal?",
-            text: "Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.",
+            title: title,
+            text: text,
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -248,6 +272,7 @@ function approve(proid) {
                     data: {
                         _token: '{{ csrf_token() }}',
                         id: proid,
+                        status: status,
                     },
                     success: function(response) {
                         if (response.success) {

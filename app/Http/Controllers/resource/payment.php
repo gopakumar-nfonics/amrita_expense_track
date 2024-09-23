@@ -8,8 +8,14 @@ use App\Models\Category;
 use App\Models\Vendor;
 use App\Models\Stream;
 use App\Models\Invoice as Invoices;
+use App\Models\Proposal;
+use App\Models\PaymentMilestone;
 use App\Models\PaymentRequest;
 use Numbers_Words;
+use App\Mail\InvoicePaymentInitiation;
+
+use Illuminate\Support\Facades\Mail;
+
 class payment extends Controller
 {
     /**
@@ -104,6 +110,21 @@ class payment extends Controller
               $invoice = Invoices::findOrFail($request->invoid);
               $invoice->invoice_status  = 1;
               $invoice->save();
+
+              $vendor = Vendor::where('id', $invoice->vendor_id )->first();
+             $proposal = Proposal::where('id', $invoice->proposal_id)->first();
+            $milestone = PaymentMilestone::where('id', $invoice->milestone_id)->first();
+
+              $detailsproposal = [
+                'name' => $vendor->vendor_name,
+                'proposal_title' => $proposal->proposal_title,
+                'milestone_title' => $milestone->milestone_title,
+                
+            ];
+
+            $subject = $proposal->proposal_title." ".$milestone->milestone_title." Invoice Payment Initiation";
+
+            Mail::to($vendor->email)->send(new InvoicePaymentInitiation($detailsproposal,$subject));
 
             return redirect()->route('invoice.index')->with('success', 'Payment Request Submitted Successfully');
         } catch (\Exception $e) {

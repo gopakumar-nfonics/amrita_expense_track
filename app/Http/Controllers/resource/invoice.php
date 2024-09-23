@@ -11,6 +11,10 @@ use App\Models\ProposalRo;
 use App\Models\Invoice as Invoices;
 use Illuminate\Support\Facades\Auth;
 use Numbers_Words;
+use App\Mail\AdminInvoiceSubmit;
+use App\Mail\VendorInvoiceSubmit;
+
+use Illuminate\Support\Facades\Mail;
 
 class invoice extends Controller
 {
@@ -101,7 +105,26 @@ class invoice extends Controller
 
             $invoices->save();
 
-            return redirect()->route('invoice.index')->with('success', 'Invoice Created Successfully');
+
+            $proposal = Proposal::where('id', $invoices->proposal_id)->first();
+            $milestone = PaymentMilestone::where('id', $invoices->milestone_id)->first();
+
+            $detailsproposal = [
+                'name' => $vendor->vendor_name,
+                'proposal_title' => $proposal->proposal_title,
+                'milestone_title' => $milestone->milestone_title,
+                
+            ];
+
+            $subject = $proposal->proposal_title." ".$milestone->milestone_title. "Invoice Submission";
+
+            Mail::to($vendor->email)->send(new VendorInvoiceSubmit($detailsproposal,$subject));
+
+            $adminsubject ="Vendor Invoice Submission – Review and Payment Processing Required";
+            $adminemail = env('CONTACT_MAIL');
+            Mail::to($adminemail)->send(new AdminInvoiceSubmit($detailsproposal,$adminsubject));
+
+            return redirect()->route('invoice.index')->with('success', 'Invoice Submitted Successfully');
         } catch (\Exception $e) {
             // Log the exception message
             print_r($e->getMessage());

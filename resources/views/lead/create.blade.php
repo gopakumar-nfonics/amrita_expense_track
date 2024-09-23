@@ -279,7 +279,6 @@
                                                             <tr
                                                                 class="border-bottom fs-7 fw-bold text-gray-700 text-uppercase">
                                                                 <th class="min-w-200px w-275px">Milestone</th>
-                                                                <th class="min-w-150px w-150px">Date</th>
                                                                 <th class="min-w-200px w-200px">Amount</th>
                                                                 <th class="min-w-100px w-100px">GST (%) </th>
                                                                 <th class="min-w-200px w-200px text-end">Total</th>
@@ -295,12 +294,6 @@
                                                                     <input type="text"
                                                                         class="form-control form-control-solid mb-2"
                                                                         name="name[]" placeholder="Milestone Title">
-
-                                                                </td>
-                                                                <td class="pe-7">
-                                                                    <input type="text"
-                                                                        class="form-control form-control-solid mb-2 mdate"
-                                                                        name="mdate[]" placeholder="Date">
 
                                                                 </td>
                                                                 <td>

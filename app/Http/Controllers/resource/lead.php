@@ -69,7 +69,6 @@ class lead extends Controller
             'total_cost' => 'required',
             'invoice_due_date' => 'required|date',
             'name.*' => 'required|string',
-            'mdate.*' => 'required|date',
             'amount.*' => 'required|numeric',
             'gst.*' => 'required|numeric',
             'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048', // Add file validation
@@ -124,7 +123,6 @@ class lead extends Controller
                 $milestones[] = [
                     'proposal_id' => $proposal->id,
                     'milestone_title' => $name,
-                    'milestone_date' => $request->input('mdate')[$index],
                     'milestone_amount' => $request->input('amount')[$index],
                     'milestone_gst' => $request->input('gst')[$index], // Adjust if you have GST calculations
                     'milestone_total_amount' => $request->input('amount')[$index] * (1 + ($request->input('gst')[$index] / 100)), // Example GST calculation

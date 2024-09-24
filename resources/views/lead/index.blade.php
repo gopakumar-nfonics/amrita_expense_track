@@ -192,9 +192,11 @@
                                             @endif
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
+                                            @if(Auth::user()->isvendor() && $pro->proposal_status ==0)
                                             <div class="menu-item px-3">
-                                                <a href="" class="menu-link px-3">Edit</a>
+                                                <a href="{{ route('lead.edit',$pro->id) }}" class="menu-link px-3">Edit</a>
                                             </div>
+                                            @endif
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">

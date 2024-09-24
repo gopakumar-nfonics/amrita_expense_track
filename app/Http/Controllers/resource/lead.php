@@ -186,7 +186,10 @@ class lead extends Controller
      */
     public function edit($id)
     {
-        //
+        $proposal = Proposal::with(['paymentMilestones'])->find($id);
+        if($proposal->proposal_status == 0){
+        return view('lead.edit', compact('proposal'));
+        }
     }
 
     /**
@@ -198,7 +201,72 @@ class lead extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'ptitle' => 'required|string|max:255',
+            'description' => 'required|string',
+            'order_cost' => 'required|numeric|min:0',
+            'order_gst' => 'required|numeric|min:0',
+            'total_cost' => 'required',
+            'invoice_due_date' => 'required|date',
+            'name.*' => 'required|string',
+            'amount.*' => 'required|numeric',
+            'gst.*' => 'required|numeric',
+            'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048', // Add file validation
+
+        ]);
+    
+        try {
+              
+           
+
+    $userId = Auth::user()->id;
+    $vendor = Vendor::where('user_id', $userId)->first();
+
+
+
+            $proposal = Proposal::findOrFail($id);
+
+            $proposal->proposal_date = $request->invoice_due_date;
+            $proposal->proposal_title = $request->ptitle;
+            $proposal->proposal_description = $request->description;
+            $proposal->proposal_cost  = $request->order_cost;
+            $proposal->proposal_gst  = $request->order_gst;
+            $proposal->proposal_total_cost  =  $request->order_cost * (1 + ($request->order_gst / 100));
+            $proposal->vendor_id  = $vendor->id;
+
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $customFilename = $proposal->proposal_id.'.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('proposals', $customFilename, 'public'); // Store file in 'public/proposals'
+                $proposal->file_path = $path; // Save file path to the Proposal model
+            }
+    
+            $proposal->save();
+            
+            PaymentMilestone::where('proposal_id', $proposal->id)->delete();
+
+            $milestones = [];
+            foreach ($request->input('name') as $index => $name) {
+                $milestones[] = [
+                    'proposal_id' => $proposal->id,
+                    'milestone_title' => $name,
+                    'milestone_amount' => $request->input('amount')[$index],
+                    'milestone_gst' => $request->input('gst')[$index], // Adjust if you have GST calculations
+                    'milestone_total_amount' => $request->input('amount')[$index] * (1 + ($request->input('gst')[$index] / 100)), // Example GST calculation
+                   
+                ];
+            }
+        
+            // Insert data into the database
+             PaymentMilestone::insert($milestones);
+
+            
+            return redirect()->route('lead.index')->with('success', 'Proposal Updated Successfully');
+        } catch (\Exception $e) {
+            // Log the exception message
+            print_r($e->getMessage());exit();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     /**

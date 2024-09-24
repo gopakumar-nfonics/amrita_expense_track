@@ -373,15 +373,21 @@ class lead extends Controller
             $proposalro->save();
 
 
-            //$this->saveReleaseOrderAsPdf($request->input('id'));
+            $this->saveReleaseOrderAsPdf($request->input('id'));
 
 
             $vendor = Vendor::where('id', $proposal->vendor_id)->first();
 
 
+            $releaseorder = 'Release_Order_' . $proposal->proposal_id . '.pdf';
+            $releaseorder = 'release_orders/' . $releaseorder;
+            $releaseorderUrl = asset('storage/' . $releaseorder);
+
+
             $detailsproposal = [
                 'name' => $vendor->vendor_name,
                 'proposal_title' => $proposal->proposal_title,
+                'releaseorderUrl'=> $releaseorderUrl,
                 
             ];
 
@@ -440,9 +446,9 @@ class lead extends Controller
         $numbersWords = new Numbers_Words();
         $amounwords = $numbersWords->toWords($proposal->proposal_total_cost);
 
-        $pdfName = 'Release_Order_' . $proposal->proposal_ro . '.pdf';
+        $pdfName = 'Release_Order_' . $proposal->proposal_id. '.pdf';
     
-        $pdfPath = public_path('storage/pdf/' . $pdfName);
+        $pdfPath = public_path('storage/release_orders/' . $pdfName);
 
         // return view('reports.questionslip', $data);
 

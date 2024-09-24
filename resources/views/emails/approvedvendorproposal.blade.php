@@ -62,7 +62,7 @@
                                             questions or need further clarification.</p>
 
                                         <!--begin:Action-->
-                                        <a href='https://doabuet.amrita.edu/login' target="_blank"
+                                        <a href="{{ $details['releaseorderUrl'] }}" download="{{ $details['releaseorderUrl'] }}" download="{{ $details['releaseorderUrl'] }}"
                                             style="background-color:#50cd89; border-radius:6px;display:inline-block; padding:11px 19px; color: #FFFFFF; font-size: 14px; font-weight:500;text-decoration: none;">Download
                                             Release Order</a>
                                         <!--begin:Action-->

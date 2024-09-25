@@ -29,7 +29,7 @@ class budget extends Controller
      */
     public function create()
     {
-        $category = Categories::orderBy('category_name')->get();
+        $category = Categories::orderBy('category_name')->where('parent_category',null)->get();
         $financialyears = FinancialYear::get();
         return view('budget.create',compact('category','financialyears'));
     }

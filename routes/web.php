@@ -56,6 +56,9 @@ Route::get('lead/get-milestones/{proposal_id}', [\App\Http\Controllers\resource\
 Route::get('lead/milestone-details/{milestone_id}', [\App\Http\Controllers\resource\lead::class, 'getMilestonesdetails']);
 Route::get('lead/ro/{id}', [\App\Http\Controllers\resource\lead::class, 'ro'])->name('lead.ro');
 
+Route::get('/registration', [App\Http\Controllers\HomeController::class, 'registration'])->name('registration');
+Route::put('/registrationprocess', [App\Http\Controllers\HomeController::class, 'registrationprocess'])->name('registrationprocess');
+
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 Route::put('/profileupdate', [App\Http\Controllers\HomeController::class, 'profileupdate'])->name('profileupdate');
 

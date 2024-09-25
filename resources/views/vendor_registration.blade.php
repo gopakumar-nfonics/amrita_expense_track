@@ -1,4 +1,4 @@
- @extends('layouts.admin')
+ @extends('layouts.blank')
 
 
  @section('content')
@@ -11,11 +11,12 @@
     /* Ensure it doesn't exceed the viewport */
 }
 
-/*#kt_app_main {
+#kt_app_main {
     width: 80%;
+    /* Set the desired width */
     max-width: 80%;
     margin: 0px auto;
-}*/
+}
  </style>
 
  <!--begin::Main-->
@@ -30,15 +31,15 @@
                  <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                      <!--begin::Title-->
                      <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                         Update Profile | {{ $vendor['email']}}</h1>
+                     Finish Sign-up | {{ $vendor['email']}}</h1>
                      <!--end::Title-->
                      <!--begin::Breadcrumb-->
-                     <!--<ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
+                     <ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
                          <li class="breadcrumb-item text-muted">
                              To complete your sign-up, please update all the required fields in your profile. This step
                              is necessary to activate your account.
                          </li>
-                     </ul>-->
+                     </ul>
                      <!--end::Breadcrumb-->
                  </div>
                  <!--end::Page title-->
@@ -66,7 +67,7 @@
                      <div id="kt_account_settings_profile_details" class="collapse show">
                          <!--begin::Form-->
                          <form id="kt_account_profile_details_form" class="form" method="POST"
-                             action="{{route('profileupdate')}}" enctype="multipart/form-data">
+                             action="{{route('registrationprocess')}}" enctype="multipart/form-data">
                              @csrf
                              @method('PUT')
 
@@ -360,7 +361,7 @@
                              <div class="card-footer d-flex justify-content-end py-6 px-9">
 
                                  <button type="submit" class="btn btn-success"
-                                     id="kt_account_profile_details_submit">Update Profile</button>
+                                     id="kt_account_profile_details_submit">Finish Sign-up</button>
                              </div>
                              <!--end::Actions-->
                          </form>
@@ -413,6 +414,23 @@
      });
      </script>
 
-     
+     @if (session('success'))
+     <script>
+     // Display the success message in a popup
+     Swal.fire({
+         icon: 'success',
+         title: 'Your vendor sign-up is successful..!',
+         text: "{{ trans('auth.profileupdate') }}",
+         timer: 7000,
+         showConfirmButton: false,
+         customClass: {
+             popup: 'custom-popup' // Apply the custom class here
+         }
+     }).then(() => {
+         // Submit the hidden logout form to perform POST request
+         document.getElementById('logout-form').submit();
+     });
+     </script>
+     @endif
 
      @endsection

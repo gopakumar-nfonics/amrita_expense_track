@@ -24,4 +24,9 @@ class PaymentMilestone extends Model
     {
         return $this->belongsTo(Proposal::class);
     }
+
+    public function invoice()
+    {
+        return $this->hasOne(Invoice::class, 'milestone_id', 'id');
+    }
 }

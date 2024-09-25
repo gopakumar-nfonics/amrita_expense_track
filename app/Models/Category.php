@@ -26,4 +26,9 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'parent_category');
     }
+
+    public function paymentRequests()
+    {
+        return $this->hasMany(PaymentRequest::class);
+    }
 }

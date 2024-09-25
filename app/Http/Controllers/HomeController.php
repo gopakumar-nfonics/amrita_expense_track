@@ -8,13 +8,17 @@ use App\Models\Company;
 use App\Models\State;
 use App\Models\Proposal;
 use App\Models\PaymentMilestone;
+use App\Models\PaymentRequest;
 use App\Models\VendorBankAccount;
+use App\Models\Budget;
 use Illuminate\Support\Facades\Auth;
 use App\Mail\VendorRegistration;
 use App\Mail\AdminVendorRegistration;
 use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class HomeController extends Controller
 {
@@ -48,7 +52,69 @@ class HomeController extends Controller
             }
         } else {
 
-            return view('home');
+            $budgettotalAmount = Budget::sum('amount');
+            $totalPaidAmount = PaymentMilestone::whereHas('invoice', function($query) {
+                $query->where('invoice_status', 1);
+            })->sum('milestone_total_amount');
+            $remainingBudget = $budgettotalAmount - $totalPaidAmount;
+            
+            $usedPercentage = $budgettotalAmount > 0 ? ($totalPaidAmount / $budgettotalAmount) * 100 : 0;
+
+            if (floor($usedPercentage) == $usedPercentage) {
+                $usedPercentage = number_format($usedPercentage, 0); 
+                } else {
+                $usedPercentage = number_format($usedPercentage, 2); 
+                }
+
+
+            $categoryWiseBudgets = Budget::with('category')
+            ->select('category_id', \DB::raw('SUM(amount) as total_amount'))
+            ->groupBy('category_id')
+            ->get();
+
+            //$vendors = vendor::with('company')->where('vendor_status', 'verified')->orderBy('id')->get();
+
+            $vendors = Vendor::with(['company', 'proposals' => function($query) {
+                $query->where('proposal_status', 1)
+                      ->select('vendor_id', \DB::raw('SUM(proposal_total_cost) as total_proposal_amount'))
+                      ->groupBy('vendor_id');
+            }, 'invoices' => function($query) {
+                $query->where('invoice_status', 1)
+                      ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
+                      ->select('invoices.vendor_id', \DB::raw('SUM(payment_milestones.milestone_total_amount) as total_paid_amount'))
+                      ->groupBy('invoices.vendor_id');
+            }])
+            ->where('vendor_status', 'verified')
+            ->orderBy('id')
+            ->get();
+        
+            $totalMilestoneByCategory = PaymentMilestone::join('invoices', 'payment_milestones.id', '=', 'invoices.milestone_id')
+        ->join('payment_request', 'invoices.id', '=', 'payment_request.invoice_id')
+        ->join('tbl_category as child_category', 'payment_request.category_id', '=', 'child_category.id')
+        ->join('tbl_category as parent_category', 'child_category.parent_category', '=', 'parent_category.id') // Join with parent category
+        ->select(
+            'parent_category.id as parent_category_id',
+            'parent_category.category_name as parent_category_name', // Adjust based on your actual column name
+            DB::raw('SUM(payment_milestones.milestone_total_amount) as total_milestone_amount')
+        )
+        ->groupBy('parent_category.id','parent_category.category_name') // Group by parent category ID
+        ->get();
+
+
+        $categorybudgetused = [];
+    foreach ($totalMilestoneByCategory as $milestone) {
+        $categorybudgetused[] = [
+            'parent_category_id' => $milestone->parent_category_id,
+            'parent_category_name' => $milestone->parent_category_name,
+            'total_milestone_amount' => $milestone->total_milestone_amount,
+            'budget_amount' => $categoryWiseBudgets->where('category_id', $milestone->parent_category_id)->sum('total_amount') // Adjust the category_id if needed
+        ];
+    }
+     
+
+
+
+            return view('home',compact('budgettotalAmount','categoryWiseBudgets','vendors','totalPaidAmount','remainingBudget','usedPercentage','categorybudgetused'));
         }
     }
 

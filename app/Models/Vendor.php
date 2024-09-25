@@ -33,4 +33,9 @@ class Vendor extends Model
     {
         return $this->belongsTo(VendorBankAccount::class,'id','vendor_id');
     }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }

@@ -39,4 +39,9 @@ class Invoice extends Model
     {
         return $this->belongsTo(ProposalRo::class, 'proposal_id','proposal_id');
     }
+
+    public function paymentRequests()
+    {
+        return $this->hasMany(PaymentRequest::class);
+    }
 }

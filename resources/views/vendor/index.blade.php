@@ -83,7 +83,7 @@
 												<span class="symbol-label color-blue w-80px"> {{$vendor->vendor_code}}</span>
 											</div>
 											<div class="d-flex justify-content-start flex-column">
-												<a href="{{ route('vendor.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">{{$vendor->vendor_name}}</a>
+												<a href="{{ route('vendor.show',$vendor->id) }}" class="text-dark fw-bold text-hover-primary fs-6">{{$vendor->vendor_name}}</a>
 												<span class="color-blue fw-semibold d-block fs-7">{{ $vendor->company->company_name ?? '' }}</span>
 												<span class="text-muted fw-semibold text-muted d-block fs-7">{{$vendor->email}}</span>
 												<span class="text-muted fw-semibold text-muted d-block fs-7">{{$vendor->phone}}</span>

@@ -452,7 +452,8 @@ class lead extends Controller
 
         // return view('reports.questionslip', $data);
 
-        $pdf = PDF::loadView('lead.release_order', compact('proposal', 'amounwords'));
+        $pdf = PDF::loadView('lead.release_order', compact('proposal', 'amounwords'))
+           ->setPaper('a4', 'portrait');
         $pdf->save($pdfPath);
     }
     

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vendor as vendors;
 use App\Models\Company;
+use App\Models\Proposal;
 use App\Mail\VendorVerified;
 use Illuminate\Support\Facades\Mail;
 
@@ -96,7 +97,47 @@ class vendor extends Controller
      */
     public function show($id)
     {
-        return view('vendor.show');
+        $vendor = vendors::with([
+            'company',
+            'states',
+            'proposals' => function ($query) {
+                $query->where('proposal_status', 1)
+                      ->select('id', 'vendor_id', \DB::raw('SUM(proposal_total_cost) as total_proposal_amount'))
+                      ->groupBy('id', 'vendor_id');
+            },
+            'invoices' => function ($query) {
+                $query->where('invoice_status', 1)
+                      ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
+                      ->select('invoices.vendor_id', 'invoices.proposal_id', \DB::raw('SUM(payment_milestones.milestone_total_amount) as total_paid_amount'))
+                      ->groupBy('invoices.vendor_id', 'invoices.proposal_id');
+            }
+        ])->find($id);
+
+        $proposalWiseTotals = []; 
+
+        $vendor->proposals = $vendor->proposals->map(function ($proposal) use ($vendor, &$proposalWiseTotals) {
+            // Get total paid amount for the specific proposal
+            $totalPaidAmount = $vendor->invoices
+                ->where('proposal_id', $proposal->id) // Filter by the proposal ID
+                ->sum('total_paid_amount'); // Sum total_paid_amount per proposal
+            
+            // Add the total_paid_amount to the proposal
+            $proposal->total_paid_amount = $totalPaidAmount;
+        
+            // Construct the proposal-wise total array
+            $proposalWiseTotals[] = [
+                'proposal_id' => $proposal->id, // Proposal ID
+                'proposal_date' => $proposal->proposal_date, // Ensure this field exists
+                'total_proposal_amount' => $proposal->total_proposal_amount,
+                'total_paid_amount' => $totalPaidAmount,
+            ];
+        
+            return $proposal;
+        });
+
+        
+        
+        return view('vendor.show',compact('vendor','proposalWiseTotals'));
     }
 
     /**

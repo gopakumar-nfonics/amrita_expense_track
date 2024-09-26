@@ -3,10 +3,6 @@
 <style>
 * {
     font-family: Inter, Helvetica, sans-serif;
-
-}
-
-body {
     font-size: 14px;
 }
 
@@ -102,8 +98,9 @@ body {
 
 .ro-head {
     font-weight: 600 !important;
-    font-size: 1.2rem !important;
+    font-size: 1.3rem !important;
     color: #333;
+    text-decoration: underline;
 }
 
 .outlay {
@@ -137,8 +134,11 @@ body {
     <table style="width:100%;margin:20px auto 10px;">
         <tr>
 
-            <td style="width:100%;text-align:center;padding: 20px 0px 0px;" colspan="3"><span class="ro-head"><u>RELEASE
-                        ORDER</u></span></td>
+            <td style="width:100%;text-align:center;padding: 20px 0px 0px;" colspan="3">
+
+                <div> <span class="ro-head">RELEASE ORDER
+                    </span></div>
+            </td>
 
         </tr>
 
@@ -241,6 +241,7 @@ body {
     </table>
 
     <div class="certificate-footer">
+        <img alt="Logo" src="{{ url('/') }}/assets/media/logos/a4-avv-sign.jpg" style="margin:20px 0px">
         <img alt="Logo" src="{{ url('/') }}/assets/media/logos/a4-avv-footer-logo.jpg" class="header-logo">
     </div>
 

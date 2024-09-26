@@ -342,6 +342,6 @@ class HomeController extends Controller
     public function email()
     {
         
-        return view('userCreate');
+        return view('lead.release_order');
     }
 }

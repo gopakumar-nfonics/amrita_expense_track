@@ -189,7 +189,7 @@
 
                                             <div class="text-muted fs-5 text-gray-600">Rupees
                                                 {{$amounwords}}
-                                                rupees only.</div>
+                                                only.</div>
                                         </div>
 
 

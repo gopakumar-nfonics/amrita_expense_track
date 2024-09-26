@@ -213,7 +213,7 @@
             <td>
                 <p style="margin-bottom:20px;">Rupees
                     {{$amounwords}}
-                    rupees only.</p>
+                    only.</p>
             </td>
         </tr>
         <tr>

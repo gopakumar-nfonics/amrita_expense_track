@@ -31,7 +31,7 @@
                  <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                      <!--begin::Title-->
                      <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                     Finish Sign-up | {{ $vendor['email']}}</h1>
+                     Complete Sign up | {{ $vendor['email']}}</h1>
                      <!--end::Title-->
                      <!--begin::Breadcrumb-->
                      <ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
@@ -65,6 +65,10 @@
                      <!--begin::Card header-->
                      <!--begin::Content-->
                      <div id="kt_account_settings_profile_details" class="collapse show">
+
+                     <div class="overlay" id="loaderOverlay">
+                            <div class="loader"></div>
+                        </div>
                          <!--begin::Form-->
                          <form id="kt_account_profile_details_form" class="form" method="POST"
                              action="{{route('registrationprocess')}}" enctype="multipart/form-data">
@@ -361,7 +365,7 @@
                              <div class="card-footer d-flex justify-content-end py-6 px-9">
 
                                  <button type="submit" class="btn btn-success"
-                                     id="kt_account_profile_details_submit">Finish Sign-up</button>
+                                     id="kt_account_profile_details_submit">Complete Sign up</button>
                              </div>
                              <!--end::Actions-->
                          </form>
@@ -432,5 +436,11 @@
      });
      </script>
      @endif
+<script>
+     $('#kt_account_profile_details_form').on('submit', function() {
+        document.getElementById('loaderOverlay').style.display = 'flex';
+});
+
+</script>
 
      @endsection

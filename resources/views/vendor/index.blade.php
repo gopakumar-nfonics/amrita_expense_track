@@ -28,11 +28,13 @@
 			</div>
 			<!--end::Page title-->
 			<!--begin::Button-->
+			@if (Auth::user()->isvendor())
 			<div class="card-toolbar">
 				<a href="{{ route('vendor.create') }}" class="btn btn-sm btn-primary">
 					Create
 				</a>
 			</div>
+			@endif
 			<!--end::Button-->
 		</div>
 		<!--end::Toolbar container-->

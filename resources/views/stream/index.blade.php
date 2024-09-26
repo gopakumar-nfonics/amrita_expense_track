@@ -73,7 +73,7 @@
 
 											</div>
 											<div class="d-flex justify-content-start flex-column">
-												<a href="{{ route('vendor.show',1) }}" class="text-dark fw-bold text-hover-primary fs-6">{{$stream->stream_name}}</a>
+												<a class="text-dark fw-bold text-hover-primary fs-6">{{$stream->stream_name}}</a>
 
 											</div>
 										</div>

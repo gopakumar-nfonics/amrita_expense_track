@@ -5,6 +5,7 @@ namespace App\Http\Controllers\resource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category as Categories;
+use App\Models\PaymentRequest;
 use Carbon\Carbon;
 
 
@@ -131,9 +132,22 @@ class category extends Controller
         if (!$category) {
         return response()->json(['error' => 'Category not found.'], 404);
         }
-        $category->delete();
-        $category->children()->delete();
-        return response()->json(['success' => 'The Category has been deleted!']);
+
+        $existingRequest = PaymentRequest::where('category_id', $request->input('id'))->first();
+
+       
+        if (isset($existingRequest)) {
+            return response()->json(['error' => 'This category is already in use and cannot be deleted.']);
+        }
         
+       
+        $category->children()->each(function ($child) {
+            $child->forceDelete(); 
+        });
+
+        
+        $category->forceDelete(); 
+        return response()->json(['success' => 'The Category has been deleted!']);
+    
     }
 }

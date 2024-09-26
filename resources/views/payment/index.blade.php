@@ -19,11 +19,11 @@
             </div>
             <!--end::Page title-->
             <!--begin::Button-->
-            <div class="card-toolbar">
+            <!--<div class="card-toolbar">
                 <a href="{{ route('payment.create') }}" class="btn btn-sm btn-primary">
                     Create
                 </a>
-            </div>
+            </div>-->
             <!--end::Button-->
         </div>
         <!--end::Toolbar container-->

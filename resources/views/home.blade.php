@@ -266,7 +266,7 @@
 											</div>
 											<div>
 												<p class="text-center fs-6 pb-0 mb-0">
-													<span class="badge badge-light-danger fs-8">Note :</span>&nbsp; {{ number_format($usedPercentage, 2) }}% of the budget has been strategically used.
+													<span class="badge badge-light-danger fs-8">Note :</span>&nbsp; {{ $usedPercentage }}% of the budget has been strategically used.
 												</p>
 
 											</div>

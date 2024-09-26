@@ -90,8 +90,8 @@ class HomeController extends Controller
         
             $totalMilestoneByCategory = PaymentMilestone::join('invoices', 'payment_milestones.id', '=', 'invoices.milestone_id')
         ->join('payment_request', 'invoices.id', '=', 'payment_request.invoice_id')
-        ->join('tbl_category as child_category', 'payment_request.category_id', '=', 'child_category.id')
-        ->join('tbl_category as parent_category', 'child_category.parent_category', '=', 'parent_category.id') // Join with parent category
+        ->leftJoin('tbl_category as child_category', 'payment_request.category_id', '=', 'child_category.id') // Use LEFT JOIN for child_category
+        ->leftJoin('tbl_category as parent_category', 'child_category.parent_category', '=', 'parent_category.id') // LEFT JOIN with parent category
         ->select(
             'parent_category.id as parent_category_id',
             'parent_category.category_name as parent_category_name', // Adjust based on your actual column name

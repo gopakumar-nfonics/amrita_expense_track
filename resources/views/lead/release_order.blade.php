@@ -1,22 +1,28 @@
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
 <style>
 * {
-    font-family: 'Verdana', sans-serif;
+    font-family: Inter, Helvetica, sans-serif;
+
 }
 
-.ro-container-legal {
-    width: 816px;
+body {
+    font-size: 14px;
+}
+
+.ro-container-a4-page {
+    width: 794px;
     /* width for legal page */
-    height: 1344px;
+    height: 1123px;
     /* height for legal page */
     margin: 0 auto;
-    border: 1px solid #000;
     background-color: #fff;
     text-align: center;
-}
-
-.certificate-header {
+    position: relative;
     padding: 10px;
 }
+
+.certificate-header {}
 
 .certificate-header-first {
     font-family: 'Verdana', serif;
@@ -40,10 +46,10 @@
 }
 
 .header-border {
-    width: 95%;
+    width: 100%;
     height: 1px;
     background-color: #ccc;
-    margin: 20px auto 20px auto;
+    margin: 10px auto 20px auto;
 }
 
 .certificate-body {
@@ -52,7 +58,11 @@
 }
 
 .certificate-footer {
-    font-size: 16px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
 }
 
 .recipient-name {
@@ -92,36 +102,53 @@
 
 .ro-head {
     font-weight: 600 !important;
-    font-size: 1.15rem !important;
+    font-size: 1.2rem !important;
     color: #333;
+}
+
+.outlay {
+    font-weight: 600 !important;
+    font-size: 1.5rem !important;
+    color: #3F4254;
+}
+
+.amount {
+    font-weight: 600 !important;
+    font-size: 2.15rem !important;
+    color: #3F4254;
+}
+
+.upper {
+    text-transform: uppercase !important;
 }
 </style>
 
 
 
-<div class="ro-container-legal">
+<div class="ro-container-a4-page">
 
 
     <div class="certificate-header">
-        <img alt="Logo" src="{{ url('/') }}/assets/media/logos/avv-head-logo.jpg" class="header-logo">
+        <img alt="Logo" src="{{ url('/') }}/assets/media/logos/a4-avv-head-logo.jpg" class="header-logo">
     </div>
 
 
 
-    <table style="width:100%;margin:0px auto;">
+    <table style="width:100%;margin:20px auto 10px;">
         <tr>
 
-            <td style="width:90%;text-align:center;" colspan="3"><span class="ro-head"><u>RELEASE ORDER</u></span></td>
+            <td style="width:100%;text-align:center;padding: 20px 0px 0px;" colspan="3"><span class="ro-head"><u>RELEASE
+                        ORDER</u></span></td>
 
         </tr>
 
         <tr>
-            <td style="width:30%;text-align:center;">
+            <td style="width:30%;text-align:left;">
                 <p class="ro-no"> <span>RO#:
                         {{$proposal->proposalro->proposal_ro}}</span></p>
             </td>
-            <td style="width:30%;text-align:center;"></td>
-            <td style="width:30%;text-align:center;">
+            <td style="width:40%;text-align:center;"></td>
+            <td style="width:30%;text-align:right;">
                 <p class="ro-no"><span>{{ \Carbon\Carbon::parse($proposal->proposal_date)->format('d F, Y') }}</span>
                 </p>
             </td>
@@ -131,38 +158,46 @@
     <div class="header-border"></div>
     <table style="width:90%;margin:0px auto;">
         <tr>
-            <td>TO:</td>
+            <td>TO</td>
         </tr>
         <tr>
-            <td>
-                <span style="margin-left:20px;">{{$proposal->vendor->contact_person}}</span>
+            <td style="padding-top:10px;">
+                <span style="margin-left:20px;"><b>{{$proposal->vendor->contact_person}}</b></span>
                 </br>
                 <span style="margin-left:20px;"> {{$proposal->vendor->vendor_name}}</span>
             </td>
         </tr>
         <tr>
-            <td>SUBJECT</td>
+            <td style="padding-top:20px;">SUBJECT</td>
         </tr>
         <tr>
             <td>
-                <p>Issue of Release order for <b>{{$proposal->proposal_title}}</b></p>
+                <p style="margin:10px 20px;">Issue of Release order for <b>{{$proposal->proposal_title}}</b></p>
             </td>
         </tr>
 
         <tr>
-            <td>Scope &
+            <td style="padding-top:20px;text-transform:uppercase;">Scope &
                 Services</td>
+        </tr>
+
+
+        <tr>
+
+
+            <td>
+                <div style="margin:10px 20px;"> {!! $proposal->proposal_description !!}</div>
+            </td>
         </tr>
         <tr>
             <td>
-                <p> <span class="fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2 txt-uppercase">Outlay
+                <div> <span class="outlay">OUTLAY
                         :</span>
-                    <span class="fs-1 fw-semibold text-gray-500 align-self-start me-1">&#x20b9;</span>
-                    <span id="total-cost-span" class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2"
-                        data-kt-element="sub-total">{{$proposal->proposal_total_cost}}
+                    <span class="outlay">&#x20b9;</span>
+                    <span class="amount">{{number_format($proposal->proposal_total_cost,2)}}
                     </span>
                     <span>[Inclusive of GST]</span>
-                </p>
+                </div>
             </td>
         </tr>
         <tr>
@@ -173,27 +208,27 @@
             </td>
         </tr>
         <tr>
-            <td><u>Billing Address</u></td>
+            <td style="padding-top:20px;text-transform:uppercase;"><u>Billing Address</u></td>
         </tr>
         <tr>
             <td>
-                <p>
-                <address class="mt-3">
+                <div style="margin:10px 20px;">
+
                     DIRECTORATE OF ADMISSIONS,
                     <br>AMRITA SCHOOL OF ENGINEERING,
                     AMRITA VISHWA VIDYAPEETHAM, AMRITA NAGAR(PO),
                     ETTIMADAI, COIMBATORE - 641112
 
-                </address>
-                </p>
+
+                </div>
             </td>
         </tr>
         <tr>
-            <td><u>Notes</u></td>
+            <td style="padding-top:20px;text-transform:uppercase;"><u>Notes</u></td>
         </tr>
         <tr>
             <td>
-                <ul class="list-disc mt-4">
+                <ul style="margin:10px 0px 20px;">
                     <li>Mandate to include RO No. and Bank details, billing address (mentioned above) on
                         the
                         invoice copies.</li>
@@ -206,7 +241,7 @@
     </table>
 
     <div class="certificate-footer">
-        <img alt="Logo" src="{{ url('/') }}/assets/media/logos/avv-footer-logo.jpg" class="header-logo">
+        <img alt="Logo" src="{{ url('/') }}/assets/media/logos/a4-avv-footer-logo.jpg" class="header-logo">
     </div>
 
 </div>

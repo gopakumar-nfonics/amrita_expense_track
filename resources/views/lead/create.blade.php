@@ -64,7 +64,7 @@
                                             <div class="row pe-0 pb-5">
                                                 <div class="col-lg-12">
                                                     <div class="fv-row  d-flex justify-content-between">
-                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-3">
+                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-2">
                                                             <!--begin::Input group-->
 
                                                             <!--begin::Label-->
@@ -248,7 +248,7 @@
                                                             </div>
 
                                                             <!-- Display the selected file name here -->
-                                                            <div class="text-muted fs-7" id="file-name">Upload
+                                                            <div class="text-muted fs-7 w-200px" id="file-name">Upload
                                                                 reference document.</div>
                                                             @error('file')<div class="invalid-feedback">
                                                                 {{ $message }}</div> @enderror
@@ -309,7 +309,8 @@
                                                                 </td>
 
                                                                 <td class="pt-8 text-end text-nowrap">&#x20b9;
-                                                                    <span class="total-cost-span" data-kt-element="total">0.00</span>
+                                                                    <span class="total-cost-span"
+                                                                        data-kt-element="total">0.00</span>
                                                                 </td>
                                                                 <td class="pt-5 text-end">
                                                                     <button type="button"

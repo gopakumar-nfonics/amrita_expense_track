@@ -1,8 +1,8 @@
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
 
 <style>
 * {
-    font-family: Inter, Helvetica, sans-serif;
+    font-family:  'Verdana', serif;
     font-size: 14px;
 }
 
@@ -126,7 +126,7 @@
 
 
     <div class="certificate-header">
-        <img alt="Logo" src="{{ url('/') }}/assets/media/logos/a4-avv-head-logo.jpg" class="header-logo">
+        <img alt="Logo" src="{{ public_path('assets/media/logos/a4-avv-head-logo.jpg') }}" class="header-logo">
     </div>
 
 
@@ -250,8 +250,9 @@
     </table>
 
     <div class="certificate-footer">
-        <img alt="Logo" src="{{ url('/') }}/assets/media/logos/a4-avv-sign.jpg" style="margin:20px 0px">
-        <img alt="Logo" src="{{ url('/') }}/assets/media/logos/a4-avv-footer-logo.jpg" class="header-logo">
+        
+        <img alt="Logo" src="{{ public_path('assets/media/logos/a4-avv-footer-logo.jpg') }}" class="header-logo">
+        <img alt="Logo" src="{{ public_path('assets/media/logos/a4-avv-sign.jpg') }}"  style="margin:20px 0px">
     </div>
 
 </div>

@@ -293,7 +293,7 @@
                                                 <div class="fv-row mt-5">
                                                     <div class="d-flex justify-content-end border-top mt-10 pt-5">
                                                         <!--begin::Button-->
-                                                        <a href="../../demo1/dist/apps/ecommerce/catalog/products.html"
+                                                        <a href="{{route('invoice.index')}}"
                                                             id="kt_ecommerce_edit_order_cancel"
                                                             class="btn btn-light me-5">Cancel</a>
                                                         <!--end::Button-->

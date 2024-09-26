@@ -21,7 +21,7 @@ class user extends Controller
     {
         $currentUserId = Auth::id();
 
-        $users = userauthenticate::with('campus')->where('id', '!=', $currentUserId) ->orderBy('first_name') ->get(); 
+        $users = userauthenticate::with('campus')->where('id', '!=', $currentUserId)->where('role', '!=', 'vendor')->orderBy('first_name') ->get(); 
         return view('user.index',compact('users'));
     }
 

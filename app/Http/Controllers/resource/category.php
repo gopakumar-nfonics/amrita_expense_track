@@ -131,9 +131,8 @@ class category extends Controller
         if (!$category) {
         return response()->json(['error' => 'Category not found.'], 404);
         }
-        $category->deleted_at = Carbon::parse(now())->format('Y-m-d H:i:s');
-        $category->save();
-        $category->children()->update(['deleted_at' => Carbon::now()]);
+        $category->delete();
+        $category->children()->delete();
         return response()->json(['success' => 'The Category has been deleted!']);
         
     }

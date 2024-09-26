@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use Numbers_Words;
+
 
 class HomeController extends Controller
 {
@@ -345,7 +347,17 @@ class HomeController extends Controller
 
     public function email()
     {
+
+        $id = 9;
+
+        $proposal = Proposal::with(['paymentMilestones', 'vendor.states','proposalro'])->find($id);
+
+       
         
-        return view('lead.release_order');
+        $number = $proposal->proposal_total_cost;
+        $numbersWords = new Numbers_Words();
+        $amounwords = $numbersWords->toWords($number);
+        
+        return view('lead.release_order',compact('proposal', 'amounwords'));
     }
 }

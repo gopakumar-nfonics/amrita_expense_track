@@ -156,7 +156,7 @@
     </table>
 
     <div class="header-border"></div>
-    <table style="width:90%;margin:0px auto;">
+    <table style="width:100%;margin:0px auto;">
         <tr>
             <td>TO</td>
         </tr>
@@ -172,26 +172,35 @@
         </tr>
         <tr>
             <td>
-                <p style="margin:10px 20px;">Issue of Release order for <b>{{$proposal->proposal_title}}</b></p>
+                <p style="margin:10px 20px;">Issue of Release order for <b>{{$proposal->proposal_title}}
+                        [{{$proposal->proposal_id}}]</b></p>
             </td>
         </tr>
 
-        <tr>
+        <!-- <tr>
             <td style="padding-top:20px;text-transform:uppercase;">Scope &
                 Services</td>
-        </tr>
+        </tr> -->
 
 
         <tr>
 
 
             <td>
-                <div style="margin:10px 20px;"> {!! $proposal->proposal_description !!}</div>
+                <div style="margin:10px 0px;line-height: 20px;text-align: justify;">
+                    We are pleased to issue the release order for the <b>{{$proposal->proposal_title}}</b>, as per the
+                    proposal submitted. This approval marks the formal authorization to proceed
+                    with the development and implementation of the proposal. The necessary budgetary allocations and
+                    resources have been sanctioned in line with the proposal requirements. Your team is
+                    now authorized to initiate the tasks in accordance with the approved scope, timeline, and
+                    deliverables. <p>We look forward to the successful completion of the tasks and appreciate your
+                        commitment to this initiative.</p>
+                </div>
             </td>
         </tr>
         <tr>
             <td>
-                <div> <span class="outlay">OUTLAY
+                <div style="margin-top:20px;"> <span class="outlay">OUTLAY
                         :</span>
                     <span class="outlay">&#x20b9;</span>
                     <span class="amount">{{number_format($proposal->proposal_total_cost,2)}}
@@ -202,7 +211,7 @@
         </tr>
         <tr>
             <td>
-                <p>Rupees
+                <p style="margin-bottom:20px;">Rupees
                     {{$amounwords}}
                     rupees only.</p>
             </td>

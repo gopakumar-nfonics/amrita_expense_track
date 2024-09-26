@@ -143,18 +143,29 @@
                                     <div class="flex-root d-flex flex-column txt-uppercase">
                                         <span class="fs-6 text-gray-700 fw-bold ">SUBJECT</span>
                                         <div class="m-5 text-gray-500 ">Issue of Release order for <span
-                                                class="fs-5 text-gray-800 ">{{$proposal->proposal_title}}</span>
+                                                class="fs-5 text-gray-800 ms-1">{{$proposal->proposal_title}}</span>
                                         </div>
                                     </div>
 
                                 </div>
 
                                 <!--begin::Billing & shipping-->
-                                <div class="d-flex flex-column flex-sm-row  fw-bold mt-5">
+                                <div class="d-flex flex-column flex-sm-row  mt-0">
                                     <div class="flex-root d-flex flex-column">
-                                        <span class="fs-6 text-gray-700 fw-bold txt-uppercase">Scope &
-                                            Services</span>
-                                        <div class="m-5"> {!! $proposal->proposal_description !!}
+                                        <div class="mx-5 text-gray-700" style="text-align: justify;">
+                                            We are pleased to issue the release order for the
+                                            <b>{{$proposal->proposal_title}}</b>, as per the
+                                            proposal submitted. This approval marks the formal authorization to proceed
+                                            with the development and implementation of the proposal. The necessary
+                                            budgetary allocations and
+                                            resources have been sanctioned in line with the proposal requirements. Your
+                                            team is
+                                            now authorized to initiate the tasks in accordance with the approved
+                                            scope, timeline, and
+                                            deliverables. <p class="mt-2">We look forward to the successful completion
+                                                of the tasks
+                                                and appreciate your
+                                                commitment to this initiative.</p>
                                         </div>
                                     </div>
 

@@ -50,7 +50,8 @@
                             <div class="d-flex flex-center flex-column me-10 br-right pe-10">
                                 <!--begin::Avatar-->
                                 <div class="symbol symbol-100px symbol-circle mb-7">
-                                    <span class="symbol-label bg-blue text-white fs-2tx"> AS</span>
+                                    <span class="symbol-label bg-blue text-white fs-2tx">
+                                        {{ substr($vendor->vendor_name, 0, 2) }}</span>
                                 </div>
                                 <!--end::Avatar-->
                                 <!--begin::Name-->

@@ -84,18 +84,30 @@
 
 .outlay {
     font-weight: 600 !important;
-    font-size: 1.5rem !important;
-    color: #3F4254;
+    font-size: 1.15rem !important;
+    text-align: right;
 }
 
 .amount {
     font-weight: 600 !important;
-    font-size: 2.15rem !important;
-    color: #3F4254;
+    font-size: 1.1rem !important;
 }
 
 .upper {
     text-transform: uppercase !important;
+}
+
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    /* Ensures borders don't double up */
+}
+
+.invoice-table td,
+.invoice-table th {
+    border: 1px solid #666;
+    padding: 8px;
+    /* Optional: Adds padding for better readability */
 }
 </style>
 
@@ -115,7 +127,7 @@
 
             <td style="width:100%;text-align:center;padding: 0px 0px 0px;" colspan="3">
 
-                <div> <span class="ro-head">RELEASE ORDER
+                <div> <span class="ro-head">PAYMENT REQUEST
                     </span></div>
             </td>
 
@@ -123,7 +135,7 @@
 
         <tr>
             <td style="width:30%;text-align:left;padding: 0px;">
-                <p class="ro-no"> <span>RO#:
+                <p class="ro-no"> <span>Request#:
                         {{$proposal->proposalro->proposal_ro}}</span></p>
             </td>
             <td style="width:40%;text-align:center;padding: 0px;"></td>
@@ -140,19 +152,33 @@
 
     <table style="width:100%;margin:0px auto;">
         <tr>
-            <td style="padding-top:10px;">TO</td>
+            <td style="padding-top:10px;">From</td>
         </tr>
         <tr>
-            <td style="padding-top:10px;padding-left:20px;">
-                <span><b>{{$proposal->vendor->contact_person}}</b></span>
+            <td style="padding-top:5px;padding-left:20px;">
+                <span><b>Maheshwara Chaitanya</b></span>
                 </br>
-                <span> {{$proposal->vendor->vendor_name}}</span>
+                <span>Director Admissions, Amrita Vishwa Vidyapeetham, Coimbatore</span>
             </td>
         </tr>
+
         <tr>
-            <td style="padding:25px 0px 10px;">SUBJECT : <span> Issue of Release order for
-                    <b>{{$proposal->proposal_title}}
-                        [{{$proposal->proposal_id}}]</b></span></td>
+            <td style="padding-top:15px;">To</td>
+        </tr>
+        <tr>
+            <td style="padding-top:5px;padding-left:20px;">
+                <span><b>Finance Manager</b></span>
+                </br>
+                <span>Amrita Vishwa Vidyapeetham, Coimbatore</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="padding:15px 0px 0px;">Sir,</td>
+        </tr>
+        <tr>
+            <td style="padding:10px 0px 10px;"><b>Subject : <span> Processing the payment of
+                        NFONICS Solutions (P) Ltd</b></span></td>
         </tr>
 
 
@@ -161,74 +187,84 @@
 
 
             <td>
-                <div style="margin:10px 0px;line-height: 20px;text-align: justify;">
-                    We are pleased to issue the release order for the <b>{{$proposal->proposal_title}}</b>, as per the
-                    proposal submitted. This approval marks the formal authorization to proceed
-                    with the development and implementation of the proposal. The necessary budgetary allocations and
-                    resources have been sanctioned in line with the proposal requirements. Your team is
-                    now authorized to initiate the tasks in accordance with the approved scope, timeline, and
-                    deliverables. <p>We look forward to the successful completion of the tasks and appreciate your
-                        commitment to this initiative.</p>
+                <div style="margin:5px 0px;line-height: 20px;text-align: justify;">
+                    We kindly request that you proceed with the payment as per the invoice detailed below. A signed copy
+                    of the invoice is enclosed for your reference.</p>
                 </div>
             </td>
         </tr>
         <tr>
-            <td>
-                <div style="margin-top:0px;"> <span class="outlay">OUTLAY
-                        :</span>
-                    <span class="outlay">
-                        <img alt="Logo" src="{{ public_path('assets/media/logos/rupee.png') }}"
-                            style="height:20px; margin:0px;">
-                    </span>
-
-                    <span class="amount" style="margin-left:-5px;">{{number_format($proposal->proposal_total_cost,2)}}
-                    </span>
-                    <span>[Inclusive of GST]</span>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <span style="margin-bottom:10px;">Rupees
-                    {{$amounwords}}
-                    only.</span>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding-top:30px;text-transform:uppercase;padding-bottom: 10px;"><u>Billing Address</u></td>
+            <td style="padding-top:20px;padding-bottom: 10px;"><u><b>Vendor Details</b></u></td>
         </tr>
         <tr>
             <td>
                 <div style="margin:0px 20px; font-size:14px;">
-
-                    DIRECTORATE OF ADMISSIONS,
-                    <br>AMRITA SCHOOL OF ENGINEERING,
-                    AMRITA VISHWA VIDYAPEETHAM, AMRITA NAGAR(PO),
-                    ETTIMADAI, COIMBATORE - 641112
+                    <b>NFONICS Solutions (P) Ltd</b><br>
+                    15/22/1, First Floor, Sahithi Tower, Harisankar Road,PALAKKAD,Kerala | 679513<br>
+                    GSTIN : 32AAGCD1055M1ZS | PAN NO: AAECN0826C
 
 
                 </div>
             </td>
         </tr>
         <tr>
-            <td style="padding-top:30px;text-transform:uppercase;padding-bottom: 10px;"><u>Notes</u></td>
+            <td style="padding-top:20px;padding-bottom: 10px;"><u><b>Invoice Details</b></u></td>
         </tr>
         <tr>
             <td>
-                <ul style="margin:0px 0px 0px;font-size:14px;">
-                    <li>Mandate to include RO No. and Bank details, billing address (mentioned above) on
-                        the
-                        invoice copies.</li>
-                    <li>Payment will be release monthly, up on submission of the tax invoice.</li>
-                    <li>Payout period is minimum of 14 working days</li>
-                </ul>
+                <table style="width:100%" class="invoice-table">
+
+                    <tr>
+                        <th>Invoice #
+                        </th>
+                        <th>Date
+                        </th>
+                        <th>Amount (INR)
+                        </th>
+                        <th>Remarks
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <td>NF/2024-25/GST/7
+                        </td>
+                        <td>26-10-2024
+                        </td>
+                        <td style="text-align:right;"> <span class="outlay">82,600.00</span>
+                        </td>
+                        <td>Budget and Expense Tracker Web Application
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4">Amount in words :
+                            <span style="margin-bottom:10px;" class="amount">Rupees
+                                {{$amounwords}}
+                                only.</span>
+                        </td>
+                    </tr>
+
+                </table>
             </td>
         </tr>
 
     </table>
 
+
+
     <div class="certificate-footer">
-        <img alt="Logo" src="{{ public_path('assets/media/logos/a4-avv-sign.jpg') }}" class="header-logo">
+        <table style="width:100%">
+            <tr>
+                <td>Prepared By : <b>Anagha</b> </td>
+                <td style="text-align:right; padding-right:90px">Approved By </td>
+            </tr>
+            <!-- <tr>
+                <td></td>
+
+            </tr> -->
+        </table>
+
+        <img alt="Logo" src="{{ public_path('assets/media/logos/a4-avv-sign-pr.jpg') }}" class="header-logo">
         <img alt="Logo" src="{{ public_path('assets/media/logos/a4-avv-footer-logo.jpg') }}" class="header-logo">
 
     </div>

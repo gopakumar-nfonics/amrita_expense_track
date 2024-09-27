@@ -68,7 +68,12 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
-                                                <a href="{{ asset('/storage/release_orders/Release_Order_2425-PL-002.pdf') }}"
+                                            @php
+                                                $paymentrequest = 'PR_' . $request->payment_request_id.'.pdf';
+                                                $paymentrequestPath = 'payment_request/' . $paymentrequest;
+                                                $paymentrequestUrl = asset('storage/' . $paymentrequestPath);
+                                                @endphp
+                                                <a href="{{ $paymentrequestUrl }}" download="{{ $paymentrequest }}"
                                                     target="_blank" class="text-dark fw-bold text-hover-primary fs-6">
                                                     #{{$request->payment_request_id}}
                                                 </a>
@@ -100,11 +105,11 @@
                                         <div class="d-flex align-items-center">
                                             <div class="symbol symbol-35px me-2">
                                                 <span class="symbol-label bg-blue text-white">
-                                                    {{$request->invoice->vendor->vendor_name[0]}}{{$request->invoice->vendor->vendor_name[1]}}</span>
+                                                    {{strtoupper($request->invoice->vendor->vendor_name[0])}}{{strtoupper($request->invoice->vendor->vendor_name[1])}}</span>
 
                                             </div>
                                             <div class="d-flex justify-content-start flex-column">
-                                                <a href="{{ route('vendor.show',1) }}"
+                                                <a href="{{ route('vendor.show',$request->invoice->vendor->id) }}"
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$request->invoice->vendor->vendor_name}}</a>
                                                 <span
                                                     class="text-muted fw-semibold text-muted d-block fs-7">{{$request->invoice->vendor->phone}}</span>
@@ -131,7 +136,12 @@
                                         <div class="d-flex align-items-center">
 
                                             <div class="d-flex justify-content-start flex-column">
-                                                <a href="{{ route('lead.ro',$request->invoice->proposal_id) }}"
+                                                @php
+                                                $releaseorder = 'RO_' . $request->invoice->proposalro->proposal_ro.'.pdf';
+                                                $releaseorderPath = 'release_orders/' . $releaseorder;
+                                                $releaseorderUrl = asset('storage/' . $releaseorderPath);
+                                                @endphp
+                                                <a href="{{ $releaseorderUrl }}" download="{{ $releaseorder }}"
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$request->invoice->proposalro->proposal_ro}}</a>
                                                 <span class="text-muted fw-semibold text-muted d-block fs-7">Issued On :
                                                     {{ \Carbon\Carbon::parse($request->invoice->proposalro->created_at)->format('d-M-Y') }}</span>
@@ -175,8 +185,12 @@
 
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-
-                                                <a href="{{ asset('/storage/release_orders/Release_Order_2425-PL-002.pdf') }}"
+                                            @php
+                                                $paymentrequest = 'PR_' . $request->payment_request_id.'.pdf';
+                                                $paymentrequestPath = 'payment_request/' . $paymentrequest;
+                                                $paymentrequestUrl = asset('storage/' . $paymentrequestPath);
+                                                @endphp
+                                                <a href="{{ $paymentrequestUrl }}" download="{{ $paymentrequest }}"
                                                     target="_blank" class="menu-link px-3">
                                                     Download PDF</a>
                                             </div>
@@ -215,14 +229,14 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    $('#budgettable').DataTable({
-        "iDisplayLength": 10,
-        "searching": true,
-        "recordsTotal": 3615,
-        "pagingType": "full_numbers"
+    $(document).ready(function() {
+        $('#budgettable').DataTable({
+            "iDisplayLength": 10,
+            "searching": true,
+            "recordsTotal": 3615,
+            "pagingType": "full_numbers"
+        });
     });
-});
 </script>
 
 @endsection

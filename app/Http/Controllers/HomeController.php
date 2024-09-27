@@ -94,8 +94,7 @@ class HomeController extends Controller
             ->join('payment_request', 'invoices.id', '=', 'payment_request.invoice_id')
             ->leftJoin('tbl_category as child_category', 'payment_request.category_id', '=', 'child_category.id') // LEFT JOIN for child_category
             ->leftJoin('tbl_category as parent_category', function($join) {
-                $join->on('child_category.parent_category', '=', 'parent_category.id')
-                    ->orOn('payment_request.category_id', '=', 'parent_category.id'); // Handle both child and parent category cases
+                $join->on('child_category.parent_category', '=', 'parent_category.id'); // Handle both child and parent category cases
             })
             ->select(
                 'parent_category.id as parent_category_id',

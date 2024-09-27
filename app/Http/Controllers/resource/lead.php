@@ -446,7 +446,7 @@ class lead extends Controller
         $numbersWords = new Numbers_Words();
         $amounwords = $numbersWords->toWords($proposal->proposal_total_cost);
 
-        $pdfName = 'Release_Order_' . $proposal->proposal_id. '.pdf';
+        $pdfName = 'RO_' . $proposal->proposalro->proposal_ro. '.pdf';
     
         $pdfPath = public_path('storage/release_orders/' . $pdfName);
 

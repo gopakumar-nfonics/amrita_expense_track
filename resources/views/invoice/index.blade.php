@@ -110,8 +110,12 @@
                                         <div class="d-flex align-items-center">
 
                                             <div class="d-flex justify-content-start flex-column">
-                                                <a href="{{ asset('/storage/release_orders/Release_Order_2425-PL-002.pdf') }}"
-                                                    target="_blank"
+                                            @php
+                                                $releaseorder = 'RO_' . $inv->proposalro->proposal_ro.'.pdf';
+                                                $releaseorderPath = 'release_orders/' . $releaseorder;
+                                                $releaseorderUrl = asset('storage/' . $releaseorderPath);
+                                                @endphp
+                                                <a href="{{ $releaseorderUrl }}" download="{{ $releaseorder }}"
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$inv->proposalro->proposal_ro}}</a>
 
 
@@ -130,7 +134,7 @@
 
                                             </div>
                                             <div class="d-flex justify-content-start flex-column">
-                                                <a href="{{ route('vendor.show',1) }}"
+                                                <a href="{{ route('vendor.show',$inv->vendor->id) }}"
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$inv->vendor->vendor_name}}
                                                 </a>
                                                 <span

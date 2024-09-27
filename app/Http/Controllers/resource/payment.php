@@ -283,7 +283,7 @@ class payment extends Controller
        $numbersWords = new Numbers_Words();
        $amounwords = $numbersWords->toWords($number);
 
-        $pdfName = 'PR_' . $invoice->proposal->proposal_id. '.pdf';
+        $pdfName = 'PR_' . $invoice->paymentRequests->payment_request_id. '.pdf';
     
         $pdfPath = public_path('storage/payment_request/' . $pdfName);
 

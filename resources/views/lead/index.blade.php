@@ -121,7 +121,12 @@
                                         <div class="d-flex align-items-center">
 
                                             <div class="d-flex justify-content-start flex-column">
-                                                <a href="{{ route('lead.ro',$pro->id) }}"
+                                            @php
+                                                $releaseorder = 'RO_' . $pro->proposalro->proposal_ro.'.pdf';
+                                                $releaseorderPath = 'release_orders/' . $releaseorder;
+                                                $releaseorderUrl = asset('storage/' . $releaseorderPath);
+                                                @endphp
+                                                <a href="{{ $releaseorderUrl }}" download="{{ $releaseorder }}"
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$pro->proposalro->proposal_ro}}</a>
                                                 <span class="text-muted fw-semibold text-muted d-block fs-7">Issued On :
                                                     {{ \Carbon\Carbon::parse($pro->proposalro->created_at)->format('d-M-Y') }}</span>
@@ -141,7 +146,7 @@
 
                                             </div>
                                             <div class="d-flex justify-content-start flex-column">
-                                                <a href="{{ route('vendor.show',1) }}"
+                                                <a href="{{ route('vendor.show',$pro->vendor->id) }}"
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$pro->vendor->vendor_name}}
                                                 </a>
                                                 <span

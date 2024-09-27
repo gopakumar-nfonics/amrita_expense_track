@@ -119,6 +119,9 @@ class payment extends Controller
             $proposal = Proposal::where('id', $invoice->proposal_id)->first();
             $milestone = PaymentMilestone::where('id', $invoice->milestone_id)->first();
 
+
+            $this->savepaymentrequestPdf($request->invoid);
+
             $detailsproposal = [
                 'name' => $vendor->vendor_name,
                 'proposal_title' => $proposal->proposal_title,
@@ -275,18 +278,19 @@ class payment extends Controller
 
     public function savepaymentrequestPdf($id)
     {
-        $proposal = Proposal::with('vendor', 'proposalro')->findOrFail($id);
+        $invoice = Invoices::with(['proposal','milestone','vendor.banckaccount','vendor.states', 'proposalro','paymentRequests'])->where('id', $id)->first();
+        $number = $invoice->milestone->milestone_total_amount;
+       $numbersWords = new Numbers_Words();
+       $amounwords = $numbersWords->toWords($number);
 
-        $numbersWords = new Numbers_Words();
-        $amounwords = $numbersWords->toWords($proposal->proposal_total_cost);
-
-        $pdfName = 'payment_request_' . $proposal->proposal_id. '.pdf';
+        $pdfName = 'PR_' . $invoice->proposal->proposal_id. '.pdf';
     
         $pdfPath = public_path('storage/payment_request/' . $pdfName);
 
+        
         // return view('reports.questionslip', $data);
 
-        $pdf = PDF::loadView('payment.payment_request', compact('proposal', 'amounwords'))
+        $pdf = PDF::loadView('payment.payment_request', compact('invoice', 'amounwords'))
            ->setPaper('a4', 'portrait');
         $pdf->save($pdfPath);
     }

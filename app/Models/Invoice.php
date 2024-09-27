@@ -42,6 +42,6 @@ class Invoice extends Model
 
     public function paymentRequests()
     {
-        return $this->hasMany(PaymentRequest::class);
+        return $this->belongsTo(PaymentRequest::class,'id','invoice_id');
     }
 }

@@ -107,6 +107,7 @@
 .invoice-table th {
     border: 1px solid #666;
     padding: 8px;
+    text-align: center;
     /* Optional: Adds padding for better readability */
 }
 </style>
@@ -136,11 +137,11 @@
         <tr>
             <td style="width:30%;text-align:left;padding: 0px;">
                 <p class="ro-no"> <span>Request#:
-                        {{$proposal->proposalro->proposal_ro}}</span></p>
+                {{$invoice->paymentRequests->payment_request_id}}</span></p>
             </td>
             <td style="width:40%;text-align:center;padding: 0px;"></td>
             <td style="width:30%;text-align:right;padding: 0px;">
-                <p class="ro-no"><span>{{ \Carbon\Carbon::parse($proposal->proposal_date)->format('d F, Y') }}</span>
+                <p class="ro-no"><span>{{ \Carbon\Carbon::parse($invoice->paymentRequests->created_at)->format('d F, Y') }}</span>
                 </p>
             </td>
         </tr>
@@ -178,7 +179,7 @@
         </tr>
         <tr>
             <td style="padding:10px 0px 10px;"><b>Subject : <span> Processing the payment of
-                        NFONICS Solutions (P) Ltd</b></span></td>
+            {{$invoice->vendor->vendor_name}}</b></span></td>
         </tr>
 
 
@@ -199,9 +200,9 @@
         <tr>
             <td>
                 <div style="margin:0px 20px; font-size:14px;">
-                    <b>NFONICS Solutions (P) Ltd</b><br>
-                    15/22/1, First Floor, Sahithi Tower, Harisankar Road,PALAKKAD,Kerala | 679513<br>
-                    GSTIN : 32AAGCD1055M1ZS | PAN NO: AAECN0826C
+                    <b>{{$invoice->vendor->vendor_name}}</b><br>
+                    {{$invoice->vendor->address}},{{$invoice->vendor->address_2}},{{$invoice->vendor->city}},{{$invoice->vendor->states[0]->name}} | {{$invoice->vendor->postcode}}<br>
+                    GSTIN : {{$invoice->vendor->gst}} | PAN NO: {{$invoice->vendor->pan}}
 
 
                 </div>
@@ -226,18 +227,18 @@
                     </tr>
 
                     <tr>
-                        <td>NF/2024-25/GST/7
+                        <td>{{$invoice->invoice_number}}
                         </td>
-                        <td>26-10-2024
+                        <td>{{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d-m-Y') }}
                         </td>
-                        <td style="text-align:right;"> <span class="outlay">82,600.00</span>
+                        <td style="text-align:right;"> <span class="outlay">{{ number_format($invoice->milestone->milestone_total_amount,2);}}</span>
                         </td>
-                        <td>Budget and Expense Tracker Web Application
+                        <td>{{$invoice->proposal->proposal_title}}
                         </td>
                     </tr>
 
                     <tr>
-                        <td colspan="4">Amount in words :
+                        <td colspan="4" style="text-align:left;">Amount in words :
                             <span style="margin-bottom:10px;" class="amount">Rupees
                                 {{$amounwords}}
                                 only.</span>

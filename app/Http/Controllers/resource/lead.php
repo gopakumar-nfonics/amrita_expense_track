@@ -142,7 +142,7 @@ class lead extends Controller
                 
             ];
 
-            $subject = $proposal->proposal_title." Submission";
+            $subject = $proposal->proposal_title." Proposal Submission";
 
             Mail::to($vendor->email)->send(new ProposalSubmit($detailsproposal,$subject));
 

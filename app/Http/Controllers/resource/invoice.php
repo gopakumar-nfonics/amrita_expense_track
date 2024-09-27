@@ -116,7 +116,7 @@ class invoice extends Controller
                 
             ];
 
-            $subject = $proposal->proposal_title." ".$milestone->milestone_title. "Invoice Submission";
+            $subject = $proposal->proposal_title." ".$milestone->milestone_title. " Invoice Submission";
 
             Mail::to($vendor->email)->send(new VendorInvoiceSubmit($detailsproposal,$subject));
 

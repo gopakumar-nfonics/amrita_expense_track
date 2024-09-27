@@ -21,40 +21,25 @@ class budget extends Controller
      */
     public function index()
     {
-        $budgets = Budgets::with(['financialYear', 'category.children']) // Load children (subcategories) as well
-    ->get()
-    ->map(function ($budget) {
-        $categoryIds = collect([$budget->category_id]); // Start with the main category_id
 
-        // Include subcategories
-        if ($budget->category->children) {
-            $categoryIds = $categoryIds->merge($budget->category->children->pluck('id'));
-        }
-
-        // Calculate usedBudget for the category and its subcategories
-        $usedBudget = PaymentRequest::whereIn('category_id', $categoryIds)
-            ->where('payment_status', 'completed')
-            ->with(['invoice.milestone'])
-            ->get()
-            ->sum(function ($paymentRequest) {
-                return $paymentRequest->invoice->milestone->sum('milestone_total_amount');
-            });
-
-            $usedBudgetPercentage = $budget->amount > 0 ? ($usedBudget / $budget->amount) * 100 : 0;
-
-        return [
-            'id'=> $budget->id,
-            'category_name' => $budget->category->category_name,
-            'category_code' => $budget->category->category_code,
-            'year' => $budget->financialYear->year,
-            'amount' => $budget->amount,
-            'used_budget' => $usedBudget,
-            'used_budget_percentage' => round($usedBudgetPercentage, 2),
-            'remaining_budget' => $budget->amount - $usedBudget,
-        ];
-    });
+        $budgets = Budgets::select('tbl_budget.*')
+        ->selectRaw('(SELECT SUM(payment_milestones.milestone_total_amount) 
+                      FROM payment_request
+                      INNER JOIN invoices ON payment_request.invoice_id = invoices.id
+                      INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
+                      INNER JOIN tbl_category ON payment_request.category_id = tbl_category.id
+                      WHERE (payment_request.category_id = tbl_budget.category_id 
+                             OR tbl_category.parent_category = tbl_budget.category_id)
+                      AND payment_request.payment_status = "completed") as used_amount')
+        ->from('tbl_budget')
+        ->whereNull('tbl_budget.deleted_at')
+        ->orderBy('id')
+        ->get();
+    
 
 
+
+   // dd($budgets);
 
 
         //print_r($budgets);exit();

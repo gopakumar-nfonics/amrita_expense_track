@@ -533,6 +533,7 @@ function getallocatedbudget() {
     var submitButton = document.querySelector("#kt_invoice_form").querySelector(
         '[id="kt_ecommerce_edit_order_submit"]');
     submitButton.disabled = false;
+    $('#error-balance').hide();
     $('#allocate_status').show();
 
     const selectElement = document.getElementById("category");

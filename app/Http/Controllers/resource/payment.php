@@ -16,6 +16,8 @@ use App\Models\FinancialYear;
 use Numbers_Words;
 use App\Mail\InvoicePaymentInitiation;
 
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+
 use Illuminate\Support\Facades\Mail;
 
 class payment extends Controller
@@ -243,5 +245,49 @@ class payment extends Controller
         'total_budget' => $totalBudget,
         'used_budget' => $usedBudget
     ]);
+    }
+
+     public function getShortFinancialYear()
+    {
+        $currentDate = new \DateTime();
+        $currentYear = (int)$currentDate->format('Y');
+        $currentMonth = (int)$currentDate->format('m');
+
+        // Define the start month of the financial year
+        $financialYearStartMonth = 4; // April
+
+        if ($currentMonth >= $financialYearStartMonth) {
+            // If current month is from April onwards, the financial year is current year to next year
+            $startYear = $currentYear;
+            $endYear = $currentYear + 1;
+        } else {
+            // If current month is before April, the financial year is previous year to current year
+            $startYear = $currentYear - 1;
+            $endYear = $currentYear;
+        }
+
+        // Extract the last two digits of each year and concatenate
+        $startYearShort = substr($startYear, -2);
+        $endYearShort = substr($endYear, -2);
+
+        return "{$startYearShort}{$endYearShort}";
+    }
+
+    public function savepaymentrequestPdf($id)
+    {
+        $proposal = Proposal::with('vendor', 'proposalro')->findOrFail($id);
+
+        $numbersWords = new Numbers_Words();
+        $amounwords = $numbersWords->toWords($proposal->proposal_total_cost);
+
+        $pdfName = 'payment_request_' . $proposal->proposal_id. '.pdf';
+    
+        $pdfPath = public_path('storage/payment_request/' . $pdfName);
+
+        // return view('reports.questionslip', $data);
+
+        $pdf = PDF::loadView('payment.payment_request', compact('proposal', 'amounwords'))
+           ->setPaper('a4', 'portrait');
+        $pdf->save($pdfPath);
     }
 }

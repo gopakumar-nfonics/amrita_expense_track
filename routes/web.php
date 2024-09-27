@@ -72,3 +72,5 @@ Route::get('/lead/{id}/save-pdf', [\App\Http\Controllers\resource\lead::class, '
 
 Route::get('/get-budget-details', [\App\Http\Controllers\resource\payment::class, 'getBudgetDetails']);
 
+Route::get('/payment/{id}/save-pdf', [\App\Http\Controllers\resource\payment::class, 'savepaymentrequestPdf'])->name('payment.save-pdf');
+

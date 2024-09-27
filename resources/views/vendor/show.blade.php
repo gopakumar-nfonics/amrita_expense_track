@@ -51,7 +51,7 @@
                                 <!--begin::Avatar-->
                                 <div class="symbol symbol-100px symbol-circle mb-7">
                                     <span class="symbol-label bg-blue text-white fs-2tx">
-                                        {{ substr($vendor->vendor_name, 0, 2) }}</span>
+                                        {{ strtoupper(substr($vendor->vendor_name, 0, 2)) }}</span>
                                 </div>
                                 <!--end::Avatar-->
                                 <!--begin::Name-->
@@ -65,8 +65,8 @@
                                 <div class="d-flex flex-row flex-center">
                                     <!--begin::Stats-->
                                     @php
-                                    $totalProposalAmount = $vendor->proposals->first()->total_proposal_amount ?? 0;
-                                    $totalPaidAmount = $vendor->invoices->first()->total_paid_amount ?? 0;
+                                    $totalProposalAmount = $vendor->total_proposal_cost ?? 0;
+                                    $totalPaidAmount = $vendor->total_paid_amount ?? 0;
 
                                     // Calculate the balance amount
                                     $balanceAmount = $totalProposalAmount - $totalPaidAmount;
@@ -161,10 +161,10 @@
                                         <div class="flex-column mb-0 w-50">
                                             <div class="fw-bold mt-5 ">Bank Details</div>
                                             <div class="text-gray-600">
-                                                NFONICS SOLUTIONS (P) LTD.<br>
-                                                ACCOUNT NO. : 17020200000221<br>
-                                                IFSC CODE : FDRL0001702<br>
-                                                FEDERAL BANK, SREEKRISHNAPURAM
+                                                {{$bankaccount_details->beneficiary_name}}.<br>
+                                                ACCOUNT NO. : {{$bankaccount_details->account_no}}<br>
+                                                IFSC CODE : {{$bankaccount_details->ifsc_code}}<br>
+                                                {{$bankaccount_details->bank_name}}, {{$bankaccount_details->branch_name}}
                                             </div>
                                         </div>
 
@@ -248,15 +248,13 @@
 
                                                                 <div class="d-flex justify-content-start flex-column">
                                                                     <a
-                                                                        class="text-dark fw-bold text-hover-primary fs-6 color-blue txt-capitalcase">{{ $proposal['proposal_id']}}
-                                                                        - Budget and
-                                                                        Expense
-                                                                        Tracker Web
-                                                                        Application</a>
+                                                                        class="text-dark fw-bold text-hover-primary fs-6 color-blue txt-capitalcase">
+                                                                        {{ $proposal['proposal_id']}}
+                                                                        - {{$proposal['proposal_title']}}</a>
                                                                     <span
                                                                         class="d-flex justify-content-start text-muted fw-semibold text-muted d-block fs-7">Submitted
                                                                         On :
-                                                                        {{ \Carbon\Carbon::parse($proposal['proposal_date'])->format('d-M-Y') }}
+                                                                        {{ \Carbon\Carbon::parse($proposal['created_at'])->format('d-M-Y') }}
 
                                                                         <span
                                                                             class="badge badge-light-success fs-8 ms-2">

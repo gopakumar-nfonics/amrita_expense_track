@@ -8,6 +8,7 @@ use App\Models\Vendor as vendors;
 use App\Models\Company;
 use App\Models\Proposal;
 use App\Mail\VendorVerified;
+use App\Models\VendorBankAccount;
 use Illuminate\Support\Facades\Mail;
 
 class vendor extends Controller
@@ -102,8 +103,8 @@ class vendor extends Controller
             'states',
             'proposals' => function ($query) {
                 $query->where('proposal_status', 1)
-                      ->select('id', 'vendor_id', \DB::raw('SUM(proposal_total_cost) as total_proposal_amount'))
-                      ->groupBy('id', 'vendor_id');
+                      ->select('id', 'vendor_id', 'proposal_title', 'proposal_id', 'created_at', \DB::raw('SUM(proposal_total_cost) as total_proposal_amount'))
+                      ->groupBy('id', 'vendor_id', 'proposal_title', 'proposal_id', 'created_at');
             },
             'invoices' => function ($query) {
                 $query->where('invoice_status', 1)
@@ -112,32 +113,46 @@ class vendor extends Controller
                       ->groupBy('invoices.vendor_id', 'invoices.proposal_id');
             }
         ])->find($id);
-
+        
         $proposalWiseTotals = []; 
-
-        $vendor->proposals = $vendor->proposals->map(function ($proposal) use ($vendor, &$proposalWiseTotals) {
+        $totalProposalCost = 0;
+        $totalPaidAmount = 0;
+        
+        $vendor->proposals = $vendor->proposals->map(function ($proposal) use ($vendor, &$proposalWiseTotals, &$totalProposalCost, &$totalPaidAmount) {
             // Get total paid amount for the specific proposal
-            $totalPaidAmount = $vendor->invoices
+            $paidAmountForProposal = $vendor->invoices
                 ->where('proposal_id', $proposal->id) // Filter by the proposal ID
                 ->sum('total_paid_amount'); // Sum total_paid_amount per proposal
             
             // Add the total_paid_amount to the proposal
-            $proposal->total_paid_amount = $totalPaidAmount;
+            $proposal->total_paid_amount = $paidAmountForProposal;
         
-            // Construct the proposal-wise total array
+            // Accumulate the total amounts
+            $totalProposalCost += $proposal->total_proposal_amount;
+            $totalPaidAmount += $paidAmountForProposal;
+        
+            // Construct the proposal-wise total array with additional fields
             $proposalWiseTotals[] = [
-                'proposal_id' => $proposal->id, // Proposal ID
-                'proposal_date' => $proposal->proposal_date, // Ensure this field exists
+                'proposal_id' => $proposal->proposal_id, 
+                'proposal_title' => $proposal->proposal_title,
+                'created_at' => $proposal->created_at,
                 'total_proposal_amount' => $proposal->total_proposal_amount,
-                'total_paid_amount' => $totalPaidAmount,
+                'total_paid_amount' => $paidAmountForProposal,
             ];
         
             return $proposal;
         });
+        
+        // Add the total proposal cost and total paid amount to the vendor object
+        $vendor->total_proposal_cost = $totalProposalCost;
+        $vendor->total_paid_amount = $totalPaidAmount;
+
+       //print_r($vendor);exit();
+
+        $bankaccount_details = VendorBankAccount::where('vendor_id', $vendor->id)->first();
 
         
-        
-        return view('vendor.show',compact('vendor','proposalWiseTotals'));
+        return view('vendor.show',compact('vendor','proposalWiseTotals','bankaccount_details'));
     }
 
     /**

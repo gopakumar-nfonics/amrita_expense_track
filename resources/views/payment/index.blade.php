@@ -68,7 +68,10 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
-                                                #{{$request->payment_request_id}}
+                                                <a href="{{ asset('/storage/release_orders/Release_Order_2425-PL-002.pdf') }}"
+                                                    target="_blank" class="text-dark fw-bold text-hover-primary fs-6">
+                                                    #{{$request->payment_request_id}}
+                                                </a>
                                                 <div class="text-gray-400 fw-semibold fs-9">
                                                     @if($request->payment_status == "pending")
                                                     <span class="badge badge-light-info fs-8">
@@ -112,7 +115,7 @@
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
                                                 <a href="{{ route('lead.show',$request->invoice->proposal->id) }}"
-                                                    class="text-dark text-hover-primary fs-6">
+                                                    class="text-dark fw-bold  text-hover-primary fs-6">
                                                     {{$request->invoice->proposal->proposal_title}}</a>
                                                 <span
                                                     class="d-flex justify-content-start text-muted fw-semibold text-muted d-block fs-7">Submitted
@@ -140,7 +143,7 @@
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
                                                 <a href="{{ route('invoice.show',$request->invoice->id) }}"
-                                                    class="text-dark text-hover-primary fs-6">
+                                                    class="text-dark text-hover-primary fs-6 fw-bold ">
                                                     {{$request->invoice->milestone->milestone_title}}</a>
                                                 <span class="text-muted fw-semibold text-muted d-block fs-7">Submitted
                                                     On :
@@ -172,18 +175,11 @@
 
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="" class="menu-link px-3">Print</a>
+
+                                                <a href="{{ asset('/storage/release_orders/Release_Order_2425-PL-002.pdf') }}"
+                                                    target="_blank" class="menu-link px-3">
+                                                    Download PDF</a>
                                             </div>
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="{{ route('payment.show',1) }}" class="menu-link px-3">View </a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="" class="menu-link px-3">Edit</a>
-                                            </div>
-                                            <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
                                                 <a href="" class="menu-link px-3"

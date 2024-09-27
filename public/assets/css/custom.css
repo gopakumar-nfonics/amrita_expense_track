@@ -548,7 +548,7 @@ div#swal2-html-container {
 
 
 .overlay {
-    position: fixed;
+    position: fixed !important;
     top: 0;
     left: 0;
     width: 100%;
@@ -571,6 +571,47 @@ div#swal2-html-container {
     width: 120px;
     height: 120px;
     animation: spin 2s linear infinite;
+}
+
+.btn.disabled, .btn:disabled, fieldset:disabled .btn
+{
+    background-color: #adadad !important;
+}
+.form-check-label, .form-check-input
+{
+    cursor: pointer !important;
+}
+
+.v-align-baseline {
+    vertical-align: baseline;
+}
+
+.v-align-top {
+    vertical-align: top;
+}
+
+.v-align-middle {
+    vertical-align: middle;
+}
+
+.v-align-bottom {
+    vertical-align: bottom;
+}
+
+.v-align-text-top {
+    vertical-align: text-top;
+}
+
+.v-align-text-bottom {
+    vertical-align: text-bottom;
+}
+
+.v-align-sub {
+    vertical-align: sub;
+}
+
+.v-align-super {
+    vertical-align: super;
 }
 
 @keyframes spin {

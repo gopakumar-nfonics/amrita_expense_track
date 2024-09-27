@@ -69,10 +69,11 @@ class HomeController extends Controller
                 }
 
 
-            $categoryWiseBudgets = Budget::with('category')
-            ->select('category_id', \DB::raw('SUM(amount) as total_amount'))
-            ->groupBy('category_id')
-            ->get();
+                $categoryWiseBudgets = Budget::with('category')
+                ->select('category_id', \DB::raw('SUM(amount) as total_amount'))
+                ->groupBy('category_id')
+                ->orderBy('total_amount', 'DESC') // Order by total_amount in descending order
+                ->get();
 
             //$vendors = vendor::with('company')->where('vendor_status', 'verified')->orderBy('id')->get();
 

@@ -633,6 +633,10 @@ span#error-balance {
     font-weight: bold;
     margin: 10px 0px;
 }
+.symbol-label
+{
+text-transform: uppercase;
+}
 
 @keyframes spin {
     0% {

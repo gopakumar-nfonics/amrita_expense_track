@@ -69,3 +69,6 @@ Route::get('/email', [App\Http\Controllers\HomeController::class, 'email'])->nam
 use App\Http\Controllers\ProposalController;
 
 Route::get('/lead/{id}/save-pdf', [\App\Http\Controllers\resource\lead::class, 'saveReleaseOrderAsPdf'])->name('lead.save-pdf');
+
+Route::get('/get-budget-details', [\App\Http\Controllers\resource\payment::class, 'getBudgetDetails']);
+

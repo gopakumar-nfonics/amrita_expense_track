@@ -22,7 +22,7 @@ class PaymentRequest extends Model
     // Define relationships
     public function invoice()
     {
-        return $this->belongsTo(Invoice::class);
+        return $this->belongsTo(Invoice::class, 'invoice_id');
     }
 
     public function stream()

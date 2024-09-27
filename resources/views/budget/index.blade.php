@@ -71,41 +71,50 @@
 															<td>
                                                                 <div class="d-flex align-items-center">
 																<div class="symbol symbol-35px me-5">
-																		<span class="symbol-label color-blue w-80px"> {{$budget->category->category_code}}</span>
+																		<span class="symbol-label color-blue w-80px"> {{$budget['category_code']}}</span>
 
 																	</div>
 																	<div class="fw-400 d-block fs-6">
-																	{{$budget->category->category_name}}
+																	{{$budget['category_name']}}
 																	</div>
 																</div>
 															</td>
 															<td>
 																<div class="d-flex align-items-center">
 																	<div class="fw-400 d-block fs-6">
-																	{{$budget->financialYear->year}}
+																	{{$budget['year']}}
 																	</div>
 																</div>
 															</td>
                                                             <td>
-                                                                <div class="d-flex align-items-center">
-																	<div class="fw-400 d-block fs-6">
-																		&#x20b9;{{$budget->amount}}
-																	</div>
-																</div>
+															<div class="d-flex align-items-center">
+                                            <div class="fw-400 d-block fs-6">
+                                                <span
+                                                    class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
+                                                <span
+                                                    class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$budget['amount']}}</span>
+                                            </div>
+                                        </div>
 															</td>
 															<td>
-                                                                <div class="d-flex align-items-center">
-																	<div class="fw-400 d-block fs-6">
-																		&#x20b9; 15297.00
-																	</div>
-																</div>
+															<div class="d-flex align-items-center">
+                                            <div class="fw-400 d-block fs-6">
+                                                <span
+                                                    class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
+                                                <span
+                                                    class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$budget['used_budget']}}</span>
+                                            </div>
+                                        </div>
 															</td>
 															<td>
-                                                                <div class="d-flex align-items-center">
-																	<div class="fw-400 d-block fs-6">
-																		&#x20b9; 6217.00
-																	</div>
-																</div>
+															<div class="d-flex align-items-center">
+                                            <div class="fw-400 d-block fs-6">
+                                                <span
+                                                    class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
+                                                <span
+                                                    class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$budget['remaining_budget']}}</span>
+                                            </div>
+                                        </div>
 															</td>
 															<td>
 															<div class="d-flex flex-column w-100 me-2">
@@ -115,7 +124,7 @@
 																	<span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
 																	<i class="fa-solid fa-arrow-up light-green fs-7 me-1 "></i>
 																	</span>
-																	<!--end::Svg Icon-->32.6%</span>
+																	<!--end::Svg Icon-->{{$budget['used_budget_percentage']}}%</span>
 																</div>
 																</div>
 															</td>
@@ -128,12 +137,12 @@
 																<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
 																	<!--begin::Menu item-->
 																	<div class="menu-item px-3">
-																		<a href="{{route('budget.edit',$budget->id)}}" class="menu-link px-3">Edit</a>
+																		<a href="{{route('budget.edit',$budget['id'])}}" class="menu-link px-3">Edit</a>
 																	</div>
 																	<!--end::Menu item-->
 																	<!--begin::Menu item-->
 																	<div class="menu-item px-3">
-																		<a href="javascript:void(0)" onclick="removebudget('{{$budget->id}}')" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+																		<a href="javascript:void(0)" onclick="removebudget('{{$budget['id']}}')" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
 																	</div>
 																	<!--end::Menu item-->
 																</div>

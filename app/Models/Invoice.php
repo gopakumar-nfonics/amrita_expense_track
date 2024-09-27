@@ -27,7 +27,7 @@ class Invoice extends Model
 
     public function milestone()
     {
-        return $this->belongsTo(PaymentMilestone::class);
+        return $this->belongsTo(PaymentMilestone::class, 'milestone_id');
     }
 
     public function vendor()

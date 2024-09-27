@@ -24,4 +24,9 @@ class Budget extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
+    public function paymentRequests()
+    {
+        return $this->hasMany(PaymentRequest::class, 'category_id');
+    }
 }

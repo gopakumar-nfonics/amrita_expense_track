@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category as Categories;
 use App\Models\FinancialYear;
+use App\Models\PaymentRequest;
 use App\Models\Budget as Budgets;
 use Carbon\Carbon;
+
+use Illuminate\Support\Facades\DB;
 
 class budget extends Controller
 {
@@ -18,7 +21,43 @@ class budget extends Controller
      */
     public function index()
     {
-        $budgets = Budgets::with('financialYear','category')->orderBy('id')->get();
+        $budgets = Budgets::with(['financialYear', 'category.children']) // Load children (subcategories) as well
+    ->get()
+    ->map(function ($budget) {
+        $categoryIds = collect([$budget->category_id]); // Start with the main category_id
+
+        // Include subcategories
+        if ($budget->category->children) {
+            $categoryIds = $categoryIds->merge($budget->category->children->pluck('id'));
+        }
+
+        // Calculate usedBudget for the category and its subcategories
+        $usedBudget = PaymentRequest::whereIn('category_id', $categoryIds)
+            ->where('payment_status', 'completed')
+            ->with(['invoice.milestone'])
+            ->get()
+            ->sum(function ($paymentRequest) {
+                return $paymentRequest->invoice->milestone->sum('milestone_total_amount');
+            });
+
+            $usedBudgetPercentage = $budget->amount > 0 ? ($usedBudget / $budget->amount) * 100 : 0;
+
+        return [
+            'id'=> $budget->id,
+            'category_name' => $budget->category->category_name,
+            'category_code' => $budget->category->category_code,
+            'year' => $budget->financialYear->year,
+            'amount' => $budget->amount,
+            'used_budget' => $usedBudget,
+            'used_budget_percentage' => round($usedBudgetPercentage, 2),
+            'remaining_budget' => $budget->amount - $usedBudget,
+        ];
+    });
+
+
+
+
+        //print_r($budgets);exit();
         return view('budget.index',['budgets'=>$budgets]);
     }
 

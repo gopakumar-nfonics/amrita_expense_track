@@ -35,13 +35,13 @@
                 <!--end::Page title-->
                 <!--begin::Actions-->
                 <div class="card-toolbar">
-               
-                <!-- end::Actions-->
-                <a href="{{ route('invoice.index') }}" class="btn btn-sm btn-primary">
-                    Back to List
-                </a>
 
-            </div>
+                    <!-- end::Actions-->
+                    <a href="{{ route('invoice.index') }}" class="btn btn-sm btn-primary">
+                        Back to List
+                    </a>
+
+                </div>
                 <!--end::Actions-->
             </div>
             <!--end::Toolbar container-->
@@ -59,6 +59,9 @@
                         <div class="card">
                             <!--begin::Card body-->
                             <div class="card-body p-12">
+                            <div class="overlay" id="loaderOverlay">
+                            <div class="loader"></div>
+                        </div>
                                 <!--begin::Form-->
                                 <form id="kt_invoice_form" method="POST" action="{{route('payment.store')}}"
                                     enctype="multipart/form-data">
@@ -82,7 +85,8 @@
                                                                 {{$invoice->proposal->proposal_title}}
                                                             </div>
                                                             <div class="text-muted fs-5">
-                                                                {{$invoice->vendor->vendor_name}}</div>
+                                                                {{$invoice->vendor->vendor_name}}
+                                                            </div>
 
                                                             <!--begin::Separator-->
                                                             <div class="separator my-5"></div>
@@ -199,6 +203,7 @@
                                                                                                 class="total-cost-span fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$invoice->milestone->milestone_amount}}</span>
                                                                                         </div>
                                                                                     </div>
+                                                                                    
                                                                                 </td>
                                                                                 <!--end::SKU-->
                                                                                 <!--begin::Quantity-->
@@ -248,6 +253,7 @@
                                                                                                 class="total-cost-span fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$gstAmount}}</span>
                                                                                         </div>
                                                                                     </div>
+                                                                                    
                                                                                 </td>
                                                                                 <!--end::Quantity-->
                                                                                 <!--begin::Total-->
@@ -262,6 +268,7 @@
                                                                                                 class="total-cost-span fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$invoice->milestone->milestone_total_amount}}</span>
                                                                                         </div>
                                                                                     </div>
+                                                                                    <input type="hidden" id="milestone_amount" value="{{$invoice->milestone->milestone_total_amount}}">
                                                                                 </td>
                                                                                 <!--end::Total-->
                                                                             </tr>
@@ -390,21 +397,26 @@
                                                     style="display:none !important;">
                                                     <div class="d-flex justify-content-between w-100 fs-7 fw-bold mb-3">
                                                         <span>Budget allocated for <span
-                                                                id="catname">Travel</span></span>
+                                                                id="catname"></span></span>
 
                                                     </div>
                                                     <div class="h-8px bg-light rounded mb-3">
                                                         <div class="bg-success rounded h-8px" role="progressbar"
-                                                            style="width: 68%;" aria-valuenow="50" aria-valuemin="0"
+                                                            style="width: 0%;" aria-valuenow="50" aria-valuemin="0"
                                                             aria-valuemax="100"></div>
                                                     </div>
                                                     <div
                                                         class="fw-semibold text-gray-600 fs-7 d-flex justify-content-between w-100">
-                                                        <span class="color-blue">14% remaining </span><span
-                                                            class="color-orange">&#x20b9;22,300 of 36,000 Used</span>
+                                                        <span class="color-blue"></span><span
+                                                            class="color-orange"></span>
                                                     </div>
                                                 </div>
                                                 <!--end::Description-->
+
+                                                <span class="invalid-feedback" id="error-balance"></span>
+
+                                                <input type="hidden" id="total_budget" value="">
+                                                <input type="hidden" id="used_budget" value="">
 
                                                 <div class="separator separator-solid mt-7 mb-2"></div>
                                             </div>
@@ -472,7 +484,7 @@
 <!--end::Global Stylesheets Bundle-->
 
 <script>
-var hostUrl = "{{ asset('assets/') }}";
+    var hostUrl = "{{ asset('assets/') }}";
 </script>
 
 <!--begin::Global Javascript Bundle(mandatory for all pages)-->
@@ -494,7 +506,7 @@ var hostUrl = "{{ asset('assets/') }}";
 <script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
 
 <script>
-function getallocatedbudget() {
+    /*function getallocatedbudget() {
     $('#allocate_status').show();
     const selectElement = document.getElementById("pay_category");
     const selectedOption = selectElement.options[selectElement.selectedIndex];
@@ -511,6 +523,137 @@ function getallocatedbudget() {
     }
 
     document.getElementById("catname").innerText = parentCategoryName;
-}
+}*/
+
+
+    function getallocatedbudget() {
+
+        var submitButton = invoiceFormElement.querySelector('[id="kt_ecommerce_edit_order_submit"]');
+        submitButton.disabled = false;
+        $('#allocate_status').show();
+
+        const selectElement = document.getElementById("category");
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+
+        // Find the optgroup (parent category)
+        const optgroupElement = selectedOption.closest('optgroup');
+        let parentCategoryName = '';
+
+        // Check if the option belongs to an optgroup (subcategory)
+        if (optgroupElement) {
+            parentCategoryName = optgroupElement.label; // Get the parent category name
+        } else {
+            parentCategoryName = selectedOption.text; // If no parent, it's a main category
+        }
+
+        // Update the category name in the UI
+        document.getElementById("catname").innerText = parentCategoryName;
+
+        // Get the category ID
+        const categoryId = selectElement.value;
+
+        // AJAX request to get the budget details
+        $.ajax({
+            url: '/get-budget-details', // Replace with your actual endpoint
+            type: 'GET',
+            data: {
+                category_id: categoryId
+            },
+            success: function(response) {
+                if (response.error) {
+                    alert(response.error);
+                    return;
+                }
+
+                const totalBudget = response.total_budget;
+                const usedBudget = response.used_budget;
+
+                $('#total_budget').val(totalBudget)
+                $('#used_budget').val(usedBudget)
+
+                const formatedBudget = response.num_total_budget;
+                const formatedusedBudget = response.num_used_budget;
+
+                // Calculate the percentage used and remaining
+                const usedPercentage = (usedBudget / totalBudget) * 100;
+                const remainingPercentage = 100 - usedPercentage;
+
+                // Update the progress bar
+                const progressBar = document.querySelector('#allocate_status .bg-success');
+                progressBar.style.width = `${usedPercentage}%`;
+
+
+                const remainingBudget = totalBudget - usedBudget;
+
+                const milestoneAmount = parseFloat($('#milestone_amount').val());
+
+
+                // Check conditions
+                if (usedBudget === totalBudget) { // 100% remaining
+                    submitButton.disabled = true;
+                    $('#error-balance').show();
+                    $('#error-balance').text("100% remaining. Invoice amount exceeds the available balance");
+                } else if (milestoneAmount > totalBudget) { // Milestone amount exceeds total budget
+                    submitButton.disabled = true;
+                    $('#error-balance').show();
+                    $('#error-balance').text("Invoice amount exceeds the available balance");
+                }
+
+                // Update the remaining percentage and used amount in the UI
+                document.querySelector('#allocate_status .color-blue').innerText = `${remainingPercentage.toFixed(2)}% remaining`;
+                document.querySelector('#allocate_status .color-orange').innerText = `₹${formatedusedBudget.toLocaleString('en-IN')}  of  ₹${formatedBudget.toLocaleString('en-IN')} Used`;
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching budget details:', error);
+            }
+        });
+    }
 </script>
+
+<script>
+    $('#kt_invoice_form').on('submit', function(e) {
+        e.preventDefault(); 
+
+        let totalBudget = parseFloat($('#total_budget').val());
+        let usedBudget = parseFloat($('#used_budget').val());
+
+
+        let milestoneAmount = parseFloat($('#milestone_amount').val());
+
+         let text; 
+
+
+                if (usedBudget === totalBudget) { 
+                    text = '100% remaining. Invoice amount exceeds the available balance. Do you want to process the payment?'
+                   
+                } else if (milestoneAmount > totalBudget) { 
+                    text = 'Invoice amount exceeds the available balance. Do you want to process the payment?'
+                }else{
+                     text = 'Do you want to process the payment?'
+
+                }
+
+       
+                Swal.fire({
+    title: 'Are you sure?',
+    text: text,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Proceed',
+    cancelButtonText: 'Cancel',
+    reverseButtons: true,
+    customClass: {
+        confirmButton: 'btn btn-primary', 
+        cancelButton: 'btn'   // Add your custom class for cancel button
+    }
+}).then((result) => {
+    if (result.isConfirmed) {
+        document.getElementById('loaderOverlay').style.display = 'flex';
+         this.submit();
+    }
+});
+
+    });
+</script>
+
 @endsection

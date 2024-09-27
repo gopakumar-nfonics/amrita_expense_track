@@ -89,7 +89,6 @@ class HomeController extends Controller
             ->where('vendor_status', 'verified')
             ->orderBy('id')
             ->get();
-        
             $totalMilestoneByCategory = PaymentMilestone::join('invoices', 'payment_milestones.id', '=', 'invoices.milestone_id')
             ->join('payment_request', 'invoices.id', '=', 'payment_request.invoice_id')
             ->leftJoin('tbl_category as child_category', 'payment_request.category_id', '=', 'child_category.id') // LEFT JOIN for child_category
@@ -98,10 +97,11 @@ class HomeController extends Controller
             })
             ->select(
                 'parent_category.id as parent_category_id',
-                'parent_category.category_name as parent_category_name', // Adjust based on your actual column name
+                'parent_category.category_name as parent_category_name',
                 DB::raw('SUM(payment_milestones.milestone_total_amount) as total_milestone_amount')
             )
-            ->groupBy('parent_category.id','parent_category.category_name') // Group by parent category ID
+            ->groupBy('parent_category.id', 'parent_category.category_name') // Group by parent category ID
+            ->orderBy('total_milestone_amount', 'DESC') // Order by total_milestone_amount in descending order
             ->get();
         
 

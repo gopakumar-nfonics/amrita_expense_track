@@ -623,6 +623,17 @@ div#swal2-html-container {
     cursor: pointer;
 }
 
+span#error-balance {
+    background-color: #fff0f5;
+    padding: 10px;
+    color: #e35858;
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px 0px;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);

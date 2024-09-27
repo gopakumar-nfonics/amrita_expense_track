@@ -78,7 +78,7 @@
                                                             <i
                                                                 class="fa-regular fa-circle-dot color-blue fs-8 me-1 "></i>
                                                         </span>
-                                                        <!--end::Svg Icon-->Pending
+                                                        <!--end::Svg Icon-->Payment Pending
                                                     </span>
                                                     @else
 
@@ -87,7 +87,7 @@
                                                         <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
                                                             <i class="fa-solid fa-check light-green fs-8 me-1 "></i>
                                                         </span>
-                                                        <!--end::Svg Icon-->Processed
+                                                        <!--end::Svg Icon-->Payment Processed
                                                     </span>
                                                     @endif
                                                 </div>
@@ -110,8 +110,11 @@
                                         <div class="d-flex align-items-center">
 
                                             <div class="d-flex justify-content-start flex-column">
-                                                <a href="{{ route('lead.ro',$inv->proposalro->proposal_id) }}"
+                                                <a href="{{ asset('/storage/release_orders/Release_Order_2425-PL-002.pdf') }}"
+                                                    target="_blank"
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$inv->proposalro->proposal_ro}}</a>
+
+
                                                 <span class="text-muted fw-semibold text-muted d-block fs-7">Issued On :
                                                     {{ \Carbon\Carbon::parse($inv->proposalro->created_at)->format('d-M-Y') }}</span>
                                             </div>

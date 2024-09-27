@@ -528,7 +528,7 @@
 
     function getallocatedbudget() {
 
-        var submitButton = invoiceFormElement.querySelector('[id="kt_ecommerce_edit_order_submit"]');
+        var submitButton = document.querySelector("#kt_invoice_form").querySelector('[id="kt_ecommerce_edit_order_submit"]');
         submitButton.disabled = false;
         $('#allocate_status').show();
 

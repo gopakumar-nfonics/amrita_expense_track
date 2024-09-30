@@ -318,7 +318,7 @@ class payment extends Controller
 
             ];
 
-            $subject = $proposal->proposal_title . " " . $milestone->milestone_title . " Invoice Payment Initiation";
+            $subject = $proposal->proposal_title . " " . $milestone->milestone_title . " Invoice Payment Processed";
 
             Mail::to($vendor->email)->send(new InvoicePaymentInitiation($detailsproposal, $subject));
 

@@ -110,7 +110,7 @@
 
                                             <div class="d-flex justify-content-start flex-column">
                                                 <a href="{{ route('invoice.show',$inv->id) }}"
-                                                    class="text-dark fw-bold text-hover-primary fs-6">{{$inv->milestone->milestone_title}}</a>
+                                                    class="text-dark fw-bold text-hover-primary fs-6">{{$inv->milestone->milestone_title}} | {{$inv->proposal->proposal_title}}</a>
                                                 <span class="text-muted fw-semibold text-muted d-block fs-7">Submitted
                                                     On :
                                                     {{ \Carbon\Carbon::parse($inv->created_at)->format('d-M-Y') }}</span>

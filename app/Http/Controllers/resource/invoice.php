@@ -99,8 +99,9 @@ class invoice extends Controller
 
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
-                $path = $file->store('invoice', 'public'); // Store file in 'public/proposals'
-                $invoices->invoice_file = $path; // Save file path to the Proposal model
+                $customFilename = $invoice_id.'.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('invoice', $customFilename, 'public'); 
+                $invoices->invoice_file = $path;
             }
 
             $invoices->save();

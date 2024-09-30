@@ -43,6 +43,9 @@
                 <div class="card-body py-3">
                     <!--begin::Table container-->
                     <div class="table-responsive">
+                    <div class="overlay" id="loaderOverlay">
+                             <div class="loader"></div>
+                         </div>
                         <!--begin::Table-->
                         <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
                             id="budgettable">
@@ -68,7 +71,7 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
-                                            @php
+                                                @php
                                                 $paymentrequest = 'PR_' . $request->payment_request_id.'.pdf';
                                                 $paymentrequestPath = 'payment_request/' . $paymentrequest;
                                                 $paymentrequestUrl = asset('storage/' . $paymentrequestPath);
@@ -95,6 +98,15 @@
                                                             <i class="fa-solid fa-check light-green fs-8 me-1 "></i>
                                                         </span>
                                                         <!--end::Svg Icon-->Processed
+                                                    </span>
+                                                    @elseif($request->payment_status == "initiated")
+
+                                                    <span class="badge badge-light-success fs-8">
+                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                        <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+                                                            <i class="fa-solid fa-check light-green fs-8 me-1 "></i>
+                                                        </span>
+                                                        <!--end::Svg Icon-->Payment initiated
                                                     </span>
                                                     @endif
                                                 </div>
@@ -185,7 +197,7 @@
 
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                            @php
+                                                @php
                                                 $paymentrequest = 'PR_' . $request->payment_request_id.'.pdf';
                                                 $paymentrequestPath = 'payment_request/' . $paymentrequest;
                                                 $paymentrequestUrl = asset('storage/' . $paymentrequestPath);
@@ -194,6 +206,13 @@
                                                     target="_blank" class="menu-link px-3">
                                                     Download PDF</a>
                                             </div>
+
+                                            @if(!Auth::user()->isvendor() && $request->payment_status == "initiated")
+                                            <div class="menu-item px-3">
+                                                <a href="#" onclick="updatepaymentstatus('{{$request->id}}');"
+                                                    class="menu-link px-3">Update Status</a>
+                                            </div>
+                                            @endif
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
                                                 <a href="" class="menu-link px-3"
@@ -217,6 +236,96 @@
                         <!--end::Table-->
                     </div>
                     <!--end::Table container-->
+
+                  <!--begin::Modal - New Card-->
+            <div class="modal fade" id="kt_modal_new_card" tabindex="-1" aria-hidden="true">
+                <!--begin::Modal dialog-->
+                <div class="modal-dialog modal-dialog-centered mw-650px">
+                    <!--begin::Modal content-->
+                    <div class="modal-content">
+                        <!--begin::Modal header-->
+                        <div class="modal-header">
+                            <!--begin::Modal title-->
+                            <h2>Update Payment Status</h2>
+                            <!--end::Modal title-->
+                            <!--begin::Close-->
+                            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                <span class="svg-icon svg-icon-1">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                            transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
+                                        <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                            transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
+                                    </svg>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </div>
+                            <!--end::Close-->
+                        </div>
+                        <!--end::Modal header-->
+                        <!--begin::Modal body-->
+                        <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                            <!--begin::Form-->
+                            <form id="update_pay_status" class="form fv-plugins-bootstrap5 fv-plugins-framework"
+                                action="#" method="POST">
+                                <!--begin::Input group-->
+                                <div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                        <span class="required">UTR Number</span>
+                                        
+                                    </label>
+                                    <!--end::Label-->
+                                    <input type="hidden" name="reqid" id="reqid" value="">
+                                    <input type="text" class="form-control form-control-solid" placeholder="UTR Number"
+                                        name="utrnumber" id="utrnumber" value="" required>
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+                                <!--end::Input group-->
+
+                                 <!--begin::Input group-->
+                                 <div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container">
+                                    <!--begin::Label-->
+                                    <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                        <span class="required">Date Of Transaction</span>
+                                        
+                                    </label>
+                                    <!--end::Label-->
+                                    <input type="text" class="form-control form-control-solid" placeholder=""
+                                        name="transactiondate" id="transactiondate" value="" required>
+                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                                </div>
+                                <!--end::Input group-->
+                                
+                                
+                                <!--begin::Actions-->
+                                <div class="text-center pt-15">
+                                    <button type="reset" id="kt_modal_new_card_cancel"
+                                        class="btn btn-light me-3">Cancel</button>
+                                    <button type="submit" id="kt_modal_new_card_submit" class="btn btn-primary">
+                                        <span class="indicator-label">Submit</span>
+                                        <span class="indicator-progress">Please wait...
+                                            <span
+                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    </button>
+                                </div>
+                                <!--end::Actions-->
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                        <!--end::Modal body-->
+                    </div>
+                    <!--end::Modal content-->
+                </div>
+                <!--end::Modal dialog-->
+            </div>
+            <!--end::Modal - New Card-->
+            <!--end::Modals-->
+
+
+
                 </div>
                 <!--begin::Body-->
             </div>
@@ -230,6 +339,7 @@
 
 <script>
     $(document).ready(function() {
+        
         $('#budgettable').DataTable({
             "iDisplayLength": 10,
             "searching": true,
@@ -238,5 +348,101 @@
         });
     });
 </script>
+<script>
+ 
+  document.addEventListener('DOMContentLoaded', function() {
+    flatpickr("#transactiondate", {
+        defaultDate: new Date(), // Sets the default date to the current date
+        dateFormat: "d-m-Y", // Use a standard format for backend compatibility
+        placeholder: "Select date" // Placeholder text
+    });
+});
+
+
+</script>
+
+<script>
+    function updatepaymentstatus(rid){
+
+        $('#kt_modal_new_card').modal('show');
+        $('#reqid').val(rid);
+    }
+    $(document).ready(function () {
+        $('#update_pay_status').on('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // SweetAlert confirmation
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Do you want to update this status?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Submit',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true,
+                customClass: {
+            confirmButton: 'btn btn-primary',
+            cancelButton: 'btn' 
+        }
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    let dateInput = $('#transactiondate').val(); // Assuming the date is in DD-MM-YYYY
+                    let formattedDate = dateInput.split("-").reverse().join("-"); // Convert to YYYY-MM-DD
+                    
+                    let formData = {
+                        _token: '{{ csrf_token() }}', 
+                        utrnumber: $('#utrnumber').val(),
+                        transactiondate: formattedDate,
+                        reqid: $('#reqid').val(),
+                    };
+
+                    document.getElementById('loaderOverlay').style.display = 'flex';
+
+                    $.ajax({
+                        url: "{{ route('update.payment.status') }}",  
+                        type: "POST",
+                        data: formData,
+                        success: function (response) {
+                            document.getElementById('loaderOverlay').style.display = 'none';
+                            if (response.success) {
+                                swal('Payment status updated successfully!', {
+                                icon: "success",
+                                buttons: false,
+                            });
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000);
+                                
+                            } else {
+                                document.getElementById('loaderOverlay').style.display = 'none';
+                                swal('Failed to update payment status', {
+                                icon: "warning",
+                                buttons: false,
+                            });
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000);
+                               
+                            }
+                        },
+                        error: function (xhr) {
+                            swal('An error occurred. Please try again', {
+                                icon: "Error",
+                                buttons: false,
+                            });
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000);
+                           
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+
 
 @endsection

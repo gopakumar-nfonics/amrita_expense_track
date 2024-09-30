@@ -108,11 +108,11 @@ class payment extends Controller
             $paymentrequest = PaymentRequest::where('invoice_id', $request->invoid)->first();
             $paymentrequest->stream_id  = $request->programme;
             $paymentrequest->category_id  = $request->category;
-            $paymentrequest->payment_status  = 'completed';
+            $paymentrequest->payment_status  = 'initiated';
             $paymentrequest->save();
 
             $invoice = Invoices::findOrFail($request->invoid);
-            $invoice->invoice_status  = 1;
+            $invoice->invoice_status  = 2;
             $invoice->save();
 
             $vendor = Vendor::where('id', $invoice->vendor_id)->first();
@@ -122,16 +122,7 @@ class payment extends Controller
 
             $this->savepaymentrequestPdf($request->invoid);
 
-            $detailsproposal = [
-                'name' => $vendor->vendor_name,
-                'proposal_title' => $proposal->proposal_title,
-                'milestone_title' => $milestone->milestone_title,
-
-            ];
-
-            $subject = $proposal->proposal_title . " " . $milestone->milestone_title . " Invoice Payment Initiation";
-
-            Mail::to($vendor->email)->send(new InvoicePaymentInitiation($detailsproposal, $subject));
+            
 
             return redirect()->route('invoice.index')->with('success', 'Payment Request Submitted Successfully');
         } catch (\Exception $e) {
@@ -293,5 +284,47 @@ class payment extends Controller
         $pdf = PDF::loadView('payment.payment_request', compact('invoice', 'amounwords'))
            ->setPaper('a4', 'portrait');
         $pdf->save($pdfPath);
+    }
+
+    public function updatePaymentStatus(Request $request)
+    {
+        // Validate the input fields
+        $validated = $request->validate([
+            'utrnumber' => 'required|string|max:255|unique:payment_request,utr_number',
+            'transactiondate' => 'required|date',
+        ]);
+
+        // Update payment request in the database
+        $paymentRequest = PaymentRequest::where('id', $request->reqid)->first();
+
+        if ($paymentRequest) {
+            $paymentRequest->utr_number = $request->utr_number;
+            $paymentRequest->transaction_date = $request->transactiondate;
+            $paymentRequest->payment_status = 'completed';  // Example of status update
+            $paymentRequest->save();
+
+            $invoice = Invoices::where('id', $paymentRequest->invoice_id)->first();
+            $vendor = Vendor::where('id', $invoice->vendor_id)->first();
+            $proposal = Proposal::where('id', $invoice->proposal_id)->first();
+            $milestone = PaymentMilestone::where('id', $invoice->milestone_id)->first();
+
+            $invoice->invoice_status = 1;  // Example of status update
+            $invoice->save();
+
+            $detailsproposal = [
+                'name' => $vendor->vendor_name,
+                'proposal_title' => $proposal->proposal_title,
+                'milestone_title' => $milestone->milestone_title,
+
+            ];
+
+            $subject = $proposal->proposal_title . " " . $milestone->milestone_title . " Invoice Payment Initiation";
+
+            Mail::to($vendor->email)->send(new InvoicePaymentInitiation($detailsproposal, $subject));
+
+            return response()->json(['success' => 'Payment status updated successfully.']);
+        }
+
+        return response()->json(['error' => 'Payment request not found.']);
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DropForeignKeyFromCompanyTable extends Migration
+class AddRejectionReasonToProposalTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class DropForeignKeyFromCompanyTable extends Migration
      */
     public function up()
     {
-        Schema::table('company', function (Blueprint $table) {
-            $table->dropForeign('company_user_id_foreign');
+        Schema::table('proposal', function (Blueprint $table) {
+            $table->text('rejection_reason')->nullable()->after('proposal_status');
         });
     }
 
@@ -25,8 +25,8 @@ class DropForeignKeyFromCompanyTable extends Migration
      */
     public function down()
     {
-        Schema::table('company', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        Schema::table('proposal', function (Blueprint $table) {
+            $table->dropColumn('rejection_reason');
         });
     }
 }

@@ -51,6 +51,9 @@
                         <div class="card">
                             <!--begin::Card body-->
                             <div class="card-body p-12">
+                            <div class="overlay" id="loaderOverlay">
+                             <div class="loader"></div>
+                         </div>
                                 <!--begin::Form-->
                                 <form id="kt_invoice_form" method="POST" action="{{route('invoice.store')}}"
                                     enctype="multipart/form-data">
@@ -396,7 +399,7 @@ var hostUrl = "{{ asset('assets/') }}";
 <script src="{{ asset('assets/js/custom/utilities/modals/create-app.js') }}"></script>
 <script src="{{ asset('assets/js/custom/utilities/modals/users-search.js') }}"></script>
 
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 $(document).ready(function() {
     // Listen for changes to the proposal dropdown
@@ -494,6 +497,39 @@ function updateFileName() {
     var fileName = input.files.length > 0 ? input.files[0].name : 'Upload reference Invoice.';
     document.getElementById('file-name').textContent = fileName;
 }
+</script>
+
+<script>
+document.getElementById('kt_invoice_form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Show the SweetAlert confirmation dialog
+    swal({
+        title: "Are you sure?",
+        text: "Do you really want to submit this Invoice?",
+        icon: "warning",
+        buttons: {
+            cancel: {
+                text: "Cancel",
+                value: null,
+                visible: true,
+                closeModal: true,
+            },
+            confirm: {
+                text: "Submit",
+                value: true,
+                visible: true,
+                closeModal: true
+            }
+        },
+        dangerMode: true,
+    }).then((willSubmit) => {
+        if (willSubmit) {
+            document.getElementById('loaderOverlay').style.display = 'flex';
+            this.submit(); 
+        }
+    });
+});
 </script>
 
 @endsection

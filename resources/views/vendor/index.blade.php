@@ -55,6 +55,10 @@
                 <div class="card-body py-3">
                     <!--begin::Table container-->
                     <div class="table-responsive">
+
+                    <div class="overlay" id="loaderOverlay">
+                             <div class="loader"></div>
+                         </div>
                         <!--begin::Table-->
                         <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
                             id="vendortable">
@@ -258,6 +262,8 @@ function approvevendor(vid, status) {
         })
         .then((willDelete) => {
             if (willDelete) {
+            
+                document.getElementById('loaderOverlay').style.display = 'flex';
                 $.ajax({
                     url: "{{ route('vendor.approve') }}",
                     type: 'POST',
@@ -267,6 +273,7 @@ function approvevendor(vid, status) {
                         status: status,
                     },
                     success: function(response) {
+                        document.getElementById('loaderOverlay').style.display = 'none';
                         if (response.success) {
                             swal(response.success, {
                                 icon: "success",

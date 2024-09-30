@@ -74,3 +74,6 @@ Route::get('/get-budget-details', [\App\Http\Controllers\resource\payment::class
 
 Route::get('/payment/{id}/save-pdf', [\App\Http\Controllers\resource\payment::class, 'savepaymentrequestPdf'])->name('payment.save-pdf');
 
+Route::post('/update-payment-status', [\App\Http\Controllers\resource\payment::class, 'updatePaymentStatus'])->name('update.payment.status');
+
+Route::post('/lead/reject', [\App\Http\Controllers\resource\lead::class, 'reject'])->name('lead.reject');

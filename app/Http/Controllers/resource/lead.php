@@ -151,7 +151,7 @@ class lead extends Controller
             Mail::to($adminemail)->send(new AdminProposalSubmit($detailsproposal,$adminsubject));
 
     
-            return redirect()->route('lead.index')->with('success', 'Proposal Created Successfully');
+            return redirect()->route('lead.index')->with('success', 'Proposal Submitted Successfully');
         } catch (\Exception $e) {
             // Log the exception message
             print_r($e->getMessage());exit();
@@ -455,6 +455,37 @@ class lead extends Controller
         $pdf = PDF::loadView('lead.release_order', compact('proposal', 'amounwords'))
            ->setPaper('a4', 'portrait');
         $pdf->save($pdfPath);
+    }
+
+    public function reject(Request $request)
+    {
+        
+
+            $proposal = Proposal::findOrFail($request->input('proid'));
+        if (!$proposal) {
+        return response()->json(['error' => 'Proposal not found.'], 404);
+        }
+        $proposal->proposal_status = 2;
+        $proposal->rejection_reason = $request->input('reason');
+        $proposal->save();
+
+        $vendor = Vendor::where('id', $proposal->vendor_id)->first();
+
+
+            $detailsproposal = [
+                'name' => $vendor->vendor_name,
+                'proposal_title' => $proposal->proposal_title,
+                
+            ];
+
+            $subject = $proposal->proposal_title." Proposal Rejected";
+
+            Mail::to($vendor->email)->send(new RejectVendorProposal($detailsproposal,$subject));
+
+        return response()->json(['success' => 'The Proposal has been rejected!']);
+
+ 
+        
     }
     
 }

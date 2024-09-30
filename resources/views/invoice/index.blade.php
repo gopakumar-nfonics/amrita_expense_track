@@ -80,7 +80,18 @@
                                                         </span>
                                                         <!--end::Svg Icon-->Payment Pending
                                                     </span>
+                                                  
+                                                    @elseif($inv->invoice_status == 2)
+                                                    <span class="badge badge-light-info fs-8">
+                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                        <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+                                                            <i
+                                                                class="fa-regular fa-circle-dot color-blue fs-8 me-1 "></i>
+                                                        </span>
+                                                        <!--end::Svg Icon-->Payment initiated
+                                                    </span>
                                                     @else
+
 
                                                     <span class="badge badge-light-success fs-8">
                                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->

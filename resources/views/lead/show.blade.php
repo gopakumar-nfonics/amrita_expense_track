@@ -81,6 +81,10 @@
             <div class="card">
                 <!-- begin::Body-->
                 <div class="card-body py-20">
+
+                <div class="overlay" id="loaderOverlay">
+                             <div class="loader"></div>
+                         </div>
                     <!-- begin::Wrapper-->
                     <div class="mw-lg-950px mx-auto w-100" id="printableArea">
                         <!-- begin::Header-->
@@ -156,7 +160,7 @@
                                                 <thead>
                                                     <tr class="border-bottom fs-6 fw-bold text-muted">
                                                         <th class="min-w-175px pb-2">Milestone</th>
-                                                        <th class="min-w-70px text-start pb-2">Date</th>
+                                                        <!--<th class="min-w-70px text-start pb-2">Date</th>-->
                                                         <th class="min-w-70px text-end pb-2">Amount</th>
                                                         <th class="min-w-80px text-end pb-2">GST(%)</th>
                                                         <th class="min-w-100px text-end pb-2">Total</th>
@@ -167,18 +171,18 @@
                                                     <!--begin::Products-->
                                                     <tr>
                                                         <!--begin::Product-->
-                                                        <td>
+                                                        <!--<td>
                                                             <div class="d-flex align-items-center">
 
-                                                                <!--begin::Title-->
+                                                                
                                                                 <div class="ms-0">
                                                                     <div class="fw-bold">
                                                                         {{ $milestone->milestone_title }}
                                                                     </div>
                                                                 </div>
-                                                                <!--end::Title-->
+                                                              
                                                             </div>
-                                                        </td>
+                                                        </td>-->
                                                         <!--end::Product-->
                                                         <!--begin::Date-->
                                                         <td class="text-start">
@@ -257,14 +261,15 @@
 <script>
 function approve(proid) {
     swal({
-            title: "Are you sure?",
-            text: "You want to approve this proposal",
+            title: "Are you sure, you want to approve this proposal?",
+            text: "Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.",
             icon: "warning",
             buttons: true,
             dangerMode: true,
         })
         .then((willDelete) => {
             if (willDelete) {
+                document.getElementById('loaderOverlay').style.display = 'flex';
                 $.ajax({
                     url: "{{ route('lead.approve') }}",
                     type: 'POST',
@@ -273,6 +278,7 @@ function approve(proid) {
                         id: proid,
                     },
                     success: function(response) {
+                        document.getElementById('loaderOverlay').style.display = 'none';
                         if (response.success) {
                             swal(response.success, {
                                 icon: "success",
@@ -292,6 +298,7 @@ function approve(proid) {
                         }
                     },
                     error: function(xhr) {
+                        document.getElementById('loaderOverlay').style.display = 'none';
                         swal('Error: Something went wrong.', {
                             icon: "error",
                         }).then(() => {

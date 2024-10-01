@@ -464,6 +464,7 @@ function approve(proid,status) {
                         }
                     },
                     error: function(xhr) {
+                        document.getElementById('loaderOverlay').style.display = 'none';
                         swal('Error: Something went wrong.', {
                             icon: "error",
                         }).then(() => {

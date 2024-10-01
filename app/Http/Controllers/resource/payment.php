@@ -29,7 +29,7 @@ class payment extends Controller
      */
     public function index()
     {
-        $payrequest = PaymentRequest::with(['invoice.milestone', 'invoice.vendor', 'invoice.proposalro', 'invoice.proposal'])->orderBy('id')->get();
+        $payrequest = PaymentRequest::with(['invoice.milestone', 'invoice.vendor', 'invoice.proposalro', 'invoice.proposal','category','category.parent','stream'])->orderBy('id')->get();
 
         return view('payment.index', compact('payrequest'));
     }

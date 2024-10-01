@@ -155,8 +155,8 @@
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
-                                                Train Ticket | Travel
-                                                <span class="d-flex justify-content-start fw-semibold fs-7">MCA
+                                                @if($request->category->parent->category_name){{$request->category->parent->category_name}}@else{{$request->category->category_name}}@endif @if($request->category->parent->category_name) | {{$request->category->category_name}}@endif
+                                                <span class="d-flex justify-content-start fw-semibold fs-7">{{$request->stream->stream_name}}
                                                 </span>
                                             </div>
                                         </div>
@@ -185,7 +185,7 @@
                                             <div class="fw-400 d-block fs-6">
                                                 <a href="{{ route('invoice.show',$request->invoice->id) }}"
                                                     class="text-dark text-hover-primary fs-6 fw-bold ">
-                                                    {{$request->invoice->milestone->milestone_title}}</a>
+                                                    {{$request->invoice->milestone->milestone_title}} | {{$request->invoice->invoice_id}}</a>
                                                 <span class="text-muted fw-semibold text-muted d-block fs-7">Submitted
                                                     On :
                                                     {{ \Carbon\Carbon::parse($request->invoice->created_at)->format('d-M-Y') }}</span>

@@ -87,12 +87,12 @@
                                                     </span>
                                                     @elseif($pro->proposal_status == 2)
                                                     <span class="badge badge-light-danger fs-8 rejected-span"
-                                                        title="View Comments">
+                                                        title="View Comments" onclick="rejectionreason('{{$pro->id}}');">
                                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
 
                                                         <!--end::Svg Icon-->
                                                         <i class="fa-solid fa-close color-red fs-8 me-2 "></i>Rejected
-
+                                                    
                                                     </span>
 
                                                     @else
@@ -323,6 +323,56 @@
                         <!--end::Modal dialog-->
                     </div>
                     <!--end::Modal - New Card-->
+
+                    <div class="modal fade" id="rejectreason" tabindex="-1" aria-hidden="true">
+                        <!--begin::Modal dialog-->
+                        <div class="modal-dialog modal-dialog-centered mw-650px">
+                            <!--begin::Modal content-->
+                            <div class="modal-content">
+                                <!--begin::Modal header-->
+                                <div class="modal-header">
+                                    <!--begin::Modal title-->
+                                    <h2>Rejection Commands</h2>
+                                    <!--end::Modal title-->
+                                    <!--begin::Close-->
+                                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                        <span class="svg-icon svg-icon-1">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                                    transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
+                                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                                    transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </div>
+                                    <!--end::Close-->
+                                </div>
+                                <!--end::Modal header-->
+                                <!--begin::Modal body-->
+                                <div class="modal-body scroll-y">
+                                    <!--begin::Form-->
+                                   
+                                        <!--begin::Input group-->
+                                        <div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container">
+                                            <span id="reasoncmt"></span>
+                                            
+                                        </div>
+                                        <!--end::Input group-->
+
+
+                                       
+                                    <!--end::Form-->
+                                </div>
+                                <!--end::Modal body-->
+                            </div>
+                            <!--end::Modal content-->
+                        </div>
+                        <!--end::Modal dialog-->
+                    </div>
+                    <!--end::Modal - New Card-->
                     <!--end::Modals-->
                 </div>
                 <!--begin::Body-->
@@ -488,6 +538,30 @@ function approve(proid, status) {
     } else {
         var title = 'Invalid status';
     }
+}
+
+function rejectionreason(proid){
+
+    $.ajax({
+                url: '/lead/rejectionreason/' +
+                proid, // The URL to send the AJAX request to
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+
+
+                    $('#reasoncmt').text(data.reason);
+                    
+                    $('#rejectreason').modal('show');
+
+
+                },
+
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText); // Log errors to console
+                }
+            });
+    //$('#rejectreason').modal('show');
 }
 </script>
 

@@ -77,3 +77,7 @@ Route::get('/payment/{id}/save-pdf', [\App\Http\Controllers\resource\payment::cl
 Route::post('/update-payment-status', [\App\Http\Controllers\resource\payment::class, 'updatePaymentStatus'])->name('update.payment.status');
 
 Route::post('/lead/reject', [\App\Http\Controllers\resource\lead::class, 'reject'])->name('lead.reject');
+
+
+Route::get('/catreport', [App\Http\Controllers\ReportsController::class, 'index'])->name('catreport');
+Route::get('lead/rejectionreason/{proposal_id}', [\App\Http\Controllers\resource\lead::class, 'rejectionReason']);

@@ -487,5 +487,13 @@ class lead extends Controller
  
         
     }
+
+    public function rejectionReason($proposal_id)
+    {
+        $proposal = Proposal::where('id', $proposal_id)->first();
+        return response()->json([
+            'reason' => $proposal->rejection_reason,
+        ]);
+    }
     
 }

@@ -404,7 +404,7 @@ class lead extends Controller
     public function getMilestones($proposal_id)
     {
         // Fetch milestones based on the proposal ID
-        $milestones = PaymentMilestone::where('proposal_id', $proposal_id)->get();
+        $milestones = PaymentMilestone::where('proposal_id', $proposal_id)->doesntHave('invoice')->get();
 
         $proposalRo = ProposalRo::where('proposal_id', $proposal_id)->first();
 

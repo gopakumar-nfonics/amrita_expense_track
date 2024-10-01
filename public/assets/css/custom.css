@@ -658,6 +658,9 @@ text-transform: uppercase;
     cursor: pointer;
 }
 
+#reasoncmt {
+    font-size: 15px;
+}
 @keyframes spin {
     0% {
         transform: rotate(0deg);

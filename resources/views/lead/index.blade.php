@@ -87,12 +87,22 @@
                                                     </span>
                                                     @elseif($pro->proposal_status == 2)
                                                     <span class="badge badge-light-danger fs-8 rejected-span"
-                                                        title="View Comments" onclick="rejectionreason('{{$pro->id}}');">
+                                                        title="View Comments"
+                                                        onclick="rejectionreason('{{$pro->id}}');">
                                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
 
                                                         <!--end::Svg Icon-->
                                                         <i class="fa-solid fa-close color-red fs-8 me-2 "></i>Rejected
-                                                    
+
+                                                    </span>
+                                                    <span class="badge badge-light-info fs-8 rejected-span"
+                                                        title="View Comments"
+                                                        onclick="rejectionreason('{{$pro->id}}');">
+                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+
+                                                        <!--end::Svg Icon-->
+                                                        <i class="fa-regular fa-comments color-blue fs-8 me-2 "></i>
+
                                                     </span>
 
                                                     @else
@@ -330,9 +340,9 @@
                             <!--begin::Modal content-->
                             <div class="modal-content">
                                 <!--begin::Modal header-->
-                                <div class="modal-header">
+                                <div class="modal-header pt-5 pb-4">
                                     <!--begin::Modal title-->
-                                    <h2>Rejection Commands</h2>
+                                    <h2>Rejection Comments</h2>
                                     <!--end::Modal title-->
                                     <!--begin::Close-->
                                     <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
@@ -354,16 +364,20 @@
                                 <!--begin::Modal body-->
                                 <div class="modal-body scroll-y">
                                     <!--begin::Form-->
-                                   
-                                        <!--begin::Input group-->
-                                        <div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container">
+
+                                    <!--begin::Input group-->
+                                    <div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container">
+                                        <div
+                                            class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6">
                                             <span id="reasoncmt"></span>
-                                            
                                         </div>
-                                        <!--end::Input group-->
 
 
-                                       
+                                    </div>
+                                    <!--end::Input group-->
+
+
+
                                     <!--end::Form-->
                                 </div>
                                 <!--end::Modal body-->
@@ -540,27 +554,27 @@ function approve(proid, status) {
     }
 }
 
-function rejectionreason(proid){
+function rejectionreason(proid) {
 
     $.ajax({
-                url: '/lead/rejectionreason/' +
-                proid, // The URL to send the AJAX request to
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
+        url: '/lead/rejectionreason/' +
+            proid, // The URL to send the AJAX request to
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
 
 
-                    $('#reasoncmt').text(data.reason);
-                    
-                    $('#rejectreason').modal('show');
+            $('#reasoncmt').text(data.reason);
+
+            $('#rejectreason').modal('show');
 
 
-                },
+        },
 
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText); // Log errors to console
-                }
-            });
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText); // Log errors to console
+        }
+    });
     //$('#rejectreason').modal('show');
 }
 </script>

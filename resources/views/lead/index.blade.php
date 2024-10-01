@@ -218,22 +218,23 @@
                                         <!--end::Menu-->
                                     </td>
                                 </tr>
-                                <tr>
                                 @if($pro->rejection_reason)
-                                                            <td colspan="6"><div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6">
-                                <!--begin::Wrapper-->
+                                <!--<tr>
+                                
+                                  <td colspan="6"><div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6">
+                               
                                 <div class="d-flex flex-stack flex-grow-1">
-                                    <!--begin::Content-->
+                                  
                                     <div class="fw-semibold">
                                         <h4 class="text-gray-900 fw-bold">Reason For Rejection</h4>
                                         <div class="fs-6 text-gray-700">{{$pro->rejection_reason}}
                                         </div>
                                     </div>
-                                    <!--end::Content-->
+                                   
                                 </div>
-                                <!--end::Wrapper-->
+                              
                             </div></td>
-                                                        </tr>
+                                                        </tr>-->
                                                         @endif
                                 @empty
                                 <tr>

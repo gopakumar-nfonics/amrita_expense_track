@@ -89,6 +89,7 @@
                                                         </span>
                                                         <!--end::Svg Icon-->Payment initiated
                                                     </span>
+                                                    
                                                     @else
                                                     <span class="badge badge-light-success fs-8">
                                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
@@ -97,15 +98,15 @@
                                                         </span>
                                                         <!--end::Svg Icon-->Payment Processed
                                                     </span>
-                                                    <!-- <div>
+                                                    <div>
                                                         <span class="text-muted fw-semibold text-muted d-block fs-7">UTR
                                                             :
-                                                            #</span>
+                                                            #{{$inv->proposal->utr_number}} </span>
                                                         <span
                                                             class="text-muted fw-semibold text-muted d-block fs-7">Date
                                                             :
-                                                        </span>
-                                                    </div> -->
+                                                            {{ \Carbon\Carbon::parse($inv->proposal->transaction_date)->format('d-M-Y') }}</span>
+                                                    </div>
                                                     @endif
                                                 </div>
                                             </div>

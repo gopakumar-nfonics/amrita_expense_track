@@ -171,7 +171,7 @@
                                                     <!--begin::Products-->
                                                     <tr>
                                                         <!--begin::Product-->
-                                                        <!--<td>
+                                                        <td>
                                                             <div class="d-flex align-items-center">
 
                                                                 
@@ -182,12 +182,12 @@
                                                                 </div>
                                                               
                                                             </div>
-                                                        </td>-->
+                                                        </td>
                                                         <!--end::Product-->
                                                         <!--begin::Date-->
-                                                        <td class="text-start">
+                                                        <!--<td class="text-start">
                                                             {{ \Carbon\Carbon::parse($milestone->milestone_date)->format('d-M-Y') }}
-                                                        </td>
+                                                        </td>-->
                                                         <!--end::SKU-->
                                                         <!--begin::SKU-->
                                                         <td class="text-end">&#x20b9;<span

@@ -24,7 +24,7 @@
             color: #009ef7;
         }
         </style>
-         <div id="#kt_app_body_content"
+        <div id="#kt_app_body_content"
             style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
             <div
                 style="background-color:#ffffff; padding: 20px 0 10px 0; border-radius: 15px; margin:40px auto; max-width: 600px;">
@@ -34,13 +34,14 @@
                     <tbody>
                         <tr>
                             <td align="center" valign="center" style="text-align:center; padding-bottom: 10px">
-                                
+
                                 <!--begin:Email content-->
                                 <div style="text-align:center; margin:0 15px 0px 15px">
                                     <!--begin:Logo-->
                                     <div style="margin-bottom: 40px; border-bottom:1px solid #ccc">
                                         <a href=" rel=" noopener" target="_blank">
-                                            <img alt="Logo" src="https://doabuet.amrita.edu/assets/media/logos/logo_purple.png"
+                                            <img alt="Logo"
+                                                src="https://doabuet.amrita.edu/assets/media/logos/logo_purple.png"
                                                 style="height: 75px" />
                                         </a>
                                     </div>
@@ -52,9 +53,34 @@
                                         <p
                                             style="margin-bottom:20px; color:#181C32; font-weight:700;text-align: left;margin-left: 10px;">
                                             Dear {{$details['name']}},</p>
-                                        <p style="margin-bottom:20px; color:#777;margin-top:20px;">Thank you for submitting your proposal for the {{$details['proposal_title']}}.</p>
-                                        <p style="margin-bottom:20px; color:#777">After careful review, we regret to inform you that your proposal has not been approved by our team. While we appreciate the effort and detail you put into your submission, it does not meet our current requirements.</p>
-                                        
+                                        <p style="margin-bottom:20px; color:#777;margin-top:20px;">Thank you for
+                                            submitting your proposal for the {{$details['proposal_title']}}. We
+                                            appreciate the time and effort you dedicated to your submission.</p>
+                                        <p style="margin-bottom:20px; color:#777">After careful consideration, we regret
+                                            to inform you that your proposal has not been approved at this time. While
+                                            we recognize the detail and effort you put into your work, it did not fully
+                                            align with our current requirements.</p>
+                                        <p style="margin-bottom:20px; color:#777">We would like to provide you with some
+                                            feedback that may help you in revising your proposal:</p>
+
+                                        <p style="margin-bottom:20px; color:#333">Lorem Ipsum is simply dummy text of
+                                            the printing and typesetting industry. Lorem Ipsum has been the industry's
+                                            standard dummy text ever since the 1500s, when an unknown printer took a
+                                            galley of type and scrambled it to make a type specimen book. It has
+                                            survived not only five centuries, but also the leap into electronic
+                                            typesetting, remaining essentially unchanged. It was popularised in the
+                                            1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+                                            and more recently with desktop publishing software like Aldus PageMaker
+                                            including versions of Lorem Ipsum</p>
+
+                                        <p style="margin-bottom:20px; color:#777">We highly value your expertise and
+                                            encourage you to address these comments and resubmit your proposal for our
+                                            consideration. We believe that with the necessary adjustments, your proposal
+                                            could better align with our needs.</p>
+                                        <p style="margin-bottom:20px; color:#777">Thank you once again for your
+                                            interest, and we look forward to your revised submission.
+                                        </p>
+
 
                                     </div>
                                     <!--end:Text-->

@@ -99,12 +99,21 @@
                                                         </span>
                                                         <!--end::Svg Icon-->Payment Processed
                                                     </span>
+                                                    <div>
+                                                        <span class="text-muted fw-semibold text-muted d-block fs-7">UTR
+                                                            :
+                                                            #{{$request->utr_number}} </span>
+                                                        <span
+                                                            class="text-muted fw-semibold text-muted d-block fs-7">Date
+                                                            :
+                                                            {{ \Carbon\Carbon::parse($request->transaction_date)->format('d-M-Y') }}</span>
+                                                    </div>
                                                     @elseif($request->payment_status == "initiated")
 
                                                     <span class="badge badge-light-warning fs-8">
                                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                                         <span class="svg-icon svg-icon-5 svg-icon-warning ms-n1">
-                                                            <i class="fa-solid fa-check light-green fs-8 me-1 "></i>
+                                                            <i class="fa-solid fa-spinner light-orange fs-8 me-2 "></i>
                                                         </span>
                                                         <!--end::Svg Icon-->Payment initiated
                                                     </span>
@@ -112,10 +121,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span
-                                            class="text-muted fw-semibold text-gray-800 d-block fs-7">UTR#:912345678912</span>
-                                        <span class="text-muted fw-semibold text-muted d-block fs-7">Payment Date :
-                                            {{ \Carbon\Carbon::parse($request->invoice->proposal->created_at)->format('d-M-Y') }}</span>
+
                                     </td>
 
                                     <td>
@@ -197,11 +203,18 @@
                                             data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                             <i class="fa-solid fa-angle-down"></i></a>
                                         <!--begin::Menu-->
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-150px py-4"
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-200px py-4"
                                             data-kt-menu="true">
 
 
                                             <!--begin::Menu item-->
+
+                                            @if(!Auth::user()->isvendor() && $request->payment_status == "initiated")
+                                            <div class="menu-item px-3">
+                                                <a href="#" onclick="updatepaymentstatus('{{$request->id}}');"
+                                                    class="menu-link px-3">Update Payment Status</a>
+                                            </div>
+                                            @endif
                                             <div class="menu-item px-3">
                                                 @php
                                                 $paymentrequest = 'PR_' . $request->payment_request_id.'.pdf';
@@ -213,12 +226,6 @@
                                                     Download PDF</a>
                                             </div>
 
-                                            @if(!Auth::user()->isvendor() && $request->payment_status == "initiated")
-                                            <div class="menu-item px-3">
-                                                <a href="#" onclick="updatepaymentstatus('{{$request->id}}');"
-                                                    class="menu-link px-3">Update Status</a>
-                                            </div>
-                                            @endif
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
                                                 <a href="" class="menu-link px-3"
@@ -273,7 +280,7 @@
                                 </div>
                                 <!--end::Modal header-->
                                 <!--begin::Modal body-->
-                                <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
+                                <div class="modal-body scroll-y m-5">
                                     <!--begin::Form-->
                                     <form id="update_pay_status" class="form fv-plugins-bootstrap5 fv-plugins-framework"
                                         action="#" method="POST">
@@ -297,7 +304,7 @@
                                         <div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container">
                                             <!--begin::Label-->
                                             <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
-                                                <span class="required">Date Of Transaction</span>
+                                                <span class="required">Transaction Date</span>
 
                                             </label>
                                             <!--end::Label-->
@@ -309,11 +316,11 @@
 
 
                                         <!--begin::Actions-->
-                                        <div class="text-center pt-15">
+                                        <div class="text-end pt-1 pb-3">
                                             <button type="reset" id="kt_modal_new_card_cancel"
                                                 class="btn btn-light me-3">Cancel</button>
                                             <button type="submit" id="kt_modal_new_card_submit" class="btn btn-primary">
-                                                <span class="indicator-label">Submit</span>
+                                                <span class="indicator-label">Update</span>
                                                 <span class="indicator-progress">Please wait...
                                                     <span
                                                         class="spinner-border spinner-border-sm align-middle ms-2"></span></span>

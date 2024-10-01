@@ -22,7 +22,7 @@
             @if (Auth::user()->isvendor())
             <div class="card-toolbar">
                 <a href="{{ route('lead.create') }}" class="btn btn-sm btn-primary">
-                    Create
+                    Create Proposal
                 </a>
             </div>
             @endif
@@ -45,9 +45,9 @@
                 <div class="card-body py-3">
                     <!--begin::Table container-->
                     <div class="table-responsive">
-                    <div class="overlay" id="loaderOverlay">
-                             <div class="loader"></div>
-                         </div>
+                        <div class="overlay" id="loaderOverlay">
+                            <div class="loader"></div>
+                        </div>
                         <!--begin::Table-->
                         <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
                             id="budgettable">
@@ -83,14 +83,18 @@
                                                             <i
                                                                 class="fa-regular fa-circle-dot color-blue fs-8 me-1 "></i>
                                                         </span>
-                                                        <!--end::Svg Icon-->Pending
+                                                        <!--end::Svg Icon-->Pending Review
                                                     </span>
                                                     @elseif($pro->proposal_status == 2)
-                                                    <span class="badge badge-danger fs-8">
+                                                    <span class="badge badge-light-danger fs-8 rejected-span"
+                                                        title="View Comments">
                                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-                                                        
-                                                        <!--end::Svg Icon-->Rejected
+
+                                                        <!--end::Svg Icon-->
+                                                        <i class="fa-solid fa-close color-red fs-8 me-2 "></i>Rejected
+
                                                     </span>
+
                                                     @else
                                                     <span class="badge badge-light-success fs-8">
                                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
@@ -124,7 +128,7 @@
                                         <div class="d-flex align-items-center">
 
                                             <div class="d-flex justify-content-start flex-column">
-                                            @php
+                                                @php
                                                 $releaseorder = 'RO_' . $pro->proposalro->proposal_ro.'.pdf';
                                                 $releaseorderPath = 'release_orders/' . $releaseorder;
                                                 $releaseorderUrl = asset('storage/' . $releaseorderPath);
@@ -196,7 +200,8 @@
                                             @endif
                                             @if(!Auth::user()->isvendor() && $pro->proposal_status ==0)
                                             <div class="menu-item px-3">
-                                                <a href="javascript:void(0)" onclick="rejectpropposal('{{$pro->id}}','rejected')"
+                                                <a href="javascript:void(0)"
+                                                    onclick="rejectpropposal('{{$pro->id}}','rejected')"
                                                     class="menu-link px-3">Reject</a>
                                             </div>
                                             @endif
@@ -204,7 +209,8 @@
                                             <!--begin::Menu item-->
                                             @if(Auth::user()->isvendor() && $pro->proposal_status ==0)
                                             <div class="menu-item px-3">
-                                                <a href="{{ route('lead.edit',$pro->id) }}" class="menu-link px-3">Edit</a>
+                                                <a href="{{ route('lead.edit',$pro->id) }}"
+                                                    class="menu-link px-3">Edit</a>
                                             </div>
                                             @endif
                                             <!--end::Menu item-->
@@ -235,7 +241,7 @@
                               
                             </div></td>
                                                         </tr>-->
-                                                        @endif
+                                @endif
                                 @empty
                                 <tr>
                                     <td colspan="4">No data found</td>
@@ -248,75 +254,76 @@
                     </div>
                     <!--end::Table container-->
                     <div class="modal fade" id="rejectproposal" tabindex="-1" aria-hidden="true">
-                <!--begin::Modal dialog-->
-                <div class="modal-dialog modal-dialog-centered mw-650px">
-                    <!--begin::Modal content-->
-                    <div class="modal-content">
-                        <!--begin::Modal header-->
-                        <div class="modal-header">
-                            <!--begin::Modal title-->
-                            <h2>Reject Proposal</h2>
-                            <!--end::Modal title-->
-                            <!--begin::Close-->
-                            <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
-                                <span class="svg-icon svg-icon-1">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
-                                            transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
-                                        <rect x="7.41422" y="6" width="16" height="2" rx="1"
-                                            transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon-->
-                            </div>
-                            <!--end::Close-->
-                        </div>
-                        <!--end::Modal header-->
-                        <!--begin::Modal body-->
-                        <div class="modal-body scroll-y mx-5 mx-xl-15 my-7">
-                            <!--begin::Form-->
-                            <form id="rejectproposal-form" class="form fv-plugins-bootstrap5 fv-plugins-framework"
-                                action="#" method="POST">
-                                <!--begin::Input group-->
-                                <div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container">
-                                    <!--begin::Label-->
-                                    <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
-                                        <span class="required">Reason</span>
-                                        
-                                    </label>
-                                    <!--end::Label-->
-                                    <input type="hidden" name="proposalid" id="proposalid" value="">
-                                    <textarea name="reason" id="reason" class="form-control form-control-solid" rows="5"></textarea>
-                                    <div class="fv-plugins-message-container invalid-feedback"></div>
+                        <!--begin::Modal dialog-->
+                        <div class="modal-dialog modal-dialog-centered mw-650px">
+                            <!--begin::Modal content-->
+                            <div class="modal-content">
+                                <!--begin::Modal header-->
+                                <div class="modal-header">
+                                    <!--begin::Modal title-->
+                                    <h2>Reject Proposal</h2>
+                                    <!--end::Modal title-->
+                                    <!--begin::Close-->
+                                    <div class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                                        <span class="svg-icon svg-icon-1">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                                    transform="rotate(-45 6 17.3137)" fill="currentColor"></rect>
+                                                <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                                    transform="rotate(45 7.41422 6)" fill="currentColor"></rect>
+                                            </svg>
+                                        </span>
+                                        <!--end::Svg Icon-->
+                                    </div>
+                                    <!--end::Close-->
                                 </div>
-                                <!--end::Input group-->
+                                <!--end::Modal header-->
+                                <!--begin::Modal body-->
+                                <div class="modal-body scroll-y">
+                                    <!--begin::Form-->
+                                    <form id="rejectproposal-form"
+                                        class="form fv-plugins-bootstrap5 fv-plugins-framework" action="#"
+                                        method="POST">
+                                        <!--begin::Input group-->
+                                        <div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container">
+                                            <!--begin::Label-->
+                                            <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
+                                                <span class="required">Rejection Comments</span>
 
-                                
-                                <!--begin::Actions-->
-                                <div class="text-center pt-15">
-                                    <button type="reset" id="kt_modal_new_card_cancel"
-                                        class="btn btn-light me-3">Cancel</button>
-                                    <button type="submit" id="kt_modal_new_card_submit" class="btn btn-primary">
-                                        <span class="indicator-label">Reject</span>
-                                        <span class="indicator-progress">Please wait...
-                                            <span
-                                                class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                                    </button>
+                                            </label>
+                                            <!--end::Label-->
+                                            <input type="hidden" name="proposalid" id="proposalid" value="">
+                                            <textarea name="reason" id="reason" class="form-control form-control-solid"
+                                                rows="5"></textarea>
+                                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                                        </div>
+                                        <!--end::Input group-->
+
+
+                                        <!--begin::Actions-->
+                                        <div class="text-end pt-1 pb-3">
+
+                                            <button type="submit" id="kt_modal_new_card_submit" class="btn btn-primary">
+                                                <span class="indicator-label">Reject Proposal</span>
+                                                <span class="indicator-progress">Please wait...
+                                                    <span
+                                                        class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                            </button>
+                                        </div>
+                                        <!--end::Actions-->
+                                    </form>
+                                    <!--end::Form-->
                                 </div>
-                                <!--end::Actions-->
-                            </form>
-                            <!--end::Form-->
+                                <!--end::Modal body-->
+                            </div>
+                            <!--end::Modal content-->
                         </div>
-                        <!--end::Modal body-->
+                        <!--end::Modal dialog-->
                     </div>
-                    <!--end::Modal content-->
-                </div>
-                <!--end::Modal dialog-->
-            </div>
-            <!--end::Modal - New Card-->
-            <!--end::Modals-->
+                    <!--end::Modal - New Card-->
+                    <!--end::Modals-->
                 </div>
                 <!--begin::Body-->
             </div>
@@ -340,143 +347,146 @@ $(document).ready(function() {
 </script>
 
 <script>
-function rejectpropposal(proid,status){
+function rejectpropposal(proid, status) {
 
     $('#rejectproposal').modal('show');
-        $('#proposalid').val(proid);
+    $('#proposalid').val(proid);
 }
 
-$(document).ready(function () {
-        $('#rejectproposal-form').on('submit', function (e) {
-            e.preventDefault(); // Prevent the default form submission
+$(document).ready(function() {
+    $('#rejectproposal-form').on('submit', function(e) {
+        e.preventDefault(); // Prevent the default form submission
 
-            // SweetAlert confirmation
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You want to reject this proposal?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Reject',
-                cancelButtonText: 'Cancel',
-                reverseButtons: true,
-                customClass: {
-            confirmButton: 'btn btn-primary',
-            cancelButton: 'btn' 
-        }
-            }).then((result) => {
-                if (result.isConfirmed) {
-
-                  
-                    let formData = {
-                        _token: '{{ csrf_token() }}', 
-                        reason: $('#reason').val(),
-                        proid: $('#proposalid').val(),
-                    };
-
-                    document.getElementById('loaderOverlay').style.display = 'flex';
-
-                    $.ajax({
-                        url: "{{ route('lead.reject') }}",  
-                        type: "POST",
-                        data: formData,
-                        success: function (response) {
-                            document.getElementById('loaderOverlay').style.display = 'none';
-                            if (response.success) {
-                                swal('The Proposal has been rejected!', {
-                                icon: "success",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
-                                
-                            } else {
-                                document.getElementById('loaderOverlay').style.display = 'none';
-                                swal('Failed to reject proposal', {
-                                icon: "warning",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
-                               
-                            }
-                        },
-                        error: function (xhr) {
-                            swal('An error occurred. Please try again', {
-                                icon: "Error",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
-                           
-                        }
-                    });
-                }
-            });
-        });
-    });
-
-function approve(proid,status) {
-  
-        if (status === 'approve') {
-    var title = 'Are you sure, you want to approve this proposal?';
-    var text = "Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.";
-       
+        // SweetAlert confirmation
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to reject this proposal?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Reject',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true,
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
 
 
-    swal({
-            title: title,
-            text: text,
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
+                let formData = {
+                    _token: '{{ csrf_token() }}',
+                    reason: $('#reason').val(),
+                    proid: $('#proposalid').val(),
+                };
+
                 document.getElementById('loaderOverlay').style.display = 'flex';
+
                 $.ajax({
-                    url: "{{ route('lead.approve') }}",
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: proid,
-                        status: status,
-                    },
+                    url: "{{ route('lead.reject') }}",
+                    type: "POST",
+                    data: formData,
                     success: function(response) {
-                        document.getElementById('loaderOverlay').style.display = 'none';
+                        document.getElementById('loaderOverlay').style.display =
+                            'none';
                         if (response.success) {
-                            swal(response.success, {
+                            swal('The Proposal has been rejected!', {
                                 icon: "success",
                                 buttons: false,
                             });
                             setTimeout(() => {
                                 location.reload();
                             }, 1000);
+
                         } else {
-                            swal(response.error || 'Something went wrong.', {
+                            document.getElementById('loaderOverlay').style.display =
+                                'none';
+                            swal('Failed to reject proposal', {
                                 icon: "warning",
                                 buttons: false,
                             });
                             setTimeout(() => {
                                 location.reload();
                             }, 1000);
+
                         }
                     },
                     error: function(xhr) {
-                        document.getElementById('loaderOverlay').style.display = 'none';
-                        swal('Error: Something went wrong.', {
-                            icon: "error",
-                        }).then(() => {
-                            location.reload();
+                        swal('An error occurred. Please try again', {
+                            icon: "Error",
+                            buttons: false,
                         });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+
                     }
                 });
             }
         });
+    });
+});
+
+function approve(proid, status) {
+
+    if (status === 'approve') {
+        var title = 'Are you sure, you want to approve this proposal?';
+        var text =
+            "Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.";
+
+
+
+        swal({
+                title: title,
+                text: text,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    document.getElementById('loaderOverlay').style.display = 'flex';
+                    $.ajax({
+                        url: "{{ route('lead.approve') }}",
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: proid,
+                            status: status,
+                        },
+                        success: function(response) {
+                            document.getElementById('loaderOverlay').style.display = 'none';
+                            if (response.success) {
+                                swal(response.success, {
+                                    icon: "success",
+                                    buttons: false,
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            } else {
+                                swal(response.error || 'Something went wrong.', {
+                                    icon: "warning",
+                                    buttons: false,
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            }
+                        },
+                        error: function(xhr) {
+                            document.getElementById('loaderOverlay').style.display = 'none';
+                            swal('Error: Something went wrong.', {
+                                icon: "error",
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                    });
+                }
+            });
     } else {
-    var title = 'Invalid status';
+        var title = 'Invalid status';
     }
 }
 </script>

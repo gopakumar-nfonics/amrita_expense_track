@@ -85,14 +85,11 @@
                                                     <span class="badge badge-light-warning fs-8">
                                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                                         <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
-                                                            <i
-                                                                class="fa-solid fa-list-check color-orange fs-8 me-1 "></i>
+                                                            <i class="fa-solid fa-spinner light-orange fs-8 me-2 "></i>
                                                         </span>
                                                         <!--end::Svg Icon-->Payment initiated
                                                     </span>
                                                     @else
-
-
                                                     <span class="badge badge-light-success fs-8">
                                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                                         <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
@@ -100,10 +97,20 @@
                                                         </span>
                                                         <!--end::Svg Icon-->Payment Processed
                                                     </span>
+                                                    <!-- <div>
+                                                        <span class="text-muted fw-semibold text-muted d-block fs-7">UTR
+                                                            :
+                                                            #</span>
+                                                        <span
+                                                            class="text-muted fw-semibold text-muted d-block fs-7">Date
+                                                            :
+                                                        </span>
+                                                    </div> -->
                                                     @endif
                                                 </div>
                                             </div>
                                         </div>
+
 
                                     <td>
                                         <div class="d-flex align-items-center">

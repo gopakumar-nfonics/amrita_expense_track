@@ -649,6 +649,10 @@ span#error-balance {
 {
 text-transform: uppercase;
 }
+.rejected-span
+{
+    cursor: pointer;
+}
 
 @keyframes spin {
     0% {

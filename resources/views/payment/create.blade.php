@@ -640,7 +640,7 @@ $('#kt_invoice_form').on('submit', function(e) {
     } else if (milestoneAmount > totalBudget) {
         text = 'Invoice amount exceeds the available balance. Do you want to process the payment?'
     } else {
-        text = 'Are you certain you want to proceed with the payment?'
+        text = 'Are you certain you want to generate the payment request?'
 
     }
 

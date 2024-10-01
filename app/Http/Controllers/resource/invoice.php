@@ -28,11 +28,13 @@ class invoice extends Controller
         if(Auth::user()->isvendor()){
             $userId = Auth::user()->id;
             $vendor = Vendor::where('user_id', $userId)->first();
-            $invoices = Invoices::with(['milestone', 'vendor', 'proposalro'])->where('vendor_id', $vendor->id)->orderBy('id')->get();
+            $invoices = Invoices::with(['milestone', 'vendor', 'proposalro','paymentRequests'])->where('vendor_id', $vendor->id)->orderBy('id')->get();
             
             }else{
-              $invoices = Invoices::with(['milestone', 'vendor', 'proposalro'])->orderBy('id')->get();
+              $invoices = Invoices::with(['milestone', 'vendor', 'proposalro','paymentRequests'])->orderBy('id')->get();
             }
+
+            //print_r( $invoices);exit();
 
         return view('invoice.index',compact('invoices'));
     }

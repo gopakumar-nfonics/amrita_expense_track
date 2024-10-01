@@ -101,11 +101,11 @@
                                                     <div>
                                                         <span class="text-muted fw-semibold text-muted d-block fs-7">UTR
                                                             :
-                                                            #{{$inv->proposal->utr_number}} </span>
+                                                            #{{$inv->paymentRequests->utr_number}} </span>
                                                         <span
                                                             class="text-muted fw-semibold text-muted d-block fs-7">Date
                                                             :
-                                                            {{ \Carbon\Carbon::parse($inv->proposal->transaction_date)->format('d-M-Y') }}</span>
+                                                            {{ \Carbon\Carbon::parse($inv->paymentRequests->transaction_date)->format('d-M-Y') }}</span>
                                                     </div>
                                                     @endif
                                                 </div>

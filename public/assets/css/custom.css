@@ -74,6 +74,11 @@ border-bottom: 1px solid var(--kt-primary) !important;
     
 }
 
+.color-white
+{
+    color: #fff !important;
+    
+}
 
 .bg-green
 {
@@ -240,6 +245,10 @@ border-bottom: 1px solid var(--kt-primary) !important;
 .br-1e
 {
     border-right: 1px solid #eff2f5 !important;
+}
+.br-0
+{
+    border:none !important;
 }
 
 #examscheduletable.gs-0 td:first-child
@@ -446,6 +455,9 @@ button.btn-close:hover{
 { 
     color: #50cd89 !important;
 
+}
+.light-orange {
+    color: #FFC107 !important;
 }
 .table td
 {

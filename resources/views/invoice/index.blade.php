@@ -22,7 +22,7 @@
             @if (Auth::user()->isvendor())
             <div class="card-toolbar">
                 <a href="{{ route('invoice.create') }}" class="btn btn-sm btn-primary">
-                    Create
+                    Submit Invoice
                 </a>
             </div>
             @endif
@@ -80,13 +80,13 @@
                                                         </span>
                                                         <!--end::Svg Icon-->Payment Pending
                                                     </span>
-                                                  
+
                                                     @elseif($inv->invoice_status == 2)
-                                                    <span class="badge badge-light-info fs-8">
+                                                    <span class="badge badge-light-warning fs-8">
                                                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                                         <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
                                                             <i
-                                                                class="fa-regular fa-circle-dot color-blue fs-8 me-1 "></i>
+                                                                class="fa-solid fa-list-check color-orange fs-8 me-1 "></i>
                                                         </span>
                                                         <!--end::Svg Icon-->Payment initiated
                                                     </span>
@@ -110,7 +110,10 @@
 
                                             <div class="d-flex justify-content-start flex-column">
                                                 <a href="{{ route('invoice.show',$inv->id) }}"
-                                                    class="text-dark fw-bold text-hover-primary fs-6">{{$inv->milestone->milestone_title}} | {{$inv->proposal->proposal_title}}</a>
+                                                    class="text-dark fw-bold text-hover-primary fs-6">{{$inv->milestone->milestone_title}}
+                                                </a>
+                                                <span
+                                                    class="text-muted fw-semibold text-gray-800 d-block fs-7">{{$inv->proposal->proposal_title}}</span>
                                                 <span class="text-muted fw-semibold text-muted d-block fs-7">Submitted
                                                     On :
                                                     {{ \Carbon\Carbon::parse($inv->created_at)->format('d-M-Y') }}</span>
@@ -121,7 +124,7 @@
                                         <div class="d-flex align-items-center">
 
                                             <div class="d-flex justify-content-start flex-column">
-                                            @php
+                                                @php
                                                 $releaseorder = 'RO_' . $inv->proposalro->proposal_ro.'.pdf';
                                                 $releaseorderPath = 'release_orders/' . $releaseorder;
                                                 $releaseorderUrl = asset('storage/' . $releaseorderPath);

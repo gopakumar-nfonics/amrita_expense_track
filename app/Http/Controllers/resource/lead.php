@@ -475,6 +475,7 @@ class lead extends Controller
             $detailsproposal = [
                 'name' => $vendor->vendor_name,
                 'proposal_title' => $proposal->proposal_title,
+                'rejection_reason' => $proposal->rejection_reason,
                 
             ];
 

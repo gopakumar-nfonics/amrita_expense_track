@@ -626,6 +626,10 @@ div#swal2-html-container {
     vertical-align: super;
 }
 
+.table-responsive table td
+{
+    vertical-align: top !important;
+}
 .h-300
 {
     min-height: 300px;

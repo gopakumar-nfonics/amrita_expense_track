@@ -54,11 +54,11 @@
                                 <tr class="fw-bold">
                                     <th class="min-w-100px">ID</th>
                                     <th class="min-w-200px">Vendor</th>
-                                    <th class="min-w-100px">Proposal</th>
+                                    <th class="min-w-200px">Proposal & Category</th>
                                     <th class="min-w-100px">RO#</th>
                                     <th class="min-w-100px">Invoice</th>
                                     <th class="min-w-100px">Amount</th>
-                                    <th class="min-w-150px text-center">Actions</th>
+                                    <th class="min-w-50px text-center">Actions</th>
                                 </tr>
                             </thead>
                             <!--end::Table head-->
@@ -150,6 +150,13 @@
                                                     On :
                                                     {{ \Carbon\Carbon::parse($request->invoice->proposal->created_at)->format('d-M-Y') }}
 
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="fw-400 d-block fs-6">
+                                                Train Ticket | Travel
+                                                <span class="d-flex justify-content-start fw-semibold fs-7">MCA
                                                 </span>
                                             </div>
                                         </div>

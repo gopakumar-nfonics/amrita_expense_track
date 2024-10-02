@@ -9,6 +9,7 @@
             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                 <!--begin::Title-->
                 <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Payment
+                    Request
                     Listing</h1>
                 <!--end::Title-->
                 <!--begin::Breadcrumb-->
@@ -53,12 +54,14 @@
                             <thead>
                                 <tr class="fw-bold">
                                     <th class="min-w-100px">ID</th>
-                                    <th class="min-w-200px">Vendor</th>
-                                    <th class="min-w-200px">Proposal & Category</th>
-                                    <th class="min-w-100px">RO#</th>
-                                    <th class="min-w-100px">Invoice</th>
+                                    <th class="min-w-250px">Invoice & Proposal</th>
+
+
+                                    <th class="min-w-200px">Category & Program</th>
+
+
                                     <th class="min-w-100px">Amount</th>
-                                    <th class="min-w-50px text-center">Actions</th>
+                                    <th class="min-w-100px text-center">Actions</th>
                                 </tr>
                             </thead>
                             <!--end::Table head-->
@@ -100,11 +103,11 @@
                                                         <!--end::Svg Icon-->Payment Processed
                                                     </span>
                                                     <div>
-                                                        <span class="text-muted fw-semibold text-muted d-block fs-7">UTR
+                                                        <span class="text-muted fw-semibold text-muted d-block fs-8">UTR
                                                             :
                                                             #{{$request->utr_number}} </span>
                                                         <span
-                                                            class="text-muted fw-semibold text-muted d-block fs-7">Date
+                                                            class="text-muted fw-semibold text-muted d-block fs-8">Date
                                                             :
                                                             {{ \Carbon\Carbon::parse($request->transaction_date)->format('d-M-Y') }}</span>
                                                     </div>
@@ -123,36 +126,49 @@
                                         </div>
 
                                     </td>
-
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-35px me-2">
-                                                <span class="symbol-label bg-blue text-white">
-                                                    {{strtoupper($request->invoice->vendor->vendor_name[0])}}{{strtoupper($request->invoice->vendor->vendor_name[1])}}</span>
-
-                                            </div>
-                                            <div class="d-flex justify-content-start flex-column">
-                                                <a href="{{ route('vendor.show',$request->invoice->vendor->id) }}"
-                                                    class="text-dark fw-bold text-hover-primary fs-6">{{$request->invoice->vendor->vendor_name}}</a>
-                                                <span
-                                                    class="text-muted fw-semibold text-muted d-block fs-7">{{$request->invoice->vendor->phone}}</span>
-                                            </div>
-                                        </div>
-                                    </td>
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
-                                                <a href="{{ route('lead.show',$request->invoice->proposal->id) }}"
-                                                    class="text-dark fw-bold  text-hover-primary fs-6">
-                                                    {{$request->invoice->proposal->proposal_title}}</a>
-                                                <span
-                                                    class="d-flex justify-content-start text-muted fw-semibold text-muted d-block fs-7">Submitted
-                                                    On :
-                                                    {{ \Carbon\Carbon::parse($request->invoice->proposal->created_at)->format('d-M-Y') }}
+                                                <a href="{{ route('invoice.show',$request->invoice->id) }}"
+                                                    class="text-dark text-hover-primary fs-6 fw-bold ">
+                                                    {{$request->invoice->invoice_id}} |
+                                                    {{$request->invoice->milestone->milestone_title}}
+                                                </a>
 
-                                                </span>
+                                                <div class="d-flex justify-content-start flex-column">
+                                                    @php
+                                                    $releaseorder = 'RO_' .
+                                                    $request->invoice->proposalro->proposal_ro.'.pdf';
+                                                    $releaseorderPath = 'release_orders/' . $releaseorder;
+                                                    $releaseorderUrl = asset('storage/' . $releaseorderPath);
+                                                    @endphp
+                                                    <a href="{{ $releaseorderUrl }}" download="{{ $releaseorder }}"
+                                                        class="text-dark fw-bold text-muted text-hover-primary fs-8">RO#:{{$request->invoice->proposalro->proposal_ro}}</a>
+
+                                                </div>
+
                                             </div>
                                         </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="fw-400 d-block fs-6">
+                                                <a href="{{ route('lead.show',$request->invoice->proposal->id) }}"
+                                                    class="text-dark fw-bold text-muted text-hover-primary fs-8">
+                                                    {{$request->invoice->proposal->proposal_title}}</a>
+
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="d-flex justify-content-start flex-column">
+                                                <a href="{{ route('vendor.show',$request->invoice->vendor->id) }}"
+                                                    class="text-dark fw-bold text-muted text-hover-primary fs-8">{{$request->invoice->vendor->vendor_name}}</a>
+
+                                            </div>
+                                        </div>
+                                    </td>
+
+
+                                    <td>
+
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
                                                 @if($request->category->parent){{$request->category->parent->category_name}}@else{{$request->category->category_name}}@endif
@@ -164,38 +180,8 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
 
-                                        <div class="d-flex align-items-center">
 
-                                            <div class="d-flex justify-content-start flex-column">
-                                                @php
-                                                $releaseorder = 'RO_' .
-                                                $request->invoice->proposalro->proposal_ro.'.pdf';
-                                                $releaseorderPath = 'release_orders/' . $releaseorder;
-                                                $releaseorderUrl = asset('storage/' . $releaseorderPath);
-                                                @endphp
-                                                <a href="{{ $releaseorderUrl }}" download="{{ $releaseorder }}"
-                                                    class="text-dark fw-bold text-hover-primary fs-6">{{$request->invoice->proposalro->proposal_ro}}</a>
-                                                <span class="text-muted fw-semibold text-muted d-block fs-7">Issued On :
-                                                    {{ \Carbon\Carbon::parse($request->invoice->proposalro->created_at)->format('d-M-Y') }}</span>
-                                            </div>
-                                        </div>
-
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="fw-400 d-block fs-6">
-                                                <a href="{{ route('invoice.show',$request->invoice->id) }}"
-                                                    class="text-dark text-hover-primary fs-6 fw-bold ">
-                                                    {{$request->invoice->milestone->milestone_title}} |
-                                                    {{$request->invoice->invoice_id}}</a>
-                                                <span class="text-muted fw-semibold text-muted d-block fs-7">Submitted
-                                                    On :
-                                                    {{ \Carbon\Carbon::parse($request->invoice->created_at)->format('d-M-Y') }}</span>
-                                            </div>
-                                        </div>
-                                    </td>
 
 
                                     <td>

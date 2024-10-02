@@ -52,7 +52,7 @@
                             <thead>
                                 <tr class="fw-bold">
                                     <th class="min-w-100px">ID</th>
-                                    <th class="min-w-200px">Invoice</th>
+                                    <th class="min-w-200px">Invoice Title</th>
                                     <th class="min-w-100px">RO #</th>
                                     @if(!Auth::user()->isvendor())
                                     <th class="min-w-200px">Vendor</th>
@@ -99,11 +99,11 @@
                                                         <!--end::Svg Icon-->Payment Processed
                                                     </span>
                                                     <div>
-                                                        <span class="text-muted fw-semibold text-muted d-block fs-7">UTR
+                                                        <span class="text-muted fw-semibold text-muted d-block fs-8">UTR
                                                             :
                                                             #{{$inv->paymentRequests->utr_number}} </span>
                                                         <span
-                                                            class="text-muted fw-semibold text-muted d-block fs-7">Date
+                                                            class="text-muted fw-semibold text-muted d-block fs-8">Date
                                                             :
                                                             {{ \Carbon\Carbon::parse($inv->paymentRequests->transaction_date)->format('d-M-Y') }}</span>
                                                     </div>
@@ -121,8 +121,8 @@
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$inv->milestone->milestone_title}}
                                                 </a>
                                                 <span
-                                                    class="text-muted fw-semibold text-gray-800 d-block fs-7">{{$inv->proposal->proposal_title}}</span>
-                                                <span class="text-muted fw-semibold text-muted d-block fs-7">Submitted
+                                                    class="text-muted fw-semibold text-muted d-block fs-7">{{$inv->proposal->proposal_title}}</span>
+                                                <span class="text-muted fw-semibold text-muted d-block fs-8">Submitted
                                                     On :
                                                     {{ \Carbon\Carbon::parse($inv->created_at)->format('d-M-Y') }}</span>
                                             </div>
@@ -141,7 +141,7 @@
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$inv->proposalro->proposal_ro}}</a>
 
 
-                                                <span class="text-muted fw-semibold text-muted d-block fs-7">Issued On :
+                                                <span class="text-muted fw-semibold text-muted d-block fs-8">Issued On :
                                                     {{ \Carbon\Carbon::parse($inv->proposalro->created_at)->format('d-M-Y') }}</span>
                                             </div>
                                         </div>
@@ -150,17 +150,13 @@
                                     <td>
 
                                         <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-35px me-2">
-                                                <span
-                                                    class="symbol-label bg-blue text-white">{{$inv->vendor->vendor_name[0]}}{{$inv->vendor->vendor_name[1]}}</span>
 
-                                            </div>
                                             <div class="d-flex justify-content-start flex-column">
                                                 <a href="{{ route('vendor.show',$inv->vendor->id) }}"
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$inv->vendor->vendor_name}}
                                                 </a>
                                                 <span
-                                                    class="text-muted fw-semibold text-muted d-block fs-7">{{$inv->vendor->phone}}</span>
+                                                    class="text-muted fw-semibold text-muted d-block fs-8">{{$inv->vendor->phone}}</span>
                                             </div>
                                         </div>
 

@@ -63,11 +63,15 @@
                                         <p style="margin-bottom:20px; color:#777">We would like to provide you with some
                                             feedback that may help you in revising your proposal:</p>
 
-                                        <p style="margin-bottom:20px; color:#333">{{$details['rejection_reason']}}</p>
+                                        <p
+                                            style="margin: 20px;color: #333;padding: 15px;border: 1px dashed #f1416c;background: #fff5f8;border-radius: 4px;">
+                                            {{$details['rejection_reason']}}</p>
 
                                         <p style="margin-bottom:20px; color:#777">We highly value your expertise and
-                                            encourage you to address these comments and resubmit your proposal for our
-                                            consideration. We believe that with the necessary adjustments, your proposal
+                                            encourage you to address these comments and resubmit your proposal for
+                                            our
+                                            consideration. We believe that with the necessary adjustments, your
+                                            proposal
                                             could better align with our needs.</p>
                                         <p style="margin-bottom:20px; color:#777">Thank you once again for your
                                             interest, and we look forward to your revised submission.

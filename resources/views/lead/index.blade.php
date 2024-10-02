@@ -55,7 +55,7 @@
                             <thead>
                                 <tr class="fw-bold">
                                     <th class="min-w-100px">ID</th>
-                                    <th class="min-w-200px">Title</th>
+                                    <th class="min-w-200px">Proposal Title</th>
                                     <th class="min-w-100px">RO #</th>
                                     @if(!Auth::user()->isvendor())
                                     <th class="min-w-200px">Vendor</th>
@@ -123,9 +123,9 @@
 
                                             <div class="d-flex justify-content-start flex-column">
                                                 <a href="{{ route('lead.show',$pro->id) }}"
-                                                    class="text-dark fw-bold text-hover-primary fs-6 color-blue txt-capitalcase">{{$pro->proposal_title}}</a>
+                                                    class="text-dark fw-bold text-hover-primary fs-6  txt-capitalcase">{{$pro->proposal_title}}</a>
                                                 <span
-                                                    class="d-flex justify-content-start text-muted fw-semibold text-muted d-block fs-7">Submitted
+                                                    class="d-flex justify-content-start text-muted fw-semibold text-muted d-block fs-8">Submitted
                                                     On :
                                                     {{ \Carbon\Carbon::parse($pro->created_at)->format('d-M-Y') }}
 
@@ -145,7 +145,7 @@
                                                 @endphp
                                                 <a href="{{ $releaseorderUrl }}" download="{{ $releaseorder }}"
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$pro->proposalro->proposal_ro}}</a>
-                                                <span class="text-muted fw-semibold text-muted d-block fs-7">Issued On :
+                                                <span class="text-muted fw-semibold text-muted d-block fs-8">Issued On :
                                                     {{ \Carbon\Carbon::parse($pro->proposalro->created_at)->format('d-M-Y') }}</span>
                                             </div>
                                         </div>
@@ -156,18 +156,15 @@
                                     @if(!Auth::user()->isvendor())
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-35px me-2">
 
-                                                <span class="symbol-label bg-blue text-white">
-                                                    {{$pro->vendor->vendor_name[0]}}{{$pro->vendor->vendor_name[1]}}</span>
-
-                                            </div>
                                             <div class="d-flex justify-content-start flex-column">
                                                 <a href="{{ route('vendor.show',$pro->vendor->id) }}"
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$pro->vendor->vendor_name}}
                                                 </a>
-                                                <span
-                                                    class="text-muted fw-semibold text-muted d-block fs-7">{{$pro->vendor->phone}}</span>
+                                                <span class="text-muted fw-semibold text-muted d-block fs-8">
+                                                    <i
+                                                        class="fa-regular fa-envelope fs-8 me-1"></i>{{$pro->vendor->email}}</span>
+
                                             </div>
                                         </div>
                                     </td>

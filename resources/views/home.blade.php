@@ -97,7 +97,7 @@
                                         <div class="d-flex align-items-center flex-wrap w-100">
                                             <!--begin::Title-->
                                             <div class="mb-1 pe-3 flex-grow-1 w-100">
-                                                <a href="#" class="fs-7 text-gray-800 text-hover-primary fw-bold">
+                                                <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-bold">
                                                     {{$budget->category->category_name}}
                                                 </a>
                                             </div>
@@ -111,7 +111,7 @@
                                                     </span>
                                                     <!--end::Svg Icon--> {{$allocatedPercentage}}
                                                 </span>
-                                                <div class="fw-bold fs-7 text-gray-500 ms-auto">
+                                                <div class="fw-bold fs-6 text-gray-500 ms-auto">
                                                     &#x20b9;{{ number_format($budget->total_amount, 2) }}
                                                 </div>
                                             </div>
@@ -199,7 +199,7 @@
                                             <!--begin::Title-->
                                             <div class="mb-1 pe-3 w-100">
                                                 <a href="#"
-                                                    class="fs-7 text-gray-800 text-hover-primary fw-bold">{{ $result['parent_category_name'] }}</a>
+                                                    class="fs-6 text-gray-800 text-hover-primary fw-bold">{{ $result['parent_category_name'] }}</a>
                                             </div>
                                             <!--end::Title-->
                                             <!--begin::Label-->
@@ -215,7 +215,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="fw-bold fs-7 text-gray-500 ms-auto">
+                                                <div class="fw-bold fs-6 text-gray-500 ms-auto">
                                                     &#x20b9;{{ number_format($result['total_milestone_amount'], 2) }}
                                                 </div>
                                             </div>

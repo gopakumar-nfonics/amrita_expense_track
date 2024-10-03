@@ -92,7 +92,7 @@
                                 <!--begin:Menu item-->
                                 <div class="menu-item me-7">
                                     <!--begin:Menu link-->
-                                    <a class="menu-link" href="">
+                                    <a class="menu-link" href="{{ route('support.center') }}">
 
                                         <span class="menu-icon color-blue me-1">
                                             <i class="fa-solid fa-tv f-15 p-0 color-blue"></i>

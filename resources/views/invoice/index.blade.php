@@ -87,7 +87,7 @@
                                                         <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
                                                             <i class="fa-solid fa-spinner light-orange fs-8 me-2 "></i>
                                                         </span>
-                                                        <!--end::Svg Icon-->Payment initiated
+                                                        <!--end::Svg Icon-->Payment Initiated
                                                     </span>
 
                                                     @else

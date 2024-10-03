@@ -665,6 +665,22 @@ text-transform: uppercase;
 text#SvgjsText1015 {
     font-size: 25px !important;
 }
+
+.video-tile {
+    background: #f3f6f8;
+    padding: 20px 20px 20px;
+    border-radius: 6px;
+    align-items: center;
+  max-width: 320px;
+}
+.video-tile .description
+{
+    width: 100%;
+}
+video {
+    border-radius: 2px;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);

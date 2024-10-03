@@ -661,6 +661,10 @@ text-transform: uppercase;
 #reasoncmt {
     font-size: 15px;
 }
+
+text#SvgjsText1015 {
+    font-size: 25px !important;
+}
 @keyframes spin {
     0% {
         transform: rotate(0deg);

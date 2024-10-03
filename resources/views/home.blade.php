@@ -40,7 +40,7 @@
                             <!--begin::Body-->
                             <div class="card-body p-0">
                                 <!--begin::Header-->
-                                <div class="px-9 pt-7 card-rounded h-275px w-100 bg-blue">
+                                <div class="px-9 pt-7 card-rounded h-250px w-100 bg-blue">
                                     <!--begin::Heading-->
                                     <div class="d-flex flex-stack">
                                         <h3 class="m-0 text-white fw-bold fs-3">Allocation</h3>
@@ -51,14 +51,14 @@
                                     <div class="d-flex text-center flex-column text-white pt-8">
                                         <span class="fw-semibold fs-7">Budget Allocated</span>
                                         <span
-                                            class="fw-bold fs-2x pt-1">&#x20b9;{{ number_format($budgettotalAmount, 2) }}</span>
+                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format($budgettotalAmount, 2) }}</span>
                                     </div>
                                     <!--end::Balance-->
                                 </div>
                                 <!--end::Header-->
                                 <!--begin::Items-->
-                                <div class="bg-body shadow-sm card-rounded mx-9 mb-9 px-6 py-9 pb-5 position-relative z-index-1 h-300"
-                                    style="margin-top: -110px">
+                                <div class="bg-body shadow-sm card-rounded mx-9 mb-9 px-6 py-9 pb-0 position-relative z-index-1 h-300"
+                                    style="margin-top: -100px">
                                     @foreach($categoryWiseBudgets as $budget)
                                     @php
                                     $allocatedPercentage = $budgettotalAmount > 0 ? ($budget->total_amount /
@@ -85,41 +85,39 @@
                                     <!--begin::Item-->
                                     <div class="d-flex align-items-center mb-6">
                                         <!--begin::Symbol-->
-                                        <div class="symbol symbol-45px w-40px me-5">
+                                        <!-- <div class="symbol symbol-45px w-40px me-5">
                                             <span class="symbol-label bg-lighten">
-                                                <!--begin::Svg Icon | path: icons/duotune/maps/map004.svg-->
                                                 <span class="svg-icon svg-icon-1">
                                                     {{$output}}
                                                 </span>
-                                                <!--end::Svg Icon-->
                                             </span>
-                                        </div>
+                                        </div> -->
                                         <!--end::Symbol-->
                                         <!--begin::Description-->
                                         <div class="d-flex align-items-center flex-wrap w-100">
                                             <!--begin::Title-->
-                                            <div class="mb-1 pe-3 flex-grow-1">
-                                                <a href="#"
-                                                    class="fs-5 text-gray-800 text-hover-primary fw-bold">{{$budget->category->category_name }}</a>
-                                                <div class="text-gray-400 fw-semibold fs-7">
-                                                    <span class="badge badge-light-success fs-base">
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-                                                        <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
-                                                            <i class="fa-solid fa-arrow-up light-green fs-8 me-1 "></i>
-                                                        </span>
-                                                        <!--end::Svg Icon-->{{$allocatedPercentage }}
-                                                    </span>
-                                                </div>
+                                            <div class="mb-1 pe-3 flex-grow-1 w-100">
+                                                <a href="#" class="fs-7 text-gray-800 text-hover-primary fw-bold">
+                                                    {{$budget->category->category_name}}
+                                                </a>
                                             </div>
                                             <!--end::Title-->
                                             <!--begin::Label-->
-                                            <div class="d-flex align-items-center">
-                                                <div class="fw-bold fs-5 text-gray-800 pe-1">
-                                                    &#x20b9;{{ number_format($budget->total_amount, 2) }}</div>
-
+                                            <div class="d-flex w-100 align-items-center">
+                                                <span class="badge badge-light-success fs-9 w-60px">
+                                                    <!--begin::Svg Icon-->
+                                                    <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+                                                        <i class="fa-solid fa-arrow-up light-green fs-9 me-1"></i>
+                                                    </span>
+                                                    <!--end::Svg Icon--> {{$allocatedPercentage}}
+                                                </span>
+                                                <div class="fw-bold fs-7 text-gray-500 ms-auto">
+                                                    &#x20b9;{{ number_format($budget->total_amount, 2) }}
+                                                </div>
                                             </div>
                                             <!--end::Label-->
                                         </div>
+
                                         <!--end::Description-->
                                     </div>
                                     <!--end::Item-->
@@ -139,7 +137,7 @@
                             <!--begin::Body-->
                             <div class="card-body p-0">
                                 <!--begin::Header-->
-                                <div class="px-9 pt-7 card-rounded h-275px w-100 bg-danger">
+                                <div class="px-9 pt-7 card-rounded h-250px w-100 bg-danger">
                                     <!--begin::Heading-->
                                     <div class="d-flex flex-stack">
                                         <h3 class="m-0 text-white fw-bold fs-3">Usage</h3>
@@ -150,14 +148,14 @@
                                     <div class="d-flex text-center flex-column text-white pt-8">
                                         <span class="fw-semibold fs-7">Budget Used</span>
                                         <span
-                                            class="fw-bold fs-2x pt-1">&#x20b9;{{ number_format($totalPaidAmount, 2) }}</span>
+                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format($totalPaidAmount, 2) }}</span>
                                     </div>
                                     <!--end::Balance-->
                                 </div>
                                 <!--end::Header-->
                                 <!--begin::Items-->
-                                <div class="bg-body shadow-sm card-rounded mx-9 mb-9 px-6 py-9 pb-5 position-relative z-index-1 h-300"
-                                    style="margin-top: -110px">
+                                <div class="bg-body shadow-sm card-rounded mx-9 mb-9 px-6 py-9 pb-0 position-relative z-index-1 h-300"
+                                    style="margin-top: -100px">
                                     <!--begin::Item-->
                                     @foreach($categorybudgetused as $result)
 
@@ -196,50 +194,34 @@
                                     }
                                     @endphp
                                     <div class="d-flex align-items-center mb-6">
-                                        <!--begin::Symbol-->
-                                        <div class="symbol symbol-45px w-40px me-5">
-                                            <span class="symbol-label bg-lighten">
-                                                <!--begin::Svg Icon | path: icons/duotune/maps/map004.svg-->
-                                                <span class="svg-icon svg-icon-1">
-                                                    {{$boutput}}
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </span>
-                                        </div>
-                                        <!--end::Symbol-->
-                                        <!--begin::Description-->
+
                                         <div class="d-flex align-items-center flex-wrap w-100">
                                             <!--begin::Title-->
-                                            <div class="mb-1 pe-3 flex-grow-1">
+                                            <div class="mb-1 pe-3 w-100">
                                                 <a href="#"
-                                                    class="fs-5 text-gray-800 text-hover-primary fw-bold">{{ $result['parent_category_name'] }}</a>
-                                                <div class="text-gray-400 fw-semibold fs-7">
-                                                    <div class="d-flex flex-column w-100 me-2">
-                                                        <span
-                                                            class="text-muted me-2 fs-8 fw-bold">{{ number_format($catpaidPercentage, 2) }}%</span>
-
-                                                        <div class="progress h-4px w-150px p-0 m-0">
-
-                                                            <div class="progress-bar {{$catprogressBarClass}}"
-                                                                role="progressbar"
-                                                                style="width: {{ floor($catpaidPercentage) }}%"
-                                                                aria-valuenow="80" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    class="fs-7 text-gray-800 text-hover-primary fw-bold">{{ $result['parent_category_name'] }}</a>
                                             </div>
                                             <!--end::Title-->
                                             <!--begin::Label-->
-                                            <div class="d-flex align-items-center">
-                                                <div class="fw-bold fs-5 text-gray-800 pe-1">
+                                            <div class="d-flex align-items-center w-100">
+                                                <div class="d-flex flex-column flex-grow-1 me-2">
+                                                    <span
+                                                        class="text-muted me-2 fs-9 fw-bold">{{ number_format($catpaidPercentage, 2) }}%</span>
+                                                    <div class="progress h-4px w-50px p-0 m-0">
+                                                        <div class="progress-bar {{$catprogressBarClass}}"
+                                                            role="progressbar"
+                                                            style="width: {{ floor($catpaidPercentage) }}%"
+                                                            aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="fw-bold fs-7 text-gray-500 ms-auto">
                                                     &#x20b9;{{ number_format($result['total_milestone_amount'], 2) }}
                                                 </div>
-
                                             </div>
                                             <!--end::Label-->
                                         </div>
-                                        <!--end::Description-->
+
                                     </div>
                                     <!--end::Item-->
                                     @endforeach
@@ -259,7 +241,7 @@
                             <!--begin::Body-->
                             <div class="card-body p-0">
                                 <!--begin::Header-->
-                                <div class="px-9 pt-7 card-rounded h-275px w-100 bg-success">
+                                <div class="px-9 pt-7 card-rounded h-250px w-100 bg-success">
                                     <!--begin::Heading-->
                                     <div class="d-flex flex-stack">
                                         <h3 class="m-0 text-white fw-bold fs-3">Balance</h3>
@@ -270,18 +252,18 @@
                                     <div class="d-flex text-center flex-column text-white pt-8">
                                         <span class="fw-semibold fs-7">Remaning Budget</span>
                                         <span
-                                            class="fw-bold fs-2x pt-1">&#x20b9;{{ number_format($remainingBudget, 2) }}</span>
+                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format($remainingBudget, 2) }}</span>
                                     </div>
                                     <!--end::Balance-->
                                 </div>
                                 <!--end::Header-->
                                 <!--begin::Items-->
                                 <div class="bg-body shadow-sm card-rounded mx-9 mb-9 px-6 py-9 position-relative z-index-1 h-300"
-                                    style="margin-top: -110px">
+                                    style="margin-top: -100px">
                                     <div class="card-body d-flex flex-column  py-0">
                                         <div class="flex-grow-1">
                                             <div class="budgetused" data-kt-chart-color="success"
-                                                style="height: 200px; min-height: 178.7px;" id="usedPercentageChart">
+                                                style="height: 180px; min-height: 178.7px;" id="usedPercentageChart">
                                                 <!-- <div id="apexchartsjqk2il5bi" class="apexcharts-canvas apexchartsjqk2il5bi apexcharts-theme-light" style="width: 344px; height: 178.7px;">
 																<div class="apexcharts-legend"></div>
 															</div> -->
@@ -392,10 +374,10 @@
                                                     </div>
                                                     <div class="d-flex justify-content-start flex-column">
                                                         <a href="{{ route('vendor.show',$vendor->id) }}"
-                                                            class="text-dark fw-bold text-hover-primary fs-6">{{strtoupper($vendor->vendor_name)}}</a>
+                                                            class="text-dark fw-bold text-hover-primary fs-7">{{strtoupper($vendor->vendor_name)}}</a>
 
                                                         <span
-                                                            class="fw-semibold d-block fs-7">{{ $vendor->company->company_name ?? '' }}</span>
+                                                            class="fw-semibold d-block text-gray-600 fs-8">{{ $vendor->company->company_name ?? '' }}</span>
                                                         <span
                                                             class="text-muted fw-semibold text-muted d-block fs-7">{{$vendor->email}}
                                                             | {{$vendor->phone}}</span>
@@ -534,7 +516,11 @@
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
 
 <script>
-var usedPercentage = {{ $usedPercentage }};
+var usedPercentage = {
+    {
+        $usedPercentage
+    }
+};
 var initMixedWidget4 = function() {
     var charts = document.querySelectorAll('.budgetused');
 

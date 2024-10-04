@@ -51,7 +51,7 @@
                                     <div class="d-flex text-center flex-column text-white pt-8">
                                         <span class="fw-semibold fs-7">Proposed Amount</span>
                                         <span
-                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format($budgettotalAmount, 2) }}</span>
+                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format_indian($budgettotalAmount, 2) }}</span>
                                     </div>
                                     <!--end::Balance-->
 
@@ -83,7 +83,7 @@
                                     <div class="d-flex text-center flex-column text-white pt-8">
                                         <span class="fw-semibold fs-7">Disbursed Amount</span>
                                         <span
-                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format($totalPaidAmount, 2) }}</span>
+                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format_indian($totalPaidAmount, 2) }}</span>
                                     </div>
                                     <!--end::Balance-->
 
@@ -116,7 +116,7 @@
                                     <div class="d-flex text-center flex-column text-white pt-8">
                                         <span class="fw-semibold fs-7">Due Amount</span>
                                         <span
-                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format($remainingBudget, 2) }}</span>
+                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format_indian($remainingBudget, 2) }}</span>
                                     </div>
                                     <!--end::Balance-->
 
@@ -225,7 +225,8 @@
                                                             class="text-muted fw-semibold text-muted d-block fs-8">Submitted
                                                             on 3-Oct-2024</span>
 
-                                                        <span class="fw-semibold d-block text-gray-600 fs-8">Milestones
+                                                        <span class="fw-semibold d-block text-gray-600 fs-8">No. of
+                                                            Milestones
                                                             : 5</span>
 
 
@@ -239,7 +240,7 @@
                                                         <span
                                                             class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
                                                         <span
-                                                            class="total-cost-span fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format($totalProposalAmount, 2) }}</span>
+                                                            class="total-cost-span fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($totalProposalAmount, 2) }}</span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -249,7 +250,7 @@
                                                         <span
                                                             class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
                                                         <span
-                                                            class="total-cost-span fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format($totalPaidAmount, 2) }}</span>
+                                                            class="total-cost-span fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($totalPaidAmount, 2) }}</span>
                                                     </div>
                                                 </div>
 
@@ -260,7 +261,7 @@
                                                         <span
                                                             class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
                                                         <span
-                                                            class="total-cost-span fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format($balanceAmount, 2) }}</span>
+                                                            class="total-cost-span fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($balanceAmount, 2) }}</span>
                                                     </div>
                                                 </div>
 
@@ -358,6 +359,42 @@
     </div>
 </div>
 </div>
+<?php
+function number_format_indian(float $num, int $decimals = 2, string $decimal_separator = ".", string $thousands_separator = ","): string {
+    // Split the integer and decimal parts
+    $parts = explode('.', number_format($num, $decimals, $decimal_separator, ''));
+    
+    // Format the integer part for Indian numbering system
+    $integer_part = $parts[0];
+    
+    // Check if the number is negative
+    $negative = ($num < 0) ? "-" : "";
+    
+    // Remove negative sign from the integer part for formatting
+    $integer_part = ltrim($integer_part, '-');
+
+    // Reverse the integer part to process it
+    $last_three = substr($integer_part, -3); // Extract the last three digits
+    $remaining = substr($integer_part, 0, -3); // Extract the remaining part
+    
+    // Add thousands separator in Indian format
+    if(strlen($remaining) > 0) {
+        $remaining = preg_replace("/\B(?=(\d{2})+(?!\d))/", $thousands_separator, $remaining);
+        $formatted_integer = $remaining . $thousands_separator . $last_three;
+    } else {
+        $formatted_integer = $last_three;
+    }
+    
+    // Combine integer part and decimal part
+    $result = $negative . $formatted_integer;
+    if (isset($parts[1])) {
+        $result .= $decimal_separator . $parts[1];
+    }
+    
+    return $result;
+}
+
+?>
 <!--end::App-->
 
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>

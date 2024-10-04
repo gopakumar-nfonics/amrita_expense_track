@@ -680,6 +680,12 @@ text#SvgjsText1015 {
 video {
     border-radius: 2px;
 }
+.db-date-span
+{
+    position: absolute;
+    bottom: 20px;
+    color: #fff;
+}
 
 @keyframes spin {
     0% {

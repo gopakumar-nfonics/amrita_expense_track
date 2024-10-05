@@ -22,8 +22,8 @@
                         aria-controls="kt_account_profile_details">
                         <!--begin::Card title-->
                         <div class="card-title m-0 d-flex flex-column">
-                            <h3 class="fw-bold m-0 my-0 mt-10">Tutorial Videos</h3>
-                            <p class="my-0 fs-7 text-muted br-b-1 pt-2 pb-2 mb-10">
+                            <h3 class="fw-bold m-0 my-0 mt-10">Support Center | Tutorial Videos</h3>
+                            <p class="my-0 fs-7 text-muted br-b-1 pt-3 pb-2 mb-10">
                                 Get a complete walkthrough of the features in our application.
                                 These tutorial videos will guide you through setting budgets, managing payments, and
                                 maximizing the app’s powerful tools for better financial control!

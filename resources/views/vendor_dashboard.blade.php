@@ -132,13 +132,29 @@
                     <!--end::Col-->
                 </div>
                 <!--end::Row-->
+                <div class="row g-5 g-xl-10 mb-3 px-5 ">
+
+
+                    <div class="card mb-5 pb-5 pt-4 px-10">
+                        <div class="d-flex flex-column w-100 me-2">
+                            <div class="d-flex flex-stack mb-0">
+                                <span class=" color-blue  me-2 fs-7 ">71% of Amount Disbursed</span>
+                            </div>
+                            <div class="progress h-6px w-100">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: 71%;"
+                                    aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--begin::Row-->
                 <div class="row g-5 g-xl-10 mb-0 px-5 ">
 
 
                     <div class="card mb-5">
                         <!--begin::Header-->
-                        <div class="card-header border-0 pt-10">
+                        <div class="card-header border-0 pt-10 px-5">
                             <h3 class="card-title align-items-start flex-column">
                                 <span class="card-label fw-bold fs-3 mb-1">Proposal Statistics</span>
                                 <span class="text-muted mt-1 fw-semibold fs-7">Over {{count($vendors)}} Proposals</span>
@@ -152,8 +168,9 @@
                             <!--end::Card toolbar-->
                         </div>
                         <!--end::Header-->
+
                         <!--begin::Body-->
-                        <div class="card-body py-0">
+                        <div class="card-body py-0  px-5 pb-5">
                             <!--begin::Table container-->
                             <div class="table-responsive">
                                 <!--begin::Table-->
@@ -219,7 +236,7 @@
 
                                                     <div class="d-flex justify-content-start flex-column">
                                                         <a href="{{ route('vendor.show',$vendor->id) }}"
-                                                            class="text-dark fw-bold text-hover-primary fs-7">Budget and
+                                                            class="text-dark fw-bold text-hover-primary fs-6">Budget and
                                                             Expense Tracker Web Application</a>
                                                         <span
                                                             class="text-muted fw-semibold text-muted d-block fs-8">Submitted

@@ -34,7 +34,7 @@
                     <!--begin::Card header-->
                     <!--begin::Content-->
                     <div id="kt_account_settings_profile_details" class="p-10 pt-0">
-                        <div class="d-flex flex-wrap gap-10">
+                        <div class="video-container">
                             <div class="video-tile">
                                 <!-- Video Tile 1 -->
                                 <div>

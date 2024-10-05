@@ -179,7 +179,7 @@ border-bottom: 1px solid var(--kt-primary) !important;
 
 .progress {
     background-color: #f3f3f3;
-    border-radius: 0px;
+    border-radius: 10px;
     overflow: hidden;
     position: relative;
     height: 5px;
@@ -192,6 +192,7 @@ border-bottom: 1px solid var(--kt-primary) !important;
     color: white;
     text-align: center;
     transition: width 0.6s ease;
+    border-radius: 10px;
 }
 
 .progress-bar-success {
@@ -666,12 +667,21 @@ text#SvgjsText1015 {
     font-size: 25px !important;
 }
 
+.video-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Optional: space between the tiles */
+    justify-content: space-between; /* To distribute tiles evenly */
+  }
+
 .video-tile {
     background: #f3f6f8;
     padding: 20px 20px 20px;
+    margin-bottom: 10px;
     border-radius: 6px;
     align-items: center;
-  max-width: 310px;
+    max-width: 100%; /* Allow tiles to scale with the container */
+    flex-grow: 1; /* Allow tiles to grow equally */
 }
 .video-tile .description
 {
@@ -686,7 +696,10 @@ video {
     bottom: 20px;
     color: #fff;
 }
-
+.br-radius-50
+{
+    border-radius: 50% !important;
+}
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -696,4 +709,30 @@ video {
         transform: rotate(360deg);
     }
 }
-
+/* For screens wider than 1080px */
+@media (min-width: 1080px) {
+    .video-tile {
+      max-width: calc(33.33% - 20px); /* 3 tiles per row with space between */
+    }
+  }
+  
+  /* For screens between 900px and 1080px */
+  @media (min-width: 900px) {
+    .video-tile {
+      max-width: calc(33.33% - 20px); /* Same layout for medium-large screens */
+    }
+  }
+  
+  /* For screens between 768px and 900px */
+  @media (min-width: 768px) {
+    .video-tile {
+      max-width: calc(33.33% - 20px); /* 3 tiles per row on medium screens */
+    }
+  }
+  
+  /* For screens smaller than 768px (e.g. mobile) */
+  @media (max-width: 767px) {
+    .video-tile {
+      max-width: 100%; /* Stack the tiles on top of each other */
+    }
+  }

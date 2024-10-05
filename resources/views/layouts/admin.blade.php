@@ -105,8 +105,17 @@
                                 <div class="cursor-pointer symbol symbol-35px symbol-md-40px"
                                     data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                                     data-kt-menu-placement="bottom-end">
+                                    @if(Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
                                     <img src="{{ !empty(Auth::user()->thumbnail_path) ? asset(Auth::user()->thumbnail_path) : url('/assets/media/avatars/300-1.jpg') }}"
                                         alt="user" />
+
+                                    @endif
+                                    @if(Auth::user()->isvendor())
+                                    <span class="symbol-label bg-danger text-white br-radius-50">
+                                        {{ strtoupper(substr(Auth::user()->first_name, 0, 2));}}
+                                    </span>
+
+                                    @endif
                                 </div>
                                 <!--begin::User account menu-->
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
@@ -115,14 +124,20 @@
                                     <div class="menu-item px-3">
                                         <div class="menu-content d-flex align-items-center px-3">
                                             <!--begin::Avatar-->
-                                            <div class="symbol symbol-50px me-5">
+                                            <!-- <div class="symbol symbol-50px me-5">
+                                                @if(Auth::user()->isvendor()){
+                                                <span class="symbol-label bg-blue text-white">
+                                                    NF</span>
+
+                                                }
+                                                @endif
                                                 <img src="{{ !empty(Auth::user()->thumbnail_path) ? asset(Auth::user()->thumbnail_path) : url('/assets/media/avatars/300-1.jpg') }}"
                                                     alt="user" />
-                                            </div>
+                                            </div> -->
                                             <!--end::Avatar-->
                                             <!--begin::Username-->
                                             <div class="d-flex flex-column">
-                                                <div class="fw-bold d-flex align-items-center fs-5">
+                                                <div class="fw-bold d-flex align-items-center fs-6">
                                                     {{ Auth::user()->first_name }}
                                                     @if(Auth::user()->last_name){{ Auth::user()->last_name }}@endif
                                                     <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2"
@@ -387,6 +402,35 @@
                                 <!--end:Menu item-->
                                 @endif
                                 @if(Auth::user()->isvendor())
+
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
+                                    <!--begin:Menu link-->
+                                    <a href="{{route('dashboard')}}">
+                                        <span
+                                            class="menu-link @if(in_array(Route::currentRouteName(),array('dashboard'))) active  @endif">
+                                            <span class="menu-icon">
+                                                <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                                                <span class="svg-icon svg-icon-2">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <rect x="2" y="2" width="9" height="9" rx="2"
+                                                            fill="currentColor" />
+                                                        <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2"
+                                                            fill="currentColor" />
+                                                        <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2"
+                                                            fill="currentColor" />
+                                                        <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                            </span>
+                                            <span class="menu-title">Dashboard</span>
+                                        </span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                </div>
                                 <div class="menu-item pt-5">
                                     <!--begin:Menu content-->
                                     <div class="menu-content">

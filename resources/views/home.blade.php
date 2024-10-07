@@ -148,7 +148,7 @@
                                     <div class="d-flex text-center flex-column text-white pt-8">
                                         <span class="fw-semibold fs-7">Budget Used</span>
                                         <span
-                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format($totalPaidAmount, 2) }}</span>
+                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format($PaidAmount, 2) }}</span>
                                     </div>
                                     <!--end::Balance-->
                                 </div>

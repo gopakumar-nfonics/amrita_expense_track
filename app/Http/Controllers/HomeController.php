@@ -120,12 +120,12 @@ class HomeController extends Controller
         } else {
 
             $budgettotalAmount = Budget::sum('amount');
-            $totalPaidAmount = PaymentMilestone::whereHas('invoice', function($query) {
+            $PaidAmount = PaymentMilestone::whereHas('invoice', function($query) {
                 $query->where('invoice_status', 1);
             })->sum('milestone_total_amount');
-            $remainingBudget = $budgettotalAmount - $totalPaidAmount;
+            $remainingBudget = $budgettotalAmount - $PaidAmount;
             
-            $usedPercentage = $budgettotalAmount > 0 ? ($totalPaidAmount / $budgettotalAmount) * 100 : 0;
+            $usedPercentage = $budgettotalAmount > 0 ? ($PaidAmount / $budgettotalAmount) * 100 : 0;
 
             if (floor($usedPercentage) == $usedPercentage) {
                 $usedPercentage = number_format($usedPercentage, 0); 
@@ -156,36 +156,40 @@ class HomeController extends Controller
             ->orderBy('id')
             ->get();
             $totalMilestoneByCategory = PaymentMilestone::join('invoices', 'payment_milestones.id', '=', 'invoices.milestone_id')
-    ->join('payment_request', 'invoices.id', '=', 'payment_request.invoice_id')
-    ->leftJoin('tbl_category as child_category', 'payment_request.category_id', '=', 'child_category.id') // LEFT JOIN for child_category
-    ->leftJoin('tbl_category as parent_category', 'child_category.parent_category', '=', 'parent_category.id') // Get parent category from child category
-    ->select(
-        DB::raw('COALESCE(parent_category.id, child_category.parent_category) as parent_category_id'), // Use COALESCE to get the correct parent category ID
-        DB::raw('COALESCE(parent_category.category_name, child_category.category_name) as parent_category_name'), // Use COALESCE to get the correct category name
-        DB::raw('SUM(payment_milestones.milestone_total_amount) as total_milestone_amount')
-    )
-    ->groupBy('parent_category_id', 'parent_category_name') // Group by the derived parent category ID
-    ->orderBy('total_milestone_amount', 'DESC') // Order by total_milestone_amount in descending order
-    ->get();
-
-
+            ->join('payment_request', 'invoices.id', '=', 'payment_request.invoice_id')
+            ->leftJoin('tbl_category as child_category', 'payment_request.category_id', '=', 'child_category.id') // LEFT JOIN for child_category
+            ->leftJoin('tbl_category as parent_category', 'child_category.parent_category', '=', 'parent_category.id') // Get parent category from child category
+            ->where('payment_request.payment_status', 'completed') // Filter by payment status
+            ->select(
+                'payment_request.category_id', // Include category_id for debugging and access
+                DB::raw('COALESCE(parent_category.id, child_category.parent_category) as parent_category_id'), // Use COALESCE to get the correct parent category ID
+                DB::raw('COALESCE(parent_category.category_name, child_category.category_name) as parent_category_name'), // Use COALESCE to get the correct category name
+                DB::raw('SUM(payment_milestones.milestone_total_amount) as total_milestone_amount')
+            )
+            ->groupBy('payment_request.category_id', 'parent_category_id', 'parent_category_name') // Group by necessary fields
+            ->orderBy('total_milestone_amount', 'DESC') // Order by total_milestone_amount in descending order
+            ->get();
         
 
-
-        $categorybudgetused = [];
-    foreach ($totalMilestoneByCategory as $milestone) {
-        $categorybudgetused[] = [
-            'parent_category_id' => $milestone->parent_category_id,
-            'parent_category_name' => $milestone->parent_category_name,
-            'total_milestone_amount' => $milestone->total_milestone_amount,
-            'budget_amount' => $categoryWiseBudgets->where('category_id', $milestone->parent_category_id)->sum('total_amount') // Adjust the category_id if needed
-        ];
-    }
+        
+            $categorybudgetused = [];
+            foreach ($totalMilestoneByCategory as $milestone) {
+                // Use the category_id from payment_request as a fallback
+                $categoryIdToUse = $milestone->parent_category_id ?: $milestone->category_id;
+            
+                $categorybudgetused[] = [
+                    'parent_category_id' => $milestone->parent_category_id,
+                    'parent_category_name' => $milestone->parent_category_name,
+                    'total_milestone_amount' => $milestone->total_milestone_amount,
+                    'budget_amount' => $categoryWiseBudgets->where('category_id', $categoryIdToUse)->sum('total_amount') // Adjust the category_id if needed
+                ];
+            }
+            
      
+        //print_r($categorybudgetused);exit();
 
 
-
-            return view('home',compact('budgettotalAmount','categoryWiseBudgets','vendors','totalPaidAmount','remainingBudget','usedPercentage','categorybudgetused'));
+            return view('home',compact('budgettotalAmount','categoryWiseBudgets','vendors','PaidAmount','remainingBudget','usedPercentage','categorybudgetused'));
         }
     }
 

@@ -517,11 +517,7 @@
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
 
 <script>
-var usedPercentage = {
-    {
-        $usedPercentage
-    }
-};
+var usedPercentage = {{$usedPercentage}};
 var initMixedWidget4 = function() {
     var charts = document.querySelectorAll('.budgetused');
 

@@ -210,18 +210,15 @@
                                         $paidPercentage = number_format($paidPercentage, 2);
                                         }
 
-                                        $progressBarClass = 'bg-info'; // Default class
-                                        $progressBarText='color-blue';
-                                        if ($paidPercentage >= 90) {
-                                        $progressBarClass = 'bg-danger';
-                                        $progressBarText='color-red';
-
-                                        } elseif ($paidPercentage >= 70) {
-                                        $progressBarClass = 'bg-warning';
+                                        $progressBarClass = 'bg-warning'; // Default class
                                         $progressBarText='color-orange';
-                                        } elseif ($paidPercentage >= 50) {
+                                        if ($paidPercentage >= 90) {
                                         $progressBarClass = 'bg-success';
-                                        $progressBarText='color-45ab48';
+                                        $progressBarText='color-green';
+
+                                        } elseif ($paidPercentage >= 60) {
+                                        $progressBarClass = 'bg-info';
+                                        $progressBarText='color-blue';
                                         }
 
                                         $vwords = explode(' ', $vendor->vendor_name);
@@ -417,7 +414,11 @@ function number_format_indian(float $num, int $decimals = 2, string $decimal_sep
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
 
 <script>
-var usedPercentage = {{$usedPercentage}};
+var usedPercentage = {
+    {
+        $usedPercentage
+    }
+};
 var initMixedWidget4 = function() {
     var charts = document.querySelectorAll('.budgetused');
 

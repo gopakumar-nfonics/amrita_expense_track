@@ -32,18 +32,18 @@
                     </ul>
                     <!--end::Breadcrumb-->
 
-                   
+
                 </div>
                 <!--end::Page title-->
                 <!--begin::Actions-->
                 <div class="card-toolbar">
-               
-                <!-- end::Actions-->
-                <a href="{{ route('invoice.index') }}" class="btn btn-sm btn-primary">
-                    Back to List
-                </a>
 
-            </div>
+                    <!-- end::Actions-->
+                    <a href="{{ route('invoice.index') }}" class="btn btn-sm btn-primary">
+                        Back to List
+                    </a>
+
+                </div>
 
                 <!--end::Actions-->
             </div>
@@ -103,7 +103,8 @@
                                                                 </div>
                                                                 <div class="flex-root d-flex flex-column">
                                                                     <span class="text-muted">Invoice #</span>
-                                                                    <span class="fs-5">#{{$invoice->invoice_number}}</span>
+                                                                    <span
+                                                                        class="fs-5">#{{$invoice->invoice_number}}</span>
                                                                 </div>
                                                                 <div class="flex-root d-flex flex-column">
                                                                     <div class="symbol symbol-30px me-5">
@@ -213,10 +214,10 @@
                                                                                                 class=" fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">@if($invoice->milestone->milestone_gst
                                                                                                 ==
                                                                                                 floor($invoice->milestone->milestone_gst))
-                                                                                                {{ number_format($invoice->milestone->milestone_gst, 0) }}
+                                                                                                {{ number_format_indian($invoice->milestone->milestone_gst, 0) }}
                                                                                                 {{-- No decimal places --}}
                                                                                                 @else
-                                                                                                {{ number_format($invoice->milestone->milestone_gst, 2) }}
+                                                                                                {{ number_format_indian($invoice->milestone->milestone_gst, 2) }}
                                                                                                 {{-- Two decimal places --}}
                                                                                                 @endif
                                                                                                 %</span>

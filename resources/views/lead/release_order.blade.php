@@ -181,7 +181,8 @@
                             style="height:20px; margin:0px;">
                     </span>
 
-                    <span class="amount" style="margin-left:-5px;">{{number_format($proposal->proposal_total_cost,2)}}
+                    <span class="amount"
+                        style="margin-left:-5px;">{{number_format_indian($proposal->proposal_total_cost,2)}}
                     </span>
                     <span>[Inclusive of GST]</span>
                 </div>

@@ -51,7 +51,7 @@
                                     <div class="d-flex text-center flex-column text-white pt-8">
                                         <span class="fw-semibold fs-7">Budget Allocated</span>
                                         <span
-                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format($budgettotalAmount, 2) }}</span>
+                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format_indian($budgettotalAmount, 2) }}</span>
                                     </div>
                                     <!--end::Balance-->
                                 </div>
@@ -64,9 +64,9 @@
                                     $allocatedPercentage = $budgettotalAmount > 0 ? ($budget->total_amount /
                                     $budgettotalAmount) * 100 : 0;
                                     if (floor($allocatedPercentage) == $allocatedPercentage) {
-                                    $allocatedPercentage = number_format($allocatedPercentage, 0) . '%';
+                                    $allocatedPercentage = number_format_indian($allocatedPercentage, 0) . '%';
                                     } else {
-                                    $allocatedPercentage = number_format($allocatedPercentage, 2) . '%';
+                                    $allocatedPercentage = number_format_indian($allocatedPercentage, 2) . '%';
                                     }
 
 
@@ -112,7 +112,7 @@
                                                     <!--end::Svg Icon--> {{$allocatedPercentage}}
                                                 </span>
                                                 <div class="fw-bold fs-6 text-gray-500 ms-auto">
-                                                    &#x20b9;{{ number_format($budget->total_amount, 2) }}
+                                                    &#x20b9;{{ number_format_indian($budget->total_amount, 2) }}
                                                 </div>
                                             </div>
                                             <!--end::Label-->
@@ -148,7 +148,7 @@
                                     <div class="d-flex text-center flex-column text-white pt-8">
                                         <span class="fw-semibold fs-7">Budget Used</span>
                                         <span
-                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format($PaidAmount, 2) }}</span>
+                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format_indian($PaidAmount, 2) }}</span>
                                     </div>
                                     <!--end::Balance-->
                                 </div>
@@ -169,9 +169,9 @@
                                     * 100 : 0;
 
                                     if (floor($catpaidPercentage) == $catpaidPercentage) {
-                                    $catpaidPercentage = number_format($catpaidPercentage, 0);
+                                    $catpaidPercentage = number_format_indian($catpaidPercentage, 0);
                                     } else {
-                                    $catpaidPercentage = number_format($catpaidPercentage, 2);
+                                    $catpaidPercentage = number_format_indian($catpaidPercentage, 2);
                                     }
 
                                     $catprogressBarClass = 'bg-info'; // Default class
@@ -206,7 +206,7 @@
                                             <div class="d-flex align-items-center w-100">
                                                 <div class="d-flex flex-column flex-grow-1 me-2">
                                                     <span
-                                                        class="text-muted me-2 fs-9 fw-bold">{{ number_format($catpaidPercentage, 2) }}%</span>
+                                                        class="text-muted me-2 fs-9 fw-bold">{{ number_format_indian($catpaidPercentage, 2) }}%</span>
                                                     <div class="progress h-4px w-50px p-0 m-0">
                                                         <div class="progress-bar {{$catprogressBarClass}}"
                                                             role="progressbar"
@@ -216,7 +216,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="fw-bold fs-6 text-gray-500 ms-auto">
-                                                    &#x20b9;{{ number_format($result['total_milestone_amount'], 2) }}
+                                                    &#x20b9;{{ number_format_indian($result['total_milestone_amount'], 2) }}
                                                 </div>
                                             </div>
                                             <!--end::Label-->
@@ -252,7 +252,7 @@
                                     <div class="d-flex text-center flex-column text-white pt-8">
                                         <span class="fw-semibold fs-7">Remaning Budget</span>
                                         <span
-                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format($remainingBudget, 2) }}</span>
+                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format_indian($remainingBudget, 2) }}</span>
                                     </div>
                                     <!--end::Balance-->
                                 </div>
@@ -340,9 +340,9 @@
                                         $totalProposalAmount) * 100 : 0;
 
                                         if (floor($paidPercentage) == $paidPercentage) {
-                                        $paidPercentage = number_format($paidPercentage, 0);
+                                        $paidPercentage = number_format_indian($paidPercentage, 0);
                                         } else {
-                                        $paidPercentage = number_format($paidPercentage, 2);
+                                        $paidPercentage = number_format_indian($paidPercentage, 2);
                                         }
 
                                         $progressBarClass = 'bg-warning'; // Default class
@@ -390,7 +390,7 @@
                                                         <span
                                                             class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
                                                         <span
-                                                            class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format($totalProposalAmount, 2) }}</span>
+                                                            class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($totalProposalAmount, 2) }}</span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -400,7 +400,7 @@
                                                         <span
                                                             class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
                                                         <span
-                                                            class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format($totalPaidAmount, 2) }}</span>
+                                                            class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($totalPaidAmount, 2) }}</span>
                                                     </div>
                                                 </div>
 
@@ -411,7 +411,7 @@
                                                         <span
                                                             class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
                                                         <span
-                                                            class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format($balanceAmount, 2) }}</span>
+                                                            class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($balanceAmount, 2) }}</span>
                                                     </div>
                                                 </div>
 
@@ -420,7 +420,7 @@
                                                 <div class="d-flex flex-column w-100 me-2">
                                                     <div class="d-flex flex-stack mb-0">
                                                         <span
-                                                            class=" {{ $progressBarText }}  me-2 fs-5 fw-bold">{{ number_format($paidPercentage, 2) }}%</span>
+                                                            class=" {{ $progressBarText }}  me-2 fs-5 fw-bold">{{ number_format_indian($paidPercentage, 2) }}%</span>
                                                     </div>
                                                     <div class="progress h-6px w-100">
                                                         <div class="progress-bar {{ $progressBarClass }}"
@@ -514,7 +514,11 @@
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
 
 <script>
-var usedPercentage = {{ $usedPercentage }};
+var usedPercentage = {
+    {
+        $usedPercentage
+    }
+};
 var initMixedWidget4 = function() {
     var charts = document.querySelectorAll('.budgetused');
 

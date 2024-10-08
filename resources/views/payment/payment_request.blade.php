@@ -137,11 +137,12 @@
         <tr>
             <td style="width:30%;text-align:left;padding: 0px;">
                 <p class="ro-no"> <span>Request#:
-                {{$invoice->paymentRequests->payment_request_id}}</span></p>
+                        {{$invoice->paymentRequests->payment_request_id}}</span></p>
             </td>
             <td style="width:40%;text-align:center;padding: 0px;"></td>
             <td style="width:30%;text-align:right;padding: 0px;">
-                <p class="ro-no"><span>{{ \Carbon\Carbon::parse($invoice->paymentRequests->created_at)->format('d F, Y') }}</span>
+                <p class="ro-no">
+                    <span>{{ \Carbon\Carbon::parse($invoice->paymentRequests->created_at)->format('d F, Y') }}</span>
                 </p>
             </td>
         </tr>
@@ -179,7 +180,7 @@
         </tr>
         <tr>
             <td style="padding:10px 0px 10px;"><b>Subject : <span> Processing the payment of
-            {{$invoice->vendor->vendor_name}}</b></span></td>
+                        {{$invoice->vendor->vendor_name}}</b></span></td>
         </tr>
 
 
@@ -201,7 +202,8 @@
             <td>
                 <div style="margin:0px 20px; font-size:14px;">
                     <b>{{$invoice->vendor->vendor_name}}</b><br>
-                    {{$invoice->vendor->address}},{{$invoice->vendor->address_2}},{{$invoice->vendor->city}},{{$invoice->vendor->states[0]->name}} | {{$invoice->vendor->postcode}}<br>
+                    {{$invoice->vendor->address}},{{$invoice->vendor->address_2}},{{$invoice->vendor->city}},{{$invoice->vendor->states[0]->name}}
+                    | {{$invoice->vendor->postcode}}<br>
                     GSTIN : {{$invoice->vendor->gst}} | PAN NO: {{$invoice->vendor->pan}}
 
 
@@ -231,7 +233,8 @@
                         </td>
                         <td>{{ \Carbon\Carbon::parse($invoice->invoice_date)->format('d-m-Y') }}
                         </td>
-                        <td style="text-align:right;"> <span class="outlay">{{ number_format($invoice->milestone->milestone_total_amount,2);}}</span>
+                        <td style="text-align:right;"> <span
+                                class="outlay">{{ number_format_indian($invoice->milestone->milestone_total_amount,2);}}</span>
                         </td>
                         <td>{{$invoice->proposal->proposal_title}}
                         </td>

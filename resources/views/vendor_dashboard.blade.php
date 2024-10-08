@@ -212,10 +212,10 @@
 
                                         $progressBarClass = 'bg-warning'; // Default class
                                         $progressBarText='color-orange';
-                                        if ($paidPercentage >= 90) {
+                                        if ($paidPercentage >= 75) {
                                         $progressBarClass = 'bg-success';
                                         $progressBarText='color-green';
-                                        } elseif ($paidPercentage >= 60) {
+                                        } elseif ($paidPercentage >= 25) {
                                         $progressBarClass = 'bg-info';
                                         $progressBarText='color-blue';
                                         }

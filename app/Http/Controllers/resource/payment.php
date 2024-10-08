@@ -29,7 +29,9 @@ class payment extends Controller
      */
     public function index()
     {
-        $payrequest = PaymentRequest::with(['invoice.milestone', 'invoice.vendor', 'invoice.proposalro', 'invoice.proposal','category','category.parent','stream'])->orderBy('id')->get();
+
+       
+        $payrequest = PaymentRequest::with(['invoice.milestone', 'invoice.vendor', 'invoice.proposalro', 'invoice.proposal', 'category', 'category.parent', 'stream'])->orderBy('id')->get();
 
         return view('payment.index', compact('payrequest'));
     }
@@ -122,7 +124,7 @@ class payment extends Controller
 
             $this->savepaymentrequestPdf($request->invoid);
 
-            
+
 
             return redirect()->route('invoice.index')->with('success', 'Payment Request Submitted Successfully');
         } catch (\Exception $e) {
@@ -185,6 +187,7 @@ class payment extends Controller
     {
         $categoryId = $request->input('category_id');
 
+        // Get the current financial year
         $currentFinancialYear = FinancialYear::where('is_current', 1)->first();
 
         if (!$currentFinancialYear) {
@@ -193,11 +196,19 @@ class payment extends Controller
             ], 404);
         }
 
+        // Find the selected category
         $category = Category::find($categoryId);
+
+        if (!$category) {
+            return response()->json([
+                'error' => 'Category not found'
+            ], 404);
+        }
 
         $totalBudget = 0;
         $usedBudget = 0;
 
+        // Get the budget for the selected category
         $budget = Budget::where('category_id', $categoryId)
             ->where('financial_year_id', $currentFinancialYear->id)
             ->first();
@@ -205,7 +216,7 @@ class payment extends Controller
         if ($budget) {
             $totalBudget = $budget->amount;
         } else {
-
+            // If no budget found for the selected category, check for parent category
             if ($category->parent_category) {
                 $parentBudget = Budget::where('category_id', $category->parent_category)
                     ->where('financial_year_id', $currentFinancialYear->id)
@@ -217,31 +228,47 @@ class payment extends Controller
             }
         }
 
-        $usedBudget = PaymentRequest::where('category_id', $categoryId)
-        ->where('payment_status', 'completed')
-        ->whereHas('invoice', function ($query) {
-            $query->whereHas('milestone', function ($milestoneQuery) {
-                $milestoneQuery->selectRaw('SUM(milestone_total_amount) as total');
-            });
+        
+        $usedBudget = PaymentRequest::where(function ($query) use ($category) {
+           
+            if ($category->parent_category) {
+                
+                $subCategoryIds = Category::where('parent_category', $category->parent_category)->pluck('id');
+
+                
+                $query->whereIn('category_id', $subCategoryIds);
+            } else {
+                
+                $query->where('category_id', $category->id);
+            }
         })
-        ->with('invoice.milestone')
-        ->get()
-        ->sum(function ($paymentRequest) {
-            return $paymentRequest->invoice->milestone->milestone_total_amount;
-        });
+            ->where('payment_status', 'completed')
+            ->whereHas('invoice', function ($query) {
+                $query->whereHas('milestone', function ($milestoneQuery) {
+                    $milestoneQuery->selectRaw('SUM(milestone_total_amount) as total');
+                });
+            })
+            ->with('invoice.milestone')
+            ->get()
+            ->sum(function ($paymentRequest) {
+                return $paymentRequest->invoice->milestone->milestone_total_amount;
+            });
 
+
+        // Format the results
         $formattedTotalBudget = number_format($totalBudget, 2, '.', ',');
-    $formattedUsedBudget = number_format($usedBudget, 2, '.', ',');
+        $formattedUsedBudget = number_format($usedBudget, 2, '.', ',');
 
-    return response()->json([
-        'num_total_budget' => $formattedTotalBudget,
-        'num_used_budget' => $formattedUsedBudget,
-        'total_budget' => $totalBudget,
-        'used_budget' => $usedBudget
-    ]);
+        return response()->json([
+            'num_total_budget' => $formattedTotalBudget,
+            'num_used_budget' => $formattedUsedBudget,
+            'total_budget' => $totalBudget,
+            'used_budget' => $usedBudget
+        ]);
     }
 
-     public function getShortFinancialYear()
+
+    public function getShortFinancialYear()
     {
         $currentDate = new \DateTime();
         $currentYear = (int)$currentDate->format('Y');
@@ -269,20 +296,20 @@ class payment extends Controller
 
     public function savepaymentrequestPdf($id)
     {
-        $invoice = Invoices::with(['proposal','milestone','vendor.banckaccount','vendor.states', 'proposalro','paymentRequests'])->where('id', $id)->first();
+        $invoice = Invoices::with(['proposal', 'milestone', 'vendor.banckaccount', 'vendor.states', 'proposalro', 'paymentRequests'])->where('id', $id)->first();
         $number = $invoice->milestone->milestone_total_amount;
-       $numbersWords = new Numbers_Words();
-       $amounwords = $numbersWords->toWords($number);
+        $numbersWords = new Numbers_Words();
+        $amounwords = $numbersWords->toWords($number);
 
-        $pdfName = 'PR_' . $invoice->paymentRequests->payment_request_id. '.pdf';
-    
+        $pdfName = 'PR_' . $invoice->paymentRequests->payment_request_id . '.pdf';
+
         $pdfPath = public_path('storage/payment_request/' . $pdfName);
 
-        
+
         // return view('reports.questionslip', $data);
 
         $pdf = PDF::loadView('payment.payment_request', compact('invoice', 'amounwords'))
-           ->setPaper('a4', 'portrait');
+            ->setPaper('a4', 'portrait');
         $pdf->save($pdfPath);
     }
 

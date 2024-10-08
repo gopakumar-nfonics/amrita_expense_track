@@ -111,7 +111,7 @@
                                                     </span>
                                                     <!--end::Svg Icon--> {{$allocatedPercentage}}
                                                 </span>
-                                                <div class="fw-bold fs-6 text-gray-500 ms-auto">
+                                                <div class="fw-bold fs-6 text-gray-600 ms-auto">
                                                     &#x20b9;{{ number_format_indian($budget->total_amount, 2) }}
                                                 </div>
                                             </div>
@@ -215,7 +215,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="fw-bold fs-6 text-gray-500 ms-auto">
+                                                <div class="fw-bold fs-6 text-gray-600 ms-auto">
                                                     &#x20b9;{{ number_format_indian($result['total_milestone_amount'], 2) }}
                                                 </div>
                                             </div>
@@ -391,7 +391,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="fw-400 d-block fs-6">
                                                         <span
-                                                            class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
+                                                            class="fs-4 fw-semibold text-gray-600 align-self-start me-0">&#x20b9;</span>
                                                         <span
                                                             class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($totalProposalAmount, 2) }}</span>
                                                     </div>
@@ -401,7 +401,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="fw-400 d-block fs-6">
                                                         <span
-                                                            class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
+                                                            class="fs-4 fw-semibold text-gray-600 align-self-start me-0">&#x20b9;</span>
                                                         <span
                                                             class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($totalPaidAmount, 2) }}</span>
                                                     </div>
@@ -412,7 +412,7 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="fw-400 d-block fs-6">
                                                         <span
-                                                            class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
+                                                            class="fs-4 fw-semibold text-gray-600 align-self-start me-0">&#x20b9;</span>
                                                         <span
                                                             class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($balanceAmount, 2) }}</span>
                                                     </div>

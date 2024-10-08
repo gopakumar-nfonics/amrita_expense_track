@@ -1,24 +1,24 @@
 @extends('layouts.admin')
 
 <style>
-.bottom {
-    display: flex;
-    justify-content: space-between;
-    /* Distribute space between elements */
-    align-items: center;
-    /* Align elements vertically in the center */
-}
+    .bottom {
+        display: flex;
+        justify-content: space-between;
+        /* Distribute space between elements */
+        align-items: center;
+        /* Align elements vertically in the center */
+    }
 </style>
 <style>
-.nav-scroll {
-    overflow-x: auto;
-    white-space: nowrap;
-}
+    .nav-scroll {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 
-.nav-item {
-    display: inline-block !important;
-    vertical-align: top;
-}
+    .nav-item {
+        display: inline-block !important;
+        vertical-align: top;
+    }
 </style>
 @section('content')
 <!--begin::Main-->
@@ -51,7 +51,7 @@
                                     <div class="d-flex text-center flex-column text-white pt-8">
                                         <span class="fw-semibold fs-7">Proposed Amount</span>
                                         <span
-                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format_indian($budgettotalAmount, 2) }}</span>
+                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format_indian($total_proposal_amount, 2) }}</span>
                                     </div>
                                     <!--end::Balance-->
 
@@ -83,7 +83,7 @@
                                     <div class="d-flex text-center flex-column text-white pt-8">
                                         <span class="fw-semibold fs-7">Disbursed Amount</span>
                                         <span
-                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format_indian($totalPaidAmount, 2) }}</span>
+                                            class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format_indian($total_paid_amount, 2) }}</span>
                                     </div>
                                     <!--end::Balance-->
 
@@ -138,10 +138,10 @@
                     <div class="card mb-5 pb-5 pt-4 px-10">
                         <div class="d-flex flex-column w-100 me-2">
                             <div class="d-flex flex-stack mb-0">
-                                <span class=" color-blue  me-2 fs-7 ">71% of Amount Disbursed</span>
+                                <span class=" color-blue  me-2 fs-7 ">{{$paid_percentage}}% of Amount Disbursed</span>
                             </div>
                             <div class="progress h-6px w-100">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: 71%;"
+                                <div class="progress-bar bg-info" role="progressbar" style="width: {{$paid_percentage}}%;"
                                     aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
                                 </div>
                             </div>
@@ -157,7 +157,7 @@
                         <div class="card-header border-0 pt-10 px-5">
                             <h3 class="card-title align-items-start flex-column">
                                 <span class="card-label fw-bold fs-3 mb-1">Proposal Statistics</span>
-                                <span class="text-muted mt-1 fw-semibold fs-7">Over {{count($vendors)}} Proposals</span>
+                                <span class="text-muted mt-1 fw-semibold fs-7">Over {{count($proposal)}} Proposals</span>
                             </h3>
                             <!--begin::Card toolbar-->
                             <div class="card-toolbar">
@@ -190,19 +190,18 @@
                                     <!--end::Table head-->
                                     <!--begin::Table body-->
                                     <tbody>
-                                        @forelse($vendors as $key => $vendor)
+                                        @forelse($proposal as $key => $pro)
 
                                         @php
-                                        // Retrieve the proposal and paid amounts
-                                        $totalProposalAmount = $vendor->proposals->first()->total_proposal_amount ?? 0;
-                                        $totalPaidAmount = $vendor->invoices->first()->total_paid_amount ?? 0;
 
-                                        // Calculate the balance amount
-                                        $balanceAmount = $totalProposalAmount - $totalPaidAmount;
+                                        $total_paid_amount = $pro->invoices->sum('paymentMilestone.milestone_total_amount'); // If using a relationship in invoices to access payment milestones
+                                        $total_milestone_count = $pro->paymentMilestones->count();
+                                        $totlacost = $pro->proposal_total_cost;
 
-                                        // Calculate the paid percentage, ensuring no division by zero
-                                        $paidPercentage = $totalProposalAmount > 0 ? ($totalPaidAmount /
-                                        $totalProposalAmount) * 100 : 0;
+                                        $balanceAmount = $totlacost - $total_paid_amount;
+                                        $paidPercentage = 22;
+                                        $paidPercentage = $totlacost > 0 ? ($total_paid_amount /
+                                        $totlacost) * 100 : 0;
 
                                         if (floor($paidPercentage) == $paidPercentage) {
                                         $paidPercentage = number_format($paidPercentage, 0);
@@ -219,28 +218,56 @@
                                         $progressBarClass = 'bg-info';
                                         $progressBarText='color-blue';
                                         }
-
-                                        $vwords = explode(' ', $vendor->vendor_name);
-                                        $voutput = strtoupper(substr($vendor->vendor_name, 0, 2));
-
-
                                         @endphp
+
                                         <tr>
 
                                             <td>
                                                 <div class="d-flex align-items-center">
 
                                                     <div class="d-flex justify-content-start flex-column">
-                                                        <a href="{{ route('vendor.show',$vendor->id) }}"
-                                                            class="text-dark fw-bold text-hover-primary fs-6">Budget and
-                                                            Expense Tracker Web Application</a>
+                                                        <a href="{{ route('lead.show',$pro->id) }}"
+                                                            class="text-dark fw-bold text-hover-primary fs-6">{{$pro->proposal_title}}</a>
                                                         <span
                                                             class="text-muted fw-semibold text-muted d-block fs-8">Submitted
-                                                            on 3-Oct-2024</span>
+                                                            on {{ \Carbon\Carbon::parse($pro->created_at)->format('d-M-Y') }}</span>
 
                                                         <span class="fw-semibold d-block text-gray-600 fs-8">No. of
                                                             Milestones
-                                                            : 5</span>
+                                                            : {{$total_milestone_count}}</span>
+
+                                                        <div class="text-gray-400 fw-semibold fs-9">
+                                                            @if($pro->proposal_status == 0)
+                                                            <span class="badge badge-light-info fs-8">
+                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                                <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+                                                                    <i
+                                                                        class="fa-regular fa-circle-dot color-blue fs-8 me-1 "></i>
+                                                                </span>
+                                                                <!--end::Svg Icon-->Pending Review
+                                                            </span>
+                                                            @elseif($pro->proposal_status == 2)
+                                                            <span class="badge badge-light-danger fs-8 rejected-span"
+                                                                title="View Comments"
+                                                                onclick="rejectionreason('{{$pro->id}}');">
+                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+
+                                                                <!--end::Svg Icon-->
+                                                                <i class="fa-solid fa-close color-red fs-8 me-2 "></i>Rejected
+
+                                                            </span>
+
+
+                                                            @else
+                                                            <span class="badge badge-light-success fs-8">
+                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                                <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+                                                                    <i class="fa-solid fa-check light-green fs-8 me-1 "></i>
+                                                                </span>
+                                                                <!--end::Svg Icon-->Approved
+                                                            </span>
+                                                            @endif
+                                                        </div>
 
 
                                                     </div>
@@ -253,7 +280,7 @@
                                                         <span
                                                             class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
                                                         <span
-                                                            class="total-cost-span fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($totalProposalAmount, 2) }}</span>
+                                                            class="total-cost-span fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($pro->proposal_total_cost, 2) }}</span>
                                                     </div>
                                                 </div>
                                             </td>
@@ -263,7 +290,7 @@
                                                         <span
                                                             class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
                                                         <span
-                                                            class="total-cost-span fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($totalPaidAmount, 2) }}</span>
+                                                            class="total-cost-span fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($total_paid_amount, 2) }}</span>
                                                     </div>
                                                 </div>
 
@@ -373,37 +400,38 @@
 </div>
 </div>
 <?php
-function number_format_indian(float $num, int $decimals = 2, string $decimal_separator = ".", string $thousands_separator = ","): string {
+function number_format_indian(float $num, int $decimals = 2, string $decimal_separator = ".", string $thousands_separator = ","): string
+{
     // Split the integer and decimal parts
     $parts = explode('.', number_format($num, $decimals, $decimal_separator, ''));
-    
+
     // Format the integer part for Indian numbering system
     $integer_part = $parts[0];
-    
+
     // Check if the number is negative
     $negative = ($num < 0) ? "-" : "";
-    
+
     // Remove negative sign from the integer part for formatting
     $integer_part = ltrim($integer_part, '-');
 
     // Reverse the integer part to process it
     $last_three = substr($integer_part, -3); // Extract the last three digits
     $remaining = substr($integer_part, 0, -3); // Extract the remaining part
-    
+
     // Add thousands separator in Indian format
-    if(strlen($remaining) > 0) {
+    if (strlen($remaining) > 0) {
         $remaining = preg_replace("/\B(?=(\d{2})+(?!\d))/", $thousands_separator, $remaining);
         $formatted_integer = $remaining . $thousands_separator . $last_three;
     } else {
         $formatted_integer = $last_three;
     }
-    
+
     // Combine integer part and decimal part
     $result = $negative . $formatted_integer;
     if (isset($parts[1])) {
         $result .= $decimal_separator . $parts[1];
     }
-    
+
     return $result;
 }
 
@@ -413,94 +441,94 @@ function number_format_indian(float $num, int $decimals = 2, string $decimal_sep
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
 
 <script>
-var usedPercentage = {
-    {
-        $usedPercentage
-    }
-};
-var initMixedWidget4 = function() {
-    var charts = document.querySelectorAll('.budgetused');
-
-    [].slice.call(charts).map(function(element) {
-        var height = parseInt(window.getComputedStyle(element).height);
-
-        if (!element) {
-            return;
+    var usedPercentage = {
+        {
+            $usedPercentage
         }
+    };
+    var initMixedWidget4 = function() {
+        var charts = document.querySelectorAll('.budgetused');
 
-        var color = element.getAttribute('data-kt-chart-color');
+        [].slice.call(charts).map(function(element) {
+            var height = parseInt(window.getComputedStyle(element).height);
 
-        var baseColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-' + color);
-        var lightColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-' + color +
-            '-light');
-        var labelColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-gray-700');
+            if (!element) {
+                return;
+            }
 
-        var options = {
-            series: [usedPercentage], // Dynamically pass your used percentage here
-            chart: {
-                fontFamily: 'inherit',
-                height: height,
-                type: 'radialBar',
-            },
-            plotOptions: {
-                radialBar: {
-                    hollow: {
-                        margin: 0,
-                        size: "65%"
-                    },
-                    dataLabels: {
-                        showOn: "always",
-                        name: {
-                            show: false,
-                            fontWeight: '700'
+            var color = element.getAttribute('data-kt-chart-color');
+
+            var baseColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-' + color);
+            var lightColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-' + color +
+                '-light');
+            var labelColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-gray-700');
+
+            var options = {
+                series: [usedPercentage], // Dynamically pass your used percentage here
+                chart: {
+                    fontFamily: 'inherit',
+                    height: height,
+                    type: 'radialBar',
+                },
+                plotOptions: {
+                    radialBar: {
+                        hollow: {
+                            margin: 0,
+                            size: "65%"
                         },
-                        value: {
-                            color: labelColor,
-                            fontSize: "30px",
-                            fontWeight: '700',
-                            offsetY: 12,
-                            show: true,
-                            formatter: function(val) {
-                                return val + '%';
+                        dataLabels: {
+                            showOn: "always",
+                            name: {
+                                show: false,
+                                fontWeight: '700'
+                            },
+                            value: {
+                                color: labelColor,
+                                fontSize: "30px",
+                                fontWeight: '700',
+                                offsetY: 12,
+                                show: true,
+                                formatter: function(val) {
+                                    return val + '%';
+                                }
                             }
+                        },
+                        track: {
+                            background: lightColor,
+                            strokeWidth: '100%'
                         }
-                    },
-                    track: {
-                        background: lightColor,
-                        strokeWidth: '100%'
                     }
-                }
-            },
-            colors: [baseColor],
-            stroke: {
-                lineCap: "round",
-            },
-            labels: ["Progress"]
-        };
+                },
+                colors: [baseColor],
+                stroke: {
+                    lineCap: "round",
+                },
+                labels: ["Progress"]
+            };
 
-        var chart = new ApexCharts(element, options);
-        chart.render();
+            var chart = new ApexCharts(element, options);
+            chart.render();
+        });
+    }
+
+    // Initialize the chart when the document is fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        initMixedWidget4();
     });
-}
-
-// Initialize the chart when the document is fully loaded
-document.addEventListener("DOMContentLoaded", function() {
-    initMixedWidget4();
-});
 </script>
 @endsection
 
 @section('pageScripts')
 <script>
-$(document).ready(function() {
-    $('#vendor-table').DataTable({
-        "pageLength": 10,
-        "ordering": false,
-        "searching": false,
-        "lengthChange": false,
-        "autoWidth": false,
+    $(document).ready(function() {
+        $('#vendor-table').DataTable({
+            "pageLength": 10,
+            "ordering": false,
+            "searching": false,
+            "lengthChange": false,
+            "autoWidth": false,
+        });
     });
-});
 </script>
 
 @endsection

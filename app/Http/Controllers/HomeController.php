@@ -43,53 +43,83 @@ class HomeController extends Controller
     {
 
         if (Auth::user()->isvendor()) {
-            if(Auth::user()->vendor_status == null){
+            if (Auth::user()->vendor_status == null) {
                 return redirect()->route('registration');
-
-            }else{
+            } else {
 
                 $userId = Auth::user()->id;
-        $vendor = Vendor::where('user_id', $userId)->first();
-            
-                $vendor_id = $vendor->id; 
+                $vendor = Vendor::where('user_id', $userId)->first();
 
-                    $vendordata = Vendor::with(['company', 'proposals' => function($query) {
-                    $query->where('proposal_status', 1)
-                          ->select('vendor_id', \DB::raw('SUM(proposal_total_cost) as total_proposal_amount'))
-                          ->groupBy('vendor_id');
-                }, 'invoices' => function($query) {
-                    $query->where('invoice_status', 1)
-                          ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
-                          ->select('invoices.vendor_id', \DB::raw('SUM(payment_milestones.milestone_total_amount) as total_paid_amount'))
-                          ->groupBy('invoices.vendor_id');
+                $vendor_id = $vendor->id;
+
+                $vendor_id = $vendor->id;
+
+                $vendordata = Vendor::with([
+                    'company',
+                    'proposals' => function ($query) {
+                        $query->where('proposal_status', 1)
+                            ->select('vendor_id', \DB::raw('SUM(proposal_total_cost) as total_proposal_amount'))
+                            ->groupBy('vendor_id');
+                    },
+                    'invoices' => function ($query) {
+                        $query->where('invoice_status', 1)
+                            ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
+                            ->select('invoices.vendor_id', \DB::raw('SUM(payment_milestones.milestone_total_amount) as total_paid_amount'))
+                            ->groupBy('invoices.vendor_id');
+                    }
+                ])
+                    ->where('vendor_status', 'verified')
+                    ->where('id', $vendor_id) // Fetch specific vendor by id
+                    ->first();
+
+                // Get the totals
+                $total_proposal_amount = $vendordata->proposals->isNotEmpty() ? $vendordata->proposals[0]->total_proposal_amount : 0;
+                $total_paid_amount = $vendordata->invoices->isNotEmpty() ? $vendordata->invoices[0]->total_paid_amount : 0;
+                $remainingBudget = $total_proposal_amount - $total_paid_amount;
+
+                $paid_percentage = $total_proposal_amount > 0 ? ($total_paid_amount / $total_proposal_amount) * 100 : 0;
+
+                // Optionally, you can round the percentage to two decimal places
+                $paid_percentage = round($paid_percentage, 2);
+
+                //$proposal = Proposal::where('vendor_id', $vendor->id)->orderBy('id')->get();
+
+                $proposal = Proposal::where('vendor_id', $vendor->id)
+                ->with(['invoices' => function ($query) {
+                    // Filter invoices with status 1
+                    $query->where('invoice_status', 1);
                 }])
-                ->where('vendor_status', 'verified')
-                ->where('id', $vendor_id) // Add condition to fetch specific vendor by id
-                ->first(); // Use first() to get a single result instead of a collection
+                ->with(['paymentMilestones' => function ($query) {
+                    // Get the count and sum for all payment milestones related to each proposal
+                    $query->select('id', 'milestone_total_amount', 'proposal_id'); // Adjust fields as necessary
+                }])
+                ->orderBy('id')
+                ->get();
 
-               // print_r($vendordata);exit();
-    
-               // return view('vendor_dashboard');
-           
+
+
+
+
+                return view('vendor_dashboard', compact('total_proposal_amount', 'total_paid_amount', 'remainingBudget','paid_percentage','proposal'));
             }
         } else {
 
             $budgettotalAmount = Budget::sum('amount');
-            $PaidAmount = PaymentMilestone::whereHas('invoice', function($query) {
+            $PaidAmount = PaymentMilestone::whereHas('invoice', function ($query) {
                 $query->where('invoice_status', 1);
             })->sum('milestone_total_amount');
             $remainingBudget = $budgettotalAmount - $PaidAmount;
-            
+
             $usedPercentage = $budgettotalAmount > 0 ? ($PaidAmount / $budgettotalAmount) * 100 : 0;
 
             if (floor($usedPercentage) == $usedPercentage) {
-                $usedPercentage = number_format($usedPercentage, 0); 
-                } else {
-                $usedPercentage = number_format($usedPercentage, 2); 
-                }
+                $usedPercentage = number_format($usedPercentage, 0);
+            } else {
+                $usedPercentage = number_format($usedPercentage, 2);
+            }
 
 
-                $categoryWiseBudgets = Budget::with('category')
+            $categoryWiseBudgets = Budget::with('category')
                 ->select('category_id', \DB::raw('SUM(amount) as total_amount'))
                 ->groupBy('category_id')
                 ->orderBy('total_amount', 'DESC') // Order by total_amount in descending order
@@ -97,55 +127,55 @@ class HomeController extends Controller
 
             //$vendors = vendor::with('company')->where('vendor_status', 'verified')->orderBy('id')->get();
 
-            $vendors = Vendor::with(['company', 'proposals' => function($query) {
+            $vendors = Vendor::with(['company', 'proposals' => function ($query) {
                 $query->where('proposal_status', 1)
-                      ->select('vendor_id', \DB::raw('SUM(proposal_total_cost) as total_proposal_amount'))
-                      ->groupBy('vendor_id');
-            }, 'invoices' => function($query) {
+                    ->select('vendor_id', \DB::raw('SUM(proposal_total_cost) as total_proposal_amount'))
+                    ->groupBy('vendor_id');
+            }, 'invoices' => function ($query) {
                 $query->where('invoice_status', 1)
-                      ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
-                      ->select('invoices.vendor_id', \DB::raw('SUM(payment_milestones.milestone_total_amount) as total_paid_amount'))
-                      ->groupBy('invoices.vendor_id');
+                    ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
+                    ->select('invoices.vendor_id', \DB::raw('SUM(payment_milestones.milestone_total_amount) as total_paid_amount'))
+                    ->groupBy('invoices.vendor_id');
             }])
-            ->where('vendor_status', 'verified')
-            ->orderBy('id')
-            ->get();
+                ->where('vendor_status', 'verified')
+                ->orderBy('id')
+                ->get();
             $totalMilestoneByCategory = PaymentMilestone::join('invoices', 'payment_milestones.id', '=', 'invoices.milestone_id')
-    ->join('payment_request', 'invoices.id', '=', 'payment_request.invoice_id')
-    ->leftJoin('tbl_category as child_category', 'payment_request.category_id', '=', 'child_category.id') // LEFT JOIN for child_category
-    ->leftJoin('tbl_category as parent_category', 'child_category.parent_category', '=', 'parent_category.id') // Get parent category from child category
-    ->where('payment_request.payment_status', 'completed') // Filter by payment status
-    ->select(
-        DB::raw('COALESCE(parent_category.id, child_category.id) as parent_category_id'), // Get the parent category or fallback to child category
-        DB::raw('COALESCE(parent_category.category_name, child_category.category_name) as parent_category_name'), // Get the parent category name or fallback
-        DB::raw('SUM(payment_milestones.milestone_total_amount) as total_milestone_amount') // Sum the milestones for child categories under the same parent
-    )
-    ->groupBy('parent_category_id', 'parent_category_name') // Group by parent category instead of child category
-    ->orderBy('total_milestone_amount', 'DESC') // Order by total milestone amount
-    ->get();
-
-        
-
-        
-    $categorybudgetused = [];
-    foreach ($totalMilestoneByCategory as $milestone) {
-        // Use parent_category_id directly since child categories are grouped under parent
-        $categoryIdToUse = $milestone->parent_category_id;
-    
-        $categorybudgetused[] = [
-            'parent_category_id' => $milestone->parent_category_id,
-            'parent_category_name' => $milestone->parent_category_name,
-            'total_milestone_amount' => $milestone->total_milestone_amount,
-            'budget_amount' => $categoryWiseBudgets->where('category_id', $categoryIdToUse)->sum('total_amount') // Sum the budget based on parent category
-        ];
-    }
-    
-            
-     
-        //print_r($categorybudgetused);exit();
+                ->join('payment_request', 'invoices.id', '=', 'payment_request.invoice_id')
+                ->leftJoin('tbl_category as child_category', 'payment_request.category_id', '=', 'child_category.id') // LEFT JOIN for child_category
+                ->leftJoin('tbl_category as parent_category', 'child_category.parent_category', '=', 'parent_category.id') // Get parent category from child category
+                ->where('payment_request.payment_status', 'completed') // Filter by payment status
+                ->select(
+                    DB::raw('COALESCE(parent_category.id, child_category.id) as parent_category_id'), // Get the parent category or fallback to child category
+                    DB::raw('COALESCE(parent_category.category_name, child_category.category_name) as parent_category_name'), // Get the parent category name or fallback
+                    DB::raw('SUM(payment_milestones.milestone_total_amount) as total_milestone_amount') // Sum the milestones for child categories under the same parent
+                )
+                ->groupBy('parent_category_id', 'parent_category_name') // Group by parent category instead of child category
+                ->orderBy('total_milestone_amount', 'DESC') // Order by total milestone amount
+                ->get();
 
 
-            return view('home',compact('budgettotalAmount','categoryWiseBudgets','vendors','PaidAmount','remainingBudget','usedPercentage','categorybudgetused'));
+
+
+            $categorybudgetused = [];
+            foreach ($totalMilestoneByCategory as $milestone) {
+                // Use parent_category_id directly since child categories are grouped under parent
+                $categoryIdToUse = $milestone->parent_category_id;
+
+                $categorybudgetused[] = [
+                    'parent_category_id' => $milestone->parent_category_id,
+                    'parent_category_name' => $milestone->parent_category_name,
+                    'total_milestone_amount' => $milestone->total_milestone_amount,
+                    'budget_amount' => $categoryWiseBudgets->where('category_id', $categoryIdToUse)->sum('total_amount') // Sum the budget based on parent category
+                ];
+            }
+
+
+
+            //print_r($categorybudgetused);exit();
+
+
+            return view('home', compact('budgettotalAmount', 'categoryWiseBudgets', 'vendors', 'PaidAmount', 'remainingBudget', 'usedPercentage', 'categorybudgetused'));
         }
     }
 
@@ -218,7 +248,7 @@ class HomeController extends Controller
             $vendor->city = $request->city;
             $vendor->postcode = $request->postcode;
             $vendor->state = $request->state;
-            if($vendor->vendor_status != 'verified'){
+            if ($vendor->vendor_status != 'verified') {
                 $vendor->vendor_status = 'profile updated';
             }
 
@@ -235,24 +265,24 @@ class HomeController extends Controller
 
 
             $userId = Auth::user()->id;
-             $user = User::where('id', $userId)->first();
+            $user = User::where('id', $userId)->first();
 
-             $user->first_name = $request->name;
+            $user->first_name = $request->name;
 
-             $user->save();
+            $user->save();
 
             $detailsvendor = [
                 'name' => $vendor->vendor_name,
-                
+
             ];
 
-            $subject ="Welcome to Amrita - Vendor Sign-Up Successful!";
+            $subject = "Welcome to Amrita - Vendor Sign-Up Successful!";
 
-            Mail::to($vendor->email)->send(new VendorRegistration($detailsvendor,$subject));
+            Mail::to($vendor->email)->send(new VendorRegistration($detailsvendor, $subject));
 
-            $adminsubject ="Vendor Sign-Up Notification - Review and Approval Required";
+            $adminsubject = "Vendor Sign-Up Notification - Review and Approval Required";
             $adminemail = env('CONTACT_MAIL');
-            Mail::to($adminemail)->send(new AdminVendorRegistration($detailsvendor,$adminsubject));
+            Mail::to($adminemail)->send(new AdminVendorRegistration($detailsvendor, $adminsubject));
 
 
 
@@ -335,7 +365,7 @@ class HomeController extends Controller
             $vendor->city = $request->city;
             $vendor->postcode = $request->postcode;
             $vendor->state = $request->state;
-            if($vendor->vendor_status != 'verified'){
+            if ($vendor->vendor_status != 'verified') {
                 $vendor->vendor_status = 'profile updated';
             }
 
@@ -352,13 +382,13 @@ class HomeController extends Controller
 
 
             $userId = Auth::user()->id;
-             $user = User::where('id', $userId)->first();
+            $user = User::where('id', $userId)->first();
 
-             $user->first_name = $request->name;
+            $user->first_name = $request->name;
 
-             $user->save();
+            $user->save();
 
-            
+
 
             return redirect()->route('lead.index')->with('success', 'Profile Updated Successfully');
         } catch (\Exception $e) {
@@ -375,14 +405,14 @@ class HomeController extends Controller
 
         $id = 9;
 
-        $proposal = Proposal::with(['paymentMilestones', 'vendor.states','proposalro'])->find($id);
+        $proposal = Proposal::with(['paymentMilestones', 'vendor.states', 'proposalro'])->find($id);
 
-       
-        
+
+
         $number = $proposal->proposal_total_cost;
         $numbersWords = new Numbers_Words();
         $amounwords = $numbersWords->toWords($number);
-        
-        return view('lead.release_order',compact('proposal', 'amounwords'));
+
+        return view('lead.release_order', compact('proposal', 'amounwords'));
     }
 }

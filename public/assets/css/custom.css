@@ -101,10 +101,8 @@ border-bottom: 1px solid var(--kt-primary) !important;
     background-color: #00bcd4 !important;
 }
 .bg-orange-dark
-{
-    
-        background-color: #f66505 !important;
-     
+{   
+    background-color: #f66505 !important;     
 }
 
 .span-calender

@@ -27,7 +27,7 @@
         <div id="#kt_app_body_content"
             style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:20px 0px; width:100%;">
             <div
-                style="background-color:#ffffff; padding: 20px 0 10px 0; border-radius: 15px; margin:40px auto; max-width: 600px;">
+                style="background-color:#ffffff; padding: 30px 0 10px 0; border-radius: 15px; margin:40px auto; max-width: 600px;">
 
                 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto"
                     style="border-collapse:collapse">
@@ -38,43 +38,48 @@
                                 <!--begin:Email content-->
                                 <div style="text-align:center; margin:0 15px 0px 15px">
                                     <!--begin:Logo-->
-                                    <div style="margin-bottom: 40px; border-bottom:1px solid #ccc">
-                                        <a href=" rel=" noopener" target="_blank">
-                                            <img alt="Logo"
-                                                src="https://doabuet.amrita.edu/assets/media/logos/logo_purple.png"
-                                                style="height: 75px" />
-                                        </a>
+                                    <div style="margin-bottom: 20px; border-bottom:1px solid #e2e2e2">
+
+                                        <img src="https://doabuet.amrita.edu/assets/media/logos/logo_purple_mail.png"
+                                            style="height: 80px" />
+
                                     </div>
                                     <!--end:Logo-->
 
                                     <!--begin:Text-->
                                     <div
-                                        style="font-size: 14px; font-weight: 500; margin-bottom: 7px; font-family:Arial,Helvetica,sans-serif;">
+                                        style="text-align: left;font-size: 14px; font-weight: 500; margin-bottom: 7px; font-family:Arial,Helvetica,sans-serif;">
                                         <p
-                                            style="margin-bottom:20px; color:#181C32; font-weight:700;text-align: left;margin-left: 10px;">
-                                            Dear {{$details['name']}},</p>
-                                        <p style="margin-bottom:20px; color:#777;margin-top:20px;">Thank you for
+                                            style="margin-bottom:20px; color:#525252; font-weight:700;text-align: left;margin-left: 10px;">
+                                            Dear <span style="text-transform: uppercase;">{{$details['name']}},</span>
+                                        </p>
+                                        <p style="margin:20px 15px; color:#333">Thank you for
                                             submitting your proposal for the {{$details['proposal_title']}}. We
                                             appreciate the time and effort you dedicated to your submission.</p>
-                                        <p style="margin-bottom:20px; color:#777">After careful consideration, we regret
+                                        <p style="margin:20px 15px; color:#333">After careful consideration, we regret
                                             to inform you that your proposal has not been approved at this time. While
                                             we recognize the detail and effort you put into your work, it did not fully
                                             align with our current requirements.</p>
-                                        <p style="margin-bottom:20px; color:#777">We would like to provide you with some
+                                        <p style="margin:20px 15px; color:#333">We would like to provide you with some
                                             feedback that may help you in revising your proposal:</p>
 
                                         <p
-                                            style="margin: 20px;color: #333;padding: 15px;border: 1px dashed #f1416c;background: #fff5f8;border-radius: 4px;">
+                                            style="margin: 20px 15px;color: #333;padding: 15px;border: 1px dashed #f1416c;background: #fff5f8;border-radius: 4px;">
                                             {{$details['rejection_reason']}}</p>
 
-                                        <p style="margin-bottom:20px; color:#777">We highly value your expertise and
+                                        <p style="margin: 20px 15px;color:#333">We highly value your expertise and
                                             encourage you to address these comments and resubmit your proposal for
                                             our
                                             consideration. We believe that with the necessary adjustments, your
                                             proposal
                                             could better align with our needs.</p>
-                                        <p style="margin-bottom:20px; color:#777">Thank you once again for your
+                                        <p style="margin: 20px 15px;color:#333">Thank you once again for your
                                             interest, and we look forward to your revised submission.
+                                        </p>
+                                        <p
+                                            style="margin:30px 0px 0px; color:#525252; font-weight:700;text-align: left;margin-left: 10px;">
+                                            Director (Admissions) <br>
+                                            Amrita Vishwa Vidyapeetham
                                         </p>
 
 
@@ -85,12 +90,11 @@
                                 <!--end:Email content-->
                             </td>
                         </tr>
-
                         <tr>
                             <td align="center" valign="center"
-                                style="font-size: 13px; text-align:center; padding: 0 10px 40px 10px; font-weight: 500; color: #93949b; font-family:Arial,Helvetica,sans-serif">
+                                style="font-size: 13px; text-align:center; padding: 5px 10px 5px 10px; font-weight: 500; color: #93949b;border-top:1px solid #e2e2e2; font-family:Arial,Helvetica,sans-serif">
 
-                                <p style="margin-bottom:2px">For Inquiries or Support, Call Us: +91 94899 32973</p>
+                                <p style="margin:2px">For Inquiries or Support, Call Us: +91 94899 32973</p>
                                 <p style="margin-bottom:4px">You may reach us at
                                     <a href="#" rel="noopener" target="_blank"
                                         style="font-weight: 600; padding-bottom:20px">directoradmissions@amrita.edu</a>.
@@ -101,7 +105,7 @@
 
                         <tr>
                             <td align="center" valign="center"
-                                style="font-size: 13px; padding:0 15px; text-align:center; font-weight: 500; color: #93949b;font-family:Arial,Helvetica,sans-serif;  border-top:1px solid #ccc;margin-top:20px">
+                                style="font-size: 13px; padding:0 15px; text-align:center; font-weight: 500; color: #93949b;font-family:Arial,Helvetica,sans-serif;  border-top:1px solid #e2e2e2;margin-top:20px">
                                 <p>&copy; 2024. Amrita Vishwa Vidyapeetham
                                 </p>
                             </td>

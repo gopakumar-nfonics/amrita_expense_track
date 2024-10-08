@@ -1,24 +1,24 @@
 @extends('layouts.admin')
 
 <style>
-    .bottom {
-        display: flex;
-        justify-content: space-between;
-        /* Distribute space between elements */
-        align-items: center;
-        /* Align elements vertically in the center */
-    }
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    /* Distribute space between elements */
+    align-items: center;
+    /* Align elements vertically in the center */
+}
 </style>
 <style>
-    .nav-scroll {
-        overflow-x: auto;
-        white-space: nowrap;
-    }
+.nav-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+}
 
-    .nav-item {
-        display: inline-block !important;
-        vertical-align: top;
-    }
+.nav-item {
+    display: inline-block !important;
+    vertical-align: top;
+}
 </style>
 @section('content')
 <!--begin::Main-->
@@ -49,7 +49,7 @@
                                     <!--end::Heading-->
                                     <!--begin::Balance-->
                                     <div class="d-flex text-center flex-column text-white pt-8">
-                                        <span class="fw-semibold fs-7">Proposed Amount</span>
+                                        <span class="fw-semibold fs-7">Approved Amount</span>
                                         <span
                                             class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format_indian($total_proposal_amount, 2) }}</span>
                                     </div>
@@ -141,8 +141,9 @@
                                 <span class=" color-blue  me-2 fs-7 ">{{$paid_percentage}}% of Amount Disbursed</span>
                             </div>
                             <div class="progress h-6px w-100">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: {{$paid_percentage}}%;"
-                                    aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar bg-info" role="progressbar"
+                                    style="width: {{$paid_percentage}}%;" aria-valuenow="90" aria-valuemin="0"
+                                    aria-valuemax="100">
                                 </div>
                             </div>
                         </div>
@@ -157,7 +158,8 @@
                         <div class="card-header border-0 pt-10 px-5">
                             <h3 class="card-title align-items-start flex-column">
                                 <span class="card-label fw-bold fs-3 mb-1">Proposal Statistics</span>
-                                <span class="text-muted mt-1 fw-semibold fs-7">Over {{count($proposal)}} Proposals</span>
+                                <span class="text-muted mt-1 fw-semibold fs-7">Over {{count($proposal)}}
+                                    Proposals</span>
                             </h3>
                             <!--begin::Card toolbar-->
                             <div class="card-toolbar">
@@ -194,10 +196,11 @@
 
                                         @php
 
-                                        $total_paid_amount = $pro->invoices->isNotEmpty() ? $pro->invoices[0]->total_paid_amount : 0;
-                                        $total_milestone_count =  $pro->paymentMilestones->count();
+                                        $total_paid_amount = $pro->invoices->isNotEmpty() ?
+                                        $pro->invoices[0]->total_paid_amount : 0;
+                                        $total_milestone_count = $pro->paymentMilestones->count();
                                         $totlacost = $pro->proposal_total_cost;
-                                        
+
                                         $balanceAmount = $totlacost - $total_paid_amount;
                                         $paidPercentage = 22;
                                         $paidPercentage = $totlacost > 0 ? ($total_paid_amount /
@@ -228,53 +231,63 @@
                                                     <div class="d-flex justify-content-start flex-column">
                                                         <a href="{{ route('lead.show',$pro->id) }}"
                                                             class="text-dark fw-bold text-hover-primary fs-6">{{$pro->proposal_title}}</a>
+                                                        <div class="text-gray-400 fw-semibold fs-9 my-1">
+                                                            @if($pro->proposal_status == 0)
+                                                            <span class="badge badge-light-info fs-8">
+                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                                <span
+                                                                    class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+                                                                    <i
+                                                                        class="fa-regular fa-circle-dot color-blue fs-8 me-1 "></i>
+                                                                </span>
+                                                                <!--end::Svg Icon-->Pending Review
+                                                            </span>
+                                                            @elseif($pro->proposal_status == 2)
+                                                            <span class="badge badge-light-danger fs-8 rejected-span"
+                                                                title="View Comments"
+                                                                onclick="rejectionreason('{{$pro->id}}');">
+                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+
+                                                                <!--end::Svg Icon-->
+                                                                <i
+                                                                    class="fa-solid fa-close color-red fs-8 me-2 "></i>Rejected
+
+                                                            </span>
+
+
+                                                            @else
+                                                            <span class="badge badge-light-success fs-8">
+                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                                <span
+                                                                    class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+                                                                    <i
+                                                                        class="fa-solid fa-check light-green fs-8 me-1 "></i>
+                                                                </span>
+                                                                <!--end::Svg Icon-->Approved
+                                                            </span>
+                                                            @endif
+                                                        </div>
                                                         <span
                                                             class="text-muted fw-semibold text-muted d-block fs-8">Submitted
-                                                            on {{ \Carbon\Carbon::parse($pro->created_at)->format('d-M-Y') }}</span>
-
-                                                        <span class="fw-semibold d-block text-gray-600 fs-8">No. of
+                                                            on
+                                                            {{ \Carbon\Carbon::parse($pro->created_at)->format('d-M-Y') }}
+                                                            | No.
+                                                            of
                                                             Milestones
                                                             : {{$total_milestone_count}}</span>
 
-                                                            <div class="text-gray-400 fw-semibold fs-9">
-                                                    @if($pro->proposal_status == 0)
-                                                    <span class="badge badge-light-info fs-8">
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-                                                        <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
-                                                            <i
-                                                                class="fa-regular fa-circle-dot color-blue fs-8 me-1 "></i>
-                                                        </span>
-                                                        <!--end::Svg Icon-->Pending Review
-                                                    </span>
-                                                    @elseif($pro->proposal_status == 2)
-                                                    <span class="badge badge-light-danger fs-8 rejected-span"
-                                                        title="View Comments"
-                                                        onclick="rejectionreason('{{$pro->id}}');">
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
 
-                                                        <!--end::Svg Icon-->
-                                                        <i class="fa-solid fa-close color-red fs-8 me-2 "></i>Rejected
 
-                                                    </span>
-                                           
 
-                                                    @else
-                                                    <span class="badge badge-light-success fs-8">
-                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-                                                        <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
-                                                            <i class="fa-solid fa-check light-green fs-8 me-1 "></i>
-                                                        </span>
-                                                        <!--end::Svg Icon-->Approved
-                                                    </span>
-                                                    @endif
-                                                </div>
 
 
                                                     </div>
+
                                                 </div>
                                             </td>
 
                                             <td>
+
                                                 <div class="d-flex align-items-center">
                                                     <div class="fw-400 d-block fs-6">
                                                         <span
@@ -283,8 +296,10 @@
                                                             class="total-cost-span fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($pro->proposal_total_cost, 2) }}</span>
                                                     </div>
                                                 </div>
+
                                             </td>
                                             <td>
+                                                @if($pro->proposal_status != 2)
                                                 <div class="d-flex align-items-center">
                                                     <div class="fw-400 d-block fs-6">
                                                         <span
@@ -294,8 +309,12 @@
                                                     </div>
                                                 </div>
 
+                                                @else
+                                                <span class="fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2">NA</span>
+                                                @endif
                                             </td>
                                             <td>
+                                                @if($pro->proposal_status != 2)
                                                 <div class="d-flex align-items-center">
                                                     <div class="fw-400 d-block fs-6">
                                                         <span
@@ -304,9 +323,13 @@
                                                             class="total-cost-span fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{ number_format_indian($balanceAmount, 2) }}</span>
                                                     </div>
                                                 </div>
+                                                @else
+                                                <span class="fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2">NA</span>
+                                                @endif
 
                                             </td>
-                                            <td class="text-end">
+                                            <td>
+                                                @if($pro->proposal_status != 2)
                                                 <div class="d-flex flex-column w-100 me-2">
                                                     <div class="d-flex flex-stack mb-0">
                                                         <span
@@ -320,6 +343,10 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                @else
+                                                <span
+                                                    class="fs-5 fw-bold text-gray-800 me-2 lh-1 ls-n2 text-start">NA</span>
+                                                @endif
                                             </td>
 
                                         </tr>
@@ -441,94 +468,94 @@ function number_format_indian(float $num, int $decimals = 2, string $decimal_sep
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
 
 <script>
-    var usedPercentage = {
-        {
-            $usedPercentage
-        }
-    };
-    var initMixedWidget4 = function() {
-        var charts = document.querySelectorAll('.budgetused');
-
-        [].slice.call(charts).map(function(element) {
-            var height = parseInt(window.getComputedStyle(element).height);
-
-            if (!element) {
-                return;
-            }
-
-            var color = element.getAttribute('data-kt-chart-color');
-
-            var baseColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-' + color);
-            var lightColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-' + color +
-                '-light');
-            var labelColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-gray-700');
-
-            var options = {
-                series: [usedPercentage], // Dynamically pass your used percentage here
-                chart: {
-                    fontFamily: 'inherit',
-                    height: height,
-                    type: 'radialBar',
-                },
-                plotOptions: {
-                    radialBar: {
-                        hollow: {
-                            margin: 0,
-                            size: "65%"
-                        },
-                        dataLabels: {
-                            showOn: "always",
-                            name: {
-                                show: false,
-                                fontWeight: '700'
-                            },
-                            value: {
-                                color: labelColor,
-                                fontSize: "30px",
-                                fontWeight: '700',
-                                offsetY: 12,
-                                show: true,
-                                formatter: function(val) {
-                                    return val + '%';
-                                }
-                            }
-                        },
-                        track: {
-                            background: lightColor,
-                            strokeWidth: '100%'
-                        }
-                    }
-                },
-                colors: [baseColor],
-                stroke: {
-                    lineCap: "round",
-                },
-                labels: ["Progress"]
-            };
-
-            var chart = new ApexCharts(element, options);
-            chart.render();
-        });
+var usedPercentage = {
+    {
+        $usedPercentage
     }
+};
+var initMixedWidget4 = function() {
+    var charts = document.querySelectorAll('.budgetused');
 
-    // Initialize the chart when the document is fully loaded
-    document.addEventListener("DOMContentLoaded", function() {
-        initMixedWidget4();
+    [].slice.call(charts).map(function(element) {
+        var height = parseInt(window.getComputedStyle(element).height);
+
+        if (!element) {
+            return;
+        }
+
+        var color = element.getAttribute('data-kt-chart-color');
+
+        var baseColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-' + color);
+        var lightColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-' + color +
+            '-light');
+        var labelColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-gray-700');
+
+        var options = {
+            series: [usedPercentage], // Dynamically pass your used percentage here
+            chart: {
+                fontFamily: 'inherit',
+                height: height,
+                type: 'radialBar',
+            },
+            plotOptions: {
+                radialBar: {
+                    hollow: {
+                        margin: 0,
+                        size: "65%"
+                    },
+                    dataLabels: {
+                        showOn: "always",
+                        name: {
+                            show: false,
+                            fontWeight: '700'
+                        },
+                        value: {
+                            color: labelColor,
+                            fontSize: "30px",
+                            fontWeight: '700',
+                            offsetY: 12,
+                            show: true,
+                            formatter: function(val) {
+                                return val + '%';
+                            }
+                        }
+                    },
+                    track: {
+                        background: lightColor,
+                        strokeWidth: '100%'
+                    }
+                }
+            },
+            colors: [baseColor],
+            stroke: {
+                lineCap: "round",
+            },
+            labels: ["Progress"]
+        };
+
+        var chart = new ApexCharts(element, options);
+        chart.render();
     });
+}
+
+// Initialize the chart when the document is fully loaded
+document.addEventListener("DOMContentLoaded", function() {
+    initMixedWidget4();
+});
 </script>
 @endsection
 
 @section('pageScripts')
 <script>
-    $(document).ready(function() {
-        $('#vendor-table').DataTable({
-            "pageLength": 10,
-            "ordering": false,
-            "searching": false,
-            "lengthChange": false,
-            "autoWidth": false,
-        });
+$(document).ready(function() {
+    $('#vendor-table').DataTable({
+        "pageLength": 10,
+        "ordering": false,
+        "searching": false,
+        "lengthChange": false,
+        "autoWidth": false,
     });
+});
 </script>
 
 @endsection

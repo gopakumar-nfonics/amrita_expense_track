@@ -359,14 +359,17 @@
                                         $vwords = explode(' ', $vendor->vendor_name);
                                         $voutput = strtoupper(substr($vendor->vendor_name, 0, 2));
 
+                                        // Define an array of color classes
+                                        $colors = ['bg-red', 'bg-cyan', 'bg-orange-dark', 'bg-blue','bg-green'];
 
                                         @endphp
                                         <tr>
 
                                             <td>
                                                 <div class="d-flex align-items-center">
-                                                    <div class="symbol symbol-45px me-5">
-                                                        <span class="symbol-label bg-blue text-white">
+                                                    <div class="symbol symbol-45px symbol-circle me-5">
+                                                        <span
+                                                            class="symbol-label {{ $colors[array_rand($colors)] }} text-white">
                                                             {{$voutput}}</span>
 
                                                     </div>
@@ -514,7 +517,7 @@
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
 
 <script>
-var usedPercentage = {{$usedPercentage}};
+var usedPercentage = {{$usedPercentage }};
 var initMixedWidget4 = function() {
     var charts = document.querySelectorAll('.budgetused');
 

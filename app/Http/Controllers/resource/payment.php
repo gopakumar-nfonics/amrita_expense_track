@@ -43,7 +43,14 @@ class payment extends Controller
      */
     public function create($id)
     {
-        $main_categories = Category::whereNull('parent_category')->with('children')->get();
+        $categories = Category::whereNull('parent_category')
+    ->with(['children', 'budgets']) // Eager load children and budgets
+    ->get();
+
+    $main_categories = $categories->filter(function ($category) {
+        return $category->budgets->isNotEmpty(); // Categories with budgets
+    });
+
         $stream = Stream::orderBy('stream_name')->get();
         $invoice = Invoices::with(['proposal', 'milestone', 'vendor.banckaccount', 'vendor.states', 'proposalro'])->where('id', $id)->first();
         // print_r($invoice->vendor->banckaccount);exit();

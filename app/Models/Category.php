@@ -14,6 +14,11 @@ class Category extends Model
 
     protected $fillable = ['category_name', 'category_code', 'parent_category', 'remarks'];
 
+    public function budgets()
+    {
+        return $this->hasMany(Budget::class, 'category_id'); 
+    }
+
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_category');

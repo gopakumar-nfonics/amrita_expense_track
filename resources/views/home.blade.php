@@ -360,7 +360,8 @@
                                         $voutput = strtoupper(substr($vendor->vendor_name, 0, 2));
 
                                         // Define an array of color classes
-                                        $colors = ['bg-red', 'bg-cyan', 'bg-orange-dark', 'bg-blue','bg-green'];
+                                       // Define an array of custom color codes
+    $colors = ['#45ab48', '#f66505', '#0057D9', '#FFD700', '#FF5733', '#7D3C98', '#17A2B8', '#FF6347', '#5A9E6F', '#34495E'];
 
                                         @endphp
                                         <tr>
@@ -368,8 +369,7 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     <div class="symbol symbol-45px symbol-circle me-5">
-                                                        <span
-                                                            class="symbol-label {{ $colors[array_rand($colors)] }} text-white">
+                                                   <span class="symbol-label text-white" style="background-color: {{ $colors[array_rand($colors)] }};">
                                                             {{$voutput}}</span>
 
                                                     </div>

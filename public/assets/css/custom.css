@@ -58,7 +58,7 @@ border-bottom: 1px solid var(--kt-primary) !important;
 }
 .color-orange
 {
-    color: #f66505 !important;
+    color: var(--kt-warning) !important;
 }
 .color-blue
 {
@@ -86,7 +86,7 @@ border-bottom: 1px solid var(--kt-primary) !important;
 }
 .bg-orange
 {
-    background-color: #f66505 !important;
+    background-color: var(--kt-warning) !important;
 }
 .bg-blue
 {

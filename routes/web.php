@@ -80,6 +80,10 @@ Route::post('/lead/reject', [\App\Http\Controllers\resource\lead::class, 'reject
 
 
 Route::get('/catreport', [App\Http\Controllers\ReportsController::class, 'index'])->name('catreport');
+
+Route::get('/catreport', [App\Http\Controllers\ReportsController::class, 'index'])->name('catreport');
+Route::post('/reportdata', [App\Http\Controllers\ReportsController::class, 'reportdata'])->name('reports.reportdata');
+
 Route::get('lead/rejectionreason/{proposal_id}', [\App\Http\Controllers\resource\lead::class, 'rejectionReason']);
 
 Route::get('/support-center', function () {

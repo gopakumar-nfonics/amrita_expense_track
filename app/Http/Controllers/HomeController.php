@@ -43,6 +43,7 @@ class HomeController extends Controller
     {
 
         if (Auth::user()->isvendor()) {
+            if (Auth::check()) {
             if(Auth::user()->vendor_status == null){
                 return redirect()->route('registration');
 
@@ -72,6 +73,10 @@ class HomeController extends Controller
                // return view('vendor_dashboard');
            
             }
+        }
+        else {
+            return redirect()->route('login');
+        }
         } else {
 
             $budgettotalAmount = Budget::sum('amount');

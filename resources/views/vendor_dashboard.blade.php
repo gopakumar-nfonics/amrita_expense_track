@@ -135,10 +135,11 @@
                 <div class="row g-5 g-xl-10 mb-3 px-5 ">
 
 
-                    <div class="card mb-5 pb-5 pt-4 px-10">
+                    <div class="card mb-5 pb-5 pt-5 px-10">
                         <div class="d-flex flex-column w-100 me-2">
                             <div class="d-flex flex-stack mb-0">
-                                <span class=" color-blue  me-2 fs-7 ">{{$paid_percentage}}% of Amount Disbursed</span>
+                                <span class=" color-blue  me-2 fs-4 ">{{$paid_percentage}}% <span class="fs-7 ">of
+                                        Amount Disbursed</span></span>
                             </div>
                             <div class="progress h-6px w-100">
                                 <div class="progress-bar bg-info" role="progressbar"

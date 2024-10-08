@@ -5,8 +5,6 @@ namespace App\Exceptions;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
-use Illuminate\Auth\AuthenticationException;
-
 class Handler extends ExceptionHandler
 {
     /**
@@ -40,14 +38,4 @@ class Handler extends ExceptionHandler
             //
         });
     }
-
-    public function render($request, Throwable $exception)
-{
-    // Check for AuthenticationException, which occurs when session is invalid or user is not logged in
-    if ($exception instanceof AuthenticationException) {
-        return redirect()->route('login')->with('error', 'Your session has expired. Please log in again.');
-    }
-
-    return parent::render($request, $exception);
-}
 }

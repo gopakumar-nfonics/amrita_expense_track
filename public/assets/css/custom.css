@@ -105,6 +105,23 @@ border-bottom: 1px solid var(--kt-primary) !important;
     background-color: #f66505 !important;     
 }
 
+.bg-blue-dark
+{   
+    background-color: #085765 !important;     
+}
+.bg-purple-dark
+{   
+    background-color: #da3b73 !important;     
+}
+.bg-cyan-dark
+{   
+    background-color: #08a582 !important;     
+}
+
+
+
+
+
 .span-calender
 {
     background-color: #f5f5f5;

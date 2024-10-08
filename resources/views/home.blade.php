@@ -360,7 +360,7 @@
                                         $voutput = strtoupper(substr($vendor->vendor_name, 0, 2));
 
                                         // Define an array of color classes
-                                        $colors = ['bg-red', 'bg-cyan', 'bg-orange-dark', 'bg-blue','bg-green'];
+                                        $colors = ['bg-red', 'bg-cyan', 'bg-orange-dark', 'bg-blue','bg-green','bg-blue-dark','bg-purple-dark','bg-cyan-dark'];
 
                                         @endphp
                                         <tr>

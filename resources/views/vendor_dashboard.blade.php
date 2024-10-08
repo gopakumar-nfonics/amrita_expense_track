@@ -194,10 +194,10 @@
 
                                         @php
 
-                                        $total_paid_amount = $pro->invoices->sum('paymentMilestone.milestone_total_amount'); // If using a relationship in invoices to access payment milestones
-                                        $total_milestone_count = $pro->paymentMilestones->count();
+                                        $total_paid_amount = $pro->invoices->isNotEmpty() ? $pro->invoices[0]->total_paid_amount : 0;
+                                        $total_milestone_count =  $pro->paymentMilestones->count();
                                         $totlacost = $pro->proposal_total_cost;
-
+                                        
                                         $balanceAmount = $totlacost - $total_paid_amount;
                                         $paidPercentage = 22;
                                         $paidPercentage = $totlacost > 0 ? ($total_paid_amount /
@@ -236,38 +236,38 @@
                                                             Milestones
                                                             : {{$total_milestone_count}}</span>
 
-                                                        <div class="text-gray-400 fw-semibold fs-9">
-                                                            @if($pro->proposal_status == 0)
-                                                            <span class="badge badge-light-info fs-8">
-                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-                                                                <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
-                                                                    <i
-                                                                        class="fa-regular fa-circle-dot color-blue fs-8 me-1 "></i>
-                                                                </span>
-                                                                <!--end::Svg Icon-->Pending Review
-                                                            </span>
-                                                            @elseif($pro->proposal_status == 2)
-                                                            <span class="badge badge-light-danger fs-8 rejected-span"
-                                                                title="View Comments"
-                                                                onclick="rejectionreason('{{$pro->id}}');">
-                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                            <div class="text-gray-400 fw-semibold fs-9">
+                                                    @if($pro->proposal_status == 0)
+                                                    <span class="badge badge-light-info fs-8">
+                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                        <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+                                                            <i
+                                                                class="fa-regular fa-circle-dot color-blue fs-8 me-1 "></i>
+                                                        </span>
+                                                        <!--end::Svg Icon-->Pending Review
+                                                    </span>
+                                                    @elseif($pro->proposal_status == 2)
+                                                    <span class="badge badge-light-danger fs-8 rejected-span"
+                                                        title="View Comments"
+                                                        onclick="rejectionreason('{{$pro->id}}');">
+                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
 
-                                                                <!--end::Svg Icon-->
-                                                                <i class="fa-solid fa-close color-red fs-8 me-2 "></i>Rejected
+                                                        <!--end::Svg Icon-->
+                                                        <i class="fa-solid fa-close color-red fs-8 me-2 "></i>Rejected
 
-                                                            </span>
+                                                    </span>
+                                           
 
-
-                                                            @else
-                                                            <span class="badge badge-light-success fs-8">
-                                                                <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
-                                                                <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
-                                                                    <i class="fa-solid fa-check light-green fs-8 me-1 "></i>
-                                                                </span>
-                                                                <!--end::Svg Icon-->Approved
-                                                            </span>
-                                                            @endif
-                                                        </div>
+                                                    @else
+                                                    <span class="badge badge-light-success fs-8">
+                                                        <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+                                                        <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+                                                            <i class="fa-solid fa-check light-green fs-8 me-1 "></i>
+                                                        </span>
+                                                        <!--end::Svg Icon-->Approved
+                                                    </span>
+                                                    @endif
+                                                </div>
 
 
                                                     </div>

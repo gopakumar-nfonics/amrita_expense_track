@@ -85,16 +85,20 @@ class HomeController extends Controller
                 //$proposal = Proposal::where('vendor_id', $vendor->id)->orderBy('id')->get();
 
                 $proposal = Proposal::where('vendor_id', $vendor->id)
-                ->with(['invoices' => function ($query) {
-                    // Filter invoices with status 1
-                    $query->where('invoice_status', 1);
-                }])
-                ->with(['paymentMilestones' => function ($query) {
-                    // Get the count and sum for all payment milestones related to each proposal
-                    $query->select('id', 'milestone_total_amount', 'proposal_id'); // Adjust fields as necessary
-                }])
-                ->orderBy('id')
-                ->get();
+    ->with(['invoices' => function ($query) {
+        $query->where('invoice_status', 1) // Add condition to filter by invoice_status
+            ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
+            ->select('invoices.proposal_id', 
+                DB::raw('COUNT(payment_milestones.id) as total_milestone_count'), 
+                DB::raw('SUM(payment_milestones.milestone_total_amount) as total_paid_amount'))
+            ->groupBy('invoices.proposal_id');
+    }])
+    ->with(['paymentMilestones' => function ($query) {
+        // Get the count and sum for all payment milestones related to each proposal
+        $query->select('id','proposal_id'); // Adjust fields as necessary
+    }])
+    ->orderBy('id')
+    ->get();
 
 
 

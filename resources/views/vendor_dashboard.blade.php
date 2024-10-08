@@ -215,7 +215,6 @@
                                         if ($paidPercentage >= 90) {
                                         $progressBarClass = 'bg-success';
                                         $progressBarText='color-green';
-
                                         } elseif ($paidPercentage >= 60) {
                                         $progressBarClass = 'bg-info';
                                         $progressBarText='color-blue';

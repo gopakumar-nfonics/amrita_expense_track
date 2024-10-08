@@ -345,18 +345,15 @@
                                         $paidPercentage = number_format($paidPercentage, 2);
                                         }
 
-                                        $progressBarClass = 'bg-info'; // Default class
-                                        $progressBarText='color-blue';
-                                        if ($paidPercentage >= 90) {
-                                        $progressBarClass = 'bg-danger';
-                                        $progressBarText='color-red';
-
-                                        } elseif ($paidPercentage >= 70) {
-                                        $progressBarClass = 'bg-warning';
+                                        $progressBarClass = 'bg-warning'; // Default class
                                         $progressBarText='color-orange';
-                                        } elseif ($paidPercentage >= 50) {
+                                        if ($paidPercentage >= 90) {
                                         $progressBarClass = 'bg-success';
-                                        $progressBarText='color-45ab48';
+                                        $progressBarText='color-green';
+
+                                        } elseif ($paidPercentage >= 60) {
+                                        $progressBarClass = 'bg-info';
+                                        $progressBarText='color-blue';
                                         }
 
                                         $vwords = explode(' ', $vendor->vendor_name);
@@ -423,7 +420,7 @@
                                                 <div class="d-flex flex-column w-100 me-2">
                                                     <div class="d-flex flex-stack mb-0">
                                                         <span
-                                                            class=" {{ $progressBarText }}  me-2 fs-3 fw-bold">{{ number_format($paidPercentage, 2) }}%</span>
+                                                            class=" {{ $progressBarText }}  me-2 fs-5 fw-bold">{{ number_format($paidPercentage, 2) }}%</span>
                                                     </div>
                                                     <div class="progress h-6px w-100">
                                                         <div class="progress-bar {{ $progressBarClass }}"

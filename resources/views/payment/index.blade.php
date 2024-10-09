@@ -102,6 +102,7 @@
                                                         </span>
                                                         <!--end::Svg Icon-->Payment Processed
                                                     </span>
+                                                    @if($request->utr_number)
                                                     <div>
                                                         <span class="text-muted fw-semibold text-muted d-block fs-8">UTR
                                                             :
@@ -111,6 +112,7 @@
                                                             :
                                                             {{ \Carbon\Carbon::parse($request->transaction_date)->format('d-M-Y') }}</span>
                                                     </div>
+                                                    @endif
                                                     @elseif($request->payment_status == "initiated")
 
                                                     <span class="badge badge-light-warning fs-8">

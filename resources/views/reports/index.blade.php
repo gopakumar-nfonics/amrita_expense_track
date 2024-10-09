@@ -108,7 +108,7 @@ $(document).ready(function() {
                 data: 'category',
                 name: 'category',
                 render: function(data) {
-                    return '<p class="allocated fs-5 fw-bold text-gray-800 py-2">' +
+                    return '<p class="allocated fs-5 text-gray-800 py-2">' +
                         data + '</p>';
                 }
             },
@@ -127,7 +127,7 @@ $(document).ready(function() {
                     return Array.isArray(data) && data.length > 0 ?
                         data.map(sub => '<p class="sub-cat-disp fs-6">' + sub.name +
                             '</p>')
-                        .join(' ') : '-';
+                        .join(' ') : '<p class="sub-cat-disp fs-6">NIL</p>';
                 }
             },
             {
@@ -138,7 +138,7 @@ $(document).ready(function() {
                         data.map(sub => '<p class="sub-expense-disp fs-6  text-end">&#x20b9;' +
                             sub
                             .expense +
-                            '</p>').join('') : '-';
+                            '</p>').join('') : '<p class="sub-cat-disp fs-6 text-end">NIL</p>';
                 }
             },
             {

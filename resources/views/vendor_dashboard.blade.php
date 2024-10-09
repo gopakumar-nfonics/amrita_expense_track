@@ -135,14 +135,14 @@
                 <div class="row g-5 g-xl-10 mb-3 px-5 ">
 
 
-                    <div class="card mb-5 pb-5 pt-5 px-10">
+                    <div class="card mb-5 pb-5 pt-5 px-10" style="background-color: #00bcd4;">
                         <div class="d-flex flex-column w-100 me-2">
                             <div class="d-flex flex-stack mb-0">
-                                <span class=" color-blue  me-2 fs-4 ">{{$paid_percentage}}% <span class="fs-7 ">of
+                                <span class=" color-white  me-2 fs-4 ">{{$paid_percentage}}% <span class="fs-7 ">of
                                         Amount Disbursed</span></span>
                             </div>
-                            <div class="progress h-6px w-100">
-                                <div class="progress-bar bg-info" role="progressbar"
+                            <div class="progress h-6px w-100 bg-white bg-opacity-50">
+                                <div class="progress-bar bg-white" role="progressbar"
                                     style="width: {{$paid_percentage}}%;" aria-valuenow="90" aria-valuemin="0"
                                     aria-valuemax="100">
                                 </div>
@@ -222,12 +222,24 @@
                                         $progressBarClass = 'bg-info';
                                         $progressBarText='color-blue';
                                         }
+
+                                        $voutput = strtoupper(substr($pro->proposal_title, 0, 2));
+
+                                        // Define an array of color classes
+                                        $colors = ['bg-red', 'bg-cyan', 'bg-orange-dark',
+                                        'bg-blue','bg-green','bg-blue-dark','bg-purple-dark','bg-cyan-dark'];
                                         @endphp
 
                                         <tr>
 
                                             <td>
                                                 <div class="d-flex align-items-center">
+                                                    <div class="symbol symbol-45px symbol-circle me-5">
+                                                        <span
+                                                            class="symbol-label {{ $colors[array_rand($colors)] }} text-white">
+                                                            {{$voutput}}</span>
+
+                                                    </div>
 
                                                     <div class="d-flex justify-content-start flex-column">
                                                         <a href="{{ route('lead.show',$pro->id) }}"

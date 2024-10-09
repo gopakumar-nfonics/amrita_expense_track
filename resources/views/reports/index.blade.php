@@ -20,6 +20,9 @@
             <!--end::Page title-->
             <!--begin::Button-->
             <div class="card-toolbar">
+                <a href="" class="btn btn-sm btn-success me-5">
+                    <i class="fa-solid fa-download"></i> Excel Export
+                </a>
                 <a href="" class="btn btn-sm btn-primary">
                     Back
                 </a>

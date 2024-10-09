@@ -16,24 +16,24 @@
             <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
                 <!--begin::Logo-->
                 <a href="" class="mb-0 mb-lg-12">
-                    <img alt="Logo" src="assets/media/logos/logo.svg" class="h-60px h-lg-75px" />
+                    <img alt="Logo" src="assets/media/logos/logo.svg" class="h-50px h-lg-50px" />
                 </a>
                 <!--end::Logo-->
                 <!--begin::Image-->
-                <img class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-10 mb-lg-20"
+                <img class="d-none d-lg-block mx-auto w-200px w-md-50 w-lg-400px"
                     src="assets/media/misc/auth-screens.png" alt="" />
                 <!--end::Image-->
                 <!--begin::Title-->
-                <h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">Expense Tracking Solution
-                </h1>
+                <h1 class="d-none d-lg-block text-white fs-1 fw-bolder text-center mt-6">Budgeting & Expense Tracking
+                    Solution</h1>
                 <!--end::Title-->
                 <!--begin::Text-->
                 <div class="d-none d-lg-block text-white fs-base text-center">Effortlessly track expenses,
                     <a href="#" class="opacity-75-hover text-warning fw-bold me-1">set budgets,</a>and stay in control
                     of your
                     <br />financial health with our
-                    <a href="#" class="opacity-75-hover text-warning fw-bold me-1">intuitive expense tracking
-                        solution.</a>
+                    <a href="#" class="opacity-75-hover text-warning fw-bold me-1">intuitive budgeting & expense
+                        tracking solution.</a>
                 </div>
                 <!--end::Text-->
             </div>

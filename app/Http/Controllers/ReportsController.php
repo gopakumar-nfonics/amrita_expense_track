@@ -9,6 +9,9 @@ use App\Models\FinancialYear;
 use App\Models\PaymentRequest;
 use App\Models\Budget as Budgets;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BudgetReportExport;
+
 class ReportsController extends Controller
 {
     public function index()
@@ -172,6 +175,68 @@ foreach ($budgets as $budget) {
             'recordsFiltered' => $totalCount, // You can modify this if you want to return filtered count
             'data' => $categories
         ]);
+    }
+
+    public function exportBudgetReport()
+    {
+        $budgets = Budgets::select('tbl_budget.*')
+    ->selectRaw('(SELECT SUM(payment_milestones.milestone_total_amount) 
+                  FROM payment_request
+                  INNER JOIN invoices ON payment_request.invoice_id = invoices.id
+                  INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
+                  INNER JOIN tbl_category ON payment_request.category_id = tbl_category.id
+                  WHERE (payment_request.category_id = tbl_budget.category_id 
+                         OR tbl_category.parent_category = tbl_budget.category_id)
+                  AND payment_request.payment_status = "completed") as used_amount')
+    ->from('tbl_budget')
+    ->whereNull('tbl_budget.deleted_at')
+    ->with(['category' => function ($query) {
+        $query->select('tbl_category.*')
+              ->selectRaw('(SELECT SUM(payment_milestones.milestone_total_amount) 
+                            FROM payment_request
+                            INNER JOIN invoices ON payment_request.invoice_id = invoices.id
+                            INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
+                            WHERE payment_request.category_id = tbl_category.id 
+                            AND payment_request.payment_status = "completed") as used_amount_by_subcategory')
+              ->whereNull('tbl_category.deleted_at')
+              ->with(['children' => function ($subQuery) {
+                  $subQuery->select('tbl_category.*')
+                           ->selectRaw('(SELECT SUM(payment_milestones.milestone_total_amount) 
+                                         FROM payment_request
+                                         INNER JOIN invoices ON payment_request.invoice_id = invoices.id
+                                         INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
+                                         WHERE payment_request.category_id = tbl_category.id 
+                                         AND payment_request.payment_status = "completed") as used_amount')
+                           ->whereNull('tbl_category.deleted_at');
+              }]);
+    }])
+    ->orderBy('id')
+    ->get();
+
+// Initialize the categories array
+$categories = [];
+
+foreach ($budgets as $budget) {
+    // Retrieve sub-categories if available
+    $subCategories = [];
+    foreach ($budget->category->children as $subCategory) {
+        $subCategories[] = [
+            'id' => $subCategory->id, // Assuming you want to include the ID
+            'name' => $subCategory->category_name, // Adjust this field based on your data
+            'expense' => number_format($subCategory->used_amount) // Access the correct field for used amount
+        ];
+    }
+
+    // Push the formatted data into the categories array
+    $categories[] = [
+        'category' => $budget->category->category_name, // Adjust this field based on your data
+        'allocated' => number_format($budget->amount), // Format the allocated amount
+        'sub_categories' => $subCategories,
+        'total_expense' => number_format($budget->used_amount), // Sum of the used amount
+        'balance' => number_format($budget->amount - $budget->used_amount), // Calculate the balance
+    ];
+}
+  return Excel::download(new BudgetReportExport($categories), 'budgets.xlsx');
     }
     
     

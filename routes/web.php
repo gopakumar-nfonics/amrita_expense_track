@@ -85,6 +85,7 @@ Route::get('/catreport', [App\Http\Controllers\ReportsController::class, 'index'
 Route::post('/reportdata', [App\Http\Controllers\ReportsController::class, 'reportdata'])->name('reports.reportdata');
 
 Route::get('lead/rejectionreason/{proposal_id}', [\App\Http\Controllers\resource\lead::class, 'rejectionReason']);
+Route::get('/export-budget-report', [App\Http\Controllers\ReportsController::class, 'exportBudgetReport'])->name('reports.exportcatreport');;
 
 Route::get('/support-center', function () {
     return view('support');

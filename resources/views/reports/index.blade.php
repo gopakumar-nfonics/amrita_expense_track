@@ -124,7 +124,7 @@ $(document).ready(function() {
                 data: 'category',
                 name: 'category',
                 render: function(data) {
-                    return '<p class="allocated fs-5 text-gray-800 py-2">' +
+                    return '<p class="allocated fs-6 text-gray-800 py-2">' +
                         data + '</p>';
                 }
             },
@@ -132,7 +132,7 @@ $(document).ready(function() {
                 data: 'allocated',
                 name: 'allocated',
                 render: function(data) {
-                    return '<p class="allocated fs-5 fw-bold text-gray-800 me-5 lh-1 ls-n1 text-end"> &#x20b9;' +
+                    return '<p class="allocated fs-6 fw-bold text-gray-800 me-5 lh-1 ls-n1 text-end"> &#x20b9;' +
                         data + '</p>';
                 }
             },
@@ -141,9 +141,9 @@ $(document).ready(function() {
                 name: 'sub_categories',
                 render: function(data) {
                     return Array.isArray(data) && data.length > 0 ?
-                        data.map(sub => '<p class="sub-cat-disp fs-6">' + sub.name +
+                        data.map(sub => '<p class="sub-cat-disp fs-7">' + sub.name +
                             '</p>')
-                        .join(' ') : '<p class="sub-cat-disp fs-6">NIL</p>';
+                        .join(' ') : '<p class="sub-cat-disp fs-7">NIL</p>';
                 }
             },
             {
@@ -151,17 +151,18 @@ $(document).ready(function() {
                 name: 'sub_expenses',
                 render: function(data) {
                     return Array.isArray(data) && data.length > 0 ?
-                        data.map(sub => '<p class="sub-expense-disp fs-6  text-end">&#x20b9;' +
+                        data.map(sub =>
+                            '<p class="sub-expense-disp fs-7 fw-bold lh-1 ls-n1 text-end">&#x20b9;' +
                             sub
                             .expense +
-                            '</p>').join('') : '<p class="sub-cat-disp fs-6 text-end">NIL</p>';
+                            '</p>').join('') : '<p class="sub-cat-disp fs-7 text-end">NIL</p>';
                 }
             },
             {
                 data: 'total_expense',
                 name: 'total_expense',
                 render: function(data) {
-                    return '<p class="allocated fs-5 fw-bold text-gray-800 me-5 lh-1 ls-n1  text-end"> &#x20b9;' +
+                    return '<p class="allocated fs-6 fw-bold text-gray-800 me-5 lh-1 ls-n1  text-end"> &#x20b9;' +
                         data + '</p>';
                 }
             },
@@ -169,7 +170,7 @@ $(document).ready(function() {
                 data: 'balance',
                 name: 'balance',
                 render: function(data) {
-                    return '<p class="allocated fs-5 fw-bold text-gray-800 me-5 lh-1 ls-n1  text-end my-3 "> &#x20b9;' +
+                    return '<p class="allocated fs-6 fw-bold text-gray-800 me-5 lh-1 ls-n1  text-end my-3 "> &#x20b9;' +
                         data +
                         '<br><span class="badge badge-sm badge-light-success align-self-center px-2">95%</span></p>';
                 }

@@ -150,8 +150,9 @@ $(document).ready(function() {
                 data: 'balance',
                 name: 'balance',
                 render: function(data) {
-                    return '<p class="allocated fs-5 fw-bold text-gray-800 me-5 lh-1 ls-n1  text-end"> &#x20b9;' +
-                        data + '</p>';
+                    return '<p class="allocated fs-5 fw-bold text-gray-800 me-5 lh-1 ls-n1  text-end my-3 "> &#x20b9;' +
+                        data +
+                        '<br><span class="badge badge-sm badge-light-success align-self-center px-2">95%</span></p>';
                 }
             }
         ],

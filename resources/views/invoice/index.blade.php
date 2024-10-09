@@ -98,7 +98,9 @@
                                                         </span>
                                                         <!--end::Svg Icon-->Payment Processed
                                                     </span>
+                                                    @if($inv->paymentRequests)
                                                     <div>
+                                                    
                                                         <span class="text-muted fw-semibold text-muted d-block fs-8">UTR
                                                             :
                                                             #{{$inv->paymentRequests->utr_number}} </span>
@@ -107,6 +109,7 @@
                                                             :
                                                             {{ \Carbon\Carbon::parse($inv->paymentRequests->transaction_date)->format('d-M-Y') }}</span>
                                                     </div>
+                                                    @endif
                                                     @endif
                                                 </div>
                                             </div>

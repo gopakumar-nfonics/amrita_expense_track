@@ -46,6 +46,22 @@
                 <div class="card-body py-3">
                     <!--begin::Table container-->
                     <div class="table-responsive">
+
+                        <div class="filter-section mb-3 d-flex justify-content-end border-bottom py-4">
+                            <div class="d-flex flex-wrap">
+                                <div class="d-flex align-items-center me-3">
+                                    <label for="start-date" class="me-0 w-200px text-end"><i
+                                            class="fa-solid fa-filter me-1 text-dark fs-8"></i>Filter By:</label>
+                                </div>
+                                <div class="d-flex align-items-center me-3">
+                                    <input class="form-control p-2 me-5 fs-6" placeholder="Start Date" type="text">
+                                </div>
+                                <div class="d-flex align-items-center me-3">
+                                    <input class="form-control p-2  fs-6" placeholder="End Date" type="text">
+                                </div>
+
+                            </div>
+                        </div>
                         <!--begin::Table-->
                         <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4 report-table"
                             id="categorytable">

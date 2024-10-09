@@ -20,9 +20,7 @@
             <!--end::Page title-->
             <!--begin::Button-->
             <div class="card-toolbar">
-                <a href="{{ route('reports.exportcatreport') }}" class="btn btn-sm btn-success me-5">
-                    <i class="fa-solid fa-download"></i> Excel Export
-                </a>
+
                 <a href="" class="btn btn-sm btn-primary">
                     Back
                 </a>
@@ -47,21 +45,30 @@
                     <!--begin::Table container-->
                     <div class="table-responsive">
 
-                        <div class="filter-section mb-3 d-flex justify-content-end border-bottom py-4">
+                        <div class="filter-section mb-3 d-flex justify-content-between border-bottom py-4">
+                            <!-- Left Side (Filter) -->
                             <div class="d-flex flex-wrap">
                                 <div class="d-flex align-items-center me-3">
-                                    <label for="start-date" class="me-0 w-200px text-end"><i
-                                            class="fa-solid fa-filter me-1 text-dark fs-8"></i>Filter By:</label>
+                                    <label for="start-date" class="me-0 w-175px">
+                                        <i class="fa-solid fa-filter me-1 text-dark fs-8"></i> Filter by Date Period :
+                                    </label>
                                 </div>
                                 <div class="d-flex align-items-center me-3">
-                                    <input class="form-control p-2 me-5 fs-6" placeholder="Start Date" type="text">
+                                    <input class="form-control p-2 me-2 fs-7" placeholder="Start Date" type="text">
                                 </div>
                                 <div class="d-flex align-items-center me-3">
-                                    <input class="form-control p-2  fs-6" placeholder="End Date" type="text">
+                                    <input class="form-control p-2 fs-7" placeholder="End Date" type="text">
                                 </div>
+                            </div>
 
+                            <!-- Right Side (Download Button) -->
+                            <div class="d-flex flex-wrap ms-auto">
+                                <a href="{{ route('reports.exportcatreport') }}" class="btn btn-sm btn-success">
+                                    <i class="fa-solid fa-download"></i> Download Report
+                                </a>
                             </div>
                         </div>
+
                         <!--begin::Table-->
                         <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4 report-table"
                             id="categorytable">

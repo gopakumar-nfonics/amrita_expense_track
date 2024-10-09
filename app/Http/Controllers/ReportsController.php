@@ -60,17 +60,17 @@ foreach ($budgets as $budget) {
         $subCategories[] = [
             'id' => $subCategory->id, // Assuming you want to include the ID
             'name' => $subCategory->category_name, // Adjust this field based on your data
-            'expense' => number_format($subCategory->used_amount) // Access the correct field for used amount
+            'expense' => number_format_indian($subCategory->used_amount) // Access the correct field for used amount
         ];
     }
 
     // Push the formatted data into the categories array
     $categories[] = [
         'category' => $budget->category->category_name, // Adjust this field based on your data
-        'allocated' => number_format($budget->amount), // Format the allocated amount
+        'allocated' => number_format_indian($budget->amount), // Format the allocated amount
         'sub_categories' => $subCategories,
-        'total_expense' => number_format($budget->used_amount), // Sum of the used amount
-        'balance' => number_format($budget->amount - $budget->used_amount), // Calculate the balance
+        'total_expense' => number_format_indian($budget->used_amount), // Sum of the used amount
+        'balance' => number_format_indian($budget->amount - $budget->used_amount), // Calculate the balance
     ];
 }
 
@@ -223,20 +223,20 @@ foreach ($budgets as $budget) {
         $subCategories[] = [
             'id' => $subCategory->id, // Assuming you want to include the ID
             'name' => $subCategory->category_name, // Adjust this field based on your data
-            'expense' => number_format($subCategory->used_amount) // Access the correct field for used amount
+            'expense' => number_format_indian($subCategory->used_amount) // Access the correct field for used amount
         ];
     }
 
     // Push the formatted data into the categories array
     $categories[] = [
         'category' => $budget->category->category_name, // Adjust this field based on your data
-        'allocated' => number_format($budget->amount), // Format the allocated amount
+        'allocated' => number_format_indian($budget->amount), // Format the allocated amount
         'sub_categories' => $subCategories,
-        'total_expense' => number_format($budget->used_amount), // Sum of the used amount
-        'balance' => number_format($budget->amount - $budget->used_amount), // Calculate the balance
+        'total_expense' => number_format_indian($budget->used_amount), // Sum of the used amount
+        'balance' => number_format_indian($budget->amount - $budget->used_amount), // Calculate the balance
     ];
 }
-  return Excel::download(new BudgetReportExport($categories), 'budgets.xlsx');
+  return Excel::download(new BudgetReportExport($categories), 'BUET_BE_Report.xlsx');
     }
     
     

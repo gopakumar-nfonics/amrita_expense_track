@@ -45,7 +45,7 @@
                     <!--begin::Table container-->
                     <div class="table-responsive">
 
-                        <div class="filter-section mb-3 d-flex justify-content-between border-bottom py-4">
+                        <div class="filter-section mb-5 d-flex justify-content-between border-bottom py-5">
                             <!-- Left Side (Filter) -->
                             <div class="d-flex flex-wrap">
                                 <div class="d-flex align-items-center me-3">
@@ -121,8 +121,6 @@ $(document).ready(function() {
         columns: [{
                 data: null,
                 name: 'row_number',
-                orderable: false,
-                searchable: false,
                 render: function(data, type, row, meta) {
                     return meta.row + 1; // Display row number
                 }
@@ -187,7 +185,8 @@ $(document).ready(function() {
             [1, 'asc']
         ], // Set initial order by the 'category' column
         pageLength: 10, // Set default page length if needed
-        lengthMenu: [10, 25, 50, 100] // Customize length menu
+        lengthChange: false, // Disable length menu
+        searching: false // Disable the search box
     });
 });
 </script>

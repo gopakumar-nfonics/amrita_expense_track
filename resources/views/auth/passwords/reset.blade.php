@@ -64,9 +64,8 @@
 
                             <div class="col-md-6">
                                 <input id="email" type="email"
-                                    class="w-250px form-control @error('email') is-invalid @enderror" name="email"
-                                    value="{{ $email ?? old('email') }} " disabled required autocomplete="email"
-                                    autofocus>
+                                    class="w-275px form-control @error('email') is-invalid @enderror" name="email"
+                                    value="{{ $email ?? old('email') }} " required autocomplete="email" autofocus>
 
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -82,7 +81,7 @@
 
                             <div class="col-md-6">
                                 <input id="password" type="password"
-                                    class="w-250px form-control @error('password') is-invalid @enderror" name="password"
+                                    class="w-275px form-control @error('password') is-invalid @enderror" name="password"
                                     required autocomplete="new-password">
 
                                 @error('password')
@@ -98,7 +97,7 @@
                                 class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control w-250px"
+                                <input id="password-confirm" type="password" class="form-control w-275px"
                                     name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>

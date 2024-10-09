@@ -94,34 +94,150 @@ class BudgetReportExport implements FromArray, WithEvents
 
                 // Format the first title row
                 $sheet->mergeCells('A1:G1');
-                $sheet->getStyle('A1')->applyFromArray([
-                    'font' => ['bold' => true, 'size' => 16],
-                    'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER],
+                $sheet->getStyle('A1:G1')->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                        'size' => 11,
+                        'name' => 'Verdana' // Set font to Verdana
+                    ],
+                    'fill' => [
+                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                        'startColor' => ['argb' => 'FFE2E2E2'], // Set background color
+                    ],
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    ],
+                    'borders' => [
+                        'outline' => [ // Set black borders on the outer boundary of the merged cells
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => 'FF000000'], // Black color
+                        ],
+                    ],
                 ]);
+                
 
                 // Format the second title row
                 $sheet->mergeCells('A2:G2');
-                $sheet->getStyle('A2')->applyFromArray([
-                    'font' => ['bold' => true, 'size' => 16],
-                    'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER],
+                $sheet->getStyle('A2:G2')->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                        'size' => 11,
+                        'name' => 'Verdana' // Set font to Verdana
+                    ],
+                    'fill' => [
+                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                        'startColor' => ['argb' => 'FFE2E2E2'], // Set background color
+                    ],
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    ],
+                    'borders' => [
+                        'outline' => [ // Set black borders on the outer boundary of the merged cells
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => 'FF000000'], // Black color
+                        ],
+                    ],
                 ]);
 
                 // Format the period row
                 $sheet->mergeCells('A3:G3');
-                $sheet->getStyle('A3')->applyFromArray([
-                    'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER],
+                $sheet->getStyle('A3:G3')->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                        'size' => 11,
+                        'name' => 'Verdana' // Set font to Verdana
+                    ],
+                    'fill' => [
+                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                        'startColor' => ['argb' => 'FFE2E2E2'], // Set background color
+                    ],
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    ],
+                    'borders' => [
+                        'outline' => [ // Set black borders on the outer boundary of the merged cells
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => 'FF000000'], // Black color
+                        ],
+                    ],
                 ]);
 
                 $sheet->getStyle('A4:G4')->applyFromArray([
                     'font' => [
                         'bold' => true,
+                        'size' => 11,
                         'color' => ['argb' => 'FFFFFFFF'], // Set font color to white
+                        'name' => 'Verdana', // Set font to Verdana
                     ],
                     'fill' => [
                         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
                         'startColor' => ['argb' => 'FF0070C0'], // Set background color to a specific blue
                     ],
+                    'borders' => [
+                        'allBorders' => [ // Apply borders to all cells in the range
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => 'FF000000'], // Set border color to black
+                        ],
+                    ],
                 ]);
+
+                  // Set auto-size for each column from A to G
+                //   foreach (range('A', 'G') as $columnID) {
+                //     $sheet->getColumnDimension($columnID)->setAutoSize(true);
+                // }
+              
+
+                // Apply Verdana font with size 11 to all columns
+$sheet->getStyle('A:G')->applyFromArray([
+    'font' => [
+        'name' => 'Verdana',  // Set font to Verdana
+        'size' => 11,         // Set font size to 11
+    ]
+]);
+
+
+                // Make columns C, E, F, G bold
+                $sheet->getStyle('C')->applyFromArray([
+                    'font' => ['bold' => true],
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT // Right alignment
+                    ]
+                ]);
+                $sheet->getStyle('C')->applyFromArray([
+                    'font' => ['bold' => true],
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT // Right alignment
+                    ]
+                ]);
+                $sheet->getStyle('E')->applyFromArray([
+                    'font' => ['bold' => true],
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT // Right alignment
+                    ]
+                ]);
+                $sheet->getStyle('F')->applyFromArray([
+                    'font' => ['bold' => true],
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT // Right alignment
+                    ]
+                ]);
+
+                $sheet->getStyle('G')->applyFromArray([
+                    'font' => ['bold' => true],
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT // Right alignment
+                    ]
+                ]);
+              
+
+
+                $sheet->getColumnDimension('A')->setWidth(5);
+                $sheet->getColumnDimension('B')->setWidth(40);
+                $sheet->getColumnDimension('C')->setWidth(25);
+                $sheet->getColumnDimension('D')->setWidth(40);
+                $sheet->getColumnDimension('E')->setWidth(25);
+                $sheet->getColumnDimension('F')->setWidth(25);
+                $sheet->getColumnDimension('G')->setWidth(25);
 
                 // Merging cells based on the number of subcategories
                 $rowIndex = 5; // Start after the title and headings
@@ -144,10 +260,8 @@ class BudgetReportExport implements FromArray, WithEvents
                     }
                 }
 
-                // Set auto-size for columns
-                foreach (range('A', 'G') as $col) {
-                    $sheet->getColumnDimension($col)->setAutoSize(true);
-                }
+                              
+             
             }
         ];
     }

@@ -379,7 +379,7 @@ class lead extends Controller
             $vendor = Vendor::where('id', $proposal->vendor_id)->first();
 
 
-            $releaseorder = 'Release_Order_' . $proposal->proposal_id . '.pdf';
+            $releaseorder = 'RO_' . $proposalro->proposal_ro. '.pdf';
             $releaseorder = 'release_orders/' . $releaseorder;
             $releaseorderUrl = asset('storage/' . $releaseorder);
 

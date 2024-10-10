@@ -44,6 +44,12 @@
                                     <!--begin::Heading-->
                                     <div class="d-flex flex-stack">
                                         <h3 class="m-0 text-white fw-bold fs-3">Allocation</h3>
+                                        <div class="ms-1">
+                                            <a type="button" title="View Report" href="{{route('catreport')}}"
+                                                class="btn btn-sm btn-icon btn-color-white btn-active-white btn-active-color-primary border-0 me-n3">
+                                                <i class="fa-solid fa-border-none"></i>
+                                            </a>
+                                        </div>
 
                                     </div>
                                     <!--end::Heading-->
@@ -141,9 +147,16 @@
                                     <!--begin::Heading-->
                                     <div class="d-flex flex-stack">
                                         <h3 class="m-0 text-white fw-bold fs-3">Usage</h3>
-
+                                        <div class="ms-1">
+                                            <a type="button" title="View Report" href="{{route('catreport')}}"
+                                                class="btn btn-sm btn-icon btn-color-white btn-active-white btn-active-color-primary border-0 me-n3">
+                                                <i class="fa-solid fa-border-none"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                     <!--end::Heading-->
+
+
                                     <!--begin::Balance-->
                                     <div class="d-flex text-center flex-column text-white pt-8">
                                         <span class="fw-semibold fs-7">Budget Used</span>
@@ -245,6 +258,12 @@
                                     <!--begin::Heading-->
                                     <div class="d-flex flex-stack">
                                         <h3 class="m-0 text-white fw-bold fs-3">Balance</h3>
+                                        <div class="ms-1">
+                                            <a type="button" title="View Report" href="{{route('catreport')}}"
+                                                class="btn btn-sm btn-icon btn-color-white btn-active-white btn-active-color-primary border-0 me-n3">
+                                                <i class="fa-solid fa-border-none"></i>
+                                            </a>
+                                        </div>
 
                                     </div>
                                     <!--end::Heading-->
@@ -301,6 +320,12 @@
                                 <span class="text-muted mt-1 fw-semibold fs-7">Over {{count($vendors)}} Vendors</span>
                             </h3>
                             <!--begin::Card toolbar-->
+                            <div class="ms-1">
+                                <a type="button" title="View Report" href="{{route('catreport')}}"
+                                    class="btn btn-sm btn-icon color-blue btn-active-primary btn-active-color-white border-0 me-n3">
+                                    <i class="fa-solid fa-border-none fs-3"></i>
+                                </a>
+                            </div>
 
                         </div>
                         <!--end::Header-->
@@ -360,7 +385,8 @@
                                         $voutput = strtoupper(substr($vendor->vendor_name, 0, 2));
 
                                         // Define an array of color classes
-                                        $colors = ['bg-red', 'bg-cyan', 'bg-orange-dark', 'bg-blue','bg-green','bg-blue-dark','bg-purple-dark','bg-cyan-dark'];
+                                        $colors = ['bg-red', 'bg-cyan', 'bg-orange-dark',
+                                        'bg-blue','bg-green','bg-blue-dark','bg-purple-dark','bg-cyan-dark'];
 
                                         @endphp
                                         <tr>
@@ -517,7 +543,11 @@
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
 
 <script>
-var usedPercentage = {{$usedPercentage }};
+var usedPercentage = {
+    {
+        $usedPercentage
+    }
+};
 var initMixedWidget4 = function() {
     var charts = document.querySelectorAll('.budgetused');
 

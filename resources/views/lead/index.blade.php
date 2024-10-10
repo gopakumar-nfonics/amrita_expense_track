@@ -195,7 +195,7 @@
 
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="{{ route('lead.show',1) }}" class="menu-link px-3">View </a>
+                                                <a href="{{ route('lead.show',$pro->id) }}" class="menu-link px-3">View </a>
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->

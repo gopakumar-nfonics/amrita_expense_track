@@ -21,7 +21,7 @@
             <!--begin::Button-->
             <div class="card-toolbar">
 
-                <a href="" class="btn btn-sm btn-primary">
+                <a href="javascript:history.back()" class="btn btn-sm btn-primary">
                     Back
                 </a>
             </div>
@@ -115,7 +115,7 @@ $(document).ready(function() {
             url: "{{ route('reports.reportdata') }}", // The route to your server-side code
             type: "POST",
             data: {
-                _token: "{{ csrf_token() }}"
+                _token: "{{ csrf_token() }}",
             },
         },
         columns: [{
@@ -129,8 +129,7 @@ $(document).ready(function() {
                 data: 'category',
                 name: 'category',
                 render: function(data) {
-                    return '<p class="allocated fs-6 text-gray-800 py-2">' +
-                        data + '</p>';
+                    return '<p class="allocated fs-6 text-gray-800 py-2">' + data + '</p>';
                 }
             },
             {
@@ -146,8 +145,7 @@ $(document).ready(function() {
                 name: 'sub_categories',
                 render: function(data) {
                     return Array.isArray(data) && data.length > 0 ?
-                        data.map(sub => '<p class="sub-cat-disp fs-7">' + sub.name +
-                            '</p>')
+                        data.map(sub => '<p class="sub-cat-disp fs-7">' + sub.name + '</p>')
                         .join(' ') : '<p class="sub-cat-disp fs-7">NIL</p>';
                 }
             },
@@ -158,9 +156,8 @@ $(document).ready(function() {
                     return Array.isArray(data) && data.length > 0 ?
                         data.map(sub =>
                             '<p class="sub-expense-disp fs-7 fw-bold lh-1 ls-n1 text-end">&#x20b9;' +
-                            sub
-                            .expense +
-                            '</p>').join('') : '<p class="sub-cat-disp fs-7 text-end">NIL</p>';
+                            sub.expense + '</p>'
+                        ).join('') : '<p class="sub-cat-disp fs-7 text-end">NIL</p>';
                 }
             },
             {
@@ -174,10 +171,36 @@ $(document).ready(function() {
             {
                 data: 'balance',
                 name: 'balance',
-                render: function(data) {
-                    return '<p class="allocated fs-6 fw-bold text-gray-800 me-5 lh-1 ls-n1  text-end my-3 "> &#x20b9;' +
-                        data +
-                        '<br><span class="badge badge-sm badge-light-success align-self-center px-2">95%</span></p>';
+                render: function(data, type, row) {
+                    // Convert allocated to a number by removing currency symbol and commas
+                    var allocatedStr = row.allocated; // Example: '10,000.00'
+                    var allocated = parseFloat(allocatedStr.replace(/[^0-9.-]+/g,
+                        "")); // Convert to number
+
+                    // Convert balance to a number similarly
+                    var balanceStr = data; // Assuming 'data' is in the same format
+                    var balance = parseFloat(balanceStr.replace(/[^0-9.-]+/g,
+                        "")); // Convert to number
+
+                    // Calculate percentage
+                    var percentage = allocated > 0 ? ((balance / allocated) * 100).toFixed(2) :
+                        0;
+
+                    // Determine badge class based on percentage
+                    var badgeClass = 'badge-light-success'; // Default class
+                    if (percentage < 25) {
+                        badgeClass = 'badge-light-danger';
+                    } else if (percentage < 50) {
+                        badgeClass = 'badge-light-warning';
+                    } else if (percentage < 75) {
+                        badgeClass = 'badge-light-info';
+                    }
+
+                    return '<p class="allocated fs-6 fw-bold text-gray-800 me-5 lh-1 ls-n1 text-end my-3 "> &#x20b9;' +
+                        data + // Display original balance value
+                        '<br><span class="badge badge-sm ' + badgeClass +
+                        ' align-self-center px-2">' +
+                        percentage + '%</span></p>';
                 }
             }
         ],
@@ -190,6 +213,7 @@ $(document).ready(function() {
     });
 });
 </script>
+
 
 
 

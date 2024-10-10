@@ -209,6 +209,7 @@ $(document).ready(function() {
         ], // Set initial order by the 'category' column
         pageLength: 10, // Set default page length if needed
         lengthChange: false, // Disable length menu
+        ordering: false,
         searching: false // Disable the search box
     });
 });

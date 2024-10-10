@@ -327,7 +327,7 @@
                             </h3>
                             <!--begin::Card toolbar-->
                             <div class="ms-1">
-                                <a type="button" title="View Report" href="{{route('catreport')}}"
+                                <a type="button" title="View Report" href="{{route('vendorreport')}}"
                                     class="btn btn-sm btn-icon color-blue btn-active-primary btn-active-color-white border-0 me-n3">
                                     <i class="fa-solid fa-arrow-right fs-4"></i>
                                 </a>

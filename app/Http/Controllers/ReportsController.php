@@ -9,7 +9,7 @@ use App\Models\FinancialYear;
 use App\Models\PaymentRequest;
 use App\Models\Budget as Budgets;
 use App\Models\Vendor;
-use App\Models\Invoice;
+use Carbon\Carbon;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BudgetReportExport;
@@ -330,9 +330,9 @@ class ReportsController extends Controller
                         foreach ($relatedInvoices as $invoice) {
                             $milestoneDetails = [
                                 'milestone_name' => $milestone->milestone_title, // Adjust to your milestone name field
-                                'milestone_amount' => $milestone->milestone_total_amount, // Adjust to your milestone amount field
+                                'milestone_amount' => number_format_indian($milestone->milestone_total_amount ?? 0), // Adjust to your milestone amount field
                                 'invoice_id' => $invoice->invoice_id, // Include the invoice ID
-                                'transaction_date' => $invoice->paymentRequests ? $invoice->paymentRequests->transaction_date : null // Get transaction date
+                                'transaction_date' => $invoice->paymentRequests ? Carbon::parse($invoice->paymentRequests->transaction_date)->format('d-m-Y') : null // Get transaction date
                             ];
 
                             $proposalDetails['milestones'][] = $milestoneDetails;
@@ -341,6 +341,8 @@ class ReportsController extends Controller
                             $proposalDetails['total_milestone_amount'] += $milestone->milestone_total_amount; // Summing milestone amounts
                         }
                     }
+
+                    $proposalDetails['total_milestone_amount'] = number_format_indian($proposalDetails['total_milestone_amount'], 2, '.', ',');
 
                     // Only add the proposal if it has milestones
                     if (!empty($proposalDetails['milestones'])) {

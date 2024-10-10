@@ -691,8 +691,7 @@ text#SvgjsText1015 {
 .video-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px; /* Optional: space between the tiles */
-    justify-content: space-between; /* To distribute tiles evenly */
+    gap: 20px; /* Optional: space between the tiles */ 
   }
 
 .video-tile {

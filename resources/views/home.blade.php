@@ -69,15 +69,19 @@
                                     @php
                                     $allocatedPercentage = $budgettotalAmount > 0 ? ($budget->total_amount /
                                     $budgettotalAmount) * 100 : 0;
-                                    if (floor($allocatedPercentage) == $allocatedPercentage) {
-                                    $allocatedPercentage = number_format_indian($allocatedPercentage, 0) . '%';
-                                    } else {
-                                    $allocatedPercentage = number_format_indian($allocatedPercentage, 2) . '%';
-                                    }
 
+                                    $badgeClass = ' badge-light-danger'; // Default class $iconClass="color-red" ;
+                                    $iconClass="color-red";
 
-
-                                    $words = explode(' ', $budget->category->category_name);
+                                    if ($allocatedPercentage < 25) { $badgeClass='badge-light-success' ;
+                                        $iconClass="color-green" ;} elseif ($allocatedPercentage < 50) {
+                                        $badgeClass='badge-light-info' ; $iconClass="color-blue" ;} elseif
+                                        ($allocatedPercentage < 70) { $badgeClass='badge-light-warning'
+                                        ;$iconClass="color-orange" ; } if
+                                        (floor($allocatedPercentage)==$allocatedPercentage) {
+                                        $allocatedPercentage=number_format_indian($allocatedPercentage, 0) . '%' ; }
+                                        else { $allocatedPercentage=number_format_indian($allocatedPercentage, 2) . '%'
+                                        ; } $words=explode(' ', $budget->category->category_name);
 
                                     if (count($words) == 1) {
                                     $output = strtoupper(substr($budget->category->category_name, 0, 2));
@@ -86,48 +90,49 @@
                                     1));
                                     }
 
-                                    @endphp
 
-                                    <!--begin::Item-->
-                                    <div class="d-flex align-items-center mb-6">
-                                        <!--begin::Symbol-->
-                                        <!-- <div class="symbol symbol-45px w-40px me-5">
+                                 
+                                        @endphp <!--begin::Item-->
+                                        <div class="d-flex align-items-center mb-6">
+                                            <!--begin::Symbol-->
+                                            <!-- <div class="symbol symbol-45px w-40px me-5">
                                             <span class="symbol-label bg-lighten">
                                                 <span class="svg-icon svg-icon-1">
                                                     {{$output}}
                                                 </span>
                                             </span>
                                         </div> -->
-                                        <!--end::Symbol-->
-                                        <!--begin::Description-->
-                                        <div class="d-flex align-items-center flex-wrap w-100">
-                                            <!--begin::Title-->
-                                            <div class="mb-1 pe-3 flex-grow-1 w-100">
-                                                <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-bold">
-                                                    {{$budget->category->category_name}}
-                                                </a>
-                                            </div>
-                                            <!--end::Title-->
-                                            <!--begin::Label-->
-                                            <div class="d-flex w-100 align-items-center">
-                                                <span class="badge badge-light-success fs-9 w-60px">
-                                                    <!--begin::Svg Icon-->
-                                                    <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
-                                                        <i class="fa-solid fa-arrow-up light-green fs-9 me-1"></i>
-                                                    </span>
-                                                    <!--end::Svg Icon--> {{$allocatedPercentage}}
-                                                </span>
-                                                <div class="fw-bold fs-6 text-gray-600 ms-auto">
-                                                    &#x20b9;{{ number_format_indian($budget->total_amount, 2) }}
+                                            <!--end::Symbol-->
+                                            <!--begin::Description-->
+                                            <div class="d-flex align-items-center flex-wrap w-100">
+                                                <!--begin::Title-->
+                                                <div class="mb-1 pe-3 flex-grow-1 w-100">
+                                                    <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-bold">
+                                                        {{$budget->category->category_name}}
+                                                    </a>
                                                 </div>
+                                                <!--end::Title-->
+                                                <!--begin::Label-->
+                                                <div class="d-flex w-100 align-items-center">
+                                                    <span class="badge {{ $badgeClass }} fs-9 w-60px">
+                                                        <!--begin::Svg Icon-->
+                                                        <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
+                                                            <i
+                                                                class="fa-solid fa-arrow-up {{ $iconClass }} fs-9 me-1"></i>
+                                                        </span>
+                                                        <!--end::Svg Icon--> {{$allocatedPercentage}}
+                                                    </span>
+                                                    <div class="fw-bold fs-6 text-gray-600 ms-auto">
+                                                        &#x20b9;{{ number_format_indian($budget->total_amount, 2) }}
+                                                    </div>
+                                                </div>
+                                                <!--end::Label-->
                                             </div>
-                                            <!--end::Label-->
-                                        </div>
 
-                                        <!--end::Description-->
-                                    </div>
-                                    <!--end::Item-->
-                                    @endforeach
+                                            <!--end::Description-->
+                                        </div>
+                                        <!--end::Item-->
+                                        @endforeach
                                 </div>
                                 <!--end::Items-->
                             </div>
@@ -174,70 +179,71 @@
 
                                     @php
 
-                                    $budget_amount = $result['budget_amount'] ?? 0;
-                                    $total_milestone_amount = $result['total_milestone_amount'] ?? 0;
+                                    $budget_amount = $result[' budget_amount'] ?? 0;
+                                        $total_milestone_amount=$result['total_milestone_amount'] ?? 0;
+                                        $catpaidPercentage=$budget_amount> 0 ? ($total_milestone_amount /
+                                        $budget_amount)
+                                        * 100 : 0;
+
+                                        if (floor($catpaidPercentage) == $catpaidPercentage) {
+                                        $catpaidPercentage = number_format_indian($catpaidPercentage, 0);
+                                        } else {
+                                        $catpaidPercentage = number_format_indian($catpaidPercentage, 2);
+                                        }
+
+                                        $catprogressBarClass = 'bg-info'; // Default class
+                                        if ($catpaidPercentage >= 90) {
+                                        $catprogressBarClass = 'bg-danger';
+                                        } elseif ($catpaidPercentage >= 70) {
+                                        $catprogressBarClass = 'bg-warning';
+                                        } elseif ($catpaidPercentage >= 50) {
+                                        $catprogressBarClass = 'bg-success';
+                                        }
 
 
-                                    $catpaidPercentage = $budget_amount > 0 ? ($total_milestone_amount / $budget_amount)
-                                    * 100 : 0;
+                                        $bwords = explode(' ', $result['parent_category_name']);
 
-                                    if (floor($catpaidPercentage) == $catpaidPercentage) {
-                                    $catpaidPercentage = number_format_indian($catpaidPercentage, 0);
-                                    } else {
-                                    $catpaidPercentage = number_format_indian($catpaidPercentage, 2);
-                                    }
+                                        if (count($bwords) == 1) {
+                                        $boutput = strtoupper(substr($result['parent_category_name'], 0, 2));
+                                        } else {
+                                        $boutput = strtoupper(substr($bwords[0], 0, 1) . substr($bwords[count($bwords) -
+                                        1],
+                                        0, 1));
+                                        }
+                                        @endphp
+                                        <div class="d-flex align-items-center mb-6">
 
-                                    $catprogressBarClass = 'bg-info'; // Default class
-                                    if ($catpaidPercentage >= 90) {
-                                    $catprogressBarClass = 'bg-danger';
-                                    } elseif ($catpaidPercentage >= 70) {
-                                    $catprogressBarClass = 'bg-warning';
-                                    } elseif ($catpaidPercentage >= 50) {
-                                    $catprogressBarClass = 'bg-success';
-                                    }
-
-
-                                    $bwords = explode(' ', $result['parent_category_name']);
-
-                                    if (count($bwords) == 1) {
-                                    $boutput = strtoupper(substr($result['parent_category_name'], 0, 2));
-                                    } else {
-                                    $boutput = strtoupper(substr($bwords[0], 0, 1) . substr($bwords[count($bwords) - 1],
-                                    0, 1));
-                                    }
-                                    @endphp
-                                    <div class="d-flex align-items-center mb-6">
-
-                                        <div class="d-flex align-items-center flex-wrap w-100">
-                                            <!--begin::Title-->
-                                            <div class="mb-1 pe-3 w-100">
-                                                <a href="#"
-                                                    class="fs-6 text-gray-800 text-hover-primary fw-bold">{{ $result['parent_category_name'] }}</a>
-                                            </div>
-                                            <!--end::Title-->
-                                            <!--begin::Label-->
-                                            <div class="d-flex align-items-center w-100">
-                                                <div class="d-flex flex-column flex-grow-1 me-2">
-                                                    <span
-                                                        class="text-muted me-2 fs-9 fw-bold">{{ number_format_indian($catpaidPercentage, 2) }}%</span>
-                                                    <div class="progress h-4px w-50px p-0 m-0">
-                                                        <div class="progress-bar {{$catprogressBarClass}}"
-                                                            role="progressbar"
-                                                            style="width: {{ floor($catpaidPercentage) }}%"
-                                                            aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="d-flex align-items-center flex-wrap w-100">
+                                                <!--begin::Title-->
+                                                <div class="mb-1 pe-3 w-100">
+                                                    <a href="#"
+                                                        class="fs-6 text-gray-800 text-hover-primary fw-bold">{{ $result['parent_category_name'] }}</a>
+                                                </div>
+                                                <!--end::Title-->
+                                                <!--begin::Label-->
+                                                <div class="d-flex align-items-center w-100">
+                                                    <div class="d-flex flex-column flex-grow-1 me-2">
+                                                        <span
+                                                            class="text-muted me-2 fs-9 fw-bold">{{ number_format_indian($catpaidPercentage, 2) }}%</span>
+                                                        <div class="progress h-4px w-50px p-0 m-0">
+                                                            <div class="progress-bar {{$catprogressBarClass}}"
+                                                                role="progressbar"
+                                                                style="width: {{ floor($catpaidPercentage) }}%"
+                                                                aria-valuenow="80" aria-valuemin="0"
+                                                                aria-valuemax="100">
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <div class="fw-bold fs-6 text-gray-600 ms-auto">
+                                                        &#x20b9;{{ number_format_indian($result['total_milestone_amount'], 2) }}
+                                                    </div>
                                                 </div>
-                                                <div class="fw-bold fs-6 text-gray-600 ms-auto">
-                                                    &#x20b9;{{ number_format_indian($result['total_milestone_amount'], 2) }}
-                                                </div>
+                                                <!--end::Label-->
                                             </div>
-                                            <!--end::Label-->
-                                        </div>
 
-                                    </div>
-                                    <!--end::Item-->
-                                    @endforeach
+                                        </div>
+                                        <!--end::Item-->
+                                        @endforeach
                                 </div>
                                 <!--end::Items-->
 
@@ -543,7 +549,7 @@
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
 
 <script>
-var usedPercentage = {{$usedPercentage }};
+var usedPercentage = {{ $usedPercentage }};
 var initMixedWidget4 = function() {
     var charts = document.querySelectorAll('.budgetused');
 

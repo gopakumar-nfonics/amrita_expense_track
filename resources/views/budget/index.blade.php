@@ -129,64 +129,68 @@
 
                                         $used_budget_percentage = ($budget['used_amount'] / $budget['amount']) * 100;
                                         $used_budget_percentage = number_format($used_budget_percentage, 2);
+                                        $badgeClass = 'badge-light-danger'; // Default class
+                                        $iconClass="color-red";
 
-                                        @endphp
-                                        <div class="d-flex flex-column w-100 me-2">
+                                        if ($used_budget_percentage < 25) { $badgeClass='badge-light-success' ;
+                                            $iconClass="color-green" ;} elseif ($used_budget_percentage < 50) {
+                                            $badgeClass='badge-light-info' ; $iconClass="color-blue" ;} elseif
+                                            ($used_budget_percentage < 70) { $badgeClass='badge-light-warning'
+                                            ;$iconClass="color-orange" ; } @endphp <div
+                                            class="d-flex flex-column w-100 me-2">
                                             <div class="text-gray-400 fw-semibold fs-7">
-                                                <span class="badge badge-light-success fs-7">
+                                                <span class="badge {{ $badgeClass }} fs-7">
                                                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
                                                     <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
-                                                        <i class="fa-solid fa-arrow-up light-green fs-7 me-1 "></i>
+                                                        <i class="fa-solid fa-arrow-up {{ $iconClass }} fs-7 me-1 "></i>
                                                     </span>
                                                     <!--end::Svg Icon-->{{$used_budget_percentage}}%
                                                 </span>
                                             </div>
-                                        </div>
-                                    </td>
-
-
-                                    <td class="text-center">
-                                        <a href="#" class="btn btn-sm btn-light btn-active-light-primary"
-                                            data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                            <i class="fa-solid fa-angle-down"></i></a>
-                                        <!--begin::Menu-->
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
-                                            data-kt-menu="true">
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="{{route('budget.edit',$budget['id'])}}"
-                                                    class="menu-link px-3">Edit</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="javascript:void(0)" onclick="removebudget('{{$budget['id']}}')"
-                                                    class="menu-link px-3"
-                                                    data-kt-customer-table-filter="delete_row">Delete</a>
-                                            </div>
-                                            <!--end::Menu item-->
-                                        </div>
-                                        <!--end::Menu-->
-                                    </td>
-                                </tr>
-
-                                @empty
-                                <tr>
-                                    <td colspan="4">No data found</td>
-                                </tr>
-                                @endforelse
-
-                            </tbody>
-                            <!--end::Table body-->
-                        </table>
-                        <!--end::Table-->
                     </div>
-                    <!--end::Table container-->
+                    </td>
+
+
+                    <td class="text-center">
+                        <a href="#" class="btn btn-sm btn-light btn-active-light-primary" data-kt-menu-trigger="click"
+                            data-kt-menu-placement="bottom-end">Actions
+                            <i class="fa-solid fa-angle-down"></i></a>
+                        <!--begin::Menu-->
+                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
+                            data-kt-menu="true">
+                            <!--begin::Menu item-->
+                            <div class="menu-item px-3">
+                                <a href="{{route('budget.edit',$budget['id'])}}" class="menu-link px-3">Edit</a>
+                            </div>
+                            <!--end::Menu item-->
+                            <!--begin::Menu item-->
+                            <div class="menu-item px-3">
+                                <a href="javascript:void(0)" onclick="removebudget('{{$budget['id']}}')"
+                                    class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+                            </div>
+                            <!--end::Menu item-->
+                        </div>
+                        <!--end::Menu-->
+                    </td>
+                    </tr>
+
+                    @empty
+                    <tr>
+                        <td colspan="4">No data found</td>
+                    </tr>
+                    @endforelse
+
+                    </tbody>
+                    <!--end::Table body-->
+                    </table>
+                    <!--end::Table-->
                 </div>
-                <!--begin::Body-->
+                <!--end::Table container-->
             </div>
+            <!--begin::Body-->
         </div>
     </div>
+</div>
 </div>
 @endsection
 

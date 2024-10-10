@@ -455,9 +455,9 @@
                                                 <div class="d-flex flex-column w-100 me-2">
                                                     <div class="d-flex flex-stack mb-0">
                                                         <span
-                                                            class=" {{ $progressBarText }}  me-2 fs-5 fw-bold">{{ number_format_indian($paidPercentage, 2) }}%</span>
+                                                            class=" {{ $progressBarText }}  me-2 fs-7 fw-bold">{{ number_format_indian($paidPercentage, 2) }}%</span>
                                                     </div>
-                                                    <div class="progress h-6px w-100">
+                                                    <div class="progress h-4px w-100">
                                                         <div class="progress-bar {{ $progressBarClass }}"
                                                             role="progressbar"
                                                             style="width: {{ floor($paidPercentage) }}%;"

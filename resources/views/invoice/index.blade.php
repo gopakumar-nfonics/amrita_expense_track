@@ -100,7 +100,7 @@
                                                     </span>
                                                     @if($inv->paymentRequests)
                                                     <div>
-                                                    
+
                                                         <span class="text-muted fw-semibold text-muted d-block fs-8">UTR
                                                             :
                                                             #{{$inv->paymentRequests->utr_number}} </span>
@@ -204,11 +204,6 @@
                                             </div>
                                             <!--end::Menu item-->
 
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="" class="menu-link px-3">Edit</a>
-                                            </div>
-                                            <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
                                                 <a href="" class="menu-link px-3"

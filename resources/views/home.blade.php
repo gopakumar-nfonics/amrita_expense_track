@@ -54,7 +54,7 @@
                                     </div>
                                     <!--end::Heading-->
                                     <!--begin::Balance-->
-                                    <div class="d-flex text-center flex-column text-white pt-8">
+                                    <div class="d-flex text-center flex-column text-white pt-4">
                                         <span class="fw-semibold fs-7">Budget Allocated</span>
                                         <span
                                             class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format_indian($budgettotalAmount, 2) }}</span>
@@ -158,7 +158,7 @@
 
 
                                     <!--begin::Balance-->
-                                    <div class="d-flex text-center flex-column text-white pt-8">
+                                    <div class="d-flex text-center flex-column text-white pt-4">
                                         <span class="fw-semibold fs-7">Budget Used</span>
                                         <span
                                             class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format_indian($PaidAmount, 2) }}</span>
@@ -268,7 +268,7 @@
                                     </div>
                                     <!--end::Heading-->
                                     <!--begin::Balance-->
-                                    <div class="d-flex text-center flex-column text-white pt-8">
+                                    <div class="d-flex text-center flex-column text-white pt-4">
                                         <span class="fw-semibold fs-7">Remaning Budget</span>
                                         <span
                                             class="fw-bold fs-2 pt-1">&#x20b9;{{ number_format_indian($remainingBudget, 2) }}</span>
@@ -543,11 +543,7 @@
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
 
 <script>
-var usedPercentage = {
-    {
-        $usedPercentage
-    }
-};
+var usedPercentage = {{$usedPercentage }};
 var initMixedWidget4 = function() {
     var charts = document.querySelectorAll('.budgetused');
 

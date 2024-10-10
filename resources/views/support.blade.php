@@ -40,13 +40,13 @@
                                 <div>
                                     <!-- Loader element -->
                                     <video width="100%" height="100%" controls>
-                                        <source src="{{ url('/') }}/assets/videos/TB.mp4" type="video/mp4">
+                                        <source src="{{ asset('assets/media/videos/vendor/signup.mp4') }}" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
 
                                 </div>
                                 <!--end::Content-->
-                                <h5 class="title mt-3">User Sign Up</h5>
+                                <h5 class="title mt-3">Vendor Sign Up</h5>
                                 <span class="description text-muted">Create your account effortlessly with our
                                     step-by-step
                                     span guide.</span>
@@ -56,99 +56,17 @@
                                 <div>
                                     <!-- Loader element -->
                                     <video width="100%" height="100%" controls>
-                                        <source src="{{ asset('EMS_Tutorial.mp4') }}" type="video/mp4">
+                                        <source src="{{ asset('assets/media/videos/vendor/proposal.mp4') }}" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
 
                                 </div>
                                 <!--end::Content-->
-                                <h5 class="title mt-3">User Sign Up</h5>
+                                <h5 class="title mt-3">Vendor proposal submission</h5>
                                 <span class="description text-muted">Create your account effortlessly with our
                                     step-by-step
                                     span guide.</span>
                             </div>
-                            <div class="video-tile">
-                                <!-- Video Tile 1 -->
-                                <div>
-                                    <!-- Loader element -->
-                                    <video width="100%" height="100%" controls>
-                                        <source src="{{ asset('EMS_Tutorial.mp4') }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-
-                                </div>
-                                <!--end::Content-->
-                                <h5 class="title mt-3">User Sign Up</h5>
-                                <span class="description text-muted">Create your account effortlessly with our
-                                    step-by-step
-                                    span guide.</span>
-                            </div>
-                            <div class="video-tile">
-                                <!-- Video Tile 1 -->
-                                <div>
-                                    <!-- Loader element -->
-                                    <video width="100%" height="100%" controls>
-                                        <source src="{{ asset('EMS_Tutorial.mp4') }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-
-                                </div>
-                                <!--end::Content-->
-                                <h5 class="title mt-3">User Sign Up</h5>
-                                <span class="description text-muted">Create your account effortlessly with our
-                                    step-by-step
-                                    span guide.</span>
-                            </div>
-                            <div class="video-tile">
-                                <!-- Video Tile 1 -->
-                                <div>
-                                    <!-- Loader element -->
-                                    <video width="100%" height="100%" controls>
-                                        <source src="{{ asset('EMS_Tutorial.mp4') }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-
-                                </div>
-                                <!--end::Content-->
-                                <h5 class="title mt-3">User Sign Up</h5>
-                                <span class="description text-muted">Create your account effortlessly with our
-                                    step-by-step
-                                    span guide.</span>
-                            </div>
-                            <div class="video-tile">
-                                <!-- Video Tile 1 -->
-                                <div>
-                                    <!-- Loader element -->
-                                    <video width="100%" height="100%" controls>
-                                        <source src="{{ asset('EMS_Tutorial.mp4') }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-
-                                </div>
-                                <!--end::Content-->
-                                <h5 class="title mt-3">User Sign Up</h5>
-                                <span class="description text-muted">Create your account effortlessly with our
-                                    step-by-step
-                                    span guide.</span>
-                            </div>
-                            <div class="video-tile">
-                                <!-- Video Tile 1 -->
-                                <div>
-                                    <!-- Loader element -->
-                                    <video width="100%" height="100%" controls>
-                                        <source src="{{ asset('EMS_Tutorial.mp4') }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-
-                                </div>
-                                <!--end::Content-->
-                                <h5 class="title mt-3">User Sign Up</h5>
-                                <span class="description text-muted">Create your account effortlessly with our
-                                    step-by-step
-                                    span guide.</span>
-                            </div>
-
-                        </div>
 
 
 

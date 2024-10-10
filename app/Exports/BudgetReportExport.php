@@ -3,7 +3,6 @@
 namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromArray;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 
@@ -16,7 +15,6 @@ class BudgetReportExport implements FromArray, WithEvents
         $this->categories = $categories;
     }
 
-   
     public function array(): array
     {
         $data = [];
@@ -25,26 +23,19 @@ class BudgetReportExport implements FromArray, WithEvents
         $totalAllocated = 0;
         $totalExpense = 0;
         $totalBalance = 0;
-        $totalsubCategoryExpense=0;
+        $totalsubCategoryExpense = 0;
 
-        // Add empty rows for title and header
+        // Title and Header rows
         $data[] = ['Amrita Vishwa Vidyapeetham (ASE/ASA)', '', '', '', '', '', ''];
         $data[] = ['Budget & Expense Report', '', '', '', '', '', ''];
         $data[] = ['Period: From 01-Jul-2024 To 26-Sep-2024', '', '', '', '', '', ''];
-
-        // Add the header row after the title rows
-        $data[] = ['#','Category','Allocated','Sub-Category','Expense','Total Expense','Balance']; // Add headings as a row
+        $data[] = ['#', 'Category', 'Budget Allocated', 'Sub-Category', 'Used Amount', 'Total Usage', 'Balance'];
 
         foreach ($this->categories as $category) {
             $subCategoryCount = count($category['sub_categories']);
-
-
             $allocated = $category['allocated'] ?? 0;
             $totalExp = $category['total_expense'] ?? 0;
             $balance = $category['balance'] ?? 0;
-
-
-
 
             $totalAllocated += $this->convertToFloat($allocated);
             $totalExpense += $this->convertToFloat($totalExp);
@@ -52,40 +43,34 @@ class BudgetReportExport implements FromArray, WithEvents
 
             if ($subCategoryCount > 0) {
                 foreach ($category['sub_categories'] as $index => $subCategory) {
-
                     $subCategoryExpense = $subCategory['expense'] ?? 0;
                     $totalsubCategoryExpense += $this->convertToFloat($subCategoryExpense);
                     $row = [];
 
                     if ($index === 0) {
-                        // First row for the category, include category and total amounts with rowspan logic
                         $row[] = $counter;
                         $row[] = $category['category'];
                         $row[] = $category['allocated'] != 0 ? $category['allocated'] : '-';
                     } else {
-                        // Empty cells for the next rows in this category
-                        $row[] = ''; // For the '#'
-                        $row[] = ''; // For the 'Category'
-                        $row[] = ''; // For the 'Allocated'
+                        $row[] = '';
+                        $row[] = '';
+                        $row[] = '';
                     }
 
-                    // Sub-category details
                     $row[] = $subCategory['name'];
                     $row[] = $subCategory['expense'] != 0 ? $subCategory['expense'] : '0.00';
 
                     if ($index === 0) {
-                        // Only the first row for this category should have total expense and balance
                         $row[] = $category['total_expense'] != 0 ? $category['total_expense'] : '-';
                         $row[] = $category['balance'] != 0 ? $category['balance'] : '-';
                     } else {
-                        $row[] = ''; // For the 'Total Expense'
-                        $row[] = ''; // For the 'Balance'
+                        $row[] = '';
+                        $row[] = '';
                     }
 
                     $data[] = $row;
                 }
             } else {
-                // No sub-categories, so we only display the category details
                 $data[] = [
                     $counter,
                     $category['category'],
@@ -100,214 +85,170 @@ class BudgetReportExport implements FromArray, WithEvents
             $counter++;
         }
 
-        $data[]= [
-            '', 
-            '',
-            '', 
-            '', 
-            '', 
-            '', 
-            '', 
-        ];
-     
+        $data[] = ['', '', '', '', '', '', '']; // Empty row before total
+
+        // Total row
         $data[] = [
-            '', 
+            '',
             'Total',
-            number_format_indian($totalAllocated, 2), 
-            '', 
-            number_format_indian($totalsubCategoryExpense, 2), 
-            number_format_indian($totalExpense, 2), 
-            number_format_indian($totalBalance, 2), 
+            number_format_indian($totalAllocated, 2),
+            '',
+            number_format_indian($totalsubCategoryExpense, 2),
+            number_format_indian($totalExpense, 2),
+            number_format_indian($totalBalance, 2),
         ];
 
         return $data;
     }
 
-    /**
-     * Register events to modify the sheet after creation.
-     */
+
     public function registerEvents(): array
+{
+    return [
+        AfterSheet::class => function (AfterSheet $event) {
+            $sheet = $event->sheet;
+
+            // Title row styling
+            $sheet->mergeCells('A1:G1');
+            $sheet->mergeCells('A2:G2');
+            $sheet->mergeCells('A3:G3');
+            $this->applyTitleStyle($sheet, 'A1:G1');
+            $this->applyTitleStyle($sheet, 'A2:G2');
+            $this->applyTitleStyle($sheet, 'A3:G3');
+
+            // Header row styling
+            $sheet->getStyle('A4:G4')->applyFromArray($this->getHeaderStyle());
+
+            // Apply default font and vertical alignment
+            $sheet->getStyle('A:G')->applyFromArray([
+                'font' => ['name' => 'Verdana', 'size' => 11],
+                'alignment' => ['vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER],
+            ]);
+
+            // Bold and align specific columns (C, E, F, G)
+            $this->applyBoldRightAlign($sheet, 'C');
+            $this->applyBoldRightAlign($sheet, 'E');
+            $this->applyBoldRightAlign($sheet, 'F');
+            $this->applyBoldRightAlign($sheet, 'G');
+
+            // Set column widths
+            $sheet->getColumnDimension('A')->setWidth(5);
+            $sheet->getColumnDimension('B')->setWidth(50);
+            $sheet->getColumnDimension('C')->setWidth(30);
+            $sheet->getColumnDimension('D')->setWidth(50);
+            $sheet->getColumnDimension('E')->setWidth(30);
+            $sheet->getColumnDimension('F')->setWidth(30);
+            $sheet->getColumnDimension('G')->setWidth(30);
+
+            // Merge cells for categories with sub-categories
+            $rowIndex = 5;
+            foreach ($this->categories as $category) {
+                $subCategoryCount = count($category['sub_categories']);
+                if ($subCategoryCount > 0) {
+                    $sheet->mergeCells("A$rowIndex:A" . ($rowIndex + $subCategoryCount - 1));
+                    $sheet->mergeCells("B$rowIndex:B" . ($rowIndex + $subCategoryCount - 1));
+                    $sheet->mergeCells("C$rowIndex:C" . ($rowIndex + $subCategoryCount - 1));
+                    $sheet->mergeCells("F$rowIndex:F" . ($rowIndex + $subCategoryCount - 1));
+                    $sheet->mergeCells("G$rowIndex:G" . ($rowIndex + $subCategoryCount - 1));
+                    $rowIndex += $subCategoryCount;
+                } else {
+                    $rowIndex++;
+                }
+            }
+
+            // Apply total row styling dynamically
+            $lastRow = count($this->categories) + 7;
+            $sheet->getStyle("A$lastRow:G$lastRow")->applyFromArray($this->getTotalRowStyle());
+
+            // Apply black borders from start row (4) to the last row
+            $sheet->getStyle("A4:G$lastRow")->applyFromArray($this->getBorderStyle());
+        }
+    ];
+}
+
+// Helper to get border style
+private function getBorderStyle()
+{
+    return [
+        'borders' => [
+            'allBorders' => [
+                'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                'color' => ['argb' => 'FF000000'],
+            ],
+        ],
+    ];
+}
+
+
+    // Helper to style title rows
+    private function applyTitleStyle($sheet, $range)
+    {
+        $sheet->getStyle($range)->applyFromArray([
+            'font' => ['bold' => true, 'size' => 11, 'name' => 'Verdana'],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['argb' => 'FFE2E2E2'],
+            ],
+            'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER],
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => 'FF000000'],
+                ],
+            ],
+        ]);
+    }
+
+    // Helper to apply bold and right alignment to specific columns
+    private function applyBoldRightAlign($sheet, $column)
+    {
+        $sheet->getStyle($column)->applyFromArray([
+            'font' => ['bold' => true],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT
+            ],
+        ]);
+    }
+
+    // Helper to get header row style
+    private function getHeaderStyle()
     {
         return [
-            AfterSheet::class => function(AfterSheet $event) {
-                $sheet = $event->sheet;
-
-                // Format the first title row
-                $sheet->mergeCells('A1:G1');
-                $sheet->getStyle('A1:G1')->applyFromArray([
-                    'font' => [
-                        'bold' => true,
-                        'size' => 11,
-                        'name' => 'Verdana' // Set font to Verdana
-                    ],
-                    'fill' => [
-                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                        'startColor' => ['argb' => 'FFE2E2E2'], // Set background color
-                    ],
-                    'alignment' => [
-                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                    ],
-                    'borders' => [
-                        'outline' => [ // Set black borders on the outer boundary of the merged cells
-                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                            'color' => ['argb' => 'FF000000'], // Black color
-                        ],
-                    ],
-                ]);
-                
-
-                // Format the second title row
-                $sheet->mergeCells('A2:G2');
-                $sheet->getStyle('A2:G2')->applyFromArray([
-                    'font' => [
-                        'bold' => true,
-                        'size' => 11,
-                        'name' => 'Verdana' // Set font to Verdana
-                    ],
-                    'fill' => [
-                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                        'startColor' => ['argb' => 'FFE2E2E2'], // Set background color
-                    ],
-                    'alignment' => [
-                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                    ],
-                    'borders' => [
-                        'outline' => [ // Set black borders on the outer boundary of the merged cells
-                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                            'color' => ['argb' => 'FF000000'], // Black color
-                        ],
-                    ],
-                ]);
-
-                // Format the period row
-                $sheet->mergeCells('A3:G3');
-                $sheet->getStyle('A3:G3')->applyFromArray([
-                    'font' => [
-                        'bold' => true,
-                        'size' => 11,
-                        'name' => 'Verdana' // Set font to Verdana
-                    ],
-                    'fill' => [
-                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                        'startColor' => ['argb' => 'FFE2E2E2'], // Set background color
-                    ],
-                    'alignment' => [
-                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                    ],
-                    'borders' => [
-                        'outline' => [ // Set black borders on the outer boundary of the merged cells
-                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                            'color' => ['argb' => 'FF000000'], // Black color
-                        ],
-                    ],
-                ]);
-
-                $sheet->getStyle('A4:G4')->applyFromArray([
-                    'font' => [
-                        'bold' => true,
-                        'size' => 11,
-                        'color' => ['argb' => 'FFFFFFFF'], // Set font color to white
-                        'name' => 'Verdana', // Set font to Verdana
-                    ],
-                    'fill' => [
-                        'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                        'startColor' => ['argb' => 'FF0070C0'], // Set background color to a specific blue
-                    ],
-                    'borders' => [
-                        'allBorders' => [ // Apply borders to all cells in the range
-                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                            'color' => ['argb' => 'FF000000'], // Set border color to black
-                        ],
-                    ],
-                ]);
-
-                  // Set auto-size for each column from A to G
-                //   foreach (range('A', 'G') as $columnID) {
-                //     $sheet->getColumnDimension($columnID)->setAutoSize(true);
-                // }
-              
-
-                // Apply Verdana font with size 11 to all columns
-$sheet->getStyle('A:G')->applyFromArray([
-    'font' => [
-        'name' => 'Verdana',  // Set font to Verdana
-        'size' => 11,         // Set font size to 11
-    ]
-]);
-
-
-                // Make columns C, E, F, G bold
-                $sheet->getStyle('C')->applyFromArray([
-                    'font' => ['bold' => true],
-                    'alignment' => [
-                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT // Right alignment
-                    ]
-                ]);
-                $sheet->getStyle('C')->applyFromArray([
-                    'font' => ['bold' => true],
-                    'alignment' => [
-                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT // Right alignment
-                    ]
-                ]);
-                $sheet->getStyle('E')->applyFromArray([
-                    'font' => ['bold' => true],
-                    'alignment' => [
-                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT // Right alignment
-                    ]
-                ]);
-                $sheet->getStyle('F')->applyFromArray([
-                    'font' => ['bold' => true],
-                    'alignment' => [
-                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT // Right alignment
-                    ]
-                ]);
-
-                $sheet->getStyle('G')->applyFromArray([
-                    'font' => ['bold' => true],
-                    'alignment' => [
-                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT // Right alignment
-                    ]
-                ]);
-              
-
-
-                $sheet->getColumnDimension('A')->setWidth(5);
-                $sheet->getColumnDimension('B')->setWidth(40);
-                $sheet->getColumnDimension('C')->setWidth(25);
-                $sheet->getColumnDimension('D')->setWidth(40);
-                $sheet->getColumnDimension('E')->setWidth(25);
-                $sheet->getColumnDimension('F')->setWidth(25);
-                $sheet->getColumnDimension('G')->setWidth(25);
-
-                // Merging cells based on the number of subcategories
-                $rowIndex = 5; // Start after the title and headings
-                foreach ($this->categories as $category) {
-                    $subCategoryCount = count($category['sub_categories']);
-                    
-                    if ($subCategoryCount > 0) {
-                        // Merge cells for the first row of the category and its subcategories
-                        $sheet->mergeCells("A$rowIndex:A" . ($rowIndex + $subCategoryCount - 1)); // Merging '#'
-                        $sheet->mergeCells("B$rowIndex:B" . ($rowIndex + $subCategoryCount - 1)); // Merging 'Category'
-                        $sheet->mergeCells("C$rowIndex:C" . ($rowIndex + $subCategoryCount - 1)); // Merging 'Allocated'
-                        $sheet->mergeCells("F$rowIndex:F" . ($rowIndex + $subCategoryCount - 1)); // Merging 'Total Expense'
-                        $sheet->mergeCells("G$rowIndex:G" . ($rowIndex + $subCategoryCount - 1)); // Merging 'Balance'
-
-                        // Move the row index by the number of subcategories plus the header
-                        $rowIndex += $subCategoryCount;
-                    } else {
-                        // Just move to the next row for categories without subcategories
-                        $rowIndex++;
-                    }
-                }
-
-                              
-             
-            }
+            'font' => ['bold' => true, 'size' => 11, 'color' => ['argb' => 'FFFFFFFF'], 'name' => 'Verdana'],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['argb' => 'FF0070C0'],
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => 'FF000000'],
+                ],
+            ],
         ];
     }
 
-    function convertToFloat($value) {
-        // Remove commas and spaces, then convert to float
+    // Helper to get total row style
+    private function getTotalRowStyle()
+    {
+        return [
+            'font' => ['bold' => true, 'size' => 11, 'color' => ['argb' => 'FFFFFFFF'], 'name' => 'Verdana'],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['argb' => 'FF0070C0'],
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['argb' => 'FF000000'],
+                ],
+            ],
+        ];
+    }
+
+    // Helper to convert values to float
+    private function convertToFloat($value)
+    {
         return floatval(str_replace(',', '', $value));
     }
 }

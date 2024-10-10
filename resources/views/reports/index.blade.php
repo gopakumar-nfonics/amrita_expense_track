@@ -9,7 +9,7 @@
             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                 <!--begin::Title-->
                 <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Budget &
-                    Expense Report</h1>
+                    Usage Report</h1>
                 <!--end::Title-->
                 <!--begin::Breadcrumb-->
                 <!-- <ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
@@ -77,10 +77,10 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Category</th>
-                                    <th class="text-end">Allocated</th>
+                                    <th class="text-end">Budget Allocated</th>
                                     <th>Sub-Category</th>
-                                    <th class="text-end pe-5">Expense</th>
-                                    <th class="text-end">Total Expense</th>
+                                    <th class="text-end pe-5">Used Amount</th>
+                                    <th class="text-end">Total Usage</th>
                                     <th class="text-end pe-5">Balance</th>
                                 </tr>
                             </thead>

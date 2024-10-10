@@ -47,7 +47,7 @@
                                         <div class="ms-1">
                                             <a type="button" title="View Report" href="{{route('catreport')}}"
                                                 class="btn btn-sm btn-icon btn-color-white btn-active-white btn-active-color-primary border-0 me-n3">
-                                                <i class="fa-solid fa-border-none"></i>
+                                                <i class="fa-solid fa-arrow-right fs-4"></i>
                                             </a>
                                         </div>
 
@@ -150,7 +150,7 @@
                                         <div class="ms-1">
                                             <a type="button" title="View Report" href="{{route('catreport')}}"
                                                 class="btn btn-sm btn-icon btn-color-white btn-active-white btn-active-color-primary border-0 me-n3">
-                                                <i class="fa-solid fa-border-none"></i>
+                                                <i class="fa-solid fa-arrow-right fs-4"></i>
                                             </a>
                                         </div>
                                     </div>
@@ -261,7 +261,7 @@
                                         <div class="ms-1">
                                             <a type="button" title="View Report" href="{{route('catreport')}}"
                                                 class="btn btn-sm btn-icon btn-color-white btn-active-white btn-active-color-primary border-0 me-n3">
-                                                <i class="fa-solid fa-border-none"></i>
+                                                <i class="fa-solid fa-arrow-right fs-4"></i>
                                             </a>
                                         </div>
 
@@ -323,7 +323,7 @@
                             <div class="ms-1">
                                 <a type="button" title="View Report" href="{{route('catreport')}}"
                                     class="btn btn-sm btn-icon color-blue btn-active-primary btn-active-color-white border-0 me-n3">
-                                    <i class="fa-solid fa-border-none fs-3"></i>
+                                    <i class="fa-solid fa-arrow-right fs-4"></i>
                                 </a>
                             </div>
 

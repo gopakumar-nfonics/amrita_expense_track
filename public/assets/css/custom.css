@@ -767,6 +767,15 @@ p.sub-expense-disp {
 p.sub-expense-disp:last-child {
     border-bottom: none;
 }
+a.btn.btn-sm.btn-icon.btn-color-white.btn-active-white.btn-active-color-primary.border-0.me-n3
+{
+    border-radius: 50%;
+
+}
+a.btn.btn-sm.btn-icon.color-blue.btn-active-primary.btn-active-color-white.border-0.me-n3
+{
+    border-radius: 50%;
+}
 @keyframes spin {
     0% {
         transform: rotate(0deg);

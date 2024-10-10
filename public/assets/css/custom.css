@@ -703,6 +703,10 @@ text#SvgjsText1015 {
     max-width: 100%; /* Allow tiles to scale with the container */
     flex-grow: 1; /* Allow tiles to grow equally */
 }
+.video-tile h5
+{
+    text-transform: capitalize;
+}
 .video-tile .description
 {
     width: 100%;

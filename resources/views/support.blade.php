@@ -40,13 +40,14 @@
                                 <div>
                                     <!-- Loader element -->
                                     <video width="100%" height="100%" controls>
-                                        <source src="{{ asset('assets/media/videos/vendor/signup.mp4') }}" type="video/mp4">
+                                        <source src="{{ asset('assets/media/videos/vendor/signup.mp4') }}"
+                                            type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
 
                                 </div>
                                 <!--end::Content-->
-                                <h5 class="title mt-3">Vendor Sign Up</h5>
+                                <h5 class="title mt-3">Sign Up</h5>
                                 <span class="description text-muted">Create your account effortlessly with our
                                     step-by-step
                                     span guide.</span>
@@ -56,13 +57,14 @@
                                 <div>
                                     <!-- Loader element -->
                                     <video width="100%" height="100%" controls>
-                                        <source src="{{ asset('assets/media/videos/vendor/proposal.mp4') }}" type="video/mp4">
+                                        <source src="{{ asset('assets/media/videos/vendor/proposal.mp4') }}"
+                                            type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
 
                                 </div>
                                 <!--end::Content-->
-                                <h5 class="title mt-3">Vendor proposal submission</h5>
+                                <h5 class="title mt-3">submit proposal </h5>
                                 <span class="description text-muted">Create your account effortlessly with our
                                     step-by-step
                                     span guide.</span>
@@ -71,19 +73,19 @@
 
 
 
+                        </div>
+                        <!--end::Basic info-->
                     </div>
-                    <!--end::Basic info-->
+                    <!--end::Content container-->
+
+
+
                 </div>
-                <!--end::Content container-->
-
-
+                <!--end::Content-->
 
             </div>
-            <!--end::Content-->
-
-        </div>
-        <!--end::Content wrapper-->
+            <!--end::Content wrapper-->
 
 
 
-        @endsection
+            @endsection

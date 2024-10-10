@@ -22,6 +22,11 @@ class BudgetReportExport implements FromArray, WithEvents
         $data = [];
         $counter = 1;
 
+        $totalAllocated = 0;
+        $totalExpense = 0;
+        $totalBalance = 0;
+        $totalsubCategoryExpense=0;
+
         // Add empty rows for title and header
         $data[] = ['Amrita Vishwa Vidyapeetham (ASE/ASA)', '', '', '', '', '', ''];
         $data[] = ['Budget & Expense Report', '', '', '', '', '', ''];
@@ -33,8 +38,23 @@ class BudgetReportExport implements FromArray, WithEvents
         foreach ($this->categories as $category) {
             $subCategoryCount = count($category['sub_categories']);
 
+
+            $allocated = $category['allocated'] ?? 0;
+            $totalExp = $category['total_expense'] ?? 0;
+            $balance = $category['balance'] ?? 0;
+
+
+
+
+            $totalAllocated += $this->convertToFloat($allocated);
+            $totalExpense += $this->convertToFloat($totalExp);
+            $totalBalance += $this->convertToFloat($balance);
+
             if ($subCategoryCount > 0) {
                 foreach ($category['sub_categories'] as $index => $subCategory) {
+
+                    $subCategoryExpense = $subCategory['expense'] ?? 0;
+                    $totalsubCategoryExpense += $this->convertToFloat($subCategoryExpense);
                     $row = [];
 
                     if ($index === 0) {
@@ -79,6 +99,26 @@ class BudgetReportExport implements FromArray, WithEvents
 
             $counter++;
         }
+
+        $data[]= [
+            '', 
+            '',
+            '', 
+            '', 
+            '', 
+            '', 
+            '', 
+        ];
+     
+        $data[] = [
+            '', 
+            'Total',
+            number_format_indian($totalAllocated, 2), 
+            '', 
+            number_format_indian($totalsubCategoryExpense, 2), 
+            number_format_indian($totalExpense, 2), 
+            number_format_indian($totalBalance, 2), 
+        ];
 
         return $data;
     }
@@ -264,5 +304,10 @@ $sheet->getStyle('A:G')->applyFromArray([
              
             }
         ];
+    }
+
+    function convertToFloat($value) {
+        // Remove commas and spaces, then convert to float
+        return floatval(str_replace(',', '', $value));
     }
 }

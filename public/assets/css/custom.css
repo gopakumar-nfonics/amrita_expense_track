@@ -776,6 +776,10 @@ a.btn.btn-sm.btn-icon.color-blue.btn-active-primary.btn-active-color-white.borde
 {
     border-radius: 50%;
 }
+text#SvgjsText1015
+{
+font-size: 23px !important;
+}
 @keyframes spin {
     0% {
         transform: rotate(0deg);

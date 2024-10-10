@@ -157,7 +157,9 @@ class BudgetReportExport implements FromArray, WithEvents
             }
 
             // Apply total row styling dynamically
-            $lastRow = count($this->categories) + 7;
+            //$lastRow = count($this->categories) + 6;
+            $lastRow = $rowIndex + 1; // $rowIndex is the current row after all category and subcategory rows
+
             $sheet->getStyle("A$lastRow:G$lastRow")->applyFromArray($this->getTotalRowStyle());
 
             // Apply black borders from start row (4) to the last row

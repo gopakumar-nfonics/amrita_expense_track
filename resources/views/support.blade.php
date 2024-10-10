@@ -49,8 +49,7 @@
                                 <!--end::Content-->
                                 <h5 class="title mt-3">Sign Up</h5>
                                 <span class="description text-muted">Create your account effortlessly with our
-                                    step-by-step
-                                    span guide.</span>
+                                    step-by-step guide.</span>
                             </div>
                             <div class="video-tile">
                                 <!-- Video Tile 1 -->
@@ -65,9 +64,8 @@
                                 </div>
                                 <!--end::Content-->
                                 <h5 class="title mt-3">submit proposal </h5>
-                                <span class="description text-muted">Create your account effortlessly with our
-                                    step-by-step
-                                    span guide.</span>
+                                <span class="description text-muted">Submit your proposal effortlessly with our
+                                    step-by-step guide.</span>
                             </div>
 
 

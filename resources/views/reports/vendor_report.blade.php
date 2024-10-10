@@ -8,7 +8,8 @@
             <!--begin::Page title-->
             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                 <!--begin::Title-->
-                <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Vendor Wise - Payment Reports</h1>
+                <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Vendor
+                    Wise - Payment Reports</h1>
                 <!--end::Title-->
                 <!--begin::Breadcrumb-->
                 <!-- <ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
@@ -76,17 +77,17 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Vendor</th>
-                                    <th class="text-end">Proposal</th>
+                                    <th>Proposal</th>
                                     <th>RO#</th>
-                                    <th class="text-end pe-5">Invoice</th>
-                                    <th class="text-end">Invoice #</th>
-                                    <th class="text-end pe-5">Payment Date</th>
+                                    <th class="pe-5">Invoice</th>
+                                    <th>Invoice #</th>
+                                    <th>Payment Date</th>
                                     <th class="text-end pe-5">Amount</th>
                                     <th class="text-end pe-5">Total</th>
                                 </tr>
                             </thead>
                             <tbody>
-                              
+
                             </tbody>
 
 
@@ -122,8 +123,7 @@ $(document).ready(function() {
                 d._token = "{{ csrf_token() }}"; // Include CSRF token
             }
         },
-        columns: [
-            {
+        columns: [{
                 data: null,
                 render: function(data, type, row, meta) {
                     // Only increment serial number if this is a new vendor
@@ -147,22 +147,28 @@ $(document).ready(function() {
                 data: null,
                 render: function(data, type, row, meta) {
                     // Show proposal titles for each proposal
-                    return row.proposals.map(proposal => `<p>${proposal.proposal_title}</p>`).join('');
+                    return row.proposals.map(proposal =>
+                        `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp ">${proposal.proposal_title}</p>`
+                    ).join('');
                 }
             },
             {
                 data: null,
                 render: function(data, type, row, meta) {
                     // Show RO# for each proposal
-                    return row.proposals.map(proposal => `<p>${proposal.proposal_ro}</p>`).join('');
+                    return row.proposals.map(proposal =>
+                        `<p class="allocated fs-7 fw-bold text-gray-800 py-2 sub-cat-disp ">${proposal.proposal_ro}</p>`
+                    ).join('');
                 }
             },
             {
                 data: null,
                 render: function(data, type, row, meta) {
                     // Show milestone names for each proposal
-                    return row.proposals.flatMap(proposal => 
-                        proposal.milestones.map(milestone => `<p>${milestone.milestone_name}</p>`)
+                    return row.proposals.flatMap(proposal =>
+                        proposal.milestones.map(milestone =>
+                            `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp ">${milestone.milestone_name}</p>`
+                        )
                     ).join('');
                 }
             },
@@ -170,8 +176,10 @@ $(document).ready(function() {
                 data: null,
                 render: function(data, type, row, meta) {
                     // Show invoice IDs for each proposal
-                    return row.proposals.flatMap(proposal => 
-                        proposal.milestones.map(milestone => `<p>${milestone.invoice_id}</p>`)
+                    return row.proposals.flatMap(proposal =>
+                        proposal.milestones.map(milestone =>
+                            `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp ">${milestone.invoice_id}</p>`
+                        )
                     ).join('');
                 }
             },
@@ -179,8 +187,10 @@ $(document).ready(function() {
                 data: null,
                 render: function(data, type, row, meta) {
                     // Show payment dates for each proposal
-                    return row.proposals.flatMap(proposal => 
-                        proposal.milestones.map(milestone => `<p>${milestone.transaction_date || 'N/A'}</p>`)
+                    return row.proposals.flatMap(proposal =>
+                        proposal.milestones.map(milestone =>
+                            `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp ">${milestone.transaction_date || 'N/A'}</p>`
+                        )
                     ).join('');
                 }
             },
@@ -188,8 +198,10 @@ $(document).ready(function() {
                 data: null,
                 render: function(data, type, row, meta) {
                     // Show milestone amounts for each proposal
-                    return row.proposals.flatMap(proposal => 
-                        proposal.milestones.map(milestone => `<p>₹${milestone.milestone_amount}</p>`)
+                    return row.proposals.flatMap(proposal =>
+                        proposal.milestones.map(milestone =>
+                            `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp fw-bold ls-n1 text-end">&#x20b9;${milestone.milestone_amount}</p>`
+                        )
                     ).join('');
                 }
             },
@@ -197,7 +209,9 @@ $(document).ready(function() {
                 data: null,
                 render: function(data, type, row, meta) {
                     // Show total milestone amount for each proposal
-                    return row.proposals.map(proposal => `<p>₹${proposal.total_milestone_amount}</p>`).join('');
+                    return row.proposals.map(proposal =>
+                        `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp fw-bold ls-n1 text-end">&#x20b9;${proposal.total_milestone_amount}</p>`
+                    ).join('');
                 }
             },
         ],
@@ -206,18 +220,12 @@ $(document).ready(function() {
         ],
         pageLength: 10,
         lengthChange: false,
+        ordering: false,
         searching: false
     });
 
-    
+
 });
-
-
-
-
-
-
-
 </script>
 
 

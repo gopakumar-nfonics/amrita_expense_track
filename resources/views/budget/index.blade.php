@@ -53,7 +53,7 @@
                                     <th class="min-w-100px">Category</th>
                                     <th class="min-w-100px">Year</th>
                                     <th class="min-w-100px">Allocated</th>
-                                    <th class="min-w-100px">Spent</th>
+                                    <th class="min-w-100px">Used</th>
                                     <th class="min-w-100px">Balance</th>
                                     <th class="min-w-100px">Usage (%)</th>
                                     <th class="min-w-150px text-center">Actions</th>

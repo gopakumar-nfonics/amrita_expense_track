@@ -196,10 +196,10 @@ $(document).ready(function() {
                         badgeClass = 'badge-light-info';
                     }
 
-                    return '<p class="allocated fs-6 fw-bold text-gray-800 me-5 lh-1 ls-n1 text-end my-3 "> &#x20b9;' +
+                    return '<p class="allocated fs-6 fw-bold text-gray-800 text-end  my-3"><span class=" me-5 lh-1 ls-n1 text-end "> &#x20b9;' +
                         data + // Display original balance value
-                        '<br><span class="badge badge-sm ' + badgeClass +
-                        ' align-self-center px-2">' +
+                        '</span><br><span class="badge badge-sm ' + badgeClass +
+                        ' align-self-center fs-8 px-0 me-5">' +
                         percentage + '%</span></p>';
                 }
             }

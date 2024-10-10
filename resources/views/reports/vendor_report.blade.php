@@ -110,7 +110,6 @@
 <script>
 $(document).ready(function() {
     let currentVendor = ''; // Track the current vendor name
-    let vendorProposalCount = 0; // Count of proposals for each vendor
     let vendorSerial = 0; // Serial number for vendors
 
     $('#categorytable').DataTable({
@@ -127,102 +126,82 @@ $(document).ready(function() {
             {
                 data: null,
                 render: function(data, type, row, meta) {
-                    const vendorName = row.vendor_name;
-
-                    if (vendorName !== currentVendor) {
-                        currentVendor = vendorName; // Update current vendor
+                    // Only increment serial number if this is a new vendor
+                    if (row.vendor_name !== currentVendor) {
+                        currentVendor = row.vendor_name; // Update current vendor
                         vendorSerial++; // Increment vendor serial
-                        vendorProposalCount = row.proposals.length; // Count proposals for the current vendor
                         return vendorSerial; // Return the serial number
-                    } else {
-                        return ''; // Return empty for subsequent proposals
                     }
+                    return ''; // Return empty for subsequent rows
                 }
             },
             {
                 data: 'vendor_name',
                 name: 'vendor_name',
                 render: function(data, type, row, meta) {
-                    // Show vendor name only for the first occurrence
-                    return (meta.row === meta.settings._iDisplayStart) ? data : '';
+                    // Show vendor name only for the first occurrence in each group
+                    if (meta.row === meta.settings._iDisplayStart || row.vendor_name !== currentVendor) {
+                        currentVendor = row.vendor_name; // Update current vendor for next rows
+                        return data; // Display vendor name
+                    }
+                    return ''; // Return empty if it's not the first occurrence
                 }
             },
             {
                 data: null, // Proposal title will be rendered dynamically
                 render: function(data, type, row, meta) {
-                    // Show the proposal title for the first row of the vendor
-                    if (meta.row === meta.settings._iDisplayStart) {
-                        return row.proposals.map(proposal => `<p>${proposal.proposal_title}</p>`).join(''); // Use <p> for each proposal title
-                    }
-                    return ''; // Return empty for subsequent rows
+                    // Show proposal titles for each proposal
+                    return row.proposals.map(proposal => `<p>${proposal.proposal_title}</p>`).join('');
                 }
             },
             {
                 data: null, // RO# will be rendered dynamically
                 render: function(data, type, row, meta) {
-                    // Show the RO# for the first row of the vendor
-                    if (meta.row === meta.settings._iDisplayStart) {
-                        return row.proposals.map(proposal => `<p>${proposal.proposal_ro}</p>`).join(''); // Use <p> for each RO#
-                    }
-                    return ''; // Return empty for subsequent rows
+                    // Always show RO# for each proposal
+                    return row.proposals.map(proposal => `<p>${proposal.proposal_ro}</p>`).join('');
                 }
             },
             {
                 data: null, // Milestone names will be rendered dynamically
                 render: function(data, type, row, meta) {
-                    // Show milestone names for the first row of the vendor
-                    if (meta.row === meta.settings._iDisplayStart) {
-                        return row.proposals.flatMap(proposal => 
-                            proposal.milestones.map(milestone => `<p>${milestone.milestone_name}</p>`).join('')
-                        ); // Use <p> for each milestone name
-                    }
-                    return ''; // Return empty for subsequent rows
+                    // Always show milestone names for each proposal
+                    return row.proposals.flatMap(proposal => 
+                        proposal.milestones.map(milestone => `<p>${milestone.milestone_name}</p>`)
+                    ).join('');
                 }
             },
             {
                 data: null, // Invoice IDs will be rendered dynamically
                 render: function(data, type, row, meta) {
-                    // Show invoice IDs for the first row of the vendor
-                    if (meta.row === meta.settings._iDisplayStart) {
-                        return row.proposals.flatMap(proposal => 
-                            proposal.milestones.map(milestone => `<p>${milestone.invoice_id}</p>`).join('')
-                        ); // Use <p> for each invoice ID
-                    }
-                    return ''; // Return empty for subsequent rows
+                    // Always show invoice IDs for each proposal
+                    return row.proposals.flatMap(proposal => 
+                        proposal.milestones.map(milestone => `<p>${milestone.invoice_id}</p>`)
+                    ).join('');
                 }
             },
             {
                 data: null, // Payment date will be rendered dynamically
                 render: function(data, type, row, meta) {
-                    // Show payment dates for the first proposal only
-                    if (meta.row === meta.settings._iDisplayStart) {
-                        return row.proposals.flatMap(proposal => 
-                            proposal.milestones.map(milestone => `<p>${milestone.transaction_date || 'N/A'}</p>`).join('')
-                        ); // Use <p> for each payment date
-                    }
-                    return ''; // Return empty for subsequent rows
+                    // Always show payment dates for each proposal
+                    return row.proposals.flatMap(proposal => 
+                        proposal.milestones.map(milestone => `<p>${milestone.transaction_date || 'N/A'}</p>`)
+                    ).join('');
                 }
             },
             {
                 data: null, // Milestone amounts will be rendered dynamically
                 render: function(data, type, row, meta) {
-                    // Show milestone amounts for the first proposal only
-                    if (meta.row === meta.settings._iDisplayStart) {
-                        return row.proposals.flatMap(proposal => 
-                            proposal.milestones.map(milestone => `<p>₹${milestone.milestone_amount}</p>`).join('')
-                        ); // Use <p> for each milestone amount
-                    }
-                    return ''; // Return empty for subsequent rows
+                    // Always show milestone amounts for each proposal
+                    return row.proposals.flatMap(proposal => 
+                        proposal.milestones.map(milestone => `<p>₹${milestone.milestone_amount}</p>`)
+                    ).join('');
                 }
             },
             {
-                data: null, // Proposal title will be rendered dynamically
+                data: null, // Total milestone amounts will be rendered dynamically
                 render: function(data, type, row, meta) {
-                    // Show the proposal title for the first row of the vendor
-                    if (meta.row === meta.settings._iDisplayStart) {
-                        return row.proposals.map(proposal => `<p>₹${proposal.total_milestone_amount}</p>`).join('')
-                    }
-                    return ''; // Return empty for subsequent rows
+                    // Always show total milestone amount for each proposal
+                    return row.proposals.map(proposal => `<p>₹${proposal.total_milestone_amount}</p>`).join('');
                 }
             },
         ],
@@ -235,11 +214,11 @@ $(document).ready(function() {
     });
 
     // After DataTable is drawn, update the rowspan for vendor names
-    $('#vendorTable').on('draw.dt', function() {
+    $('#categorytable').on('draw.dt', function() {
         let currentRowSpan = 0;
         let lastVendor = '';
 
-        $('#vendorTable tbody tr').each(function() {
+        $('#categorytable tbody tr').each(function() {
             const vendorName = $(this).find('td:nth-child(2)').text(); // Get vendor name column
 
             if (vendorName) {
@@ -250,15 +229,15 @@ $(document).ready(function() {
                     if (currentRowSpan > 0) {
                         $(this).prev().find('td:nth-child(2)').attr('rowspan', currentRowSpan + 1); // Set rowspan
                     }
-                    currentRowSpan = 1;
-                    lastVendor = vendorName;
+                    currentRowSpan = 1; // Reset count for new vendor
+                    lastVendor = vendorName; // Update lastVendor to current
                 }
             }
         });
 
-        // Update the last vendor's rowspan
+        // Update the last vendor's rowspan if applicable
         if (currentRowSpan > 0) {
-            $('#vendorTable tbody tr').last().find('td:nth-child(2)').attr('rowspan', currentRowSpan);
+            $('#categorytable tbody tr').last().find('td:nth-child(2)').attr('rowspan', currentRowSpan);
         }
     });
 });

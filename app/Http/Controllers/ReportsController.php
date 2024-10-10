@@ -258,7 +258,7 @@ class ReportsController extends Controller
 
         // Returning the data as JSON response for DataTables or other frontend use
         
-
+//print_r($vendorDetails);exit();
 
         return view('reports.vendor_report', compact('vendorData'));
     }

@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 
 @section('content')
+<style>
+.sub-cat-disp {
+    min-height: 40px;
+}
+</style>
 <div class="d-flex flex-column flex-column-fluid">
     <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
         <!--begin::Toolbar container-->
@@ -78,11 +83,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Vendor</th>
-                                    <th>Proposal</th>
-                                    <th>RO#</th>
+                                    <th>RO# & Proposal</th>
                                     <th class="pe-5">Invoice</th>
-                                    <th>Invoice #</th>
-                                    <th>Payment Date</th>
                                     <th class="text-end pe-5">Amount</th>
                                     <th class="text-end pe-5">Total</th>
                                 </tr>
@@ -124,6 +126,10 @@ $(document).ready(function() {
                 d._token = "{{ csrf_token() }}"; // Include CSRF token
             }
         },
+        preDrawCallback: function(settings) {
+            currentVendor = ''; // Reset vendor tracking
+            vendorSerial = 0; // Reset serial number
+        },
         columns: [{
                 data: null,
                 render: function(data, type, row, meta) {
@@ -131,7 +137,9 @@ $(document).ready(function() {
                     if (row.vendor_name !== currentVendor) {
                         currentVendor = row.vendor_name; // Update current vendor
                         vendorSerial++; // Increment vendor serial
-                        return vendorSerial; // Return the serial number
+                        // return vendorSerial; // Return the serial number
+                        return '<p style="width:30px;">' + vendorSerial +
+                            '</p>';
                     }
                     return ''; // Return empty for subsequent rows
                 }
@@ -140,61 +148,33 @@ $(document).ready(function() {
                 data: 'vendor_name',
                 name: 'vendor_name',
                 render: function(data, type, row, meta) {
-                    // Always display vendor name
-                    return data; // Display vendor name
+                    // return data; // Display vendor name
+                    return '<p class="fs-6 fw-bold ">' + data + '</p>';
                 }
             },
             {
                 data: null,
                 render: function(data, type, row, meta) {
                     // Show proposal titles for each proposal
-                    return row.proposals.map(proposal =>
-                        `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp ">${proposal.proposal_title}</p>`
-                    ).join('');
+                    return row.proposals.map(proposal => {
+                        let milestoneCount = proposal.milestones.length;
+                        return `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp " style="min-height:${40*milestoneCount}px;padding-top:${(40*milestoneCount/2)-10}px !important;">${proposal.proposal_ro} | ${proposal.proposal_title}</p>`;
+                    }).join('');
                 }
             },
-            {
-                data: null,
-                render: function(data, type, row, meta) {
-                    // Show RO# for each proposal
-                    return row.proposals.map(proposal =>
-                        `<p class="allocated fs-7 fw-bold text-gray-800 py-2 sub-cat-disp ">${proposal.proposal_ro}</p>`
-                    ).join('');
-                }
-            },
+
             {
                 data: null,
                 render: function(data, type, row, meta) {
                     // Show milestone names for each proposal
                     return row.proposals.flatMap(proposal =>
                         proposal.milestones.map(milestone =>
-                            `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp ">${milestone.milestone_name}</p>`
+                            `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp">${milestone.invoice_id} | ${milestone.milestone_name}</p>`
                         )
                     ).join('');
                 }
             },
-            {
-                data: null,
-                render: function(data, type, row, meta) {
-                    // Show invoice IDs for each proposal
-                    return row.proposals.flatMap(proposal =>
-                        proposal.milestones.map(milestone =>
-                            `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp ">${milestone.invoice_id}</p>`
-                        )
-                    ).join('');
-                }
-            },
-            {
-                data: null,
-                render: function(data, type, row, meta) {
-                    // Show payment dates for each proposal
-                    return row.proposals.flatMap(proposal =>
-                        proposal.milestones.map(milestone =>
-                            `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp ">${milestone.transaction_date || 'N/A'}</p>`
-                        )
-                    ).join('');
-                }
-            },
+
             {
                 data: null,
                 render: function(data, type, row, meta) {
@@ -210,22 +190,22 @@ $(document).ready(function() {
                 data: null,
                 render: function(data, type, row, meta) {
                     // Show total milestone amount for each proposal
-                    return row.proposals.map(proposal =>
-                        `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp fw-bold ls-n1 text-end">&#x20b9;${proposal.total_milestone_amount}</p>`
-                    ).join('');
+                    // return row.proposals.map(proposal =>
+                    //     `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp fw-bold ls-n1 text-end">&#x20b9;${proposal.total_milestone_amount}</p>`
+                    // ).join('');
+                    return row.proposals.map(proposal => {
+                        let milestoneCount = proposal.milestones.length;
+                        return `<p class="allocated fs-5 text-gray-800 py-2 sub-cat-disp fw-bold ls-n1 text-end"" style="min-height:${40*milestoneCount}px;padding-top:${(40*milestoneCount/2)-10}px !important;">&#x20b9;${proposal.total_milestone_amount}</p>`;
+                    }).join('');
                 }
             },
         ],
-        order: [
-            [1, 'asc'] // Sort by vendor name
-        ],
+        order: [],
         pageLength: 10,
         lengthChange: false,
         ordering: false,
         searching: false
     });
-
-
 });
 </script>
 

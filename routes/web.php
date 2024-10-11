@@ -88,7 +88,9 @@ Route::get('/programmereport', [App\Http\Controllers\ReportsController::class, '
 Route::post('/programmedata', [App\Http\Controllers\ReportsController::class, 'programmedata'])->name('reports.programmedata');
 
 Route::get('lead/rejectionreason/{proposal_id}', [\App\Http\Controllers\resource\lead::class, 'rejectionReason']);
-Route::get('/export-budget-report', [App\Http\Controllers\ReportsController::class, 'exportBudgetReport'])->name('reports.exportcatreport');;
+Route::get('/export-budget-report', [App\Http\Controllers\ReportsController::class, 'exportBudgetReport'])->name('reports.exportcatreport');
+Route::get('/export-vendor-report', [App\Http\Controllers\ReportsController::class, 'vendordataexport'])->name('reports.vendordataexport');;
+
 
 Route::get('/support-center', function () {
     return view('support');

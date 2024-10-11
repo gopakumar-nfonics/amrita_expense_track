@@ -466,12 +466,13 @@ public function exportprogrammedata()
         $query->select(
                 'payment_request.stream_id',
                 'payment_request.category_id',
+                'payment_request.utr_number',
                 DB::raw('COALESCE(SUM(payment_milestones.milestone_total_amount), 0) as total_expense') // Ensure correct column
             )
             ->join('invoices', 'payment_request.invoice_id', '=', 'invoices.id')
             ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
             ->where('payment_request.payment_status', 'completed')
-            ->groupBy('payment_request.stream_id', 'payment_request.category_id'); // Group by stream and category
+            ->groupBy('payment_request.stream_id', 'payment_request.category_id','payment_request.utr_number'); // Group by stream and category
     }]);
 
    

@@ -10,6 +10,8 @@ use Maatwebsite\Excel\Events\AfterSheet;
 class ProgramDataExport implements FromCollection, WithHeadings, WithEvents
 {
     protected $data;
+    protected $grandTotalExpense = 0;
+    protected $grandTotalProgramExpense = 0;
 
     public function __construct(array $data)
     {
@@ -30,6 +32,7 @@ class ProgramDataExport implements FromCollection, WithHeadings, WithEvents
 
     foreach ($this->data as $stream) {
         $totalExpense = $stream['total_program_expense'];
+        $this->grandTotalProgramExpense += $this->convertToFloat($totalExpense ?? 0); // Accumulate total program expense
         $streamRowCount = count($stream['categories']); // Count categories for merging
 
         // Add the stream name and total program expense for the first category
@@ -43,6 +46,8 @@ class ProgramDataExport implements FromCollection, WithHeadings, WithEvents
 
         // Add the remaining categories without stream name and total expense
         for ($i = 1; $i < $streamRowCount; $i++) {
+            $currentExpense = $this->convertToFloat($stream['categories'][$i]['total_expense'] ?? 0); // Current category expense
+            $this->grandTotalExpense += $currentExpense; // Accumulate total expenses
             $exportData[] = [
                 '', // Empty for merging
                 '', // Empty for merging
@@ -179,6 +184,10 @@ public function registerEvents(): array
 
             $event->sheet->getStyle("A$lastRow:E$lastRow")->applyFromArray($this->getTotalRowStyle());
             $event->sheet->mergeCells("A$lastRow:D$lastRow");
+
+            $event->sheet->setCellValue("A$lastRow", 'Grand Total ');
+            $event->sheet->setCellValue("E$lastRow", number_format_indian($this->grandTotalProgramExpense)); // Accessing the class property
+
             $event->sheet->getStyle("A$lastRow:D$lastRow")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
            
 

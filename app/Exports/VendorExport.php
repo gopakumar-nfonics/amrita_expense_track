@@ -200,11 +200,11 @@ class VendorExport implements FromArray, WithEvents
 
                 $sheet->getStyle("A$lastRow:J$lastRow")->applyFromArray($this->getTotalRowStyle());
                 
-                $sheet->mergeCells("A$lastRow:H$lastRow");
+                $sheet->mergeCells("A$lastRow:I$lastRow");
 
                 $sheet->setCellValue("A$lastRow", 'Grand Total ');
                 //$sheet->setCellValue("H$lastRow", number_format_indian($this->grandTotalAmount)); // Accessing the class property
-                $sheet->setCellValue("I$lastRow", number_format_indian($this->grandTotalProposalAmount)); // Accessing the class property
+                $sheet->setCellValue("j$lastRow", number_format_indian($this->grandTotalProposalAmount)); // Accessing the class property
 
                 $sheet->getStyle("A$lastRow:I$lastRow")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
                 

@@ -23,4 +23,9 @@ class Stream extends Model
     {
         return $this->belongsTo(Campus::class, 'campus_id');
     }
+
+    public function paymentRequests()
+    {
+        return $this->hasMany(PaymentRequest::class, 'stream_id');
+    }
 }

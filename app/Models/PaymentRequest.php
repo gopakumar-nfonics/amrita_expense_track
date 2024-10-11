@@ -27,7 +27,7 @@ class PaymentRequest extends Model
 
     public function stream()
     {
-        return $this->belongsTo(Stream::class);
+        return $this->belongsTo(Stream::class, 'stream_id');
     }
 
     public function category()

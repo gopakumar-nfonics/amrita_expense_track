@@ -10,6 +10,9 @@ use App\Models\PaymentRequest;
 use App\Models\Budget as Budgets;
 use App\Models\Vendor;
 use Carbon\Carbon;
+use App\Models\Stream;
+use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BudgetReportExport;
@@ -365,4 +368,91 @@ class ReportsController extends Controller
             'data' => $vendorData
         ]);
     }
+
+    public function programmereport()
+    {
+      
+    return view('reports.programme_report', ['data' => $data]); // Pass data to the view if needed
+}
+
+public function programmedata(Request $request)
+{
+    // Get search value and pagination parameters
+    $searchValue = $request->input('search.value');
+    $start = $request->input('start', 0);
+    $length = $request->input('length', 10);
+
+    // Fetch all streams with their payment requests
+    $query = Stream::with(['paymentRequests' => function ($query) {
+        $query->select(
+                'payment_request.stream_id',
+                'payment_request.category_id',
+                DB::raw('COALESCE(SUM(payment_milestones.milestone_total_amount), 0) as total_expense') // Ensure correct column
+            )
+            ->join('invoices', 'payment_request.invoice_id', '=', 'invoices.id')
+            ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
+            ->where('payment_request.payment_status', 'completed')
+            ->groupBy('payment_request.stream_id', 'payment_request.category_id'); // Group by stream and category
+    }]);
+
+    // Apply search filter if needed
+    if ($searchValue) {
+        $query->where('stream_name', 'LIKE', "%$searchValue%"); // Filter streams by name
+    }
+
+    // Get total count before pagination
+    $totalCount = $query->count();
+
+    // Apply pagination
+    $streams = $query->skip($start)->take($length)->get();
+
+    // Initialize the data array
+    $data = [];
+
+    foreach ($streams as $stream) {
+        $categoriesArray = []; // Initialize categories array for this stream
+        $totalProgramExpense = 0; // Initialize total program expense for this stream
+
+        // Process each payment request for the current stream
+        foreach ($stream->paymentRequests as $paymentRequest) {
+            // Get the category related to the payment request
+            $category = Category::with('children')->find($paymentRequest->category_id);
+
+            if ($category) {
+                // Determine parent category name
+                $parentCategoryName = $category->parent ? $category->parent->category_name : $category->category_name;
+                 
+                // Initialize parent category if it doesn't exist
+                if (!isset($categoriesArray[$parentCategoryName])) {
+                    $categoriesArray[$parentCategoryName] = [
+                        'category_name' => $parentCategoryName,
+                        'total_expense' => 0,
+                    ];
+                }
+
+                // Update the total expense for the parent category
+                $categoriesArray[$parentCategoryName]['total_expense'] += $paymentRequest->total_expense;
+
+                // Update the total program expense
+                $totalProgramExpense += $paymentRequest->total_expense;
+            }
+        }
+
+        // Push stream-wise data along with total program expense
+        $data[] = [
+            'stream_name' => $stream->stream_name,
+            'total_program_expense' => $totalProgramExpense, // Total expense for the program
+            'categories' => array_values($categoriesArray) // Convert to a standard array
+        ];
+    }
+
+    // Return JSON response for DataTables
+    return response()->json([
+        'draw' => intval($request->input('draw')),
+        'recordsTotal' => $totalCount,
+        'recordsFiltered' => $totalCount,
+        'data' => $data,
+    ]);
+}
+
 }

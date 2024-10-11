@@ -179,8 +179,8 @@ $(document).ready(function() {
                         currentVendor = row.vendor_name; // Update current vendor
                         vendorSerial++; // Increment vendor serial
                         // return vendorSerial; // Return the serial number
-                        return '<p style="width:30px;">' + vendorSerial +
-                            '</p>';
+                        return '<span style="width:30px;">' + vendorSerial +
+                            '</span>';
                     }
                     return ''; // Return empty for subsequent rows
                 }
@@ -190,7 +190,7 @@ $(document).ready(function() {
                 name: 'vendor_name',
                 render: function(data, type, row, meta) {
                     // return data; // Display vendor name
-                    return '<p class="fs-6 fw-bold ">' + data + '</p>';
+                    return '<span class="fs-6 fw-bold ">' + data + '</span>';
                 }
             },
             {

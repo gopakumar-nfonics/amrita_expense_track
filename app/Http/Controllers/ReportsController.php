@@ -300,7 +300,7 @@ class ReportsController extends Controller
                     $query->where('invoice_status', 1)
                         ->select('id', 'invoice_id', 'proposal_id', 'invoice_status', 'milestone_id')
                         ->with(['paymentRequests' => function ($query) {
-                            $query->select('id', 'invoice_id', 'transaction_date');
+                            $query->select('id', 'invoice_id', 'transaction_date','utr_number');
                         }]);
                 }, 'paymentMilestones' => function ($query) {
                     $query->select('id', 'proposal_id', 'milestone_title', 'milestone_total_amount');
@@ -342,7 +342,8 @@ class ReportsController extends Controller
                                 'milestone_name' => $milestone->milestone_title, // Adjust to your milestone name field
                                 'milestone_amount' => number_format_indian($milestone->milestone_total_amount ?? 0), // Adjust to your milestone amount field
                                 'invoice_id' => $invoice->invoice_id, // Include the invoice ID
-                                'transaction_date' => $invoice->paymentRequests ? Carbon::parse($invoice->paymentRequests->transaction_date)->format('d-m-Y') : null // Get transaction date
+                                'transaction_date' => $invoice->paymentRequests ? Carbon::parse($invoice->paymentRequests->transaction_date)->format('d-m-Y') : null, // Get transaction date
+                                'utr_number' => $invoice->paymentRequests ? $invoice->paymentRequests->utr_number : null
                             ];
 
                             $proposalDetails['milestones'][] = $milestoneDetails;
@@ -466,13 +467,12 @@ public function exportprogrammedata()
         $query->select(
                 'payment_request.stream_id',
                 'payment_request.category_id',
-                'payment_request.utr_number',
                 DB::raw('COALESCE(SUM(payment_milestones.milestone_total_amount), 0) as total_expense') // Ensure correct column
             )
             ->join('invoices', 'payment_request.invoice_id', '=', 'invoices.id')
             ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
             ->where('payment_request.payment_status', 'completed')
-            ->groupBy('payment_request.stream_id', 'payment_request.category_id','payment_request.utr_number'); // Group by stream and category
+            ->groupBy('payment_request.stream_id', 'payment_request.category_id'); // Group by stream and category
     }]);
 
    

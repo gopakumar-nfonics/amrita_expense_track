@@ -445,7 +445,7 @@ public function programmedata(Request $request)
         // Push stream-wise data along with total program expense
         $data[] = [
             'stream_name' => $stream->stream_name,
-            'total_program_expense' => $totalProgramExpense, // Total expense for the program
+            'total_program_expense' => number_format_indian($totalProgramExpense), // Total expense for the program
             'categories' => array_values($categoriesArray) // Convert to a standard array
         ];
     }
@@ -513,7 +513,7 @@ public function exportprogrammedata()
         // Push stream-wise data along with total program expense
         $data[] = [
             'stream_name' => $stream->stream_name,
-            'total_program_expense' => $totalProgramExpense, // Total expense for the program
+            'total_program_expense' => number_format_indian($totalProgramExpense), // Total expense for the program
             'categories' => array_values($categoriesArray) // Convert to a standard array
         ];
     }

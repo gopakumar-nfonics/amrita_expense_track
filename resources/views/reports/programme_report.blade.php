@@ -162,8 +162,8 @@ $(document).ready(function() {
                 data: null,
                 render: function(data, type, row, meta) {
 
-                    return '<p style="width:30px;">' + (meta.row + 1) +
-                        '</p>';
+                    return '<span style="width:30px;">' + (meta.row + 1) +
+                        '</span>';
                 }
             }, // Row number
             {

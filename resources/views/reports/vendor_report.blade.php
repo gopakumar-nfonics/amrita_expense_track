@@ -109,7 +109,7 @@
 
                             <!-- Right Side (Download Button) -->
                             <div class="d-flex ms-auto">
-                                <a href="{{ route('reports.exportcatreport') }}" class="btn btn-sm btn-success">
+                                <a href="{{ route('reports.vendordataexport') }}" class="btn btn-sm btn-success">
                                     <i class="fa-solid fa-download"></i> Download Report
                                 </a>
                             </div>

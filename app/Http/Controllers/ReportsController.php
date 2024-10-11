@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BudgetReportExport;
+use App\Exports\VendorExport;
 
 class ReportsController extends Controller
 {
@@ -180,90 +181,9 @@ class ReportsController extends Controller
 
     public function vendorreport()
     {
-        /* $invoices = Invoice::with('paymentRequests')->where('invoice_status', 1)->get();
+       
 
-        print_r($invoices);exit();*/
-
-        $query = Vendor::with(['proposals' => function ($query) {
-            $query->where('proposal_status', 1)
-                ->with(['invoices' => function ($query) {
-                    $query->where('invoice_status', 1)
-                        ->select('id', 'invoice_id', 'proposal_id', 'invoice_status', 'milestone_id')
-                        ->with(['paymentRequests' => function ($query) {
-                            $query->select('id', 'invoice_id', 'transaction_date');
-                        }]);
-                }, 'paymentMilestones' => function ($query) {
-                    $query->select('id', 'proposal_id', 'milestone_title', 'milestone_total_amount');
-                }, 'proposalro' => function ($query) {
-                    $query->select('id', 'proposal_id', 'proposal_ro'); // Adjust if needed
-                }])
-                ->orderBy('id'); // Order proposals by their ID
-        }])
-            ->where('vendor_status', 'verified')
-            ->orderBy('id');
-
-        // Get total count before pagination
-        $totalCount = $query->count();
-
-        // Apply pagination
-        $vendors = $query->get();
-
-        // Initialize the vendor data array
-        $vendorData = [];
-
-        foreach ($vendors as $vendor) {
-            $vendorDetails = [
-                'vendor_name' => $vendor->vendor_name, // Adjust this to your vendor name field
-                'proposals' => []
-            ];
-
-            foreach ($vendor->proposals as $proposal) {
-                // Check if there are invoices with status = 1
-                if ($proposal->invoices->isNotEmpty()) {
-                    $proposalDetails = [
-                        'proposal_title' => $proposal->proposal_title, // Adjust to your proposal title field
-                        'proposal_ro' => $proposal->proposalro ? $proposal->proposalro->proposal_ro : null, // Accessing the RO field
-                        'milestones' => [],
-                        'total_milestone_amount' => 0 // Initialize total milestone amount for this proposal
-                    ];
-
-                    foreach ($proposal->paymentMilestones as $milestone) {
-                        // Find the corresponding invoice(s) for the milestone
-                        $relatedInvoices = $proposal->invoices->where('milestone_id', $milestone->id)->where('invoice_status', 1); // Check for invoice status
-
-                        foreach ($relatedInvoices as $invoice) {
-                            $milestoneDetails = [
-                                'milestone_name' => $milestone->milestone_title, // Adjust to your milestone name field
-                                'milestone_amount' => $milestone->milestone_total_amount, // Adjust to your milestone amount field
-                                'invoice_id' => $invoice->invoice_id, // Include the invoice ID
-                                'transaction_date' => $invoice->paymentRequests ? $invoice->paymentRequests->transaction_date : null // Get transaction date
-                            ];
-
-                            $proposalDetails['milestones'][] = $milestoneDetails;
-
-                            // Add to total milestone amount for the proposal
-                            $proposalDetails['total_milestone_amount'] += $milestone->milestone_total_amount; // Summing milestone amounts
-                        }
-                    }
-
-                    // Only add the proposal if it has milestones
-                    if (!empty($proposalDetails['milestones'])) {
-                        $vendorDetails['proposals'][] = $proposalDetails;
-                    }
-                }
-            }
-
-            // Only add vendors that have proposals
-            if (!empty($vendorDetails['proposals'])) {
-                $vendorData[] = $vendorDetails;
-            }
-        }
-
-        // Returning the data as JSON response for DataTables or other frontend use
-        
-//print_r($vendorDetails);exit();
-
-        return view('reports.vendor_report', compact('vendorData'));
+        return view('reports.vendor_report');
     }
 
     public function vendordata(Request $request)
@@ -367,6 +287,85 @@ class ReportsController extends Controller
             'recordsFiltered' => $totalCount, // You can modify this if you want to return filtered count
             'data' => $vendorData
         ]);
+    }
+
+    public function vendordataexport()
+    {
+        
+        $query = Vendor::with(['proposals' => function ($query) {
+            $query->where('proposal_status', 1)
+                ->with(['invoices' => function ($query) {
+                    $query->where('invoice_status', 1)
+                        ->select('id', 'invoice_id', 'proposal_id', 'invoice_status', 'milestone_id')
+                        ->with(['paymentRequests' => function ($query) {
+                            $query->select('id', 'invoice_id', 'transaction_date');
+                        }]);
+                }, 'paymentMilestones' => function ($query) {
+                    $query->select('id', 'proposal_id', 'milestone_title', 'milestone_total_amount');
+                }, 'proposalro' => function ($query) {
+                    $query->select('id', 'proposal_id', 'proposal_ro'); // Adjust if needed
+                }])
+                ->orderBy('id'); // Order proposals by their ID
+        }])
+            ->where('vendor_status', 'verified')
+            ->orderBy('id');
+
+        $vendors = $query->get();
+
+        // Initialize the vendor data array
+        $vendorData = [];
+
+        foreach ($vendors as $vendor) {
+            $vendorDetails = [
+                'vendor_name' => $vendor->vendor_name, // Adjust this to your vendor name field
+                'proposals' => []
+            ];
+
+            foreach ($vendor->proposals as $proposal) {
+                // Check if there are invoices with status = 1
+                if ($proposal->invoices->isNotEmpty()) {
+                    $proposalDetails = [
+                        'proposal_title' => $proposal->proposal_title, // Adjust to your proposal title field
+                        'proposal_ro' => $proposal->proposalro ? $proposal->proposalro->proposal_ro : null, // Accessing the RO field
+                        'milestones' => [],
+                        'total_milestone_amount' => 0 // Initialize total milestone amount for this proposal
+                    ];
+
+                    foreach ($proposal->paymentMilestones as $milestone) {
+                        // Find the corresponding invoice(s) for the milestone
+                        $relatedInvoices = $proposal->invoices->where('milestone_id', $milestone->id)->where('invoice_status', 1); // Check for invoice status
+
+                        foreach ($relatedInvoices as $invoice) {
+                            $milestoneDetails = [
+                                'milestone_name' => $milestone->milestone_title, // Adjust to your milestone name field
+                                'milestone_amount' => number_format_indian($milestone->milestone_total_amount ?? 0), // Adjust to your milestone amount field
+                                'invoice_id' => $invoice->invoice_id, // Include the invoice ID
+                                'transaction_date' => $invoice->paymentRequests ? Carbon::parse($invoice->paymentRequests->transaction_date)->format('d-m-Y') : null // Get transaction date
+                            ];
+
+                            $proposalDetails['milestones'][] = $milestoneDetails;
+
+                            // Add to total milestone amount for the proposal
+                            $proposalDetails['total_milestone_amount'] += $milestone->milestone_total_amount; // Summing milestone amounts
+                        }
+                    }
+
+                    $proposalDetails['total_milestone_amount'] = number_format_indian($proposalDetails['total_milestone_amount'], 2, '.', ',');
+
+                    // Only add the proposal if it has milestones
+                    if (!empty($proposalDetails['milestones'])) {
+                        $vendorDetails['proposals'][] = $proposalDetails;
+                    }
+                }
+            }
+
+            // Only add vendors that have proposals
+            if (!empty($vendorDetails['proposals'])) {
+                $vendorData[] = $vendorDetails;
+            }
+        }
+
+        return Excel::download(new VendorExport($vendorData), 'Vendor_wise_Report.xlsx');
     }
 
     public function programmereport()

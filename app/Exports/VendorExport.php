@@ -9,6 +9,8 @@ use Maatwebsite\Excel\Events\AfterSheet;
 class VendorExport implements FromArray, WithEvents
 {
     protected $vendorData;
+    protected $grandTotalAmount = 0;
+    protected $grandTotalProposalAmount = 0;
 
     public function __construct(array $vendorData)
     {
@@ -16,65 +18,64 @@ class VendorExport implements FromArray, WithEvents
     }
 
     public function array(): array
-    {
-        $data[] = ['Amrita Vishwa Vidyapeetham (ASE/ASA)', '', '', '', '', '', '', '','',''];
-        $data[] = ['Vendor Wise - Payment Reports', '', '', '', '', '', '', '','',''];
-        $data[] = ['Period: From 01-Jul-2024 To 26-Sep-2024', '', '', '', '', '', '', '','',''];
-        $data[] = ['#', 'Vendor', 'Proposal', 'RO #', 'Milestone', 'Invoice #', 'Payment Date', 'Amount', 'Total'];
-    
-        $serialNumber = 1; // Initialize serial number for vendors
-    
-        foreach ($this->vendorData as $vendor) {
-            $vendorRowCount = 0; // Track rows added for each vendor
-    
-            foreach ($vendor['proposals'] as $proposal) {
-                $proposalRowCount = 0; // Track rows added for each proposal
-                $milestones = $proposal['milestones'];
-    
-                // Only include proposals with milestones
-                if (!empty($milestones)) {
-                    // Prepare the row for the vendor
-                    if ($vendorRowCount === 0) {
-                        $data[] = [
-                            $serialNumber++, // Serial number for the vendor
-                            $vendor['vendor_name'],  // Vendor Name
-                            '', // Proposal Title
-                            '', // RO
-                            '', // Milestone Name
-                            '', // Milestone Amount
-                            '', // Invoice ID
-                            '', // Transaction Date
-                            ''  // Total (if any)
-                        ];
-                    }
-    
-                    // Prepare the row for the proposal
-                    if ($proposalRowCount === 0) {
-                        // Fill proposal title and RO for the first milestone
-                        $data[count($data) - 1][2] = $proposal['proposal_title'];
-                        $data[count($data) - 1][3] = $proposal['proposal_ro'];
-                        $data[count($data) - 1][8] = $proposal['total_milestone_amount'];  // Set Total for the proposal
-                    }
-    
-                    foreach ($milestones as $milestone) {
-                        $data[] = [
-                            '', // Serial number (leave empty for milestone rows)
-                            '', // Vendor Name (leave empty for merged cell)
-                            '', // Proposal Title (leave empty for merged cell)
-                            '', // RO
-                            $milestone['milestone_name'], // Milestone
-                            $milestone['invoice_id'], // Invoice #
-                            $milestone['transaction_date'], // Payment Date
-                            $milestone['milestone_amount'], // Amount
-                            '',  // Leave Total empty for milestone rows
-                        ];
-                    }
-    
-                    $vendorRowCount++;
+{
+    $data[] = ['Amrita Vishwa Vidyapeetham (ASE/ASA)', '', '', '', '', '', '', '', ''];
+    $data[] = ['Vendor Wise - Payment Reports', '', '', '', '', '', '', '', ''];
+    $data[] = ['Period: From 01-Jul-2024 To 26-Sep-2024', '', '', '', '', '', '', '', ''];
+    $data[] = ['#', 'Vendor', 'Proposal', 'RO #', 'Milestone', 'Invoice #', 'Payment Date', 'Amount', 'Total'];
+
+    $serialNumber = 1; // Initialize serial number for vendors
+
+    foreach ($this->vendorData as $vendor) {
+        $vendorRowCount = 0; // Track rows added for each vendor
+
+        foreach ($vendor['proposals'] as $proposal) {
+            $milestones = $proposal['milestones'];
+
+            if (!empty($milestones)) {
+                // For the first milestone of each vendor, add vendor and proposal data
+                if ($vendorRowCount === 0) {
+                    $data[] = [
+                        $serialNumber++, // Serial number for the vendor
+                        $vendor['vendor_name'],  // Vendor Name
+                        $proposal['proposal_title'],  // Proposal Title (only for first milestone)
+                        $proposal['proposal_ro'],     // RO (only for first milestone)
+                        $milestones[0]['milestone_name'], // First Milestone Name
+                        $milestones[0]['invoice_id'], // First Milestone Invoice #
+                        $milestones[0]['transaction_date'], // First Milestone Payment Date
+                        $milestones[0]['milestone_amount'], // First Milestone Amount
+                        $proposal['total_milestone_amount'],  // Total (for proposal)
+                    ];
+
+                    // Update grand total for amount from the first milestone
+                    $this->grandTotalAmount += $this->convertToFloat($milestones[0]['milestone_amount'] ?? 0);
                 }
+
+                $proposalAmount = $proposal['total_milestone_amount'] ?? 0;
+                $this->grandTotalProposalAmount += $this->convertToFloat($proposalAmount);
+
+                // For subsequent milestones, leave the vendor and proposal fields empty
+                for ($i = 1; $i < count($milestones); $i++) {
+                    $data[] = [
+                        '', // Serial number
+                        '', // Vendor Name (leave empty for subsequent milestones)
+                        '', // Proposal Title (leave empty for subsequent milestones)
+                        '', // RO (leave empty for subsequent milestones)
+                        $milestones[$i]['milestone_name'], // Milestone
+                        $milestones[$i]['invoice_id'], // Invoice #
+                        $milestones[$i]['transaction_date'], // Payment Date
+                        $milestones[$i]['milestone_amount'], // Amount
+                        '',  // Leave Total empty for milestone rows
+                    ];
+
+                    // Accumulate the grand total for each subsequent milestone
+                    $this->grandTotalAmount += $this->convertToFloat($milestones[$i]['milestone_amount'] ?? 0);
+                }
+
+                $vendorRowCount++;
             }
         }
-      
+    }
 
         // Total row
         $data[] = [
@@ -189,11 +190,16 @@ class VendorExport implements FromArray, WithEvents
                     }
                 }
     
-                $lastRow = $rowCount+2; // $rowIndex is the current row after all category and subcategory rows
+                $lastRow = $rowCount+1; // $rowIndex is the current row after all category and subcategory rows
 
                 $sheet->getStyle("A$lastRow:I$lastRow")->applyFromArray($this->getTotalRowStyle());
                 
                 $sheet->mergeCells("A$lastRow:H$lastRow");
+
+                $sheet->setCellValue("A$lastRow", 'Grand Total ');
+                //$sheet->setCellValue("H$lastRow", number_format_indian($this->grandTotalAmount)); // Accessing the class property
+                $sheet->setCellValue("I$lastRow", number_format_indian($this->grandTotalProposalAmount)); // Accessing the class property
+
                 $sheet->getStyle("A$lastRow:H$lastRow")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
                 
                 // Apply borders to the data range

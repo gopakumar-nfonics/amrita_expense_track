@@ -27,7 +27,7 @@
             <!--begin::Button-->
             <div class="card-toolbar">
 
-                <a href="" class="btn btn-sm btn-primary">
+                <a href="javascript:history.back()" class="btn btn-sm btn-primary">
                     Back
                 </a>
             </div>

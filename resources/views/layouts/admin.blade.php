@@ -315,7 +315,7 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">Vendor Payments</span>
+                                                <span class="menu-title">Vendor Wise</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>
@@ -327,7 +327,7 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">Programme Payments</span>
+                                                <span class="menu-title">Programme Wise</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>
@@ -339,7 +339,7 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">Budget Usage</span>
+                                                <span class="menu-title">Budget & Usage</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>

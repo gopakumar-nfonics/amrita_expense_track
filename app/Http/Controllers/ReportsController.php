@@ -372,7 +372,7 @@ class ReportsController extends Controller
     public function programmereport()
     {
       
-    return view('reports.programme_report', ['data' => $data]); // Pass data to the view if needed
+    return view('reports.programme_report'); // Pass data to the view if needed
 }
 
 public function programmedata(Request $request)

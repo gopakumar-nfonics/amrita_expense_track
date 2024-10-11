@@ -364,9 +364,9 @@ class ReportsController extends Controller
             if (!empty($vendorDetails['proposals'])) {
                 $vendorData[] = $vendorDetails;
             }
-        }
+        } 
 
-        return Excel::download(new VendorExport($vendorData), 'Vendor_wise_Report.xlsx');
+        return Excel::download(new VendorExport($vendorData), 'BUET_VR_Report.xlsx');
     }
 
     public function programmereport()

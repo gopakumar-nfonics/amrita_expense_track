@@ -516,7 +516,7 @@ public function exportprogrammedata()
             'categories' => array_values($categoriesArray) // Convert to a standard array
         ];
     }
-    return Excel::download(new ProgramDataExport($data), 'Programme_wise_Report.xlsx');
+    return Excel::download(new ProgramDataExport($data), 'BUET_PRGM_Report.xlsx');
    
 }
 

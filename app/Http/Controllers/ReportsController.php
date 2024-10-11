@@ -23,8 +23,9 @@ class ReportsController extends Controller
 {
     public function index()
     {
+        $category=Categories::where('parent_category', NULL)->orderBy('category_name')->get();
 
-        return view('reports.index');
+        return view('reports.index',compact('category'));
     }
 
     public function reportdata(Request $request)
@@ -182,9 +183,9 @@ class ReportsController extends Controller
 
     public function vendorreport()
     {
-       
+        $vendors=Vendor::where('vendor_status', 'verified')->orderBy('vendor_name')->get();
 
-        return view('reports.vendor_report');
+        return view('reports.vendor_report',compact('vendors'));
     }
 
     public function vendordata(Request $request)
@@ -371,8 +372,10 @@ class ReportsController extends Controller
 
     public function programmereport()
     {
+
+        $streams=Stream::orderBy('stream_name')->get();
       
-    return view('reports.programme_report'); // Pass data to the view if needed
+    return view('reports.programme_report',compact('streams')); // Pass data to the view if needed
 }
 
 public function programmedata(Request $request)

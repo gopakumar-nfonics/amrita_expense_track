@@ -62,8 +62,11 @@
                                     <label for="category" class="me-1 w-75px text-muted fs-7 me-4">
                                         Programme
                                     </label>
-                                    <select class="form-select form-select-solid fw-bold  p-2 px-4  fs-7">
+                                    <select class="form-select form-select-solid fw-bold  p-2 px-4  fs-7" name="stream">
                                         <option value="">Select Programme </option>
+                                        @foreach($streams as $stream)
+                                                                    <option value="{{ $stream->id }}" @if(old('stream') == $stream->id) selected @endif>{{ $stream->stream_name }}</option>
+                                                                @endforeach
                                     </select>
                                 </div>
                                 <div class="d-flex align-items-center ms-2">
@@ -81,7 +84,7 @@
                                         <!--begin::Datepicker-->
                                         <input
                                             class="form-control form-control-solid p-2 px-4 ps-12 flatpickr-input w-150px  fs-7"
-                                            placeholder="Start Date" name="due_date" type="text">
+                                            placeholder="Start Date" name="start_date" id="start_date" type="text">
                                         <!--end::Datepicker-->
                                     </div>
                                     <div class="position-relative d-flex align-items-center ms-3">
@@ -95,7 +98,7 @@
                                         <!--begin::Datepicker-->
                                         <input
                                             class="form-control form-control-solid p-2 px-4 ps-12 flatpickr-input w-150px fs-7"
-                                            placeholder="End Date" name="due_date" type="text">
+                                            placeholder="End Date" name="end_date" id="end_date" type="text">
                                         <!--end::Datepicker-->
                                     </div>
                                 </div>
@@ -230,10 +233,23 @@ $(document).ready(function() {
 });
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    flatpickr("#start_date", {
+        defaultDate: new Date(), // Sets the default date to the current date
+        dateFormat: "d-m-Y", // Use a standard format for backend compatibility
+        placeholder: "Select date" // Placeholder text
+    });
+});
 
-
-
-
+document.addEventListener('DOMContentLoaded', function() {
+    flatpickr("#end_date", {
+        defaultDate: new Date(), // Sets the default date to the current date
+        dateFormat: "d-m-Y", // Use a standard format for backend compatibility
+        placeholder: "Select date" // Placeholder text
+    });
+});
+</script>
 
 
 @endsection

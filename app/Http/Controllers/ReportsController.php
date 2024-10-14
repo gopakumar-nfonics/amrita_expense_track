@@ -442,6 +442,10 @@ public function programmedata(Request $request)
             }
         }
 
+        foreach ($categoriesArray as &$category) {
+            $category['total_expense'] = number_format_indian($category['total_expense']); // Format the expense
+        }
+
         // Push stream-wise data along with total program expense
         $data[] = [
             'stream_name' => $stream->stream_name,
@@ -508,6 +512,10 @@ public function exportprogrammedata()
                 // Update the total program expense
                 $totalProgramExpense += $paymentRequest->total_expense;
             }
+        }
+
+        foreach ($categoriesArray as &$category) {
+            $category['total_expense'] = number_format_indian($category['total_expense']); // Format the expense
         }
 
         // Push stream-wise data along with total program expense

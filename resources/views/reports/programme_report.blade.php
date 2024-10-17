@@ -50,9 +50,9 @@
                             class="filter-section mb-5 d-flex justify-content-between align-items-center border-bottom py-5">
                             <!-- Left Side (Filter) -->
                             <div class="d-flex align-items-center">
-                                <div class="d-flex align-items-center me-3 py-3">
-                                    <label for="start-date" class="me-1 w-100px text-dark fw-bold fs-7">
-                                        <i class="fa-solid fa-filter me-1 text-dark fs-8 fw-bold"></i> Filter By :
+                                <div class="d-flex align-items-center py-3">
+                                    <label for="start-date" class="me-1 w-24px text-dark fw-bold fs-7">
+                                        <i class="fa-solid fa-filter me-1 text-dark fs-8 fw-bold"></i>
 
                                     </label>
                                 </div>
@@ -65,8 +65,9 @@
                                     <select class="form-select form-select-solid fw-bold  p-2 px-4  fs-7" name="stream">
                                         <option value="">Select Programme </option>
                                         @foreach($streams as $stream)
-                                                                    <option value="{{ $stream->id }}" @if(old('stream') == $stream->id) selected @endif>{{ $stream->stream_name }}</option>
-                                                                @endforeach
+                                        <option value="{{ $stream->id }}" @if(old('stream')==$stream->id) selected
+                                            @endif>{{ $stream->stream_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="d-flex align-items-center ms-2">

@@ -55,9 +55,9 @@
                             class="filter-section mb-5 d-flex justify-content-between align-items-center border-bottom py-5">
                             <!-- Left Side (Filter) -->
                             <div class="d-flex align-items-center">
-                                <div class="d-flex align-items-center me-3 py-3">
-                                    <label for="start-date" class="me-1 w-100px text-dark fw-bold fs-7">
-                                        <i class="fa-solid fa-filter me-1 text-dark fs-8 fw-bold"></i> Filter By :
+                                <div class="d-flex align-items-center py-3">
+                                    <label for="start-date" class="me-1 w-24px text-dark fw-bold fs-7">
+                                        <i class="fa-solid fa-filter me-1 text-dark fs-8 fw-bold"></i>
 
                                     </label>
                                 </div>
@@ -67,11 +67,13 @@
                                     <label for="category" class="me-1 w-75px text-muted fs-7 me-0">
                                         Vendor
                                     </label>
-                                    <select class="form-select form-select-solid fw-bold  p-2 px-4  fs-7" name="vendor" id="vendor">
+                                    <select class="form-select form-select-solid fw-bold  p-2 px-4  fs-7" name="vendor"
+                                        id="vendor">
                                         <option value="">Select Vendor </option>
                                         @foreach($vendors as $vendor)
-                                                                    <option value="{{ $vendor->id }}" @if(old('vendor') == $vendor->id) selected @endif>{{ $vendor->vendor_name }}</option>
-                                                                @endforeach
+                                        <option value="{{ $vendor->id }}" @if(old('vendor')==$vendor->id) selected
+                                            @endif>{{ $vendor->vendor_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="d-flex align-items-center ms-2">

@@ -296,7 +296,7 @@
                                             <div class="input-group">
                                                 <!-- Prefix (non-editable) -->
                                                 <span class="input-group-text"
-                                                    style="background: #cccdcf;color: #000000;">P240</span>
+                                                    style="background: #cccdcf;color: #000000;">P2</span>
 
                                                 <!-- Editable UTR Number input -->
                                                 <input type="hidden" name="reqid" id="reqid" value="">

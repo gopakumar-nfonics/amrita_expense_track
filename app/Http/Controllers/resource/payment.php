@@ -332,7 +332,7 @@ class payment extends Controller
         $paymentRequest = PaymentRequest::where('id', $request->reqid)->first();
 
         if ($paymentRequest) {
-            $paymentRequest->utr_number = "P240".$request->utrnumber;
+            $paymentRequest->utr_number = "P2".$request->utrnumber;
             $paymentRequest->transaction_date = $request->transactiondate;
             $paymentRequest->payment_status = 'completed';  // Example of status update
             $paymentRequest->save();

@@ -492,22 +492,60 @@ $(document).ready(function() {
 function approve(proid, status) {
 
     if (status === 'approve') {
-        var title = 'Are you sure, you want to approve this proposal?';
+        var title = 'Approve Proposal';
         var text =
-            "Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.";
+            "Select Program and approve proposal. Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.";
 
+        // Create a custom select dropdown
+        var content = document.createElement('div');
+        var selectBox = document.createElement('select');
+        selectBox.id = 'programSelect';
+        selectBox.className = 'form-control form-control-lg form-control-solid ';
+        selectBox.innerHTML = `
+        <option value="">-- Select Program --</option>
+        <option value="Program1">Program 1</option>
+        <option value="Program2">Program 2</option>
+        <option value="Program3">Program 3</option>
+    `;
 
+        content.appendChild(selectBox);
 
         swal({
                 title: title,
                 text: text,
-                icon: "warning",
-                buttons: true,
+                icon: false,
+                buttons: {
+                    cancel: {
+                        text: "Cancel",
+                        value: false,
+                        visible: true,
+                        className: "btn btn-light",
+                        closeModal: true,
+                    },
+                    confirm: {
+                        text: "Approve",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-success",
+                        closeModal: false // Prevent auto-close until we process it
+                    }
+                },
                 dangerMode: true,
+                content: content, // Insert custom content (the select dropdown)
             })
-            .then((willDelete) => {
-                if (willDelete) {
+            .then((willApprove) => {
+                if (willApprove) {
+                    var selectedProgram = document.getElementById('programSelect').value;
+
+                    if (selectedProgram === "") {
+                        swal("Please select a program.", {
+                            icon: "warning",
+                        });
+                        return; // Stop the process if no program is selected
+                    }
+
                     document.getElementById('loaderOverlay').style.display = 'flex';
+
                     $.ajax({
                         url: "{{ route('lead.approve') }}",
                         type: 'POST',
@@ -515,6 +553,7 @@ function approve(proid, status) {
                             _token: '{{ csrf_token() }}',
                             id: proid,
                             status: status,
+                            program: selectedProgram // Send the selected program
                         },
                         success: function(response) {
                             document.getElementById('loaderOverlay').style.display = 'none';
@@ -551,6 +590,7 @@ function approve(proid, status) {
         var title = 'Invalid status';
     }
 }
+
 
 function rejectionreason(proid) {
 

@@ -112,7 +112,7 @@
                                                                             src="{{ url('/') }}/assets/media/svg/files/pdf.svg">
                                                                         <a class="fs-7 text-muted border-bottom color-blue ms-2"
                                                                             href="{{ Storage::url($invoice->invoice_file) }}"
-                                                                            download="{{ basename($invoice->invoice_file) }}">{{$invoice->milestone->milestone_title}}</a>
+                                                                            target="_blank">{{$invoice->milestone->milestone_title}}</a>
                                                                     </div>
 
                                                                 </div>

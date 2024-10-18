@@ -79,8 +79,8 @@
                                                 $paymentrequestPath = 'payment_request/' . $paymentrequest;
                                                 $paymentrequestUrl = asset('storage/' . $paymentrequestPath);
                                                 @endphp
-                                                <a href="{{ $paymentrequestUrl }}" download="{{ $paymentrequest }}"
-                                                    target="_blank" class="text-dark fw-bold text-hover-primary fs-6">
+                                                <a href="{{ $paymentrequestUrl }}" target="_blank"
+                                                    class="text-dark fw-bold text-hover-primary fs-6">
                                                     #{{$request->payment_request_id}}
                                                 </a>
                                                 <div class="text-gray-400 fw-semibold fs-9">
@@ -173,7 +173,7 @@
 
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
-                                            @if($request->category)
+                                                @if($request->category)
                                                 @if($request->category->parent){{$request->category->parent->category_name}}@else{{$request->category->category_name}}@endif
                                                 @if($request->category->parent) |
                                                 {{$request->category->category_name}}@endif
@@ -222,8 +222,8 @@
                                                 $paymentrequestPath = 'payment_request/' . $paymentrequest;
                                                 $paymentrequestUrl = asset('storage/' . $paymentrequestPath);
                                                 @endphp
-                                                <a href="{{ $paymentrequestUrl }}" download="{{ $paymentrequest }}"
-                                                    target="_blank" class="menu-link px-3">
+                                                <a href="{{ $paymentrequestUrl }}" target="_blank"
+                                                    class="menu-link px-3">
                                                     Download PDF</a>
                                             </div>
 

@@ -140,7 +140,7 @@
                                                 $releaseorderPath = 'release_orders/' . $releaseorder;
                                                 $releaseorderUrl = asset('storage/' . $releaseorderPath);
                                                 @endphp
-                                                <a href="{{ $releaseorderUrl }}" download="{{ $releaseorder }}"
+                                                <a href="{{ $releaseorderUrl }}" target="_blank"
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$inv->proposalro->proposal_ro}}</a>
 
 

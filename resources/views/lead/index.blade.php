@@ -143,7 +143,7 @@
                                                 $releaseorderPath = 'release_orders/' . $releaseorder;
                                                 $releaseorderUrl = asset('storage/' . $releaseorderPath);
                                                 @endphp
-                                                <a href="{{ $releaseorderUrl }}" download="{{ $releaseorder }}"
+                                                <a href="{{ $releaseorderUrl }}" target="_blank"
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$pro->proposalro->proposal_ro}}</a>
                                                 <span class="text-muted fw-semibold text-muted d-block fs-8">Issued On :
                                                     {{ \Carbon\Carbon::parse($pro->proposalro->created_at)->format('d-M-Y') }}</span>
@@ -195,7 +195,8 @@
 
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="{{ route('lead.show',$pro->id) }}" class="menu-link px-3">View </a>
+                                                <a href="{{ route('lead.show',$pro->id) }}" class="menu-link px-3">View
+                                                </a>
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->

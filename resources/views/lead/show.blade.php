@@ -82,9 +82,9 @@
                 <!-- begin::Body-->
                 <div class="card-body py-20">
 
-                <div class="overlay" id="loaderOverlay">
-                             <div class="loader"></div>
-                         </div>
+                    <div class="overlay" id="loaderOverlay">
+                        <div class="loader"></div>
+                    </div>
                     <!-- begin::Wrapper-->
                     <div class="mw-lg-950px mx-auto w-100" id="printableArea">
                         <!-- begin::Header-->
@@ -117,8 +117,8 @@
 
                                     <div class="symbol symbol-20px mt-5">
                                         <img alt="Icon" src="{{ url('/') }}/assets/media/svg/files/pdf.svg">
-                                        <a href="{{ Storage::url($proposal->file_path) }}"
-                                            download="{{ basename($proposal->file_path) }}" class="fw-semibold ms-2">
+                                        <a href="{{ Storage::url($proposal->file_path) }}" target="_blank"
+                                            class="fw-semibold ms-2">
                                             <u>Reference Document</u>
                                         </a>
                                     </div>
@@ -174,13 +174,13 @@
                                                         <td>
                                                             <div class="d-flex align-items-center">
 
-                                                                
+
                                                                 <div class="ms-0">
                                                                     <div class="fw-bold">
                                                                         {{ $milestone->milestone_title }}
                                                                     </div>
                                                                 </div>
-                                                              
+
                                                             </div>
                                                         </td>
                                                         <!--end::Product-->

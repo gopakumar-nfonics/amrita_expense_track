@@ -106,7 +106,7 @@
                                                     <div>
                                                         <span class="text-muted fw-semibold text-muted d-block fs-8">UTR
                                                             :
-                                                            #{{$request->utr_number}} </span>
+                                                            {{$request->utr_number}} </span>
                                                         <span
                                                             class="text-muted fw-semibold text-muted d-block fs-8">Date
                                                             :
@@ -290,16 +290,25 @@
                                             <!--begin::Label-->
                                             <label class="d-flex align-items-center fs-6 fw-semibold form-label mb-2">
                                                 <span class="required">UTR Number</span>
-
                                             </label>
                                             <!--end::Label-->
-                                            <input type="hidden" name="reqid" id="reqid" value="">
-                                            <input type="text" class="form-control form-control-solid"
-                                                placeholder="UTR Number" name="utrnumber" id="utrnumber" value=""
-                                                required>
+
+                                            <div class="input-group">
+                                                <!-- Prefix (non-editable) -->
+                                                <span class="input-group-text"
+                                                    style="background: #cccdcf;color: #000000;">P240</span>
+
+                                                <!-- Editable UTR Number input -->
+                                                <input type="hidden" name="reqid" id="reqid" value="">
+                                                <input type="text" class="form-control form-control-solid"
+                                                    placeholder="UTR Number" name="utrnumber" id="utrnumber" value=""
+                                                    required>
+                                            </div>
+
                                             <div class="fv-plugins-message-container invalid-feedback"></div>
                                         </div>
                                         <!--end::Input group-->
+
 
                                         <!--begin::Input group-->
                                         <div class="d-flex flex-column mb-7 fv-row fv-plugins-icon-container">

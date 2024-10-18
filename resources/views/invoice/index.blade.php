@@ -103,7 +103,7 @@
 
                                                         <span class="text-muted fw-semibold text-muted d-block fs-8">UTR
                                                             :
-                                                            #{{$inv->paymentRequests->utr_number}} </span>
+                                                            {{$inv->paymentRequests->utr_number}} </span>
                                                         <span
                                                             class="text-muted fw-semibold text-muted d-block fs-8">Date
                                                             :

@@ -17,7 +17,7 @@ class department extends Controller
      */
     public function index()
     {
-        $departments=departments::with('campus')->orderBy('department_name')->get();
+        $departments=departments::with('campus')->orderByDesc('id')->get();
         return view('department.index', compact('departments'));
     }
 

@@ -239,12 +239,7 @@
                                                     Download PDF</a>
                                             </div>
 
-                                            <!--begin::Menu item-->
-                                            <div class="menu-item px-3">
-                                                <a href="" class="menu-link px-3"
-                                                    data-kt-customer-table-filter="delete_row">Delete</a>
-                                            </div>
-                                            <!--end::Menu item-->
+                                           
                                         </div>
                                         <!--end::Menu-->
                                     </td>
@@ -380,8 +375,7 @@ $(document).ready(function() {
     $('#budgettable').DataTable({
         "iDisplayLength": 10,
         "searching": true,
-        "recordsTotal": 3615,
-        "pagingType": "full_numbers"
+        "ordering":false
     });
 });
 </script>

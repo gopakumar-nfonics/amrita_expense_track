@@ -20,7 +20,7 @@ class vendor extends Controller
      */
     public function index()
     {
-        $vendors=vendors::with('company')->whereNotNull('vendor_status')->orderBy('vendor_name')->get();
+        $vendors=vendors::with('company')->whereNotNull('vendor_status')->orderByDesc('vendor_name')->get();
         return view('vendor.index', compact('vendors'));
     }
 

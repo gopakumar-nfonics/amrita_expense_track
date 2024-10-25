@@ -33,7 +33,7 @@ class budget extends Controller
                       AND payment_request.payment_status = "completed") as used_amount')
         ->from('tbl_budget')
         ->whereNull('tbl_budget.deleted_at')
-        ->orderBy('id')
+        ->orderByDesc('id')
         ->get();
     
 

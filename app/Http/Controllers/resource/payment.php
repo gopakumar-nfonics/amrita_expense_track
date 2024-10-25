@@ -31,7 +31,7 @@ class payment extends Controller
     {
 
        
-        $payrequest = PaymentRequest::with(['invoice.milestone', 'invoice.vendor', 'invoice.proposalro', 'invoice.proposal', 'category', 'category.parent', 'stream'])->orderBy('id')->get();
+        $payrequest = PaymentRequest::with(['invoice.milestone', 'invoice.vendor', 'invoice.proposalro', 'invoice.proposal', 'category', 'category.parent', 'stream'])->orderByDesc('id')->get();
 
         return view('payment.index', compact('payrequest'));
     }

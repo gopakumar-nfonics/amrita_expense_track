@@ -200,7 +200,7 @@
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
-                                            @if(!Auth::user()->isvendor() && $pro->proposal_status ==1)
+                                            @if(!Auth::user()->isvendor() && $pro->proposal_status ==0)
                                             <div class="menu-item px-3">
                                                 <a href="javascript:void(0)" onclick="approve('{{$pro->id}}','approve')"
                                                     class="menu-link px-3">Approve</a>

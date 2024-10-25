@@ -326,33 +326,10 @@
                                                             #{{$paymentrequest->payment_request_id}}</div>
                                                         <!--end::Input-->
                                                     </div>
-                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-4 me-15">
-
-                                                        <input type="hidden" value="{{$invoice->id}}" name="invoid">
-                                                        <!--begin::Label-->
-                                                        <label class="required form-label">Programme</label>
-                                                        <!--end::Label-->
-                                                        <!--begin::Select2-->
-                                                        <select
-                                                            class="form-select mb-2 @error('programme') is-invalid @enderror"
-                                                            data-control="select2" data-hide-search="true"
-                                                            data-placeholder="Select Stream" name="programme"
-                                                            id="programme">
-                                                            <option></option>
-                                                            @foreach ($stream as $strm)
-                                                            <option value="{{$strm->id}}" @if(old('programme')==$strm->
-                                                                id) selected
-                                                                @endif>{{$strm->stream_name}}
-                                                            </option>
-                                                            @endforeach
-                                                        </select>
-                                                        @error('programme')<div class="invalid-feedback">{{ $message }}
-                                                        </div>@enderror
-                                                        <!--end::Select2-->
-                                                    </div>
+                                                    
                                                     <div class="fs-6 fw-bold text-gray-700 col-lg-4">
-
-
+                                                    <input type="hidden" value="{{$invoice->id}}" name="invoid">
+                                                    <input type="hidden" value="{{$invoice->proposal->programme_id}}" name="programme" id="programme">
                                                         <!--begin::Label-->
                                                         <label class="required form-label">Category</label>
                                                         <!--end::Label-->
@@ -552,6 +529,7 @@ function getallocatedbudget() {
 
     // Update the category name in the UI
     document.getElementById("catname").innerText = parentCategoryName;
+    
 
     // Get the category ID
     const categoryId = selectElement.value;

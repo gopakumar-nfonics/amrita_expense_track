@@ -270,139 +270,140 @@ select#programSelect {
 @section('pageScripts')
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-function approve(proid) {
+function approve(proid, status) {
+        var title = 'Approve Proposal';
+        var text =
+            "Select Programme and approve proposal. Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.";
 
-    var title = 'Approve Proposal';
-    var text =
-        "Select Programme and approve proposal. Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.";
+        // Create custom select dropdown
+        var content = document.createElement('div');
+        var selectBox = document.createElement('select');
+        selectBox.id = 'programSelect';
+        selectBox.className = 'form-control form-control-lg form-control-solid';
+        selectBox.innerHTML = `<option value="">-- Select Programme --</option>`;
+        content.appendChild(selectBox);
 
-    // Create a custom select dropdown
-    var content = document.createElement('div');
-    var selectBox = document.createElement('select');
-    selectBox.id = 'programSelect';
-    selectBox.className = 'form-control form-control-lg form-control-solid ';
-    selectBox.innerHTML = `<option value="">-- Select Programme --</option>`;
-    content.appendChild(selectBox);
+        var errorSpan = document.createElement('span');
+        errorSpan.id = 'programError';
+        errorSpan.className = 'badge badge-light-danger fs-6 py-3';
+        errorSpan.style.display = 'none';
+        errorSpan.textContent = 'Select Programme.';
+        content.appendChild(errorSpan);
 
-    var errorSpan = document.createElement('span');
-    errorSpan.id = 'programError';
-    errorSpan.className = 'badge badge-light-danger fs-6 py-3';
-    errorSpan.style.display = 'none'; // Hidden initially
-    errorSpan.textContent = 'Select Programme.';
-    content.appendChild(errorSpan);
-
-
-    // Show the SweetAlert
-    swal({
-            title: title,
-            text: text,
-            icon: false,
-            buttons: {
-                cancel: {
-                    text: "Cancel",
-                    value: false,
-                    visible: true,
-                    className: "btn btn-light",
-                    closeModal: true,
-                },
-                confirm: {
-                    text: "Approve",
-                    value: true,
-                    visible: true,
-                    className: "btn btn-success",
-                    closeModal: false // Prevent auto-close until we process it
-                }
-            },
-            dangerMode: true,
-            content: content, // Insert custom content (the select dropdown)
-        })
-        .then((willApprove) => {
-            if (willApprove) {
-                var selectedProgram = document.getElementById('programSelect').value;
-
-                if (selectedProgram === "") {
-
-                    errorSpan.style.display = 'block';
-                    return; // Stop the process if no program is selected
-                } else {
-
-                    errorSpan.style.display = 'none';
-                }
-
-                // document.getElementById('loaderOverlay').style.display = 'flex';
-
-                $.ajax({
-                    url: "{{ route('lead.approve') }}",
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: proid,
-                        status: status,
-                        program: selectedProgram // Send the selected program
+        // Show the SweetAlert
+        swal({
+                title: title,
+                text: text,
+                icon: false,
+                buttons: {
+                    cancel: {
+                        text: "Cancel",
+                        value: false,
+                        visible: true,
+                        className: "btn btn-light",
+                        closeModal: true,
                     },
-                    beforeSend: function() {
-                        $('.swal-modal').css('opacity', 0);
-                        document.getElementById('loaderOverlay').style.display =
-                            'flex'; // Show loader before the request
-                    },
-                    success: function(response) {
-                        $('.swal-modal').css('opacity', 1);
-                        document.getElementById('loaderOverlay').style.display = 'none';
-                        if (response.success) {
-                            swal(response.success, {
-                                icon: "success",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
-                        } else {
-                            swal(response.error || 'Something went wrong.', {
-                                icon: "warning",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
-                        }
-                    },
-                    error: function(xhr) {
-                        document.getElementById('loaderOverlay').style.display = 'none';
-                        swal('Error: Something went wrong.', {
-                            icon: "error",
-                        }).then(() => {
-                            location.reload();
-                        });
+                    confirm: {
+                        text: "Approve",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-success",
+                        closeModal: false
                     }
+                },
+                dangerMode: true,
+                content: content,
+                closeOnConfirm: false
+            })
+            .then((willApprove) => {
+                if (willApprove) {
+                    var selectedProgram = selectBox.value;
+                    if (selectedProgram === "") {
+                        errorSpan.style.display = 'block';
+                        return;
+                    } else {
+                        errorSpan.style.display = 'none';
+                    }
+
+                    $.ajax({
+                        url: "{{ route('lead.approve') }}",
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: proid,
+                            status: status,
+                            program: selectedProgram
+                        },
+                        beforeSend: function() {
+                            $('.swal-modal').css('opacity', 0);
+                            document.getElementById('loaderOverlay').style.display = 'flex';
+                        },
+                        success: function(response) {
+                            document.getElementById('loaderOverlay').style.display = 'none';
+                            $('.swal-modal').css('opacity', 1);
+                            if (response.success) {
+                                swal(response.success, {
+                                    icon: "success",
+                                    buttons: false,
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            } else {
+                                swal(response.error || 'Something went wrong.', {
+                                    icon: "warning",
+                                    buttons: false,
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            }
+                        },
+                        error: function(xhr) {
+                            document.getElementById('loaderOverlay').style.display = 'none';
+                            swal('Error: Something went wrong.', {
+                                icon: "error",
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                    });
+                }
+            });
+
+        // Set a delay to ensure the SweetAlert modal content is loaded before accessing the Approve button
+        setTimeout(function() {
+            var approveButton = document.querySelector('.swal-button--confirm');
+            approveButton.disabled = true; // Disable initially
+
+            // Toggle "Approve" button based on selection
+            selectBox.addEventListener('change', function() {
+                approveButton.disabled = (selectBox.value === "");
+            });
+        }, 200);
+
+        // Fetch programs dynamically
+        $.ajax({
+            url: "{{ route('getPrograms') }}",
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                console.log('Received data:', data);
+                data.forEach(function(program) {
+                    var option = document.createElement('option');
+                    option.value = program.id;
+                    option.text = program.stream_name;
+                    selectBox.appendChild(option);
+                });
+            },
+            error: function(xhr) {
+                console.error('Error fetching programs:', xhr);
+                swal('Error fetching programs.', {
+                    icon: "error",
                 });
             }
         });
-
-    // Fetch programs dynamically based on proposal ID
-    $.ajax({
-        url: "{{ route('getPrograms') }}", // Replace with your route
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            console.log('Received data:', data);
-            // Populate the select box with programs
-            data.forEach(function(program) {
-                var option = document.createElement('option');
-                option.value = program.id; // Assuming the program object has an 'id' field
-                option.text = program
-                    .stream_name; // Assuming the program object has a 'name' field
-                selectBox.appendChild(option);
-            });
-        },
-        error: function(xhr) {
-            console.error('Error fetching programs:', xhr);
-            swal('Error fetching programs.', {
-                icon: "error",
-            });
-        }
-    });
-
-
+    
 }
 </script>
 

@@ -17,7 +17,7 @@ class stream extends Controller
      */
     public function index()
     {
-        $streams=streams::with('campus','department')->orderBy('stream_name')->get();
+        $streams=streams::with('campus','department')->orderByDesc('id')->get();
         return view('stream.index', compact('streams'));
     }
 
@@ -45,6 +45,7 @@ class stream extends Controller
             'name' => 'required|unique:stream,stream_name',
             'code' => 'required|unique:stream,stream_code',
             'campus' => 'required',
+            'billingaddress' => 'required',
         ]);
     
             try {
@@ -53,6 +54,7 @@ class stream extends Controller
                 $stream->stream_code = $request->code;
                 $stream->campus_id = $request->campus;
                 $stream->department_id = $request->department;
+                $stream->billing_address = $request->billingaddress;
                 $stream->save();
         
                 return redirect()->route('stream.index')->with('success', 'Programme Created Successfully');
@@ -101,6 +103,7 @@ class stream extends Controller
             'name' => 'required|unique:stream,stream_name,'.$id,
             'code' => 'required|unique:stream,stream_code,'.$id,
             'campus' => 'required',
+            'billingaddress' => 'required',
         ]);
     
             try {
@@ -109,6 +112,7 @@ class stream extends Controller
                 $stream->stream_code = $request->code;
                 $stream->campus_id = $request->campus;
                 $stream->department_id = $request->department;
+                $stream->billing_address = $request->billingaddress;
                 $stream->save();
         
                 return redirect()->route('stream.index')->with('success', 'Programme Updated Successfully');

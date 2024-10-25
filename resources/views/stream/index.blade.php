@@ -143,8 +143,7 @@
 		$('#streamtable').DataTable({
 			"iDisplayLength": 10,
 			"searching": true,
-			"recordsTotal": 3615,
-			"pagingType": "full_numbers"
+			"ordering": false,
 		});
 	});
 </script>

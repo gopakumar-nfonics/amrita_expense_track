@@ -113,7 +113,7 @@
 											<select class="form-select mb-2 @error('department') is-invalid @enderror" data-control="select2" data-hide-search="true" data-placeholder="Select Department" name="department" id="department">
 												<option></option>
 												@foreach ($department as $dept)
-												<option value="{{$dept->id}}" @if(old('department',$stream->department_id ) == $dept->id) selected @endif>{{$dept->department_name}}</option>
+												<option value="{{$dept->id}}" data-address="{{$dept->address}}" @if(old('department',$stream->department_id ) == $dept->id) selected @endif>{{$dept->department_name}}</option>
 												@endforeach
 
 											</select>
@@ -121,6 +121,23 @@
 										</div>
 									</div>
 								</div>
+								<!--begin::Input group-->
+								<div class="row mb-6">
+														<!--begin::Label-->
+														<label class="col-lg-4 col-form-label required fw-semibold fs-6">Billing Address</label>
+														<!--end::Label-->
+														<!--begin::Col-->
+														<div class="col-lg-8 fv-row">
+															<!--begin::Col-->
+															<div class="col-lg-12 fv-row">
+																<textarea name="billingaddress" id="billingaddress" class="form-control form-control-lg form-control-solid @error('billingaddress') is-invalid @enderror" placeholder="Address">{{ old('billingaddress', $stream->billing_address) }}</textarea>
+																@error('billingaddress')<div class="invalid-feedback">{{ $message }}</div> @enderror
+															</div>
+															<!--end::Col-->
+														</div>
+														<!--end::Col-->
+													</div>
+													<!--end::Input group-->
 							</div>
 							<!--end::Card body-->
 							<!--begin::Actions-->
@@ -156,7 +173,7 @@
                         $('#department').empty();
                         $('#department').append('<option></option>'); // Add the placeholder
                         $.each(data, function(key, value) {
-                            $('#department').append('<option value="'+ value.id +'">'+ value.department_name +'</option>');
+                            $('#department').append('<option value="'+ value.id +'" data-address="'+value.address+'">'+ value.department_name +'</option>');
                         });
                     }
                 });
@@ -165,6 +182,10 @@
                 $('#department').append('<option></option>'); // Add the placeholder
             }
         });
+		$('#department').on('change', function() {
+        var billingaddress = $(this).find(':selected').data('address');
+		$('#billingaddress').val(billingaddress);
+    });
     });
 </script>
 @endsection

@@ -260,97 +260,135 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 function approve(proid) {
-    // Create a custom select dropdown
-    var content = document.createElement('div');
-    var selectBox = document.createElement('select');
-    selectBox.id = 'programSelect';
-    selectBox.className = 'form-control form-control-lg form-control-solid ';
-    selectBox.innerHTML = `
-        <option value="">-- Select Program --</option>
-        <option value="Program1">Program 1</option>
-        <option value="Program2">Program 2</option>
-        <option value="Program3">Program 3</option>
-    `;
+    
+        var title = 'Approve Proposal';
+        var text =
+            "Select Program and approve proposal. Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.";
 
-    content.appendChild(selectBox);
+        // Create a custom select dropdown
+        var content = document.createElement('div');
+        var selectBox = document.createElement('select');
+        selectBox.id = 'programSelect';
+        selectBox.className = 'form-control form-control-lg form-control-solid ';
+        selectBox.innerHTML = `<option value="">-- Select Program --</option>`;
+        content.appendChild(selectBox);
 
-    swal({
-            title: "Approve Proposal",
-            text: "Select Program and approve proposal. Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.",
-            icon: false,
-            buttons: {
-                cancel: {
-                    text: "Cancel",
-                    value: false,
-                    visible: true,
-                    className: "btn btn-light",
-                    closeModal: true,
-                },
-                confirm: {
-                    text: "Approve",
-                    value: true,
-                    visible: true,
-                    className: "btn btn-success",
-                    closeModal: false // Prevent auto-close until we process it
-                }
-            },
-            dangerMode: true,
-            content: content // Insert custom content (the select dropdown)
-        })
-        .then((willApprove) => {
-            if (willApprove) {
-                var selectedProgram = document.getElementById('programSelect').value;
+        var errorSpan = document.createElement('span');
+        errorSpan.id = 'programError';
+        errorSpan.style.color = 'red';
+        errorSpan.style.display = 'none'; // Hidden initially
+        errorSpan.textContent = 'Please select a program.';
+        content.appendChild(errorSpan);
 
-                if (selectedProgram === "") {
-                    swal("Please select a program.", {
-                        icon: "warning",
-                    });
-                    return; // Stop the process if no program is selected
-                }
-
-                // Show the loader
-                document.getElementById('loaderOverlay').style.display = 'flex';
-
-                // Make the AJAX request
-                $.ajax({
-                    url: "{{ route('lead.approve') }}",
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: proid,
-                        program: selectedProgram // Send the selected program
+        // Show the SweetAlert
+        swal({
+                title: title,
+                text: text,
+                icon: false,
+                buttons: {
+                    cancel: {
+                        text: "Cancel",
+                        value: false,
+                        visible: true,
+                        className: "btn btn-light",
+                        closeModal: true,
                     },
-                    success: function(response) {
-                        document.getElementById('loaderOverlay').style.display = 'none';
-                        if (response.success) {
-                            swal(response.success, {
-                                icon: "success",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
-                                window.location.href = "{{ route('lead.index') }}";
-                            }, 1000);
-                        } else {
-                            swal(response.error || 'Something went wrong.', {
-                                icon: "warning",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
-                        }
-                    },
-                    error: function(xhr) {
-                        document.getElementById('loaderOverlay').style.display = 'none';
-                        swal('Error: Something went wrong.', {
-                            icon: "error",
-                        }).then(() => {
-                            location.reload();
-                        });
+                    confirm: {
+                        text: "Approve",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-success",
+                        closeModal: false // Prevent auto-close until we process it
                     }
+                },
+                dangerMode: true,
+                content: content, // Insert custom content (the select dropdown)
+            })
+            .then((willApprove) => {
+                if (willApprove) {
+                    var selectedProgram = document.getElementById('programSelect').value;
+
+                    if (selectedProgram === "") {
+                       
+                       errorSpan.style.display = 'block';
+                       return; // Stop the process if no program is selected
+                   } else {
+                       
+                       errorSpan.style.display = 'none';
+                   }
+
+                   // document.getElementById('loaderOverlay').style.display = 'flex';
+
+                    $.ajax({
+                        url: "{{ route('lead.approve') }}",
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: proid,
+                            status: status,
+                            program: selectedProgram // Send the selected program
+                        },
+                        beforeSend: function() {
+                            $('.swal-modal').css('opacity', 0);
+                           document.getElementById('loaderOverlay').style.display = 'flex'; // Show loader before the request
+                             },
+                        success: function(response) {
+                            document.getElementById('loaderOverlay').style.display = 'none';
+                            if (response.success) {
+                                swal(response.success, {
+                                    icon: "success",
+                                    buttons: false,
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            } else {
+                                swal(response.error || 'Something went wrong.', {
+                                    icon: "warning",
+                                    buttons: false,
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            }
+                        },
+                        error: function(xhr) {
+                            document.getElementById('loaderOverlay').style.display = 'none';
+                            swal('Error: Something went wrong.', {
+                                icon: "error",
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                    });
+                }
+            });
+
+        // Fetch programs dynamically based on proposal ID
+        $.ajax({
+            url: "{{ route('getPrograms') }}", // Replace with your route
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                console.log('Received data:', data);
+                // Populate the select box with programs
+                data.forEach(function(program) {
+                    var option = document.createElement('option');
+                    option.value = program.id; // Assuming the program object has an 'id' field
+                    option.text = program
+                        .stream_name; // Assuming the program object has a 'name' field
+                    selectBox.appendChild(option);
+                });
+            },
+            error: function(xhr) {
+                console.error('Error fetching programs:', xhr);
+                swal('Error fetching programs.', {
+                    icon: "error",
                 });
             }
         });
+
+   
 }
 </script>
 

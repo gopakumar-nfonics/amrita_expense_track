@@ -227,7 +227,7 @@ select#programSelect {
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <!--begin::Menu item-->
-                                            @if(Auth::user()->isvendor() && ($pro->proposal_status ==2))
+                                            @if(Auth::user()->isvendor() && ($pro->proposal_status ==2 && $pro->is_resubmit != 1))
                                             <div class="menu-item px-3">
                                                 <a href="{{ route('lead.resubmit',$pro->id) }}"
                                                     class="menu-link px-3">Resubmit</a>
@@ -521,6 +521,13 @@ function approve(proid, status) {
         selectBox.innerHTML = `<option value="">-- Select Program --</option>`;
         content.appendChild(selectBox);
 
+        var errorSpan = document.createElement('span');
+        errorSpan.id = 'programError';
+        errorSpan.style.color = 'red';
+        errorSpan.style.display = 'none'; // Hidden initially
+        errorSpan.textContent = 'Please select a program.';
+        content.appendChild(errorSpan);
+
         // Show the SweetAlert
         swal({
                 title: title,
@@ -550,13 +557,15 @@ function approve(proid, status) {
                     var selectedProgram = document.getElementById('programSelect').value;
 
                     if (selectedProgram === "") {
-                        swal("Please select a program.", {
-                            icon: "warning",
-                        });
+                       
+                        errorSpan.style.display = 'block';
                         return; // Stop the process if no program is selected
+                    } else {
+                        
+                        errorSpan.style.display = 'none';
                     }
 
-                    document.getElementById('loaderOverlay').style.display = 'flex';
+                   // document.getElementById('loaderOverlay').style.display = 'flex';
 
                     $.ajax({
                         url: "{{ route('lead.approve') }}",
@@ -567,6 +576,10 @@ function approve(proid, status) {
                             status: status,
                             program: selectedProgram // Send the selected program
                         },
+                        beforeSend: function() {
+                            $('.swal-modal').css('opacity', 0);
+                           document.getElementById('loaderOverlay').style.display = 'flex'; // Show loader before the request
+                             },
                         success: function(response) {
                             document.getElementById('loaderOverlay').style.display = 'none';
                             if (response.success) {

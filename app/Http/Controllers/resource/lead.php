@@ -100,6 +100,17 @@ class lead extends Controller
     $userId = Auth::user()->id;
     $vendor = Vendor::where('user_id', $userId)->first();
 
+    $rejproposalId = $request->input('rejproid');
+
+    if($rejproposalId){
+
+        $oldproposal = Proposal::find($rejproposalId);
+
+        $oldproposal->is_resubmit = TRUE;
+
+        $oldproposal->save();
+    }
+
 
 
             $proposal = new Proposal();

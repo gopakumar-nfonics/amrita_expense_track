@@ -7,7 +7,8 @@
 }
 
 select#programSelect {
-    margin: 40px auto;
+    margin: 30px auto 15px;
+    cursor: pointer;
 }
 </style>
 
@@ -227,7 +228,8 @@ select#programSelect {
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <!--begin::Menu item-->
-                                            @if(Auth::user()->isvendor() && ($pro->proposal_status ==2 && $pro->is_resubmit != 1))
+                                            @if(Auth::user()->isvendor() && ($pro->proposal_status ==2 &&
+                                            $pro->is_resubmit != 1))
                                             <div class="menu-item px-3">
                                                 <a href="{{ route('lead.resubmit',$pro->id) }}"
                                                     class="menu-link px-3">Resubmit</a>
@@ -511,21 +513,21 @@ function approve(proid, status) {
     if (status === 'approve') {
         var title = 'Approve Proposal';
         var text =
-            "Select Program and approve proposal. Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.";
+            "Select Programme and approve proposal. Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.";
 
         // Create a custom select dropdown
         var content = document.createElement('div');
         var selectBox = document.createElement('select');
         selectBox.id = 'programSelect';
         selectBox.className = 'form-control form-control-lg form-control-solid ';
-        selectBox.innerHTML = `<option value="">-- Select Program --</option>`;
+        selectBox.innerHTML = `<option value="">-- Select Programme --</option>`;
         content.appendChild(selectBox);
 
         var errorSpan = document.createElement('span');
         errorSpan.id = 'programError';
-        errorSpan.style.color = 'red';
+        errorSpan.className = 'badge badge-light-danger fs-6 py-3';
         errorSpan.style.display = 'none'; // Hidden initially
-        errorSpan.textContent = 'Please select a program.';
+        errorSpan.textContent = 'Select Programme.';
         content.appendChild(errorSpan);
 
         // Show the SweetAlert
@@ -557,15 +559,15 @@ function approve(proid, status) {
                     var selectedProgram = document.getElementById('programSelect').value;
 
                     if (selectedProgram === "") {
-                       
+
                         errorSpan.style.display = 'block';
                         return; // Stop the process if no program is selected
                     } else {
-                        
+
                         errorSpan.style.display = 'none';
                     }
 
-                   // document.getElementById('loaderOverlay').style.display = 'flex';
+                    // document.getElementById('loaderOverlay').style.display = 'flex';
 
                     $.ajax({
                         url: "{{ route('lead.approve') }}",
@@ -578,10 +580,12 @@ function approve(proid, status) {
                         },
                         beforeSend: function() {
                             $('.swal-modal').css('opacity', 0);
-                           document.getElementById('loaderOverlay').style.display = 'flex'; // Show loader before the request
-                             },
+                            document.getElementById('loaderOverlay').style.display =
+                                'flex'; // Show loader before the request
+                        },
                         success: function(response) {
                             document.getElementById('loaderOverlay').style.display = 'none';
+                            $('.swal-modal').css('opacity', 1);
                             if (response.success) {
                                 swal(response.success, {
                                     icon: "success",

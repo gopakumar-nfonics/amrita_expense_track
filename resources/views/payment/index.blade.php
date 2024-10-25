@@ -57,9 +57,9 @@
                                     <th class="min-w-250px">Invoice & Proposal</th>
 
 
-                                    <th class="min-w-200px">Category & Program</th>
+                                    <th class="min-w-150px">Program</th>
 
-
+                                    <th class="min-w-150px">Category</th>
                                     <th class="min-w-100px">Amount</th>
                                     <th class="min-w-150px text-center">Actions</th>
                                 </tr>
@@ -173,13 +173,25 @@
 
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
-                                                @if($request->category)
-                                                @if($request->category->parent){{$request->category->parent->category_name}}@else{{$request->category->category_name}}@endif
-                                                @if($request->category->parent) |
-                                                {{$request->category->category_name}}@endif
+                                                @if($request->stream)
                                                 <span
                                                     class="d-flex justify-content-start fw-semibold fs-7">{{$request->stream->stream_name}}
                                                 </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+
+                                        <div class="d-flex align-items-center">
+                                            <div class="fw-400 d-block fs-6">
+                                                @if($request->category)
+                                                @if($request->category->parent){{$request->category->parent->category_name}}@else{{$request->category->category_name}}@endif
+                                                @if($request->category->parent) </br> <span
+                                                    class="d-flex justify-content-start text-muted fs-7">
+                                                    {{$request->category->category_name}}</span>
+                                                @endif
+
                                                 @endif
                                             </div>
                                         </div>

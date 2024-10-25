@@ -317,7 +317,7 @@
 
                                                 </div>
                                                 <div class="col-lg-12 d-flex justify-content-between">
-                                                    <div class="fs-6 fw-bold text-gray-700 text-nowrap col-lg-3">
+                                                    <div class="fs-6 fw-bold text-gray-700 text-nowrap col-lg-4">
                                                         <!--begin::Label-->
                                                         <label class="form-label">Request ID</label>
                                                         <!--end::Label-->
@@ -326,10 +326,12 @@
                                                             #{{$paymentrequest->payment_request_id}}</div>
                                                         <!--end::Input-->
                                                     </div>
-                                                    
-                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-4">
-                                                    <input type="hidden" value="{{$invoice->id}}" name="invoid">
-                                                    <input type="hidden" value="{{$invoice->proposal->programme_id}}" name="programme" id="programme">
+
+                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-8">
+                                                        <input type="hidden" value="{{$invoice->id}}" name="invoid">
+                                                        <input type="hidden"
+                                                            value="{{$invoice->proposal->programme_id}}"
+                                                            name="programme" id="programme">
                                                         <!--begin::Label-->
                                                         <label class="required form-label">Category</label>
                                                         <!--end::Label-->
@@ -529,7 +531,7 @@ function getallocatedbudget() {
 
     // Update the category name in the UI
     document.getElementById("catname").innerText = parentCategoryName;
-    
+
 
     // Get the category ID
     const categoryId = selectElement.value;

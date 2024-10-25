@@ -1,4 +1,15 @@
 @extends('layouts.admin')
+<style>
+.swal-modal {
+    min-width: 600px;
+    padding: 40px 20px;
+
+}
+
+select#programSelect {
+    margin: 40px auto;
+}
+</style>
 
 @section('content')
 <div class="d-flex flex-column flex-column-fluid">

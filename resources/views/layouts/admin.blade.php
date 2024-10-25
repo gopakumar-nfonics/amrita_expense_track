@@ -1005,7 +1005,8 @@
                     const body = document.body;
 
                     function isPaymentRequestPage() {
-                        return window.location.href.includes('/payment/create');
+                        // return window.location.href.includes('/payment/create');
+                        return 0;
                     }
 
                     function toggleSidebarMinimize() {

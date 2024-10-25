@@ -243,7 +243,7 @@ select#programSelect {
                                             @endif
                                             <!--end::Menu item-->
                                             <!--end::Menu item-->
-                                            
+
                                         </div>
                                         <!--end::Menu-->
                                     </td>
@@ -510,18 +510,18 @@ function approve(proid, status) {
         var text =
             "Select Programme and approve proposal. Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.";
 
-        // Create a custom select dropdown
+        // Create custom select dropdown
         var content = document.createElement('div');
         var selectBox = document.createElement('select');
         selectBox.id = 'programSelect';
-        selectBox.className = 'form-control form-control-lg form-control-solid ';
+        selectBox.className = 'form-control form-control-lg form-control-solid';
         selectBox.innerHTML = `<option value="">-- Select Programme --</option>`;
         content.appendChild(selectBox);
 
         var errorSpan = document.createElement('span');
         errorSpan.id = 'programError';
         errorSpan.className = 'badge badge-light-danger fs-6 py-3';
-        errorSpan.style.display = 'none'; // Hidden initially
+        errorSpan.style.display = 'none';
         errorSpan.textContent = 'Select Programme.';
         content.appendChild(errorSpan);
 
@@ -543,26 +543,22 @@ function approve(proid, status) {
                         value: true,
                         visible: true,
                         className: "btn btn-success",
-                        closeModal: false // Prevent auto-close until we process it
+                        closeModal: false
                     }
                 },
                 dangerMode: true,
-                content: content, // Insert custom content (the select dropdown)
+                content: content,
+                closeOnConfirm: false
             })
             .then((willApprove) => {
                 if (willApprove) {
-                    var selectedProgram = document.getElementById('programSelect').value;
-
+                    var selectedProgram = selectBox.value;
                     if (selectedProgram === "") {
-
                         errorSpan.style.display = 'block';
-                        return; // Stop the process if no program is selected
+                        return;
                     } else {
-
                         errorSpan.style.display = 'none';
                     }
-
-                    // document.getElementById('loaderOverlay').style.display = 'flex';
 
                     $.ajax({
                         url: "{{ route('lead.approve') }}",
@@ -571,12 +567,11 @@ function approve(proid, status) {
                             _token: '{{ csrf_token() }}',
                             id: proid,
                             status: status,
-                            program: selectedProgram // Send the selected program
+                            program: selectedProgram
                         },
                         beforeSend: function() {
                             $('.swal-modal').css('opacity', 0);
-                            document.getElementById('loaderOverlay').style.display =
-                                'flex'; // Show loader before the request
+                            document.getElementById('loaderOverlay').style.display = 'flex';
                         },
                         success: function(response) {
                             document.getElementById('loaderOverlay').style.display = 'none';
@@ -611,19 +606,28 @@ function approve(proid, status) {
                 }
             });
 
-        // Fetch programs dynamically based on proposal ID
+        // Set a delay to ensure the SweetAlert modal content is loaded before accessing the Approve button
+        setTimeout(function() {
+            var approveButton = document.querySelector('.swal-button--confirm');
+            approveButton.disabled = true; // Disable initially
+
+            // Toggle "Approve" button based on selection
+            selectBox.addEventListener('change', function() {
+                approveButton.disabled = (selectBox.value === "");
+            });
+        }, 200);
+
+        // Fetch programs dynamically
         $.ajax({
-            url: "{{ route('getPrograms') }}", // Replace with your route
+            url: "{{ route('getPrograms') }}",
             type: 'GET',
             dataType: 'json',
             success: function(data) {
                 console.log('Received data:', data);
-                // Populate the select box with programs
                 data.forEach(function(program) {
                     var option = document.createElement('option');
-                    option.value = program.id; // Assuming the program object has an 'id' field
-                    option.text = program
-                        .stream_name; // Assuming the program object has a 'name' field
+                    option.value = program.id;
+                    option.text = program.stream_name;
                     selectBox.appendChild(option);
                 });
             },
@@ -634,11 +638,14 @@ function approve(proid, status) {
                 });
             }
         });
-
     } else {
-        var title = 'Invalid status';
+        swal('Invalid status', {
+            icon: "error"
+        });
     }
 }
+
+
 
 
 

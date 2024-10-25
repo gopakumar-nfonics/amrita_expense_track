@@ -200,7 +200,7 @@
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
-                                            @if(!Auth::user()->isvendor() && $pro->proposal_status !=1)
+                                            @if(!Auth::user()->isvendor() && $pro->proposal_status ==1)
                                             <div class="menu-item px-3">
                                                 <a href="javascript:void(0)" onclick="approve('{{$pro->id}}','approve')"
                                                     class="menu-link px-3">Approve</a>
@@ -215,12 +215,20 @@
                                             @endif
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
-                                            @if(Auth::user()->isvendor() && ($pro->proposal_status ==0 OR $pro->proposal_status ==2))
+                                            <!--begin::Menu item-->
+                                            @if(Auth::user()->isvendor() && ($pro->proposal_status ==2))
                                             <div class="menu-item px-3">
                                                 <a href="{{ route('lead.resubmit',$pro->id) }}"
                                                     class="menu-link px-3">Resubmit</a>
                                             </div>
                                             @endif
+                                            @if(Auth::user()->isvendor() && ($pro->proposal_status ==0 ))
+                                            <div class="menu-item px-3">
+                                                <a href="{{ route('lead.resubmit',$pro->id) }}"
+                                                    class="menu-link px-3">Edit</a>
+                                            </div>
+                                            @endif
+                                            <!--end::Menu item-->
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
@@ -402,7 +410,7 @@ $(document).ready(function() {
     $('#budgettable').DataTable({
         "iDisplayLength": 10,
         "searching": true,
-        "ordering":false,
+        "ordering": false,
     });
 });
 </script>
@@ -504,81 +512,81 @@ function approve(proid, status) {
 
         // Show the SweetAlert
         swal({
-            title: title,
-            text: text,
-            icon: false,
-            buttons: {
-                cancel: {
-                    text: "Cancel",
-                    value: false,
-                    visible: true,
-                    className: "btn btn-light",
-                    closeModal: true,
-                },
-                confirm: {
-                    text: "Approve",
-                    value: true,
-                    visible: true,
-                    className: "btn btn-success",
-                    closeModal: false // Prevent auto-close until we process it
-                }
-            },
-            dangerMode: true,
-            content: content, // Insert custom content (the select dropdown)
-        })
-        .then((willApprove) => {
-            if (willApprove) {
-                var selectedProgram = document.getElementById('programSelect').value;
-
-                if (selectedProgram === "") {
-                    swal("Please select a program.", {
-                        icon: "warning",
-                    });
-                    return; // Stop the process if no program is selected
-                }
-
-                document.getElementById('loaderOverlay').style.display = 'flex';
-
-                $.ajax({
-                    url: "{{ route('lead.approve') }}",
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: proid,
-                        status: status,
-                        program: selectedProgram // Send the selected program
+                title: title,
+                text: text,
+                icon: false,
+                buttons: {
+                    cancel: {
+                        text: "Cancel",
+                        value: false,
+                        visible: true,
+                        className: "btn btn-light",
+                        closeModal: true,
                     },
-                    success: function(response) {
-                        document.getElementById('loaderOverlay').style.display = 'none';
-                        if (response.success) {
-                            swal(response.success, {
-                                icon: "success",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
-                        } else {
-                            swal(response.error || 'Something went wrong.', {
-                                icon: "warning",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
-                        }
-                    },
-                    error: function(xhr) {
-                        document.getElementById('loaderOverlay').style.display = 'none';
-                        swal('Error: Something went wrong.', {
-                            icon: "error",
-                        }).then(() => {
-                            location.reload();
-                        });
+                    confirm: {
+                        text: "Approve",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-success",
+                        closeModal: false // Prevent auto-close until we process it
                     }
-                });
-            }
-        });
+                },
+                dangerMode: true,
+                content: content, // Insert custom content (the select dropdown)
+            })
+            .then((willApprove) => {
+                if (willApprove) {
+                    var selectedProgram = document.getElementById('programSelect').value;
+
+                    if (selectedProgram === "") {
+                        swal("Please select a program.", {
+                            icon: "warning",
+                        });
+                        return; // Stop the process if no program is selected
+                    }
+
+                    document.getElementById('loaderOverlay').style.display = 'flex';
+
+                    $.ajax({
+                        url: "{{ route('lead.approve') }}",
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: proid,
+                            status: status,
+                            program: selectedProgram // Send the selected program
+                        },
+                        success: function(response) {
+                            document.getElementById('loaderOverlay').style.display = 'none';
+                            if (response.success) {
+                                swal(response.success, {
+                                    icon: "success",
+                                    buttons: false,
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            } else {
+                                swal(response.error || 'Something went wrong.', {
+                                    icon: "warning",
+                                    buttons: false,
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            }
+                        },
+                        error: function(xhr) {
+                            document.getElementById('loaderOverlay').style.display = 'none';
+                            swal('Error: Something went wrong.', {
+                                icon: "error",
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
+                    });
+                }
+            });
 
         // Fetch programs dynamically based on proposal ID
         $.ajax({
@@ -591,7 +599,8 @@ function approve(proid, status) {
                 data.forEach(function(program) {
                     var option = document.createElement('option');
                     option.value = program.id; // Assuming the program object has an 'id' field
-                    option.text = program.stream_name; // Assuming the program object has a 'name' field
+                    option.text = program
+                        .stream_name; // Assuming the program object has a 'name' field
                     selectBox.appendChild(option);
                 });
             },

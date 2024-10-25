@@ -61,7 +61,7 @@
 
 
                                     <th class="min-w-100px">Amount</th>
-                                    <th class="min-w-100px text-center">Actions</th>
+                                    <th class="min-w-150px text-center">Actions</th>
                                 </tr>
                             </thead>
                             <!--end::Table head-->

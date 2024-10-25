@@ -35,10 +35,10 @@ class lead extends Controller
         if(Auth::user()->isvendor()){
         $userId = Auth::user()->id;
         $vendor = Vendor::where('user_id', $userId)->first();
-        $proposal = Proposal::with(['proposalro', 'vendor'])->where('vendor_id', $vendor->id)->orderBy('id')->get();
+        $proposal = Proposal::with(['proposalro', 'vendor'])->where('vendor_id', $vendor->id)->orderByDesc('id')->get();
         
         }else{
-          $proposal = Proposal::with(['proposalro', 'vendor'])->orderBy('id')->get();
+          $proposal = Proposal::with(['proposalro', 'vendor'])->orderByDesc('id')->get();
         }
         return view('lead.index',compact('proposal'));
     }
@@ -187,7 +187,7 @@ class lead extends Controller
     public function edit($id)
     {
         $proposal = Proposal::with(['paymentMilestones'])->find($id);
-        if($proposal->proposal_status == 0){
+        if(($proposal->proposal_status == 0 || $proposal->proposal_status == 2)){
         return view('lead.edit', compact('proposal'));
         }
     }

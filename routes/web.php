@@ -92,6 +92,9 @@ Route::get('/export-budget-report', [App\Http\Controllers\ReportsController::cla
 Route::get('/export-vendor-report', [App\Http\Controllers\ReportsController::class, 'vendordataexport'])->name('reports.vendordataexport');
 Route::get('/exportprogrammedata', [App\Http\Controllers\ReportsController::class, 'exportprogrammedata'])->name('reports.programmedataexport');
 
+Route::get('/lead/{id}/resubmit', [\App\Http\Controllers\resource\lead::class, 'edit'])->name('lead.resubmit');
+
+
 Route::get('/support-center', function () {
     return view('support');
 })->name('support.center');

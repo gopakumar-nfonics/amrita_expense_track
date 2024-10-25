@@ -53,10 +53,14 @@
                             <!--begin::Card body-->
                             <div class="card-body p-12">
                                 <!--begin::Form-->
-                                <form id="kt_invoice_form" method="POST" action="{{route('lead.update',$proposal->id)}}" 
+
+                                <form id="kt_invoice_form" method="POST"
+                                    action="{{ $proposal->proposal_status == 2 ? route('lead.store') : route('lead.update', $proposal->id) }}"
                                     enctype="multipart/form-data">
                                     @csrf
-									@method('PUT')
+                                    @if($proposal->proposal_status != 2)
+                                    @method('PUT')
+                                    @endif
 
                                     <!--begin::Wrapper-->
                                     <div class="mb-0">

@@ -215,10 +215,10 @@
                                             @endif
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
-                                            @if(Auth::user()->isvendor() && $pro->proposal_status ==0)
+                                            @if(Auth::user()->isvendor() && ($pro->proposal_status ==0 OR $pro->proposal_status ==2))
                                             <div class="menu-item px-3">
-                                                <a href="{{ route('lead.edit',$pro->id) }}"
-                                                    class="menu-link px-3">Edit</a>
+                                                <a href="{{ route('lead.resubmit',$pro->id) }}"
+                                                    class="menu-link px-3">Resubmit</a>
                                             </div>
                                             @endif
                                             <!--end::Menu item-->
@@ -402,8 +402,7 @@ $(document).ready(function() {
     $('#budgettable').DataTable({
         "iDisplayLength": 10,
         "searching": true,
-        "recordsTotal": 3615,
-        "pagingType": "full_numbers"
+        "ordering":false,
     });
 });
 </script>

@@ -202,11 +202,14 @@
             <td>
                 <div style="margin:0px 20px; font-size:14px;">
 
+                  @if($stream->billing_address)
+                  {{$stream->billing_address}}
+                  @else
                     DIRECTORATE OF ADMISSIONS,
                     <br>AMRITA SCHOOL OF ENGINEERING,
                     AMRITA VISHWA VIDYAPEETHAM, AMRITA NAGAR(PO),
                     ETTIMADAI, COIMBATORE - 641112
-
+                   @endif
 
                 </div>
             </td>

@@ -38,6 +38,7 @@ class lead extends Controller
         $proposal = Proposal::with(['proposalro', 'vendor'])->where('vendor_id', $vendor->id)->orderByDesc('id')->get();
         
         }else{
+            
           $proposal = Proposal::with(['proposalro', 'vendor'])->orderByDesc('id')->get();
         }
         return view('lead.index',compact('proposal'));
@@ -343,11 +344,14 @@ class lead extends Controller
         $currentMonth = $currentDate->format('m'); 
         $currentYear = $currentDate->format('y');
 
+        $selprogramme = $request->input('program');
+
         $proposal = Proposal::findOrFail($request->input('id'));
         if (!$proposal) {
         return response()->json(['error' => 'Proposal not found.'], 404);
         }
         $proposal->proposal_status = 1;
+        $proposal->programme_id = $selprogramme;
         $proposal->save();
 
         $financialYear = $this->getShortFinancialYear();
@@ -443,6 +447,8 @@ class lead extends Controller
     {
         $proposal = Proposal::with('vendor', 'proposalro')->findOrFail($id);
 
+        $stream = Stream::find($proposal->programme_id);
+
         $numbersWords = new Numbers_Words();
         $amounwords = $numbersWords->toWords($proposal->proposal_total_cost);
 
@@ -452,7 +458,7 @@ class lead extends Controller
 
         // return view('reports.questionslip', $data);
 
-        $pdf = PDF::loadView('lead.release_order', compact('proposal', 'amounwords'))
+        $pdf = PDF::loadView('lead.release_order', compact('proposal', 'amounwords','stream'))
            ->setPaper('a4', 'portrait');
         $pdf->save($pdfPath);
     }
@@ -496,5 +502,14 @@ class lead extends Controller
             'reason' => $proposal->rejection_reason,
         ]);
     }
+
+    public function getPrograms()
+{
+    // Fetch programs related to the proposal
+    $programs = Stream::orderBy('stream_name')->get(); // Adjust this query as necessary
+
+    return response()->json($programs);
+}
+
     
 }

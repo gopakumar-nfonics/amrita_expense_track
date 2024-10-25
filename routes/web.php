@@ -94,6 +94,8 @@ Route::get('/exportprogrammedata', [App\Http\Controllers\ReportsController::clas
 
 Route::get('/lead/{id}/resubmit', [\App\Http\Controllers\resource\lead::class, 'edit'])->name('lead.resubmit');
 
+Route::get('getPrograms', [\App\Http\Controllers\resource\lead::class, 'getPrograms'])->name('getPrograms');
+
 
 Route::get('/support-center', function () {
     return view('support');

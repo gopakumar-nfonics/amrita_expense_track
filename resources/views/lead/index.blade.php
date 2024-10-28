@@ -72,6 +72,7 @@ select#programSelect {
                                     @if(!Auth::user()->isvendor())
                                     <th class="min-w-200px">Vendor</th>
                                     @endif
+                                    <th class="min-w-100px">Programme</th>
                                     <th class="min-w-100px">Cost</th>
                                     <th class="min-w-150px text-center">Actions</th>
                                 </tr>
@@ -181,6 +182,18 @@ select#programSelect {
                                         </div>
                                     </td>
                                     @endif
+
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="fw-400 d-block fs-6">
+                                            @if($pro->programme)
+                                                <span
+                                                    class="text-dark fw-bold text-hover-primary fs-6">{{$pro->programme->stream_name}}
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </td>
 
                                     <td>
                                         <div class="d-flex align-items-center">

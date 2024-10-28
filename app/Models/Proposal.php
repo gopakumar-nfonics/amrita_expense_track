@@ -43,4 +43,9 @@ class Proposal extends Model
     {
         return $this->hasMany(Invoice::class);
     }
+
+    public function programme()
+    {
+        return $this->belongsTo(Stream::class, 'programme_id','id');
+    }
 }

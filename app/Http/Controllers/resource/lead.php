@@ -35,11 +35,11 @@ class lead extends Controller
         if(Auth::user()->isvendor()){
         $userId = Auth::user()->id;
         $vendor = Vendor::where('user_id', $userId)->first();
-        $proposal = Proposal::with(['proposalro', 'vendor'])->where('vendor_id', $vendor->id)->orderByDesc('id')->get();
+        $proposal = Proposal::with(['proposalro', 'vendor','programme'])->where('vendor_id', $vendor->id)->orderByDesc('id')->get();
         
         }else{
             
-          $proposal = Proposal::with(['proposalro', 'vendor'])->orderByDesc('id')->get();
+          $proposal = Proposal::with(['proposalro', 'vendor','programme'])->orderByDesc('id')->get();
         }
         return view('lead.index',compact('proposal'));
     }

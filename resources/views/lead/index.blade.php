@@ -73,7 +73,7 @@ select#programSelect {
                                     <th class="min-w-200px">Vendor</th>
                                     @endif
                                     <th class="min-w-100px">Programme</th>
-                                    <th class="min-w-100px">Cost</th>
+                                    <th class="min-w-150px">Cost</th>
                                     <th class="min-w-150px text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -186,7 +186,7 @@ select#programSelect {
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
-                                            @if($pro->programme)
+                                                @if($pro->programme)
                                                 <span
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$pro->programme->stream_name}}
                                                 </span>
@@ -447,56 +447,56 @@ $(document).ready(function() {
     $('#rejectproposal-form').on('submit', function(e) {
         e.preventDefault(); // Prevent the default form submission
 
-      
-                let formData = {
-                    _token: '{{ csrf_token() }}',
-                    reason: $('#reason').val(),
-                    proid: $('#proposalid').val(),
-                };
 
-                document.getElementById('loaderOverlay').style.display = 'flex';
+        let formData = {
+            _token: '{{ csrf_token() }}',
+            reason: $('#reason').val(),
+            proid: $('#proposalid').val(),
+        };
 
-                $.ajax({
-                    url: "{{ route('lead.reject') }}",
-                    type: "POST",
-                    data: formData,
-                    success: function(response) {
-                        document.getElementById('loaderOverlay').style.display =
-                            'none';
-                        if (response.success) {
-                            swal('The Proposal has been rejected!', {
-                                icon: "success",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
+        document.getElementById('loaderOverlay').style.display = 'flex';
 
-                        } else {
-                            document.getElementById('loaderOverlay').style.display =
-                                'none';
-                            swal('Failed to reject proposal', {
-                                icon: "warning",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
+        $.ajax({
+            url: "{{ route('lead.reject') }}",
+            type: "POST",
+            data: formData,
+            success: function(response) {
+                document.getElementById('loaderOverlay').style.display =
+                    'none';
+                if (response.success) {
+                    swal('The Proposal has been rejected!', {
+                        icon: "success",
+                        buttons: false,
+                    });
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
 
-                        }
-                    },
-                    error: function(xhr) {
-                        swal('An error occurred. Please try again', {
-                            icon: "Error",
-                            buttons: false,
-                        });
-                        setTimeout(() => {
-                            location.reload();
-                        }, 1000);
+                } else {
+                    document.getElementById('loaderOverlay').style.display =
+                        'none';
+                    swal('Failed to reject proposal', {
+                        icon: "warning",
+                        buttons: false,
+                    });
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
 
-                    }
+                }
+            },
+            error: function(xhr) {
+                swal('An error occurred. Please try again', {
+                    icon: "Error",
+                    buttons: false,
                 });
-           
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+
+            }
+        });
+
     });
 });
 

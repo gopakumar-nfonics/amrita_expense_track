@@ -57,7 +57,7 @@
                                     @if(!Auth::user()->isvendor())
                                     <th class="min-w-200px">Vendor</th>
                                     @endif
-                                    <th class="min-w-100px">Cost</th>
+                                    <th class="min-w-150px">Cost</th>
                                     <th class="min-w-150px text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -204,7 +204,7 @@
                                             </div>
                                             <!--end::Menu item-->
 
-                                            
+
                                         </div>
                                         <!--end::Menu-->
                                     </td>
@@ -238,7 +238,7 @@ $(document).ready(function() {
     $('#budgettable').DataTable({
         "iDisplayLength": 10,
         "searching": true,
-        "ordering":false,
+        "ordering": false,
     });
 });
 </script>

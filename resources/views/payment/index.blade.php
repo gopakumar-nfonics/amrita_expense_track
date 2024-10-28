@@ -60,7 +60,7 @@
                                     <th class="min-w-150px">Program</th>
 
                                     <th class="min-w-150px">Category</th>
-                                    <th class="min-w-100px">Amount</th>
+                                    <th class="min-w-150px">Amount</th>
                                     <th class="min-w-150px text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -239,7 +239,7 @@
                                                     Download PDF</a>
                                             </div>
 
-                                           
+
                                         </div>
                                         <!--end::Menu-->
                                     </td>
@@ -375,7 +375,7 @@ $(document).ready(function() {
     $('#budgettable').DataTable({
         "iDisplayLength": 10,
         "searching": true,
-        "ordering":false
+        "ordering": false
     });
 });
 </script>
@@ -399,61 +399,61 @@ $(document).ready(function() {
     $('#update_pay_status').on('submit', function(e) {
         e.preventDefault();
 
-                let dateInput = $('#transactiondate')
-                    .val(); // Assuming the date is in DD-MM-YYYY
-                let formattedDate = dateInput.split("-").reverse().join(
-                    "-"); // Convert to YYYY-MM-DD
+        let dateInput = $('#transactiondate')
+            .val(); // Assuming the date is in DD-MM-YYYY
+        let formattedDate = dateInput.split("-").reverse().join(
+            "-"); // Convert to YYYY-MM-DD
 
-                let formData = {
-                    _token: '{{ csrf_token() }}',
-                    utrnumber: $('#utrnumber').val(),
-                    transactiondate: formattedDate,
-                    reqid: $('#reqid').val(),
-                };
+        let formData = {
+            _token: '{{ csrf_token() }}',
+            utrnumber: $('#utrnumber').val(),
+            transactiondate: formattedDate,
+            reqid: $('#reqid').val(),
+        };
 
-                document.getElementById('loaderOverlay').style.display = 'flex';
+        document.getElementById('loaderOverlay').style.display = 'flex';
 
-                $.ajax({
-                    url: "{{ route('update.payment.status') }}",
-                    type: "POST",
-                    data: formData,
-                    success: function(response) {
-                        document.getElementById('loaderOverlay').style.display =
-                            'none';
-                        if (response.success) {
-                            swal('Payment status updated successfully!', {
-                                icon: "success",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
+        $.ajax({
+            url: "{{ route('update.payment.status') }}",
+            type: "POST",
+            data: formData,
+            success: function(response) {
+                document.getElementById('loaderOverlay').style.display =
+                    'none';
+                if (response.success) {
+                    swal('Payment status updated successfully!', {
+                        icon: "success",
+                        buttons: false,
+                    });
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
 
-                        } else {
-                            document.getElementById('loaderOverlay').style.display =
-                                'none';
-                            swal('Failed to update payment status', {
-                                icon: "warning",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
+                } else {
+                    document.getElementById('loaderOverlay').style.display =
+                        'none';
+                    swal('Failed to update payment status', {
+                        icon: "warning",
+                        buttons: false,
+                    });
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
 
-                        }
-                    },
-                    error: function(xhr) {
-                        swal('An error occurred. Please try again', {
-                            icon: "Error",
-                            buttons: false,
-                        });
-                        setTimeout(() => {
-                            location.reload();
-                        }, 1000);
-
-                    }
+                }
+            },
+            error: function(xhr) {
+                swal('An error occurred. Please try again', {
+                    icon: "Error",
+                    buttons: false,
                 });
-          
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+
+            }
+        });
+
     });
 });
 </script>

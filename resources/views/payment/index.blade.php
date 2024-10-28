@@ -397,7 +397,7 @@ function updatepaymentstatus(rid) {
 }
 $(document).ready(function() {
     $('#update_pay_status').on('submit', function(e) {
-       
+        e.preventDefault();
 
                 let dateInput = $('#transactiondate')
                     .val(); // Assuming the date is in DD-MM-YYYY

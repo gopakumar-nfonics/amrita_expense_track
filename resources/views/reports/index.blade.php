@@ -181,7 +181,7 @@ $(document).ready(function() {
                 data: 'allocated',
                 name: 'allocated',
                 render: function(data) {
-                    return '<p class="allocated fs-6 fw-bold text-gray-800 me-5 lh-1 ls-n1 text-end"> &#x20b9;' +
+                    return '<p class="allocated fs-6 fw-bold text-gray-800 me-5 ls-n1 text-end"> &#x20b9;' +
                         data + '</p>';
                 }
             },
@@ -200,7 +200,7 @@ $(document).ready(function() {
                 render: function(data) {
                     return Array.isArray(data) && data.length > 0 ?
                         data.map(sub =>
-                            '<p class="sub-expense-disp fs-7 fw-bold lh-1 ls-n1 text-end">&#x20b9;' +
+                            '<p class="sub-expense-disp fs-7 fw-bold ls-n1 text-end">&#x20b9;' +
                             sub.expense + '</p>'
                         ).join('') : '<p class="sub-cat-disp fs-7 text-end">NIL</p>';
                 }
@@ -209,7 +209,7 @@ $(document).ready(function() {
                 data: 'total_expense',
                 name: 'total_expense',
                 render: function(data) {
-                    return '<p class="allocated fs-6 fw-bold text-gray-800 me-5 lh-1 ls-n1  text-end"> &#x20b9;' +
+                    return '<p class="allocated fs-6 fw-bold text-gray-800 me-5 ls-n1  text-end"> &#x20b9;' +
                         data + '</p>';
                 }
             },

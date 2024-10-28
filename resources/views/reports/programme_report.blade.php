@@ -200,7 +200,7 @@ $(document).ready(function() {
                 render: function(data) {
                     return Array.isArray(data) && data.length > 0 ?
                         data.map(category =>
-                            '<p class="sub-expense-disp fs-7 fw-bold lh-1 ls-n1 text-end">&#x20b9;' +
+                            '<p class="sub-expense-disp fs-7 fw-bold  ls-n1 text-end">&#x20b9;' +
                             category
                             .total_expense +
                             '</p>')
@@ -212,7 +212,7 @@ $(document).ready(function() {
                 name: 'total_program_expense',
                 className: 'text-end pe-5',
                 render: function(data) {
-                    return '<span class="fs-5 fw-bold lh-1 ls-n1 text-end me-3">&#x20b9;' +
+                    return '<span class="fs-5 fw-bold  ls-n1 text-end me-3">&#x20b9;' +
                         data + '</span>';
                 }
             },

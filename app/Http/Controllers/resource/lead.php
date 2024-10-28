@@ -66,7 +66,7 @@ class lead extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'ptitle' => 'required|string|max:255',
+            'proposal_title' => 'required|string|max:255',
             'description' => 'required|string',
             'order_cost' => 'required|numeric|min:0',
             'order_gst' => 'required|numeric|min:0',
@@ -116,7 +116,7 @@ class lead extends Controller
             $proposal = new Proposal();
             $proposal->proposal_id  = $proposal_id;
             $proposal->proposal_date = $request->invoice_due_date;
-            $proposal->proposal_title = $request->ptitle;
+            $proposal->proposal_title = $request->proposal_title;
             $proposal->proposal_description = $request->description;
             $proposal->proposal_cost  = $request->order_cost;
             $proposal->proposal_gst  = $request->order_gst;
@@ -214,7 +214,7 @@ class lead extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'ptitle' => 'required|string|max:255',
+            'proposal_title' => 'required|string|max:255',
             'description' => 'required|string',
             'order_cost' => 'required|numeric|min:0',
             'order_gst' => 'required|numeric|min:0',
@@ -239,7 +239,7 @@ class lead extends Controller
             $proposal = Proposal::findOrFail($id);
 
             $proposal->proposal_date = $request->invoice_due_date;
-            $proposal->proposal_title = $request->ptitle;
+            $proposal->proposal_title = $request->proposal_title;
             $proposal->proposal_description = $request->description;
             $proposal->proposal_cost  = $request->order_cost;
             $proposal->proposal_gst  = $request->order_gst;

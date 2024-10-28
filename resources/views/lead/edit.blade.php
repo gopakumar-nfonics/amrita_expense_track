@@ -133,10 +133,10 @@
                                                             <!--end::Label-->
                                                             <!--begin::Select2-->
                                                             <!--begin::Editor-->
-                                                            <input id="" name="ptitle" placeholder="Proposal Title"
-                                                                class="form-control mb-2 @error('ptitle') is-invalid @enderror"
-                                                                value="{{ old('ptitle', $proposal->proposal_title) }}" />
-                                                            @error('ptitle')<div class="invalid-feedback">{{ $message }}
+                                                            <input id="" name="proposal_title" placeholder="Proposal Title"
+                                                                class="form-control mb-2 @error('proposal_title') is-invalid @enderror"
+                                                                value="{{ old('proposal_title', $proposal->proposal_title) }}" />
+                                                            @error('proposal_title')<div class="invalid-feedback">{{ $message }}
                                                             </div> @enderror
                                                             <!--end::Editor-->
                                                             <!--end::Select2-->

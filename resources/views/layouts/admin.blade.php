@@ -820,6 +820,12 @@
                                 <!--end:Menu item-->
 
 
+
+                                @endif
+
+                                @if( !empty(Auth::user()->isAdmin()) )
+
+
                                 <!--end:Menu item-->
                                 <div data-kt-menu-trigger="click"
                                     class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('campus.index','campus.create'))) show  @endif">
@@ -866,9 +872,6 @@
                                 </div>
 
                                 <!--end:Menu item-->
-                                @endif
-
-                                @if( !empty(Auth::user()->isAdmin()) )
                                 <div class="menu-item pt-5">
                                     <!--begin:Menu content-->
                                     <div class="menu-content">

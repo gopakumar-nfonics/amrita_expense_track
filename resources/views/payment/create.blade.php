@@ -579,7 +579,7 @@ function getallocatedbudget() {
                 $('#error-balance').text(
                     "The payment process cannot proceed as 100% of the allocated budget has been utilized."
                 );
-            } else if (milestoneAmount > totalBudget) { // Milestone amount exceeds total budget
+            } else if (milestoneAmount > remainingBudget) { // Milestone amount exceeds total budget
                 submitButton.disabled = true;
                 $('#error-balance').show();
                 $('#error-balance').text(
@@ -612,12 +612,14 @@ $('#kt_invoice_form').on('submit', function(e) {
 
     let text;
 
+    const remainingBudget = totalBudget - usedBudget;
+
 
     if (usedBudget === totalBudget) {
         text =
             '100% remaining. Invoice amount exceeds the available balance. Do you want to process the payment?'
 
-    } else if (milestoneAmount > totalBudget) {
+    } else if (milestoneAmount > remainingBudget) {
         text = 'Invoice amount exceeds the available balance. Do you want to process the payment?'
     } else {
         text = 'Are you certain you want to generate the payment request?'

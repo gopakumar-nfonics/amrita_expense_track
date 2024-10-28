@@ -97,7 +97,6 @@ class invoice extends Controller
             $invoices->milestone_id = $request->milestone;
             $invoices->invoice_number = $request->invoice_number;
             $invoices->invoice_date  = $request->invoice_date;
-            $invoices->invoice_notes  = $request->invoice_note;
 
             if ($request->hasFile('file')) {
                 $file = $request->file('file');

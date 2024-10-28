@@ -242,7 +242,7 @@ class payment extends Controller
                 
                 $subCategoryIds = Category::where('parent_category', $category->parent_category)->pluck('id');
 
-                
+                $subCategoryIds->push($category->parent_category);
                 $query->whereIn('category_id', $subCategoryIds);
             } else {
                 

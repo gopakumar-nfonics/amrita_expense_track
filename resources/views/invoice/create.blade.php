@@ -273,26 +273,7 @@
 
 
 
-                                                <div class="fv-row mt-5">
-
-
-                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-12">
-
-
-                                                        <!--begin::Label-->
-                                                        <label class="form-label">Notes</label>
-                                                        <!--end::Label-->
-
-                                                        <!--begin::Editor-->
-                                                        <textarea name="invoice_note"
-                                                            class="form-control mb-2"></textarea>
-                                                        @error('invoice_note')<div class="invalid-feedback">
-                                                            {{ $message }}</div>@enderror
-                                                        <!--end::Editor-->
-
-
-                                                    </div>
-                                                </div>
+                                                
                                                 <div class="fv-row mt-5">
                                                     <div class="d-flex justify-content-end border-top mt-10 pt-5">
                                                         <!--begin::Button-->

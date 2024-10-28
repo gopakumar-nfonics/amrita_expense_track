@@ -397,23 +397,7 @@ function updatepaymentstatus(rid) {
 }
 $(document).ready(function() {
     $('#update_pay_status').on('submit', function(e) {
-        e.preventDefault(); // Prevent the default form submission
-
-        // SweetAlert confirmation
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "Do you want to update this status?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Submit',
-            cancelButtonText: 'Cancel',
-            reverseButtons: true,
-            customClass: {
-                confirmButton: 'btn btn-primary',
-                cancelButton: 'btn'
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
+       
 
                 let dateInput = $('#transactiondate')
                     .val(); // Assuming the date is in DD-MM-YYYY
@@ -469,8 +453,7 @@ $(document).ready(function() {
 
                     }
                 });
-            }
-        });
+          
     });
 });
 </script>

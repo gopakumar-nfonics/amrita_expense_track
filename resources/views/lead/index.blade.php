@@ -250,7 +250,7 @@ select#programSelect {
                                             @endif
                                             @if(Auth::user()->isvendor() && ($pro->proposal_status ==0 ))
                                             <div class="menu-item px-3">
-                                                <a href="{{ route('lead.resubmit',$pro->id) }}"
+                                                <a href="{{ route('lead.edit',$pro->id) }}"
                                                     class="menu-link px-3">Edit</a>
                                             </div>
                                             @endif
@@ -447,23 +447,7 @@ $(document).ready(function() {
     $('#rejectproposal-form').on('submit', function(e) {
         e.preventDefault(); // Prevent the default form submission
 
-        // SweetAlert confirmation
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You want to reject this proposal?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Reject',
-            cancelButtonText: 'Cancel',
-            reverseButtons: true,
-            customClass: {
-                confirmButton: 'btn btn-primary',
-                cancelButton: 'btn'
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-
-
+      
                 let formData = {
                     _token: '{{ csrf_token() }}',
                     reason: $('#reason').val(),
@@ -512,8 +496,7 @@ $(document).ready(function() {
 
                     }
                 });
-            }
-        });
+           
     });
 });
 

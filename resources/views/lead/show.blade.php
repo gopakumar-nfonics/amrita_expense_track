@@ -347,7 +347,8 @@ function approve(proid, status) {
                                     buttons: false,
                                 });
                                 setTimeout(() => {
-                                    location.reload();
+                                    window.location.href = '/lead';
+
                                 }, 1000);
                             } else {
                                 swal(response.error || 'Something went wrong.', {

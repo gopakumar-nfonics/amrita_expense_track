@@ -771,52 +771,7 @@
                                     <!--end:Menu sub-->
                                 </div>
 
-                                <!--end:Menu item-->
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('campus.index','campus.create'))) show  @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-tents f-15 p-0"></i>
-                                        </span>
-                                        <span class="menu-title">Campus</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('campus.index'))) active  @endif"
-                                                href="{{route('campus.index')}}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Campus List</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link  @if(in_array(Route::currentRouteName(),array('campus.create'))) active  @endif"
-                                                href="{{route('campus.create')}}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Create Campus</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
 
-                                    </div>
-                                    <!--end:Menu sub-->
-                                </div>
-
-                                <!--end:Menu item-->
 
                                 <div data-kt-menu-trigger="click"
                                     class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('department.index','department.create'))) show  @endif">
@@ -853,6 +808,54 @@
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
                                                 <span class="menu-title">Create Department</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
+
+                                    </div>
+                                    <!--end:Menu sub-->
+                                </div>
+
+                                <!--end:Menu item-->
+
+
+                                <!--end:Menu item-->
+                                <div data-kt-menu-trigger="click"
+                                    class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('campus.index','campus.create'))) show  @endif">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="fa-solid fa-tents f-15 p-0"></i>
+                                        </span>
+                                        <span class="menu-title">Campus</span>
+                                        <span class="menu-arrow"></span>
+                                    </span>
+                                    <!--end:Menu link-->
+                                    <!--begin:Menu sub-->
+                                    <div class="menu-sub menu-sub-accordion">
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
+                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('campus.index'))) active  @endif"
+                                                href="{{route('campus.index')}}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Campus List</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
+                                            <a class="menu-link  @if(in_array(Route::currentRouteName(),array('campus.create'))) active  @endif"
+                                                href="{{route('campus.create')}}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Create Campus</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>

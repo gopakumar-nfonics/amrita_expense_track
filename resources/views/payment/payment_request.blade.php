@@ -268,7 +268,7 @@
             </tr> -->
         </table>
 
-        <img alt="Logo" src="{{ public_path('assets/media/logos/a4-avv-sign-pr.jpg') }}" class="header-logo">
+        <img alt="Logo" src="{{ public_path('assets/media/logos/a4-avv-no-sign-pr.jpg') }}" class="header-logo">
         <img alt="Logo" src="{{ public_path('assets/media/logos/a4-avv-footer-logo.jpg') }}" class="header-logo">
 
     </div>

@@ -27,7 +27,10 @@ class ReportsController extends Controller
 
     public function index()
     {
-        $category=Categories::where('parent_category', NULL)->orderBy('category_name')->get();
+        $category = Category::whereNull('parent_category')
+        ->whereHas('budgets') // Only include categories with associated budgets
+        ->orderBy('category_name')
+        ->get();
 
         return view('reports.index',compact('category'));
     }
@@ -148,7 +151,7 @@ class ReportsController extends Controller
         $startDate = session('start_date');
         $endDate = session('end_date');
 
-        return Excel::download(new BudgetReportExport($expCategoryData), 'BUET_BE_Report.xlsx');
+        return Excel::download(new BudgetReportExport($expCategoryData, $startDate, $endDate), 'BUET_BE_Report.xlsx');
     }
 
     public function vendorreport()

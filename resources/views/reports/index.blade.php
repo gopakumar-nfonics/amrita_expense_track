@@ -153,15 +153,20 @@
 
 <script>
 $(document).ready(function() {
+
+    function loadData() {
     $('#categorytable').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
             url: "{{ route('reports.reportdata') }}", // The route to your server-side code
             type: "POST",
-            data: {
-                _token: "{{ csrf_token() }}",
-            },
+            data: function(d) {
+                    d._token = "{{ csrf_token() }}"; // Include CSRF token
+                    d.category = $('#category').val(); // Send selected vendor
+                    d.start_date = $('#start_date').val(); // Send selected start date
+                    d.end_date = $('#end_date').val(); // Send selected end date
+            }
         },
         columns: [{
                 data: null,
@@ -257,10 +262,20 @@ $(document).ready(function() {
         ordering: false,
         searching: false // Disable the search box
     });
+    }
+
+    loadData(); // Initial load
+
+    // Event listener for the category select and date inputs
+    $('#category, #start_date, #end_date').on('change', function() {
+        $('#categorytable').DataTable().destroy(); // Destroy the old table instance
+        loadData(); // Load the table again with the new filters
+    });
+
 });
 </script>
 
-<script>
+<!-- <script>
 document.addEventListener('DOMContentLoaded', function() {
     flatpickr("#start_date", {
         defaultDate: new Date(), // Sets the default date to the current date
@@ -276,6 +291,42 @@ document.addEventListener('DOMContentLoaded', function() {
         placeholder: "Select date" // Placeholder text
     });
 });
+</script> -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Calculate the date one month before today
+        const today = new Date();
+        const oneMonthAgo = new Date();
+        oneMonthAgo.setMonth(today.getMonth() - 1);
+
+        // Initialize flatpickr on start_date with default date as one month ago
+        flatpickr("#start_date", {
+            defaultDate: oneMonthAgo, // Sets the default date to one month ago
+            dateFormat: "d-m-Y",
+            placeholder: "Select date",
+            maxDate: today, // Ensures the start date cannot be after today
+            onChange: function(selectedDates) {
+                const endPicker = document.querySelector("#end_date")._flatpickr;
+                // Update the minimum date for end_date based on start_date selection
+                endPicker.set('minDate', selectedDates[0]);
+            }
+        });
+
+        // Initialize flatpickr on end_date with default date as today
+        flatpickr("#end_date", {
+            defaultDate: today, // Sets the default date to today
+            dateFormat: "d-m-Y",
+            placeholder: "Select date",
+            minDate: oneMonthAgo, // Ensures the end date cannot be before one month ago
+            maxDate: today, // Ensures the end date cannot be after today
+            onChange: function(selectedDates) {
+                const startPicker = document.querySelector("#start_date")._flatpickr;
+                // Update the maximum date for start_date based on end_date selection
+                startPicker.set('maxDate', selectedDates[0]);
+            }
+        });
+    });
 </script>
 
 

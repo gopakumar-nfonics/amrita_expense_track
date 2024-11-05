@@ -23,6 +23,7 @@ class ReportsController extends Controller
 {
     public $vendorData = [];
     public $data = [];
+    public $categories = [];
 
     public function index()
     {
@@ -35,6 +36,12 @@ class ReportsController extends Controller
     {
         // Get search value
         $searchValue = $request->input('search.value');
+        $categoryId = $request->input('category'); // Get the selected program ID
+
+        session()->forget(['category_data', 'start_date', 'end_date']);  // Remove program_data from session
+
+        $startDate = $request->input('start_date'); // Get start date
+        $endDate = $request->input('end_date'); // Get end date
 
         // Get pagination parameters
         $start = $request->input('start', 0);
@@ -75,6 +82,11 @@ class ReportsController extends Controller
             }])
             ->orderBy('id');
 
+        // Apply program filter if provided
+        if ($categoryId) {
+            $query->where('tbl_category.id', $categoryId);
+        }
+
         // Apply search filter
         if ($searchValue) {
             $query->where(function ($q) use ($searchValue) {
@@ -90,7 +102,8 @@ class ReportsController extends Controller
         $budgets = $query->skip($start)->take($length)->get();
 
         // Initialize the categories array
-        $categories = [];
+        // $categories = [];
+        $this->categories = [];
 
         foreach ($budgets as $budget) {
             // Retrieve sub-categories if available
@@ -104,7 +117,7 @@ class ReportsController extends Controller
             }
 
             // Push the formatted data into the categories array
-            $categories[] = [
+            $this->categories[] = [
                 'category' => $budget->category->category_name, // Main category name
                 'allocated' => number_format_indian($budget->amount), // Allocated amount formatted
                 'sub_categories' => $subCategories, // List of subcategories
@@ -113,75 +126,29 @@ class ReportsController extends Controller
             ];
         }
 
+        // session(['program_data' => $this->data]);
+        session([
+            'category_data' => $this->categories,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+        ]);
+
         // Returning the data as JSON response for DataTables or other frontend use
         return response()->json([
             'draw' => intval($request->input('draw')),
             'recordsTotal' => $totalCount,
             'recordsFiltered' => $totalCount, // You can modify this if you want to return filtered count
-            'data' => $categories
+            'data' => $this->categories,
         ]);
     }
 
     public function exportBudgetReport()
     {
-        $budgets = Budgets::select('tbl_budget.*')
-            ->selectRaw('(SELECT SUM(payment_milestones.milestone_total_amount) 
-                  FROM payment_request
-                  INNER JOIN invoices ON payment_request.invoice_id = invoices.id
-                  INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
-                  INNER JOIN tbl_category ON payment_request.category_id = tbl_category.id
-                  WHERE (payment_request.category_id = tbl_budget.category_id 
-                         OR tbl_category.parent_category = tbl_budget.category_id)
-                  AND payment_request.payment_status = "completed") as used_amount')
-            ->from('tbl_budget')
-            ->whereNull('tbl_budget.deleted_at')
-            ->with(['category' => function ($query) {
-                $query->select('tbl_category.*')
-                    ->selectRaw('(SELECT SUM(payment_milestones.milestone_total_amount) 
-                            FROM payment_request
-                            INNER JOIN invoices ON payment_request.invoice_id = invoices.id
-                            INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
-                            WHERE payment_request.category_id = tbl_category.id 
-                            AND payment_request.payment_status = "completed") as used_amount_by_subcategory')
-                    ->whereNull('tbl_category.deleted_at')
-                    ->with(['children' => function ($subQuery) {
-                        $subQuery->select('tbl_category.*')
-                            ->selectRaw('(SELECT SUM(payment_milestones.milestone_total_amount) 
-                                         FROM payment_request
-                                         INNER JOIN invoices ON payment_request.invoice_id = invoices.id
-                                         INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
-                                         WHERE payment_request.category_id = tbl_category.id 
-                                         AND payment_request.payment_status = "completed") as used_amount')
-                            ->whereNull('tbl_category.deleted_at');
-                    }]);
-            }])
-            ->orderBy('id')
-            ->get();
+        $expCategoryData = session('category_data', []);
+        $startDate = session('start_date');
+        $endDate = session('end_date');
 
-        // Initialize the categories array
-        $categories = [];
-
-        foreach ($budgets as $budget) {
-            // Retrieve sub-categories if available
-            $subCategories = [];
-            foreach ($budget->category->children as $subCategory) {
-                $subCategories[] = [
-                    'id' => $subCategory->id, // Assuming you want to include the ID
-                    'name' => $subCategory->category_name, // Adjust this field based on your data
-                    'expense' => number_format_indian($subCategory->used_amount  ?? 0) // Access the correct field for used amount
-                ];
-            }
-
-            // Push the formatted data into the categories array
-            $categories[] = [
-                'category' => $budget->category->category_name, // Adjust this field based on your data
-                'allocated' => number_format_indian($budget->amount ?? 0), // Format the allocated amount
-                'sub_categories' => $subCategories,
-                'total_expense' => number_format_indian($budget->used_amount ?? 0), // Sum of the used amount with a default of 0
-                'balance' => number_format_indian(($budget->amount ?? 0) - ($budget->used_amount ?? 0)), // Calculate the balance with defaults
-            ];
-        }
-        return Excel::download(new BudgetReportExport($categories), 'BUET_BE_Report.xlsx');
+        return Excel::download(new BudgetReportExport($expCategoryData), 'BUET_BE_Report.xlsx');
     }
 
     public function vendorreport()

@@ -82,7 +82,7 @@ class VendorExport implements FromArray, WithEvents
 
         // Total row
         $data[] = [
-            'Total',
+            '',
              '',
             '',
             '',

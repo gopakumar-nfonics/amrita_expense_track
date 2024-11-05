@@ -162,6 +162,7 @@ $(document).ready(function() {
     let currentVendor = ''; // Track the current vendor name
     let vendorSerial = 0; // Serial number for vendors
 
+    function loadData() {
     $('#categorytable').DataTable({
         processing: true,
         serverSide: true,
@@ -170,6 +171,9 @@ $(document).ready(function() {
             type: "POST",
             data: function(d) {
                 d._token = "{{ csrf_token() }}"; // Include CSRF token
+                d.vendor = $('#vendor').val(); // Send selected vendor
+                d.start_date = $('#start_date').val(); // Send selected start date
+                d.end_date = $('#end_date').val(); // Send selected end date
             }
         },
         preDrawCallback: function(settings) {
@@ -251,6 +255,15 @@ $(document).ready(function() {
         lengthChange: false,
         ordering: false,
         searching: false
+    });
+}
+
+    loadData(); // Initial load
+
+    // Event listener for the vendor select and date inputs
+    $('#vendor, #start_date, #end_date').on('change', function() {
+        $('#categorytable').DataTable().destroy(); // Destroy the old table instance
+        loadData(); // Load the table again with the new filters
     });
 });
 </script>

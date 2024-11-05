@@ -195,15 +195,27 @@ $(document).ready(function() {
 
 
             },
+            // {
+            //     data: 'categories', // Use categories to calculate total expense
+            //     render: function(data) {
+            //         return Array.isArray(data) && data.length > 0 ?
+            //             data.map(category =>
+            //                 '<p class="sub-expense-disp fs-7 fw-bold  ls-n1 text-end">&#x20b9;<span class="total-cost-span">' +
+            //                 category
+            //                 .total_expense +
+            //                 '</span></p>')
+            //             .join(' ') : '';
+            //     }
+            // },
             {
                 data: 'categories', // Use categories to calculate total expense
                 render: function(data) {
                     return Array.isArray(data) && data.length > 0 ?
                         data.map(category =>
-                            '<p class="sub-expense-disp fs-7 fw-bold  ls-n1 text-end">&#x20b9;' +
-                            category
-                            .total_expense +
-                            '</p>')
+                            '<p class="sub-expense-disp fs-7 fw-bold ls-n1 text-end">&#x20b9;<span class="total-cost-span">' +
+                            number_format_indian_js(category.total_expense) +
+                            // Invoke number_format_indian here
+                            '</span></p>')
                         .join(' ') : '';
                 }
             },
@@ -231,6 +243,8 @@ $(document).ready(function() {
         ordering: false,
         searching: false
     });
+
+
 });
 </script>
 
@@ -250,6 +264,39 @@ document.addEventListener('DOMContentLoaded', function() {
         placeholder: "Select date" // Placeholder text
     });
 });
+
+function number_format_indian_js(num, decimals = 2, decimalSeparator = ".", thousandsSeparator = ",") {
+    // Check if the number is negative
+    const negative = num < 0 ? "-" : "";
+
+    // Remove the negative sign for formatting
+    num = Math.abs(num);
+
+    // Split the number into integer and decimal parts
+    let parts = num.toFixed(decimals).split(".");
+    let integerPart = parts[0];
+    let decimalPart = parts[1] ? parts[1] : "";
+
+    // Format the integer part for Indian numbering system
+    let lastThree = integerPart.slice(-3); // Extract the last three digits
+    let remaining = integerPart.slice(0, -3); // Extract the remaining part
+
+    // Add thousands separator in Indian format
+    if (remaining.length > 0) {
+        remaining = remaining.replace(/\B(?=(\d{2})+(?!\d))/g, thousandsSeparator);
+        integerPart = remaining + thousandsSeparator + lastThree;
+    } else {
+        integerPart = lastThree;
+    }
+
+    // Combine integer part and decimal part
+    let result = negative + integerPart;
+    if (decimals > 0) {
+        result += decimalSeparator + decimalPart;
+    }
+
+    return result;
+}
 </script>
 
 

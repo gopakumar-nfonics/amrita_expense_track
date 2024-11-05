@@ -773,6 +773,10 @@ text#SvgjsText1015
 font-size: 23px !important;
 }
 
+.report-table td
+{
+    padding: 0px !important;
+}
 
 @keyframes spin {
     0% {

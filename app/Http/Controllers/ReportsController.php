@@ -359,11 +359,12 @@ public function programmedata(Request $request)
     $start = $request->input('start', 0);
     $length = $request->input('length', 10);
     $programmeId = $request->input('programme_id'); // Get the selected program ID
+    
+    // Clear the session data for program_data
+    session()->forget(['program_data', 'start_date', 'end_date']);  // Remove program_data from session
+
     $startDate = $request->input('start_date'); // Get start date
     $endDate = $request->input('end_date'); // Get end date
-
-    // Clear the session data for program_data
-    session()->forget(['program_data']);  // Remove program_data from session
 
     // Fetch all streams with their payment requests
     $query = Stream::whereHas('paymentRequests', function ($query) {
@@ -371,14 +372,15 @@ public function programmedata(Request $request)
     })->with(['paymentRequests' => function ($query) {
         $query->select(
                 'payment_request.stream_id',
-                'payment_request.category_id',
+                'payment_request.category_id', 'transaction_date',
                 DB::raw('COALESCE(SUM(payment_milestones.milestone_total_amount), 0) as total_expense') // Ensure correct column
             )
             ->join('invoices', 'payment_request.invoice_id', '=', 'invoices.id')
             ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
             ->where('payment_request.payment_status', 'completed')
-            ->groupBy('payment_request.stream_id', 'payment_request.category_id'); // Group by stream and category
+            ->groupBy('payment_request.stream_id', 'payment_request.category_id', 'transaction_date'); // Group by stream and category
     }]);
+    
 
     // Apply program filter if provided
     if ($programmeId) {
@@ -419,6 +421,7 @@ public function programmedata(Request $request)
         // Process each payment request for the current stream
         foreach ($stream->paymentRequests as $paymentRequest) {
             // Get the category related to the payment request
+            if($paymentRequest->transaction_date != null){
             $category = Category::with('children')->find($paymentRequest->category_id);
 
             if ($category) {
@@ -439,6 +442,7 @@ public function programmedata(Request $request)
                 // Update the total program expense
                 $totalProgramExpense += $paymentRequest->total_expense;
             }
+            }
         }
 
         // foreach ($categoriesArray as &$category) {
@@ -453,7 +457,12 @@ public function programmedata(Request $request)
         ];
     }
 
-    session(['program_data' => $this->data]);
+    // session(['program_data' => $this->data]);
+    session([
+        'program_data' => $this->data,
+        'start_date' => $startDate,
+        'end_date' => $endDate,
+    ]);
 
     // Return JSON response for DataTables
     return response()->json([
@@ -469,7 +478,10 @@ public function exportprogrammedata()
 {
 
     $expProgramData = session('program_data', []);
-    return Excel::download(new ProgramDataExport($expProgramData), 'BUET_PRGM_Report.xlsx');
+    $startDate = session('start_date');
+    $endDate = session('end_date');
+
+    return Excel::download(new ProgramDataExport($expProgramData, $startDate, $endDate), 'BUET_PRGM_Report.xlsx');
    
 }
 

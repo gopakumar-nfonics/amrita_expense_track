@@ -12,10 +12,14 @@ class ProgramDataExport implements FromCollection, WithHeadings, WithEvents
     protected $data;
     protected $grandTotalExpense = 0;
     protected $grandTotalProgramExpense = 0;
+    protected $startDate;
+    protected $endDate;
 
-    public function __construct(array $data)
+    public function __construct(array $data, $startDate, $endDate)
     {
         $this->data = $data;
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
     }
 
     public function collection()
@@ -98,6 +102,9 @@ public function registerEvents(): array
                     'alignment' => ['vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER],
                 ]);
 
+            $formattedStartDate = $this->startDate ? \Carbon\Carbon::parse($this->startDate)->format('d-M-Y') : 'N/A';
+            $formattedEndDate = $this->endDate ? \Carbon\Carbon::parse($this->endDate)->format('d-M-Y') : 'N/A';
+            
             // Merge cells for the report title
             $event->sheet->mergeCells('A1:E1'); // Title
             $event->sheet->setCellValue('A1', 'Amrita Vishwa Vidyapeetham (ASE/ASA)');
@@ -106,7 +113,7 @@ public function registerEvents(): array
             $event->sheet->setCellValue('A2', 'Budget & Expense Report');
 
             $event->sheet->mergeCells('A3:E3'); // Period
-            $event->sheet->setCellValue('A3', 'Period: From 01-Jul-2024 To 26-Sep-2024');
+            $event->sheet->setCellValue('A3', "Period: From {$formattedStartDate} To {$formattedEndDate}");
 
             $this->applyTitleStyle($event->sheet, 'A1:E1');
             $this->applyTitleStyle($event->sheet, 'A2:E2');

@@ -202,7 +202,11 @@ class ReportsController extends Controller
     $length = $request->input('length', 10);
 
     // Clear the session data for vendor_data
-    session()->forget('vendor_data'); // Remove vendor_data from session
+    session()->forget(['vendor_data', 'start_date', 'end_date']);  // Remove vendor_data from session
+
+    // Retrieve start and end date from the request
+    $startDate = $request->input('start_date');
+    $endDate = $request->input('end_date');
 
     // Build the query for verified vendors with filtered proposals and invoices
     $query = Vendor::with(['proposals' => function ($query) use ($request) {
@@ -310,9 +314,16 @@ class ReportsController extends Controller
 
         if (!empty($vendorDetails['proposals'])) {
             $this->vendorData[] = $vendorDetails;
-            session(['vendor_data' => $this->vendorData]);
+            // session(['vendor_data' => $this->vendorData]);
         }
     }
+
+    // Store vendor_data, start_date, and end_date in the session
+    session([
+        'vendor_data' => $this->vendorData,
+        'start_date' => $startDate,
+        'end_date' => $endDate,
+    ]);
 
     return response()->json([
         'draw' => intval($request->input('draw')),
@@ -326,8 +337,10 @@ class ReportsController extends Controller
     public function vendordataexport()
     {
         $expvendorData = session('vendor_data', []);
+        $startDate = session('start_date');
+        $endDate = session('end_date');
     
-        return Excel::download(new VendorExport($expvendorData), 'BUET_VR_Report.xlsx');
+        return Excel::download(new VendorExport($expvendorData, $startDate, $endDate), 'BUET_VR_Report.xlsx');
     }
 
     public function programmereport()

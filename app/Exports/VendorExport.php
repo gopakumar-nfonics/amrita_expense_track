@@ -11,17 +11,25 @@ class VendorExport implements FromArray, WithEvents
     protected $vendorData;
     protected $grandTotalAmount = 0;
     protected $grandTotalProposalAmount = 0;
+    protected $startDate;
+    protected $endDate;
 
-    public function __construct(array $vendorData)
+    public function __construct(array $vendorData, $startDate, $endDate)
     {
         $this->vendorData = $vendorData;
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
     }
 
     public function array(): array
 {
+    // Format start and end dates if they are provided
+    $formattedStartDate = $this->startDate ? \Carbon\Carbon::parse($this->startDate)->format('d-M-Y') : 'N/A';
+    $formattedEndDate = $this->endDate ? \Carbon\Carbon::parse($this->endDate)->format('d-M-Y') : 'N/A';
+
     $data[] = ['Amrita Vishwa Vidyapeetham (ASE/ASA)', '', '', '', '', '', '', '', '',''];
     $data[] = ['Vendor Wise - Payment Reports', '', '', '', '', '', '', '','', ''];
-    $data[] = ['Period: From 01-Jul-2024 To 26-Sep-2024', '', '', '', '', '', '', '','', ''];
+    $data[] = ["Period: From {$formattedStartDate} To {$formattedEndDate}", '', '', '', '', '', '', '','', ''];
     $data[] = ['#', 'Vendor', 'Proposal', 'RO #', 'Milestone', 'Invoice #', 'Payment Date','UTR #', 'Amount', 'Total'];
 
     $serialNumber = 1; // Initialize serial number for vendors

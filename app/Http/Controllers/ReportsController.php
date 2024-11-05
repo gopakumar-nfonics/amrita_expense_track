@@ -190,150 +190,138 @@ class ReportsController extends Controller
         return view('reports.vendor_report',compact('vendors'));
     }
 
+   
+
     public function vendordata(Request $request)
-    {
-        $searchValue = $request->input('search.value');
-        $vendorId = $request->input('vendor'); // Get selected vendor
+{
+    $searchValue = $request->input('search.value');
+    $vendorId = $request->input('vendor'); // Get selected vendor
 
-        // Get pagination parameters
-        $start = $request->input('start', 0);
-        $length = $request->input('length', 10);
+    // Get pagination parameters
+    $start = $request->input('start', 0);
+    $length = $request->input('length', 10);
 
-        // Clear the session data for vendor_data
-        session()->forget('vendor_data'); // Remove vendor_data from session
+    // Clear the session data for vendor_data
+    session()->forget('vendor_data'); // Remove vendor_data from session
 
-        // Build the query for verified vendors with their related proposals and invoices
-        $query = Vendor::with(['proposals' => function ($query) use ($request) {
-            $query->where('proposal_status', 1)
-                ->with(['invoices' => function ($query) use ($request) {
-                    $query->where('invoice_status', 1)
-                        ->select('id', 'invoice_id', 'proposal_id', 'invoice_status', 'milestone_id')
-                        ->with(['paymentRequests' => function ($query) use ($request) {
-                            $query->select('id', 'invoice_id', 'transaction_date', 'utr_number');
-                            
-                            // Apply date filters directly within the paymentRequests subquery
-                            if ($request->has('start_date') && $request->start_date != '') {
-                                $query->whereDate('transaction_date', '>=', \Carbon\Carbon::createFromFormat('d-m-Y', $request->start_date));
-                            }
-            
-                            if ($request->has('end_date') && $request->end_date != '') {
-                                $query->whereDate('transaction_date', '<=', \Carbon\Carbon::createFromFormat('d-m-Y', $request->end_date));
-                            }
-                        }]);
-                }, 'paymentMilestones' => function ($query) {
-                    $query->select('id', 'proposal_id', 'milestone_title', 'milestone_total_amount');
-                }, 'proposalro' => function ($query) {
-                    $query->select('id', 'proposal_id', 'proposal_ro');
-                }])
-                ->orderBy('id'); // Order proposals by their ID
-        }])
-        ->where('vendor_status', 'verified')
+    // Build the query for verified vendors with filtered proposals and invoices
+    $query = Vendor::with(['proposals' => function ($query) use ($request) {
+        $query->where('proposal_status', 1)
+            ->with(['invoices' => function ($query) use ($request) {
+                $query->where('invoice_status', 1)
+                    ->select('id', 'invoice_id', 'proposal_id', 'invoice_status', 'milestone_id')
+                    ->with(['paymentRequests' => function ($query) use ($request) {
+                        $query->select('id', 'invoice_id', 'transaction_date', 'utr_number');
+                        
+                        // Apply date filters within the paymentRequests subquery
+                        if ($request->has('start_date') && $request->start_date != '') {
+                            $query->whereDate('transaction_date', '>=', \Carbon\Carbon::createFromFormat('d-m-Y', $request->start_date));
+                        }
         
-        // Use whereHas to apply date filter on paymentRequests directly for Vendor filtering
-        ->whereHas('proposals.invoices.paymentRequests', function ($query) use ($request) {
-            if ($request->has('start_date') && $request->start_date != '') {
-                $query->whereDate('transaction_date', '>=', \Carbon\Carbon::createFromFormat('d-m-Y', $request->start_date));
-            }
+                        if ($request->has('end_date') && $request->end_date != '') {
+                            $query->whereDate('transaction_date', '<=', \Carbon\Carbon::createFromFormat('d-m-Y', $request->end_date));
+                        }
+                    }]);
+            }, 'paymentMilestones' => function ($query) {
+                $query->select('id', 'proposal_id', 'milestone_title', 'milestone_total_amount');
+            }, 'proposalro' => function ($query) {
+                $query->select('id', 'proposal_id', 'proposal_ro');
+            }])
+            ->orderBy('id'); // Order proposals by their ID
+    }])
+    ->where('vendor_status', 'verified')
     
-            if ($request->has('end_date') && $request->end_date != '') {
-                $query->whereDate('transaction_date', '<=', \Carbon\Carbon::createFromFormat('d-m-Y', $request->end_date));
-            }
-        })
-        ->orderBy('id');
-    
-    
-      //  dd($query->toSql(), $query->getBindings()); exit();
-
-
-        // Apply vendor filter if provided
-        if ($vendorId) {
-            $query->where('id', $vendorId);
+    // Use whereHas to filter vendors based on transaction_date in paymentRequests
+    ->whereHas('proposals.invoices.paymentRequests', function ($query) use ($request) {
+        if ($request->has('start_date') && $request->start_date != '') {
+            $query->whereDate('transaction_date', '>=', \Carbon\Carbon::createFromFormat('d-m-Y', $request->start_date));
         }
 
-        // if ($request->has('start_date') && $request->start_date != '') {
-        //     $query->where('invoice.paymentRequests.transaction_date', '>=', \Carbon\Carbon::createFromFormat('d-m-Y', $request->start_date));
-        // }
-    
-        // if ($request->has('end_date') && $request->end_date != '') {
-        //     $query->where('transaction_date', '<=', \Carbon\Carbon::createFromFormat('d-m-Y', $request->end_date));
-        // }
-
-        // Apply search filter
-        if ($searchValue) {
-            $query->where(function ($q) use ($searchValue) {
-                $q->where('vendor_name', 'LIKE', "%$searchValue%"); // Adjust 'vendor_name' if necessary
-            });
+        if ($request->has('end_date') && $request->end_date != '') {
+            $query->whereDate('transaction_date', '<=', \Carbon\Carbon::createFromFormat('d-m-Y', $request->end_date));
         }
+    })
+    ->orderBy('id');
 
-        // Get total count before pagination
-        $totalCount = $query->count();
+    // Apply vendor filter if provided
+    if ($vendorId) {
+        $query->where('id', $vendorId);
+    }
 
-        // Apply pagination
-        $vendors = $query->skip($start)->take($length)->get();
+    // Apply search filter
+    if ($searchValue) {
+        $query->where(function ($q) use ($searchValue) {
+            $q->where('vendor_name', 'LIKE', "%$searchValue%");
+        });
+    }
 
-        // Initialize the vendor data array
-        $this->vendorData = []; 
+    // Get total count before pagination
+    $totalCount = $query->count();
 
-        foreach ($vendors as $vendor) {
-            $vendorDetails = [
-                'vendor_name' => $vendor->vendor_name, // Adjust this to your vendor name field
-                'proposals' => []
-            ];
+    // Apply pagination
+    $vendors = $query->skip($start)->take($length)->get();
 
-            foreach ($vendor->proposals as $proposal) {
-                // Check if there are invoices with status = 1
-                if ($proposal->invoices->isNotEmpty()) {
-                    $proposalDetails = [
-                        'proposal_title' => $proposal->proposal_title, // Adjust to your proposal title field
-                        'proposal_ro' => $proposal->proposalro ? $proposal->proposalro->proposal_ro : null, // Accessing the RO field
-                        'milestones' => [],
-                        'total_milestone_amount' => 0 // Initialize total milestone amount for this proposal
-                    ];
+    // Initialize the vendor data array
+    $this->vendorData = []; 
 
-                    foreach ($proposal->paymentMilestones as $milestone) {
-                        // Find the corresponding invoice(s) for the milestone
-                        $relatedInvoices = $proposal->invoices->where('milestone_id', $milestone->id)->where('invoice_status', 1); // Check for invoice status
+    foreach ($vendors as $vendor) {
+        $vendorDetails = [
+            'vendor_name' => $vendor->vendor_name,
+            'proposals' => []
+        ];
 
-                        foreach ($relatedInvoices as $invoice) {
+        foreach ($vendor->proposals as $proposal) {
+            if ($proposal->invoices->isNotEmpty()) {
+                $proposalDetails = [
+                    'proposal_title' => $proposal->proposal_title,
+                    'proposal_ro' => $proposal->proposalro ? $proposal->proposalro->proposal_ro : null,
+                    'milestones' => [],
+                    'total_milestone_amount' => 0
+                ];
+
+                foreach ($proposal->paymentMilestones as $milestone) {
+                    $relatedInvoices = $proposal->invoices->where('milestone_id', $milestone->id)->where('invoice_status', 1);
+
+                    foreach ($relatedInvoices as $invoice) {
+                       
                             $milestoneDetails = [
-                                'milestone_name' => $milestone->milestone_title, // Adjust to your milestone name field
-                                'milestone_amount' => number_format_indian($milestone->milestone_total_amount ?? 0), // Adjust to your milestone amount field
-                                'invoice_id' => $invoice->invoice_id, // Include the invoice ID
-                                'transaction_date' => $invoice->paymentRequests ? Carbon::parse($invoice->paymentRequests->transaction_date)->format('d-m-Y') : null, // Get transaction date
+                                'milestone_name' => $milestone->milestone_title,
+                                'milestone_amount' => number_format_indian($milestone->milestone_total_amount ?? 0),
+                                'invoice_id' => $invoice->invoice_id,
+                                'transaction_date' => $invoice->paymentRequests ? Carbon::parse($invoice->paymentRequests->transaction_date)->format('d-m-Y') : null,
                                 'utr_number' => $invoice->paymentRequests ? $invoice->paymentRequests->utr_number : null
                             ];
+                            if($milestoneDetails['transaction_date']!=null)
+                            {
 
                             $proposalDetails['milestones'][] = $milestoneDetails;
-
-                            // Add to total milestone amount for the proposal
-                            $proposalDetails['total_milestone_amount'] += $milestone->milestone_total_amount; // Summing milestone amounts
+                            $proposalDetails['total_milestone_amount'] += $milestone->milestone_total_amount;
                         }
                     }
-
-                    $proposalDetails['total_milestone_amount'] = number_format_indian($proposalDetails['total_milestone_amount'], 2, '.', ',');
-
-                    // Only add the proposal if it has milestones
-                    if (!empty($proposalDetails['milestones'])) {
-                        $vendorDetails['proposals'][] = $proposalDetails;
-                    }
                 }
-            }
 
-            // Only add vendors that have proposals
-            if (!empty($vendorDetails['proposals'])) {
-                $this->vendorData[] = $vendorDetails;
-                session(['vendor_data' => $this->vendorData]);
+                $proposalDetails['total_milestone_amount'] = number_format_indian($proposalDetails['total_milestone_amount'], 2, '.', ',');
+
+                if (!empty($proposalDetails['milestones'])) {
+                    $vendorDetails['proposals'][] = $proposalDetails;
+                }
             }
         }
 
-        // Returning the data as JSON response for DataTables or other frontend use
-        return response()->json([
-            'draw' => intval($request->input('draw')),
-            'recordsTotal' => $totalCount,
-            'recordsFiltered' => $totalCount, // You can modify this if you want to return filtered count
-            'data' => $this->vendorData
-        ]);
+        if (!empty($vendorDetails['proposals'])) {
+            $this->vendorData[] = $vendorDetails;
+            session(['vendor_data' => $this->vendorData]);
+        }
     }
+
+    return response()->json([
+        'draw' => intval($request->input('draw')),
+        'recordsTotal' => $totalCount,
+        'recordsFiltered' => $totalCount,
+        'data' => $this->vendorData
+    ]);
+}
+
 
     public function vendordataexport()
     {

@@ -129,8 +129,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Vendor</th>
-                                    <th>RO# & Proposal</th>
-                                    <th class="pe-5">Invoice</th>
+                                    <th>RO#</th>
+                                    <th class="pe-5">Invoice #</th>
+                                    <th class="pe-5">DOP</th>
                                     <th class="text-end pe-5">Amount</th>
                                     <th class="text-end pe-5">Total</th>
                                 </tr>
@@ -163,100 +164,112 @@ $(document).ready(function() {
     let vendorSerial = 0; // Serial number for vendors
 
     function loadData() {
-    $('#categorytable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: "{{ route('reports.vendordata') }}",
-            type: "POST",
-            data: function(d) {
-                d._token = "{{ csrf_token() }}"; // Include CSRF token
-                d.vendor = $('#vendor').val(); // Send selected vendor
-                d.start_date = $('#start_date').val(); // Send selected start date
-                d.end_date = $('#end_date').val(); // Send selected end date
-            }
-        },
-        preDrawCallback: function(settings) {
-            currentVendor = ''; // Reset vendor tracking
-            vendorSerial = 0; // Reset serial number
-        },
-        columns: [{
-                data: null,
-                render: function(data, type, row, meta) {
-                    // Only increment serial number if this is a new vendor
-                    if (row.vendor_name !== currentVendor) {
-                        currentVendor = row.vendor_name; // Update current vendor
-                        vendorSerial++; // Increment vendor serial
-                        // return vendorSerial; // Return the serial number
-                        return '<span style="width:30px;">' + vendorSerial +
-                            '</span>';
+        $('#categorytable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ route('reports.vendordata') }}",
+                type: "POST",
+                data: function(d) {
+                    d._token = "{{ csrf_token() }}"; // Include CSRF token
+                    d.vendor = $('#vendor').val(); // Send selected vendor
+                    d.start_date = $('#start_date').val(); // Send selected start date
+                    d.end_date = $('#end_date').val(); // Send selected end date
+                }
+            },
+            preDrawCallback: function(settings) {
+                currentVendor = ''; // Reset vendor tracking
+                vendorSerial = 0; // Reset serial number
+            },
+            columns: [{
+                    data: null,
+                    render: function(data, type, row, meta) {
+                        // Only increment serial number if this is a new vendor
+                        if (row.vendor_name !== currentVendor) {
+                            currentVendor = row.vendor_name; // Update current vendor
+                            vendorSerial++; // Increment vendor serial
+                            // return vendorSerial; // Return the serial number
+                            return '<span style="width:30px;">' + vendorSerial +
+                                '</span>';
+                        }
+                        return ''; // Return empty for subsequent rows
                     }
-                    return ''; // Return empty for subsequent rows
-                }
-            },
-            {
-                data: 'vendor_name',
-                name: 'vendor_name',
-                render: function(data, type, row, meta) {
-                    // return data; // Display vendor name
-                    return '<span class="fs-6 fw-bold ">' + data + '</span>';
-                }
-            },
-            {
-                data: null,
-                render: function(data, type, row, meta) {
-                    // Show proposal titles for each proposal
-                    return row.proposals.map(proposal => {
-                        let milestoneCount = proposal.milestones.length;
-                        return `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp " style="min-height:${40*milestoneCount}px;padding-top:${(40*milestoneCount/2)-10}px !important;">${proposal.proposal_ro} | ${proposal.proposal_title}</p>`;
-                    }).join('');
-                }
-            },
+                },
+                {
+                    data: 'vendor_name',
+                    name: 'vendor_name',
+                    render: function(data, type, row, meta) {
+                        // return data; // Display vendor name
+                        return '<span class="fs-6 fw-bold ">' + data + '</span>';
+                    }
+                },
+                {
+                    data: null,
+                    render: function(data, type, row, meta) {
+                        // Show proposal titles for each proposal
+                        return row.proposals.map(proposal => {
+                            let milestoneCount = proposal.milestones.length;
+                            return `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp " style="min-height:${40*milestoneCount}px;padding-top:${(40*milestoneCount/2)-10}px !important;">${proposal.proposal_ro}</p>`;
+                        }).join('');
+                    }
+                },
 
-            {
-                data: null,
-                render: function(data, type, row, meta) {
-                    // Show milestone names for each proposal
-                    return row.proposals.flatMap(proposal =>
-                        proposal.milestones.map(milestone =>
-                            `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp">${milestone.invoice_id} | ${milestone.milestone_name}</p>`
-                        )
-                    ).join('');
-                }
-            },
+                {
+                    data: null,
+                    render: function(data, type, row, meta) {
+                        // Show milestone names for each proposal
+                        return row.proposals.flatMap(proposal =>
+                            proposal.milestones.map(milestone =>
+                                `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp">${milestone.invoice_id}</p>`
+                            )
+                        ).join('');
+                    }
+                },
+                {
+                    data: null,
+                    render: function(data, type, row, meta) {
+                        // Show milestone amounts for each proposal
+                        return row.proposals.flatMap(proposal =>
+                            proposal.milestones.map(milestone =>
+                                `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp">${milestone.transaction_date}</p>`
+                            )
+                        ).join('');
+                    }
+                },
 
-            {
-                data: null,
-                render: function(data, type, row, meta) {
-                    // Show milestone amounts for each proposal
-                    return row.proposals.flatMap(proposal =>
-                        proposal.milestones.map(milestone =>
-                            `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp fw-bold ls-n1 text-end">&#x20b9;${milestone.milestone_amount}</p>`
-                        )
-                    ).join('');
-                }
-            },
-            {
-                data: null,
-                render: function(data, type, row, meta) {
-                    // Show total milestone amount for each proposal
-                    // return row.proposals.map(proposal =>
-                    //     `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp fw-bold ls-n1 text-end">&#x20b9;${proposal.total_milestone_amount}</p>`
-                    // ).join('');
-                    return row.proposals.map(proposal => {
-                        let milestoneCount = proposal.milestones.length;
-                        return `<p class="allocated fs-5 text-gray-800 py-2 sub-cat-disp fw-bold ls-n1 text-end"" style="min-height:${40*milestoneCount}px;padding-top:${(40*milestoneCount/2)-10}px !important;">&#x20b9;${proposal.total_milestone_amount}</p>`;
-                    }).join('');
-                }
-            },
-        ],
-        order: [],
-        pageLength: 10,
-        lengthChange: false,
-        ordering: false,
-        searching: false
-    });
-}
+                {
+                    data: null,
+                    render: function(data, type, row, meta) {
+                        // Show milestone amounts for each proposal
+                        return row.proposals.flatMap(proposal =>
+                            proposal.milestones.map(milestone =>
+                                `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp fw-bold ls-n1 text-end">&#x20b9;${milestone.milestone_amount}</p>`
+                            )
+                        ).join('');
+                    }
+                },
+
+                {
+                    data: null,
+                    render: function(data, type, row, meta) {
+                        // Show total milestone amount for each proposal
+                        // return row.proposals.map(proposal =>
+                        //     `<p class="allocated fs-7 text-gray-800 py-2 sub-cat-disp fw-bold ls-n1 text-end">&#x20b9;${proposal.total_milestone_amount}</p>`
+                        // ).join('');
+                        return row.proposals.map(proposal => {
+                            let milestoneCount = proposal.milestones.length;
+                            return `<p class="allocated fs-5 text-gray-800 py-2 sub-cat-disp fw-bold ls-n1 text-end"" style="min-height:${40*milestoneCount}px;padding-top:${(40*milestoneCount/2)-10}px !important;">&#x20b9;${proposal.total_milestone_amount}</p>`;
+                        }).join('');
+                    }
+                },
+            ],
+            order: [],
+            pageLength: 10,
+            lengthChange: false,
+            ordering: false,
+            searching: false
+        });
+    }
 
     loadData(); // Initial load
 

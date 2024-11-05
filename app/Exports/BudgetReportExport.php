@@ -9,14 +9,12 @@ use Maatwebsite\Excel\Events\AfterSheet;
 class BudgetReportExport implements FromArray, WithEvents
 {
     protected $categories;
-    protected $startDate;
-    protected $endDate;
+    public $financialYear;
 
-    public function __construct($categories, $startDate, $endDate)
+    public function __construct($categories, $financialYear)
     {
         $this->categories = $categories;
-        $this->startDate = $startDate;
-        $this->endDate = $endDate;
+        $this->financialYear = $financialYear;
     }
 
     public function array(): array
@@ -29,14 +27,12 @@ class BudgetReportExport implements FromArray, WithEvents
         $totalBalance = 0;
         $totalsubCategoryExpense = 0;
 
-        // Format start and end dates if they are provided
-        $formattedStartDate = $this->startDate ? \Carbon\Carbon::parse($this->startDate)->format('d-M-Y') : 'N/A';
-        $formattedEndDate = $this->endDate ? \Carbon\Carbon::parse($this->endDate)->format('d-M-Y') : 'N/A';
-
+        $year = $this->financialYear ?? 'All';
+        
         // Title and Header rows
         $data[] = ['Amrita Vishwa Vidyapeetham (ASE/ASA)', '', '', '', '', '', ''];
         $data[] = ['Budget & Expense Report', '', '', '', '', '', ''];
-        $data[] = ["Period: From {$formattedStartDate} To {$formattedEndDate}", '', '', '', '', '', ''];
+        $data[] = ["Financial Year: {$year} ", '', '', '', '', '', ''];
         $data[] = ['#', 'Category', 'Budget Allocated', 'Sub-Category', 'Used Amount', 'Total Usage', 'Balance'];
 
         foreach ($this->categories as $category) {

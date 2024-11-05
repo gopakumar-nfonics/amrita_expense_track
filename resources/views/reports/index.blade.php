@@ -71,15 +71,15 @@
                                     </select>
                                 </div>
                                 <div class="d-flex align-items-center me-6 ms-3">
-                                    <label for="category" class="me-1 w-200px text-muted fs-7 me-0">
+                                    <label for="financial_year" class="me-1 w-200px text-muted fs-7 me-0">
                                         Financial Year
                                     </label>
-                                    <select class="form-select form-select-solid fw-bold  p-2 px-4  fs-7" id="category"
-                                        name="category">
-                                        <option value="">Select Year </option>
-                                        @foreach($category as $cat)
-                                        <option value="{{ $cat->id }}" @if(old('category')==$cat->id) selected
-                                            @endif>{{ $cat->category_name }}</option>
+                                    <select class="form-select form-select-solid fw-bold p-2 px-4 fs-7" id="financial_year" name="financial_year">
+                                        <option value="">Select Year</option>
+                                        @foreach($financialYears as $year)
+                                            <option value="{{ $year->id }}" @if(old('financial_year') == $year->id) selected @endif>
+                                                {{ $year->year }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -145,8 +145,8 @@ $(document).ready(function() {
                 data: function(d) {
                     d._token = "{{ csrf_token() }}"; // Include CSRF token
                     d.category = $('#category').val(); // Send selected vendor
-                    d.start_date = $('#start_date').val(); // Send selected start date
-                    d.end_date = $('#end_date').val(); // Send selected end date
+                    d.financial_year = $('#financial_year').val(); // Send selected vendor
+                    
                 }
             },
             columns: [{
@@ -249,7 +249,7 @@ $(document).ready(function() {
     loadData(); // Initial load
 
     // Event listener for the category select and date inputs
-    $('#category, #start_date, #end_date').on('change', function() {
+    $('#category, #financial_year').on('change', function() {
         $('#categorytable').DataTable().destroy(); // Destroy the old table instance
         loadData(); // Load the table again with the new filters
     });

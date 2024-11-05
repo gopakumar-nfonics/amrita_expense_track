@@ -32,7 +32,9 @@ class ReportsController extends Controller
         ->orderBy('category_name')
         ->get();
 
-        return view('reports.index',compact('category'));
+        $financialYears = FinancialYear::orderBy('year', 'desc')->get();
+
+        return view('reports.index',compact('category', 'financialYears'));
     }
 
     public function reportdata(Request $request)
@@ -41,10 +43,9 @@ class ReportsController extends Controller
         $searchValue = $request->input('search.value');
         $categoryId = $request->input('category'); // Get the selected program ID
 
-        session()->forget(['category_data', 'start_date', 'end_date']);  // Remove program_data from session
+        session()->forget(['category_data', 'financial_year_id']);  // Remove program_data from session
 
-        $startDate = $request->input('start_date'); // Get start date
-        $endDate = $request->input('end_date'); // Get end date
+        $financialYearId = $request->input('financial_year'); // Get the selected financial year ID
 
         // Get pagination parameters
         $start = $request->input('start', 0);
@@ -90,6 +91,11 @@ class ReportsController extends Controller
             $query->where('tbl_category.id', $categoryId);
         }
 
+        // Apply financial year filter if provided
+        if ($financialYearId) {
+            $query->where('tbl_budget.financial_year_id', $financialYearId);
+        }
+
         // Apply search filter
         if ($searchValue) {
             $query->where(function ($q) use ($searchValue) {
@@ -129,11 +135,20 @@ class ReportsController extends Controller
             ];
         }
 
+        $financialYear = FinancialYear::find($financialYearId);
+
+        // Check if the financial year exists
+        if ($financialYear) {
+            // Store the year in the session instead of the ID
+            session(['financial_year' => $financialYear->year]);
+        } else {
+            // Handle the case where the financial year is not found
+            session(['financial_year' => null]); // or handle as needed
+        }
+
         // session(['program_data' => $this->data]);
         session([
             'category_data' => $this->categories,
-            'start_date' => $startDate,
-            'end_date' => $endDate,
         ]);
 
         // Returning the data as JSON response for DataTables or other frontend use
@@ -148,10 +163,10 @@ class ReportsController extends Controller
     public function exportBudgetReport()
     {
         $expCategoryData = session('category_data', []);
-        $startDate = session('start_date');
-        $endDate = session('end_date');
+        $financialYear = session('financial_year');
+        // print_r($financialYear); exit();
 
-        return Excel::download(new BudgetReportExport($expCategoryData, $startDate, $endDate), 'BUET_BE_Report.xlsx');
+        return Excel::download(new BudgetReportExport($expCategoryData, $financialYear), 'BUET_BE_Report.xlsx');
     }
 
     public function vendorreport()

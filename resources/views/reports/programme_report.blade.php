@@ -62,7 +62,8 @@
                                     <label for="category" class="me-1 w-75px text-muted fs-7 me-4">
                                         Programme
                                     </label>
-                                    <select class="form-select form-select-solid fw-bold  p-2 px-4  fs-7" name="stream" id="stream">
+                                    <select class="form-select form-select-solid fw-bold  p-2 px-4  fs-7" name="stream"
+                                        id="stream">
                                         <option value="">Select Programme </option>
                                         @foreach($streams as $stream)
                                         <option value="{{ $stream->id }}" @if(old('stream')==$stream->id) selected
@@ -123,6 +124,7 @@
                                     <th>#</th>
                                     <th>Programme</th>
                                     <th>Category</th>
+                                    <!-- <th class="text-end">DOP</th> -->
                                     <th class="text-end">Expense</th>
                                     <th class="text-end pe-5">Total Expense</th>
 
@@ -153,100 +155,100 @@
 <script>
 $(document).ready(function() {
     function loadData() {
-    $('#categorytable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: "{{ route('reports.programmedata') }}", // The route to your server-side code
-            type: "POST",
-            data: function(d) {
-                d._token = "{{ csrf_token() }}";
-                d.programme_id = $('#stream').val(); // Send selected program ID as a parameter
-                d.start_date = $('#start_date').val(); // Capture the start date
-                d.end_date = $('#end_date').val(); // Capture the end date
-            }
-        },
-        columns: [{
-                data: null,
-                render: function(data, type, row, meta) {
-
-                    return '<span style="width:30px;">' + (meta.row + 1) +
-                        '</span>';
-                }
-            }, // Row number
-            {
-                data: 'stream_name',
-                name: 'stream_name',
-                render: function(data, type, row, meta) {
-                    // return data; // Display vendor name
-                    return '<span class="fs-6 fw-bold m-0 p-0">' + data + '</span>';
-                }
-            }, // Program name
-            {
-
-
-                data: 'categories',
-                name: 'sub_categories',
-                render: function(data) {
-                    return Array.isArray(data) && data.length > 0 ?
-                        data.map(category => '<p class="sub-cat-disp fs-7">' + category
-                            .category_name +
-                            '</p>')
-                        .join(' ') : '<p class="sub-cat-disp fs-7">NIL</p>';
-                }
-
-
-
-
-            },
-            // {
-            //     data: 'categories', // Use categories to calculate total expense
-            //     render: function(data) {
-            //         return Array.isArray(data) && data.length > 0 ?
-            //             data.map(category =>
-            //                 '<p class="sub-expense-disp fs-7 fw-bold  ls-n1 text-end">&#x20b9;<span class="total-cost-span">' +
-            //                 category
-            //                 .total_expense +
-            //                 '</span></p>')
-            //             .join(' ') : '';
-            //     }
-            // },
-            {
-                data: 'categories', // Use categories to calculate total expense
-                render: function(data) {
-                    return Array.isArray(data) && data.length > 0 ?
-                        data.map(category =>
-                            '<p class="sub-expense-disp fs-7 fw-bold ls-n1 text-end">&#x20b9;<span class="total-cost-span">' +
-                            number_format_indian_js(category.total_expense) +
-                            // Invoke number_format_indian here
-                            '</span></p>')
-                        .join(' ') : '';
+        $('#categorytable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ route('reports.programmedata') }}", // The route to your server-side code
+                type: "POST",
+                data: function(d) {
+                    d._token = "{{ csrf_token() }}";
+                    d.programme_id = $('#stream').val(); // Send selected program ID as a parameter
+                    d.start_date = $('#start_date').val(); // Capture the start date
+                    d.end_date = $('#end_date').val(); // Capture the end date
                 }
             },
-            {
-                data: 'total_program_expense', // Total expense for program
-                name: 'total_program_expense',
-                className: 'text-end pe-5',
-                render: function(data) {
-                    return '<span class="fs-5 fw-bold  ls-n1 text-end me-3">&#x20b9;' +
-                        data + '</span>';
-                }
-            },
-        ],
-        columnDefs: [{
-                orderable: false,
-                targets: 2
-            } // Make the categories column not orderable
-        ],
+            columns: [{
+                    data: null,
+                    render: function(data, type, row, meta) {
 
-        rowId: function(row) {
-            return row.stream_name; // Assign a unique identifier for each row
-        },
-        pageLength: 10,
-        lengthChange: false,
-        ordering: false,
-        searching: false
-    });
+                        return '<span style="width:30px;">' + (meta.row + 1) +
+                            '</span>';
+                    }
+                }, // Row number
+                {
+                    data: 'stream_name',
+                    name: 'stream_name',
+                    render: function(data, type, row, meta) {
+                        // return data; // Display vendor name
+                        return '<span class="fs-6 fw-bold m-0 p-0">' + data + '</span>';
+                    }
+                }, // Program name
+                {
+
+
+                    data: 'categories',
+                    name: 'sub_categories',
+                    render: function(data) {
+                        return Array.isArray(data) && data.length > 0 ?
+                            data.map(category => '<p class="sub-cat-disp fs-7">' + category
+                                .category_name +
+                                '</p>')
+                            .join(' ') : '<p class="sub-cat-disp fs-7">NIL</p>';
+                    }
+
+
+
+
+                },
+                // {
+                //     data: 'categories', // Use categories to calculate total expense
+                //     render: function(data) {
+                //         return Array.isArray(data) && data.length > 0 ?
+                //             data.map(category =>
+                //                 '<p class="sub-expense-disp fs-7 fw-bold  ls-n1 text-end"><span class="total-cost-span">' +
+                //                 category
+                //                 .dop +
+                //                 '</span></p>')
+                //             .join(' ') : '';
+                //     }
+                // },
+                {
+                    data: 'categories', // Use categories to calculate total expense
+                    render: function(data) {
+                        return Array.isArray(data) && data.length > 0 ?
+                            data.map(category =>
+                                '<p class="sub-expense-disp fs-7 fw-bold ls-n1 text-end">&#x20b9;<span class="total-cost-span">' +
+                                number_format_indian_js(category.total_expense) +
+                                // Invoke number_format_indian here
+                                '</span></p>')
+                            .join(' ') : '';
+                    }
+                },
+                {
+                    data: 'total_program_expense', // Total expense for program
+                    name: 'total_program_expense',
+                    className: 'text-end pe-5',
+                    render: function(data) {
+                        return '<span class="fs-5 fw-bold  ls-n1 text-end me-3">&#x20b9;' +
+                            data + '</span>';
+                    }
+                },
+            ],
+            columnDefs: [{
+                    orderable: false,
+                    targets: 2
+                } // Make the categories column not orderable
+            ],
+
+            rowId: function(row) {
+                return row.stream_name; // Assign a unique identifier for each row
+            },
+            pageLength: 10,
+            lengthChange: false,
+            ordering: false,
+            searching: false
+        });
     }
 
     loadData(); // Initial load
@@ -262,39 +264,39 @@ $(document).ready(function() {
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Calculate the date one month before today
-        const today = new Date();
-        const oneMonthAgo = new Date();
-        oneMonthAgo.setMonth(today.getMonth() - 1);
+document.addEventListener('DOMContentLoaded', function() {
+    // Calculate the date one month before today
+    const today = new Date();
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(today.getMonth() - 1);
 
-        // Initialize flatpickr on start_date with default date as one month ago
-        flatpickr("#start_date", {
-            defaultDate: oneMonthAgo, // Sets the default date to one month ago
-            dateFormat: "d-m-Y",
-            placeholder: "Select date",
-            maxDate: today, // Ensures the start date cannot be after today
-            onChange: function(selectedDates) {
-                const endPicker = document.querySelector("#end_date")._flatpickr;
-                // Update the minimum date for end_date based on start_date selection
-                endPicker.set('minDate', selectedDates[0]);
-            }
-        });
-
-        // Initialize flatpickr on end_date with default date as today
-        flatpickr("#end_date", {
-            defaultDate: today, // Sets the default date to today
-            dateFormat: "d-m-Y",
-            placeholder: "Select date",
-            minDate: oneMonthAgo, // Ensures the end date cannot be before one month ago
-            maxDate: today, // Ensures the end date cannot be after today
-            onChange: function(selectedDates) {
-                const startPicker = document.querySelector("#start_date")._flatpickr;
-                // Update the maximum date for start_date based on end_date selection
-                startPicker.set('maxDate', selectedDates[0]);
-            }
-        });
+    // Initialize flatpickr on start_date with default date as one month ago
+    flatpickr("#start_date", {
+        defaultDate: oneMonthAgo, // Sets the default date to one month ago
+        dateFormat: "d-m-Y",
+        placeholder: "Select date",
+        maxDate: today, // Ensures the start date cannot be after today
+        onChange: function(selectedDates) {
+            const endPicker = document.querySelector("#end_date")._flatpickr;
+            // Update the minimum date for end_date based on start_date selection
+            endPicker.set('minDate', selectedDates[0]);
+        }
     });
+
+    // Initialize flatpickr on end_date with default date as today
+    flatpickr("#end_date", {
+        defaultDate: today, // Sets the default date to today
+        dateFormat: "d-m-Y",
+        placeholder: "Select date",
+        minDate: oneMonthAgo, // Ensures the end date cannot be before one month ago
+        maxDate: today, // Ensures the end date cannot be after today
+        onChange: function(selectedDates) {
+            const startPicker = document.querySelector("#start_date")._flatpickr;
+            // Update the maximum date for start_date based on end_date selection
+            startPicker.set('maxDate', selectedDates[0]);
+        }
+    });
+});
 
 function number_format_indian_js(num, decimals = 2, decimalSeparator = ".", thousandsSeparator = ",") {
     // Check if the number is negative

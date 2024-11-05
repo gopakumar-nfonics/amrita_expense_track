@@ -367,44 +367,59 @@ public function programmedata(Request $request)
     $endDate = $request->input('end_date'); // Get end date
 
     // Fetch all streams with their payment requests
-    $query = Stream::whereHas('paymentRequests', function ($query) {
+    $query = Stream::whereHas('paymentRequests', function ($query) use ($startDate, $endDate) {
         $query->where('payment_status', 'completed');
-    })->with(['paymentRequests' => function ($query) {
+
+        // Apply date filters within whereHas to ensure the Stream has relevant paymentRequests
+        if ($startDate) {
+            $query->where('transaction_date', '>=', Carbon::parse($startDate));
+        }
+        if ($endDate) {
+            $query->where('transaction_date', '<=', Carbon::parse($endDate));
+        }
+    })
+    ->with(['paymentRequests' => function ($query) use ($startDate, $endDate) { // Apply filters here too
         $query->select(
                 'payment_request.stream_id',
-                'payment_request.category_id', 'transaction_date',
-                DB::raw('COALESCE(SUM(payment_milestones.milestone_total_amount), 0) as total_expense') // Ensure correct column
+                'payment_request.category_id', 
+                'transaction_date',
+                DB::raw('COALESCE(SUM(payment_milestones.milestone_total_amount), 0) as total_expense') 
             )
             ->join('invoices', 'payment_request.invoice_id', '=', 'invoices.id')
             ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
-            ->where('payment_request.payment_status', 'completed')
-            ->groupBy('payment_request.stream_id', 'payment_request.category_id', 'transaction_date'); // Group by stream and category
+            ->where('payment_request.payment_status', 'completed');
+
+        // Apply date filters here to limit data within the date range for grouping
+        if ($startDate) {
+            $query->where('transaction_date', '>=', Carbon::parse($startDate));
+        }
+        if ($endDate) {
+            $query->where('transaction_date', '<=', Carbon::parse($endDate));
+        }
+
+        $query->groupBy('payment_request.stream_id', 'payment_request.category_id', 'transaction_date');
     }]);
-    
 
-    // Apply program filter if provided
-    if ($programmeId) {
-        $query->where('id', $programmeId);
-    }
+// Apply program filter if provided
+if ($programmeId) {
+    $query->where('id', $programmeId);
+}
 
-    // Apply date filters if provided
-    if ($startDate) {
-        $query->whereHas('paymentRequests', function ($q) use ($startDate) {
-            $q->where('transaction_date', '>=', Carbon::parse($startDate));
-        });
-    }
-    
-    if ($endDate) {
-        $query->whereHas('paymentRequests', function ($q) use ($endDate) {
-            $q->where('transaction_date', '<=', Carbon::parse($endDate));
-        });
-    }
+// Apply search filter if needed
+if ($searchValue) {
+    $query->where('stream_name', 'LIKE', "%$searchValue%"); // Filter streams by name
+}
 
-    // Apply search filter if needed
-    if ($searchValue) {
-        $query->where('stream_name', 'LIKE', "%$searchValue%"); // Filter streams by name
-    }
 
+
+    // Print the SQL query and bindings
+    // $sql = $query->toSql();
+    // $bindings = $query->getBindings();
+
+    // echo "SQL Query: " . $sql . "\n";
+    // echo "Bindings: " . json_encode($bindings) . "\n";
+
+   // exit(1);
     // Get total count before pagination
     $totalCount = $query->count();
 
@@ -433,6 +448,7 @@ public function programmedata(Request $request)
                     $categoriesArray[$parentCategoryName] = [
                         'category_name' => $parentCategoryName,
                         'total_expense' => 0,
+                        'dop' => $paymentRequest->transaction_date,
                     ];
                 }
 
@@ -445,10 +461,7 @@ public function programmedata(Request $request)
             }
         }
 
-        // foreach ($categoriesArray as &$category) {
-        //     $category['total_expense'] = number_format_indian($category['total_expense']); // Format the expense
-        // }
-
+    
         // Push stream-wise data along with total program expense
         $this->data[] = [
             'stream_name' => $stream->stream_name,

@@ -40,7 +40,7 @@ class ProgramDataExport implements FromCollection, WithHeadings, WithEvents
             $serialNumber++, // Serial Number
             $stream['stream_name'], // Stream Name
             $stream['categories'][0]['category_name'], // First category name
-            $stream['categories'][0]['total_expense'] ?? 0, // First category expense
+            number_format_indian($stream['categories'][0]['total_expense']) ?? 0, // First category expense
             $totalExpense // Total Program Expense
         ];
 
@@ -52,7 +52,7 @@ class ProgramDataExport implements FromCollection, WithHeadings, WithEvents
                 '', // Empty for merging
                 '', // Empty for merging
                 $stream['categories'][$i]['category_name'], // Current category name
-                $stream['categories'][$i]['total_expense'] ?? 0, // Current category expense
+                number_format_indian($stream['categories'][$i]['total_expense']) ?? 0, // Current category expense
                 '' // Empty to avoid duplication
             ];
         }

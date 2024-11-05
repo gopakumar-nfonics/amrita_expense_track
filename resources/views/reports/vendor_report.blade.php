@@ -282,21 +282,39 @@ $(document).ready(function() {
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    flatpickr("#start_date", {
-        defaultDate: new Date(), // Sets the default date to the current date
-        dateFormat: "d-m-Y", // Use a standard format for backend compatibility
-        placeholder: "Select date" // Placeholder text
-    });
-});
+    document.addEventListener('DOMContentLoaded', function() {
+        // Calculate the date one month before today
+        const today = new Date();
+        const oneMonthAgo = new Date();
+        oneMonthAgo.setMonth(today.getMonth() - 1);
 
-document.addEventListener('DOMContentLoaded', function() {
-    flatpickr("#end_date", {
-        defaultDate: new Date(), // Sets the default date to the current date
-        dateFormat: "d-m-Y", // Use a standard format for backend compatibility
-        placeholder: "Select date" // Placeholder text
+        // Initialize flatpickr on start_date with default date as one month ago
+        flatpickr("#start_date", {
+            defaultDate: oneMonthAgo, // Sets the default date to one month ago
+            dateFormat: "d-m-Y",
+            placeholder: "Select date",
+            maxDate: today, // Ensures the start date cannot be after today
+            onChange: function(selectedDates) {
+                const endPicker = document.querySelector("#end_date")._flatpickr;
+                // Update the minimum date for end_date based on start_date selection
+                endPicker.set('minDate', selectedDates[0]);
+            }
+        });
+
+        // Initialize flatpickr on end_date with default date as today
+        flatpickr("#end_date", {
+            defaultDate: today, // Sets the default date to today
+            dateFormat: "d-m-Y",
+            placeholder: "Select date",
+            minDate: oneMonthAgo, // Ensures the end date cannot be before one month ago
+            maxDate: today, // Ensures the end date cannot be after today
+            onChange: function(selectedDates) {
+                const startPicker = document.querySelector("#start_date")._flatpickr;
+                // Update the maximum date for start_date based on end_date selection
+                startPicker.set('maxDate', selectedDates[0]);
+            }
+        });
     });
-});
 </script>
 
 @endsection

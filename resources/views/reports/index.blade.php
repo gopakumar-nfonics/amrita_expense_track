@@ -70,39 +70,20 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="d-flex align-items-center ms-2">
-                                    <label for="start-date" class="me-3 w-75px text-muted fs-7">
-                                        Date Period
+                                <div class="d-flex align-items-center me-6 ms-3">
+                                    <label for="category" class="me-1 w-200px text-muted fs-7 me-0">
+                                        Financial Year
                                     </label>
-                                    <div class="position-relative d-flex align-items-center">
-                                        <!--begin::Icon-->
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
-                                        <span class="svg-icon svg-icon-2 position-absolute mx-4">
-                                            <i class="fa-solid fa-calendar-days"></i>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                        <!--end::Icon-->
-                                        <!--begin::Datepicker-->
-                                        <input
-                                            class="form-control form-control-solid p-2 px-4 ps-12 flatpickr-input w-150px  fs-7"
-                                            placeholder="Start Date" id="start_date" name="start_date" type="text">
-                                        <!--end::Datepicker-->
-                                    </div>
-                                    <div class="position-relative d-flex align-items-center ms-3">
-                                        <!--begin::Icon-->
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
-                                        <span class="svg-icon svg-icon-2 position-absolute mx-4">
-                                            <i class="fa-solid fa-calendar-days"></i>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                        <!--end::Icon-->
-                                        <!--begin::Datepicker-->
-                                        <input
-                                            class="form-control form-control-solid p-2 px-4 ps-12 flatpickr-input w-150px fs-7"
-                                            placeholder="End Date" id="end_date" name="end_date" type="text">
-                                        <!--end::Datepicker-->
-                                    </div>
+                                    <select class="form-select form-select-solid fw-bold  p-2 px-4  fs-7" id="category"
+                                        name="category">
+                                        <option value="">Select Year </option>
+                                        @foreach($category as $cat)
+                                        <option value="{{ $cat->id }}" @if(old('category')==$cat->id) selected
+                                            @endif>{{ $cat->category_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+
 
                             </div>
 
@@ -155,113 +136,114 @@
 $(document).ready(function() {
 
     function loadData() {
-    $('#categorytable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: "{{ route('reports.reportdata') }}", // The route to your server-side code
-            type: "POST",
-            data: function(d) {
+        $('#categorytable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{ route('reports.reportdata') }}", // The route to your server-side code
+                type: "POST",
+                data: function(d) {
                     d._token = "{{ csrf_token() }}"; // Include CSRF token
                     d.category = $('#category').val(); // Send selected vendor
                     d.start_date = $('#start_date').val(); // Send selected start date
                     d.end_date = $('#end_date').val(); // Send selected end date
-            }
-        },
-        columns: [{
-                data: null,
-                name: 'row_number',
-                render: function(data, type, row, meta) {
-                    return meta.row + 1; // Display row number
                 }
             },
-            {
-                data: 'category',
-                name: 'category',
-                render: function(data) {
-                    return '<p class="allocated fs-6 text-gray-800 py-2">' + data + '</p>';
-                }
-            },
-            {
-                data: 'allocated',
-                name: 'allocated',
-                render: function(data) {
-                    return '<p class="allocated fs-6 fw-bold text-gray-800 me-5 ls-n1 text-end"> &#x20b9;' +
-                        data + '</p>';
-                }
-            },
-            {
-                data: 'sub_categories',
-                name: 'sub_categories',
-                render: function(data) {
-                    return Array.isArray(data) && data.length > 0 ?
-                        data.map(sub => '<p class="sub-cat-disp fs-7">' + sub.name + '</p>')
-                        .join(' ') : '<p class="sub-cat-disp fs-7">NIL</p>';
-                }
-            },
-            {
-                data: 'sub_categories',
-                name: 'sub_expenses',
-                render: function(data) {
-                    return Array.isArray(data) && data.length > 0 ?
-                        data.map(sub =>
-                            '<p class="sub-expense-disp fs-7 fw-bold ls-n1 text-end">&#x20b9;' +
-                            sub.expense + '</p>'
-                        ).join('') : '<p class="sub-cat-disp fs-7 text-end">NIL</p>';
-                }
-            },
-            {
-                data: 'total_expense',
-                name: 'total_expense',
-                render: function(data) {
-                    return '<p class="allocated fs-6 fw-bold text-gray-800 me-5 ls-n1  text-end"> &#x20b9;' +
-                        data + '</p>';
-                }
-            },
-            {
-                data: 'balance',
-                name: 'balance',
-                render: function(data, type, row) {
-                    // Convert allocated to a number by removing currency symbol and commas
-                    var allocatedStr = row.allocated; // Example: '10,000.00'
-                    var allocated = parseFloat(allocatedStr.replace(/[^0-9.-]+/g,
-                        "")); // Convert to number
-
-                    // Convert balance to a number similarly
-                    var balanceStr = data; // Assuming 'data' is in the same format
-                    var balance = parseFloat(balanceStr.replace(/[^0-9.-]+/g,
-                        "")); // Convert to number
-
-                    // Calculate percentage
-                    var percentage = allocated > 0 ? ((balance / allocated) * 100).toFixed(2) :
-                        0;
-
-                    // Determine badge class based on percentage
-                    var badgeClass = 'badge-light-success'; // Default class
-                    if (percentage < 25) {
-                        badgeClass = 'badge-light-danger';
-                    } else if (percentage < 50) {
-                        badgeClass = 'badge-light-warning';
-                    } else if (percentage < 75) {
-                        badgeClass = 'badge-light-info';
+            columns: [{
+                    data: null,
+                    name: 'row_number',
+                    render: function(data, type, row, meta) {
+                        return meta.row + 1; // Display row number
                     }
+                },
+                {
+                    data: 'category',
+                    name: 'category',
+                    render: function(data) {
+                        return '<p class="allocated fs-6 text-gray-800 py-2">' + data + '</p>';
+                    }
+                },
+                {
+                    data: 'allocated',
+                    name: 'allocated',
+                    render: function(data) {
+                        return '<p class="allocated fs-6 fw-bold text-gray-800 me-5 ls-n1 text-end"> &#x20b9;' +
+                            data + '</p>';
+                    }
+                },
+                {
+                    data: 'sub_categories',
+                    name: 'sub_categories',
+                    render: function(data) {
+                        return Array.isArray(data) && data.length > 0 ?
+                            data.map(sub => '<p class="sub-cat-disp fs-7">' + sub.name + '</p>')
+                            .join(' ') : '<p class="sub-cat-disp fs-7">NIL</p>';
+                    }
+                },
+                {
+                    data: 'sub_categories',
+                    name: 'sub_expenses',
+                    render: function(data) {
+                        return Array.isArray(data) && data.length > 0 ?
+                            data.map(sub =>
+                                '<p class="sub-expense-disp fs-7 fw-bold ls-n1 text-end">&#x20b9;' +
+                                sub.expense + '</p>'
+                            ).join('') : '<p class="sub-cat-disp fs-7 text-end">NIL</p>';
+                    }
+                },
+                {
+                    data: 'total_expense',
+                    name: 'total_expense',
+                    render: function(data) {
+                        return '<p class="allocated fs-6 fw-bold text-gray-800 me-5 ls-n1  text-end"> &#x20b9;' +
+                            data + '</p>';
+                    }
+                },
+                {
+                    data: 'balance',
+                    name: 'balance',
+                    render: function(data, type, row) {
+                        // Convert allocated to a number by removing currency symbol and commas
+                        var allocatedStr = row.allocated; // Example: '10,000.00'
+                        var allocated = parseFloat(allocatedStr.replace(/[^0-9.-]+/g,
+                            "")); // Convert to number
 
-                    return '<p class="allocated fs-6 fw-bold text-gray-800 text-end  my-3"><span class=" me-5 lh-1 ls-n1 text-end "> &#x20b9;' +
-                        data + // Display original balance value
-                        '</span><br><span class="badge badge-sm ' + badgeClass +
-                        ' align-self-center fs-8 px-0 me-5">' +
-                        percentage + '%</span></p>';
+                        // Convert balance to a number similarly
+                        var balanceStr = data; // Assuming 'data' is in the same format
+                        var balance = parseFloat(balanceStr.replace(/[^0-9.-]+/g,
+                            "")); // Convert to number
+
+                        // Calculate percentage
+                        var percentage = allocated > 0 ? ((balance / allocated) * 100).toFixed(
+                                2) :
+                            0;
+
+                        // Determine badge class based on percentage
+                        var badgeClass = 'badge-light-success'; // Default class
+                        if (percentage < 25) {
+                            badgeClass = 'badge-light-danger';
+                        } else if (percentage < 50) {
+                            badgeClass = 'badge-light-warning';
+                        } else if (percentage < 75) {
+                            badgeClass = 'badge-light-info';
+                        }
+
+                        return '<p class="allocated fs-6 fw-bold text-gray-800 text-end  my-3"><span class=" me-5 lh-1 ls-n1 text-end "> &#x20b9;' +
+                            data + // Display original balance value
+                            '</span><br><span class="badge badge-sm ' + badgeClass +
+                            ' align-self-center fs-8 px-0 me-5">' +
+                            percentage + '%</span></p>';
+                    }
                 }
-            }
-        ],
-        order: [
-            [1, 'asc']
-        ], // Set initial order by the 'category' column
-        pageLength: 10, // Set default page length if needed
-        lengthChange: false, // Disable length menu
-        ordering: false,
-        searching: false // Disable the search box
-    });
+            ],
+            order: [
+                [1, 'asc']
+            ], // Set initial order by the 'category' column
+            pageLength: 10, // Set default page length if needed
+            lengthChange: false, // Disable length menu
+            ordering: false,
+            searching: false // Disable the search box
+        });
     }
 
     loadData(); // Initial load
@@ -294,39 +276,39 @@ document.addEventListener('DOMContentLoaded', function() {
 </script> -->
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Calculate the date one month before today
-        const today = new Date();
-        const oneMonthAgo = new Date();
-        oneMonthAgo.setMonth(today.getMonth() - 1);
+document.addEventListener('DOMContentLoaded', function() {
+    // Calculate the date one month before today
+    const today = new Date();
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(today.getMonth() - 1);
 
-        // Initialize flatpickr on start_date with default date as one month ago
-        flatpickr("#start_date", {
-            defaultDate: oneMonthAgo, // Sets the default date to one month ago
-            dateFormat: "d-m-Y",
-            placeholder: "Select date",
-            maxDate: today, // Ensures the start date cannot be after today
-            onChange: function(selectedDates) {
-                const endPicker = document.querySelector("#end_date")._flatpickr;
-                // Update the minimum date for end_date based on start_date selection
-                endPicker.set('minDate', selectedDates[0]);
-            }
-        });
-
-        // Initialize flatpickr on end_date with default date as today
-        flatpickr("#end_date", {
-            defaultDate: today, // Sets the default date to today
-            dateFormat: "d-m-Y",
-            placeholder: "Select date",
-            minDate: oneMonthAgo, // Ensures the end date cannot be before one month ago
-            maxDate: today, // Ensures the end date cannot be after today
-            onChange: function(selectedDates) {
-                const startPicker = document.querySelector("#start_date")._flatpickr;
-                // Update the maximum date for start_date based on end_date selection
-                startPicker.set('maxDate', selectedDates[0]);
-            }
-        });
+    // Initialize flatpickr on start_date with default date as one month ago
+    flatpickr("#start_date", {
+        defaultDate: oneMonthAgo, // Sets the default date to one month ago
+        dateFormat: "d-m-Y",
+        placeholder: "Select date",
+        maxDate: today, // Ensures the start date cannot be after today
+        onChange: function(selectedDates) {
+            const endPicker = document.querySelector("#end_date")._flatpickr;
+            // Update the minimum date for end_date based on start_date selection
+            endPicker.set('minDate', selectedDates[0]);
+        }
     });
+
+    // Initialize flatpickr on end_date with default date as today
+    flatpickr("#end_date", {
+        defaultDate: today, // Sets the default date to today
+        dateFormat: "d-m-Y",
+        placeholder: "Select date",
+        minDate: oneMonthAgo, // Ensures the end date cannot be before one month ago
+        maxDate: today, // Ensures the end date cannot be after today
+        onChange: function(selectedDates) {
+            const startPicker = document.querySelector("#start_date")._flatpickr;
+            // Update the maximum date for start_date based on end_date selection
+            startPicker.set('maxDate', selectedDates[0]);
+        }
+    });
+});
 </script>
 
 

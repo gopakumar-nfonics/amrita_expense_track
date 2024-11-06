@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Department as departments;
 use App\Models\Campus;
 use Illuminate\Validation\Rule;
+use App\Models\Stream;
 
 class department extends Controller
 {
@@ -150,5 +151,25 @@ class department extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function deleteDepartment(Request $request)
+    {
+
+        $department = departments::findOrFail($request->input('id'));
+
+        if (!$department) {
+        return response()->json(['error' => 'department not found.'], 404);
+        }
+
+        $streamCount = Stream::where('department_id', $department->id)->count();
+
+        if ($streamCount > 0) {
+            return response()->json(['error' => 'Cannot delete department associated with a programme.']);
+        }
+
+        $department->forceDelete(); 
+        return response()->json(['success' => 'The department has been deleted!']);
+        
     }
 }

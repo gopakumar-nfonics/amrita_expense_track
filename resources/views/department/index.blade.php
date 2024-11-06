@@ -105,7 +105,7 @@
 											<!--end::Menu item-->
 											<!--begin::Menu item-->
 											<div class="menu-item px-3">
-												<a href="javascript:void(0)" onclick="" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+												<a href="javascript:void(0)" onclick="removeDepartment('{{$department->id}}')" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
 											</div>
 											<!--end::Menu item-->
 										</div>
@@ -147,5 +147,54 @@
 	});
 </script>
 
+<script>
+	function removeDepartment(department_id) {
+		swal({
+				title: "Are you sure?",
+				text: "You want to remove this department",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+			.then((willDelete) => {
+				if (willDelete) {
+					$.ajax({
+						url: "{{ route('department.deleteDepartment') }}",
+						type: 'POST',
+						data: {
+							_token: '{{ csrf_token() }}',
+							id: department_id,
+						},
+						success: function(response) {
+							if (response.success) {
+								swal(response.success, {
+									icon: "success",
+									buttons: false,
+								});
+								setTimeout(() => {
+									location.reload();
+								}, 1000);
+							} else {
+								swal(response.error || 'Something went wrong.', {
+									icon: "warning",
+									buttons: false,
+								});
+								setTimeout(() => {
+									location.reload();
+								}, 1000);
+							}
+						},
+						error: function(xhr) {
+							swal('Error: Something went wrong.', {
+								icon: "error",
+							}).then(() => {
+								location.reload();
+							});
+						}
+					});
+				}
+			});
+	}
+</script>
 
 @endsection

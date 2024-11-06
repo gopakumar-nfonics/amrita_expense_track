@@ -195,12 +195,19 @@ class budget extends Controller
     public function deletebudget(Request $request)
     {
 
-        $budgets = Budgets::findOrFail($request->input('id'));
+        $budgets = Budgets::findOrFail($request->id);
+
         if (!$budgets) {
-        return response()->json(['error' => 'Budget not found.'], 404);
+            return response()->json(['error' => 'Budget not found.'], 404);
         }
-        $budgets->deleted_at = Carbon::parse(now())->format('Y-m-d H:i:s');
-        $budgets->save();
+
+        $paymentRequestCount = PaymentRequest::where('category_id', $budgets->category_id)->count();
+        
+        if ($paymentRequestCount > 0) {
+            return response()->json(['error' => 'Cannot delete budget associated with a payment request.']);
+        }
+
+        $budgets->forceDelete();
         return response()->json(['success' => 'The Budget has been deleted!']);
         
     }

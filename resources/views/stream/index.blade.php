@@ -109,7 +109,7 @@
 											<!--end::Menu item-->
 											<!--begin::Menu item-->
 											<div class="menu-item px-3">
-												<a href="" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+												<a href="javascript:void(0)" onclick="removeProgramme('{{$stream->id}}')" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
 											</div>
 											<!--end::Menu item-->
 										</div>
@@ -146,6 +146,56 @@
 			"ordering": false,
 		});
 	});
+</script>
+
+<script>
+	function removeProgramme(programme_id) {
+		swal({
+				title: "Are you sure?",
+				text: "You want to remove this programme",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+			.then((willDelete) => {
+				if (willDelete) {
+					$.ajax({
+						url: "{{ route('stream.deleteProgramme') }}",
+						type: 'POST',
+						data: {
+							_token: '{{ csrf_token() }}',
+							id: programme_id,
+						},
+						success: function(response) {
+							if (response.success) {
+								swal(response.success, {
+									icon: "success",
+									buttons: false,
+								});
+								setTimeout(() => {
+									location.reload();
+								}, 1000);
+							} else {
+								swal(response.error || 'Something went wrong.', {
+									icon: "warning",
+									buttons: false,
+								});
+								setTimeout(() => {
+									location.reload();
+								}, 1000);
+							}
+						},
+						error: function(xhr) {
+							swal('Error: Something went wrong.', {
+								icon: "error",
+							}).then(() => {
+								location.reload();
+							});
+						}
+					});
+				}
+			});
+	}
 </script>
 
 @endsection

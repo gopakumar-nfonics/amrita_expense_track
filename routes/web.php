@@ -97,6 +97,7 @@ Route::get('/lead/{id}/resubmit', [\App\Http\Controllers\resource\lead::class, '
 Route::get('getPrograms', [\App\Http\Controllers\resource\lead::class, 'getPrograms'])->name('getPrograms');
 Route::post('/campus/deleteCampus', [\App\Http\Controllers\resource\campus::class, 'deleteCampus'])->name('campus.deleteCampus');
 Route::post('/department/deleteDepartment', [\App\Http\Controllers\resource\department::class, 'deleteDepartment'])->name('department.deleteDepartment');
+Route::post('/stream/deleteProgramme', [\App\Http\Controllers\resource\stream::class, 'deleteProgramme'])->name('stream.deleteProgramme');
 
 Route::get('/support-center', function () {
     return view('support');

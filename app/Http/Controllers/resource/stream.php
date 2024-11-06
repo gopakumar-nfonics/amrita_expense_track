@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Stream as streams;
 use App\Models\Department;
 use App\Models\Campus;
+use App\Models\Proposal;
 
 class stream extends Controller
 {
@@ -131,5 +132,25 @@ class stream extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function deleteProgramme(Request $request)
+    {
+
+        $stream = streams::findOrFail($request->input('id'));
+
+        if (!$stream) {
+        return response()->json(['error' => 'programme not found.'], 404);
+        }
+
+        $proposalCount = Proposal::where('programme_id', $stream->id)->count();
+
+        if ($proposalCount > 0) {
+            return response()->json(['error' => 'Cannot delete programme associated with a proposal.']);
+        }
+
+        $stream->forceDelete(); 
+        return response()->json(['success' => 'The programme has been deleted!']);
+        
     }
 }

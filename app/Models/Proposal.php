@@ -22,6 +22,7 @@ class Proposal extends Model
         'proposal_total_cost',
         'proposal_status',
         'vendor_id',
+        'programme_id',
     ];
 
     public function paymentMilestones()

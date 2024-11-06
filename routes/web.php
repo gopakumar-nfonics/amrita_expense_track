@@ -95,7 +95,7 @@ Route::get('/exportprogrammedata', [App\Http\Controllers\ReportsController::clas
 Route::get('/lead/{id}/resubmit', [\App\Http\Controllers\resource\lead::class, 'edit'])->name('lead.resubmit');
 
 Route::get('getPrograms', [\App\Http\Controllers\resource\lead::class, 'getPrograms'])->name('getPrograms');
-
+Route::post('/campus/deleteCampus', [\App\Http\Controllers\resource\campus::class, 'deleteCampus'])->name('campus.deleteCampus');
 
 Route::get('/support-center', function () {
     return view('support');

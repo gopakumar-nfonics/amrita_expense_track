@@ -97,7 +97,7 @@
 											<!--end::Menu item-->
 											<!--begin::Menu item-->
 											<div class="menu-item px-3">
-												<a href="javascript:void(0)" onclick="" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+												<a href="javascript:void(0)" onclick="removecampus('{{$cmps->id}}')" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
 											</div>
 											<!--end::Menu item-->
 										</div>
@@ -137,6 +137,56 @@
 			"pagingType": "full_numbers"
 		});
 	});
+</script>
+
+<script>
+	function removecampus(campus_id) {
+		swal({
+				title: "Are you sure?",
+				text: "You want to remove this campus",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+			.then((willDelete) => {
+				if (willDelete) {
+					$.ajax({
+						url: "{{ route('campus.deleteCampus') }}",
+						type: 'POST',
+						data: {
+							_token: '{{ csrf_token() }}',
+							id: campus_id,
+						},
+						success: function(response) {
+							if (response.success) {
+								swal(response.success, {
+									icon: "success",
+									buttons: false,
+								});
+								setTimeout(() => {
+									location.reload();
+								}, 1000);
+							} else {
+								swal(response.error || 'Something went wrong.', {
+									icon: "warning",
+									buttons: false,
+								});
+								setTimeout(() => {
+									location.reload();
+								}, 1000);
+							}
+						},
+						error: function(xhr) {
+							swal('Error: Something went wrong.', {
+								icon: "error",
+							}).then(() => {
+								location.reload();
+							});
+						}
+					});
+				}
+			});
+	}
 </script>
 
 

@@ -121,6 +121,27 @@ class campus extends Controller
     {
         //
     }
+
+    public function deleteCampus(Request $request)
+    {
+
+        $campus = cmps::findOrFail($request->input('id'));
+
+        if (!$campus) {
+        return response()->json(['error' => 'campus not found.'], 404);
+        }
+
+        $departmentsCount = departments::where('campus_id', $campus->id)->count();
+
+        if ($departmentsCount > 0) {
+            return response()->json(['error' => 'Cannot delete campus associated with a department.']);
+        }
+
+        $campus->forceDelete(); 
+        return response()->json(['success' => 'The Campus has been deleted!']);
+        
+    }
+
     public function getdepartments($campusId)
     {
         // Fetch departments based on the campus ID

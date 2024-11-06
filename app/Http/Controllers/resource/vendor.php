@@ -220,6 +220,26 @@ class vendor extends Controller
         //
     }
 
+    public function deleteVendor(Request $request)
+    {
+
+        $vendor = vendors::findOrFail($request->input('id'));
+
+        if (!$vendor) {
+        return response()->json(['error' => 'vendor not found.'], 404);
+        }
+
+        $proposalCount = Proposal::where('vendor_id', $vendor->id)->count();
+
+        if ($proposalCount > 0) {
+            return response()->json(['error' => 'Cannot delete vendor associated with a proposal.']);
+        }
+
+        $vendor->forceDelete(); 
+        return response()->json(['success' => 'The vendor has been deleted!']);
+        
+    }
+
     public function approve(Request $request)
     {
 

@@ -49,7 +49,7 @@
 								<tr class="fw-bold">
 									<th class="w-50px">#</th>
 									<th class="min-w-200px">Category</th>
-									<th class="min-w-100px">Parent Category</th>
+									<th class="min-w-200px">Parent Category</th>
 									<th class="min-w-150px">Remarks</th>
 									<th class="min-w-150px text-center">Actions</th>
 								</tr>

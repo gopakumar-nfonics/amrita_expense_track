@@ -157,8 +157,7 @@ class user extends Controller
         if (!$user) {
         return response()->json(['error' => 'User not found.'], 404);
         }
-        $user->deleted_at = Carbon::parse(now())->format('Y-m-d H:i:s');
-        $user->save();
+        $user->forceDelete(); 
         return response()->json(['success' => 'The user has been deleted!']);
         
     }

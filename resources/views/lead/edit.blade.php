@@ -509,7 +509,6 @@
                 ['style', ['bold', 'italic', 'underline', 'clear']],
                 ['font', ['superscript', 'subscript']],
                 ['para', ['ul', 'ol']],
-                ['insert', ['link']],
             ]
         });
 

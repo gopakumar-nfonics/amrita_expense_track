@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 
 @section('content')
+<style>
+    table tr:first-child td:nth-child(5) button {
+    display: none;
+}
+</style>
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main" data-select2-id="select2-data-kt_app_main">
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid" data-select2-id="select2-data-122-9irx">
@@ -295,9 +300,10 @@
                                                                 data-kt-element="item">
                                                                 <td class="pe-7">
                                                                     <input type="text"
-                                                                        class="form-control form-control-solid mb-2"
+                                                                        class="form-control form-control-solid mb-2 @error('name.*') is-invalid @enderror"
                                                                         name="name[]" placeholder="Milestone Title">
-
+                                                                        @error('name.*')<div class="invalid-feedback milestone-error" >
+                                                                Milestone data is required</div> @enderror
                                                                 </td>
                                                                 <td>
                                                                     <input type="text"

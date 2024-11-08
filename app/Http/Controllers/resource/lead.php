@@ -75,7 +75,8 @@ class lead extends Controller
             'name.*' => 'required|string',
             'amount.*' => 'required|numeric',
             'gst.*' => 'required|numeric',
-            'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048', // Add file validation
+            'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+
 
         ]);
     

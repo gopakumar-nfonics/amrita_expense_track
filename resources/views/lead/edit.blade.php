@@ -399,7 +399,7 @@
                                                 <!--end::Order details-->
                                                 <div class="d-flex justify-content-end border-top mt-0 pt-5">
                                                     <!--begin::Button-->
-                                                    <a href="../../demo1/dist/apps/ecommerce/catalog/products.html"
+                                                    <a href="{{route('lead.index')}}"
                                                         id="kt_ecommerce_edit_order_cancel"
                                                         class="btn btn-light me-5">Cancel</a>
                                                     <!--end::Button-->

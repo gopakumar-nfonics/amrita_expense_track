@@ -334,7 +334,7 @@ select#programSelect {
                                             <input type="hidden" name="proposalid" id="proposalid" value="">
                                             <textarea name="reason" id="reason" class="form-control form-control-solid"
                                                 rows="5"></textarea>
-                                            <div class="fv-plugins-message-container invalid-feedback"></div>
+                                            <div class="fv-plugins-message-container invalid-feedback" id="reason-error"></div>
                                         </div>
                                         <!--end::Input group-->
 
@@ -444,13 +444,29 @@ function rejectpropposal(proid, status) {
 }
 
 $(document).ready(function() {
+
+    $('#reason').on('keyup', function() {
+        if ($(this).val().trim() !== '') {
+            $('#reason-error').text('');
+        }
+    });
+
     $('#rejectproposal-form').on('submit', function(e) {
         e.preventDefault(); // Prevent the default form submission
 
+        let reason = $('#reason').val();
+
+        // Check if reason is empty
+        if (!reason.trim()) {
+            $('#reason-error').text('Rejection reason required.'); 
+            return; 
+        } else {
+            $('#reason-error').text(''); 
+        }
 
         let formData = {
             _token: '{{ csrf_token() }}',
-            reason: $('#reason').val(),
+            reason: reason,
             proid: $('#proposalid').val(),
         };
 
@@ -461,8 +477,7 @@ $(document).ready(function() {
             type: "POST",
             data: formData,
             success: function(response) {
-                document.getElementById('loaderOverlay').style.display =
-                    'none';
+                document.getElementById('loaderOverlay').style.display = 'none';
                 if (response.success) {
                     swal('The Proposal has been rejected!', {
                         icon: "success",
@@ -471,10 +486,7 @@ $(document).ready(function() {
                     setTimeout(() => {
                         location.reload();
                     }, 1000);
-
                 } else {
-                    document.getElementById('loaderOverlay').style.display =
-                        'none';
                     swal('Failed to reject proposal', {
                         icon: "warning",
                         buttons: false,
@@ -482,23 +494,21 @@ $(document).ready(function() {
                     setTimeout(() => {
                         location.reload();
                     }, 1000);
-
                 }
             },
             error: function(xhr) {
                 swal('An error occurred. Please try again', {
-                    icon: "Error",
+                    icon: "error",
                     buttons: false,
                 });
                 setTimeout(() => {
                     location.reload();
                 }, 1000);
-
             }
         });
-
     });
 });
+
 
 function approve(proid, status) {
     if (status === 'approve') {

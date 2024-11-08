@@ -443,13 +443,13 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr) {
-                swal('An error occurred. Please try again', {
-                    icon: "Error",
+                swal('This UTR number already used.', {
+                    icon: "warning",
                     buttons: false,
                 });
                 setTimeout(() => {
                     location.reload();
-                }, 1000);
+                }, 2000);
 
             }
         });

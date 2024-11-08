@@ -99,6 +99,8 @@ Route::post('/campus/deleteCampus', [\App\Http\Controllers\resource\campus::clas
 Route::post('/department/deleteDepartment', [\App\Http\Controllers\resource\department::class, 'deleteDepartment'])->name('department.deleteDepartment');
 Route::post('/stream/deleteProgramme', [\App\Http\Controllers\resource\stream::class, 'deleteProgramme'])->name('stream.deleteProgramme');
 Route::post('/vendor/deleteVendor', [\App\Http\Controllers\resource\vendor::class, 'deleteVendor'])->name('vendor.deleteVendor');
+Route::get('/userprofile', [App\Http\Controllers\HomeController::class, 'userprofile'])->name('userprofile');
+Route::put('/userupdate', [App\Http\Controllers\HomeController::class, 'userupdate'])->name('userupdate');
 
 Route::get('/support-center', function () {
     return view('support');

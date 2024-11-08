@@ -158,7 +158,7 @@
                                         @if(Auth::user()->isvendor())
                                         <a href="{{ route('profile') }}" class="menu-link px-5">My Profile</a>
                                         @else
-                                        <a href="" class="menu-link px-5">My Profile</a>
+                                        <a href="{{ route('userprofile') }}" class="menu-link px-5">My Profile</a>
                                         @endif
                                     </div>
                                     <!--end::Menu item-->

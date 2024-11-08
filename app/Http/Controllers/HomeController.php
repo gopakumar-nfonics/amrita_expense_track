@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\VendorRegistration;
 use App\Mail\AdminVendorRegistration;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Campus;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -418,5 +419,39 @@ class HomeController extends Controller
         $amounwords = $numbersWords->toWords($number);
 
         return view('lead.release_order', compact('proposal', 'amounwords'));
+    }
+
+    public function userprofile()
+    {
+        $userId = Auth::user()->id;
+        $user = User::where('id', $userId)->first();
+        $campus=Campus::orderBy('campus_name')->get();
+
+        return view('userprofile',compact('user', 'campus'));
+    }
+
+    public function userupdate(Request $request){
+
+        $id = Auth::user()->id;
+
+        $request->validate([
+            'fname' => 'required|string|max:255',
+            'password' => 'nullable|string|min:8',
+        ]);
+        try{
+            $user = User::findOrFail($id);
+           $user->first_name = $request->fname;
+           if($request->has('lname')){
+               $user->last_name = $request->lname;
+           }
+           if($request->filled('password')){
+           $user->password = bcrypt($request->password);
+           }
+           $user->save();
+
+           return redirect()->route('dashboard')->with('success','User updated Successfully');
+       } catch (\Exception $e) {
+           return redirect()->back()->with('error', $e->getMessage());
+       }
     }
 }

@@ -17,6 +17,7 @@
 									<!--begin::Page title-->
 									<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 										<!--begin::Title-->
+										
 										<!--end::Title-->
 										<!--begin::Breadcrumb-->
 										<ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
@@ -41,7 +42,7 @@
 										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
 											<!--begin::Card title-->
 											<div class="card-title m-0">
-												<h3 class="fw-bold m-0">Edit User</h3>
+												<h3 class="fw-bold m-0">Update Profile</h3>
 											</div>
 											<!--end::Card title-->
 										</div>
@@ -49,7 +50,7 @@
 										<!--begin::Content-->
 										<div id="kt_account_settings_profile_details" class="collapse show">
 											<!--begin::Form-->
-											<form id="kt_account_profile_details_form" class="form" method="POST" action="{{route('user.update',$user->id)}}" enctype="multipart/form-data">
+											<form id="kt_account_profile_details_form" class="form" method="POST" action="{{route('userupdate')}}" enctype="multipart/form-data">
                                             @csrf
 											@method('PUT')
 												<!--begin::Card body-->
@@ -85,12 +86,12 @@
 													<div class="row mb-6">
 														<!--begin::Label-->
 														<label class="col-lg-4 col-form-label required fw-semibold fs-6">Email</label>
+                                                        <div class="col-lg-8 fv-row">
+                                                            <p class="form-control form-control-lg form-control-solid text-muted">{{ $user->email }}</p>
+                                                        </div>
 														<!--end::Label-->
 														<!--begin::Col-->
-														<div class="col-lg-8 fv-row">
-															<input type="text" name="email" class="form-control form-control-lg form-control-solid @error('email') is-invalid @enderror" placeholder="Email" value="{{ old('email', $user->email) }}" />
-														    @error('email')<div class="invalid-feedback">{{ $message }}</div> @enderror
-                                                        </div>
+														
 														<!--end::Col-->
 													</div>
 													<!--end::Input group-->
@@ -114,22 +115,7 @@
 													<!--end::Input group-->
 													
 													<!--begin::Input group-->
-													<div class="row mb-6">
-														<!--begin::Label-->
-														<label class="col-lg-4 col-form-label fw-semibold fs-6">
-															<span class="required">User Role</span></label>
-														<!--end::Label-->
-														<!--begin::Col-->
-														<div class="col-lg-8 fv-row">
-															<select name="role" aria-label="Select a Role" class="form-select form-select-solid form-select-lg fw-semibold @error('role') is-invalid @enderror">
-																<option value="">Select a Role</option>
-																<option value="Admin" @if(old('role',$user->role) == "Admin") selected @endif>Admin</option>
-                                                                <option value="Expense Manager" @if(old('role',$user->role) == "Expense Manager") selected @endif>Expense Manager</option>
-																</select>
-                                                                @error('role')<div class="invalid-feedback">{{ $message }}</div> @enderror
-														</div>
-														<!--end::Col-->
-													</div>
+													
 													<!--end::Input group-->
 													<!--begin::Input group-->
 													<div class="row mb-6">
@@ -139,14 +125,10 @@
 														<!--end::Label-->
 														<!--begin::Col-->
 														<div class="col-lg-8 fv-row">
-															<select name="campus" aria-label="Select a Campus" class="form-select form-select-solid form-select-lg fw-semibold @error('campus') is-invalid @enderror">
-																<option value="">Select a Campus</option>
-																@foreach ($campus as $cmp)
-																		<option value="{{$cmp->id}}" @if(old('campus',$user->campus_id) == $cmp->id) selected @endif>{{$cmp->campus_name}}</option>
-																		@endforeach
-																</select>
-                                                                @error('role')<div class="invalid-feedback">{{ $message }}</div> @enderror
-														</div>
+                                                            <p class="form-control form-control-lg form-control-solid text-muted">
+                                                                {{ $campus->firstWhere('id', $user->campus_id)->campus_name ?? 'N/A' }}
+                                                            </p>
+                                                        </div>
 														<!--end::Col-->
 													</div>
 													<!--end::Input group-->

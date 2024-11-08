@@ -49,13 +49,13 @@
                             <!--begin::Table head-->
                             <thead>
                                 <tr class="fw-bold">
-                                    <th class="w-50px">#</th>
+                                    <th class="min-w-30px">#</th>
                                     <th class="min-w-100px">Category</th>
                                     <th class="min-w-100px">Year</th>
                                     <th class="min-w-100px">Allocated</th>
                                     <th class="min-w-100px">Used</th>
                                     <th class="min-w-100px">Balance</th>
-                                    <th class="min-w-100px">Usage (%)</th>
+                                    <th class="min-w-75px">Usage (%)</th>
                                     <th class="min-w-150px text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -72,11 +72,11 @@
                                         </div>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <div class="symbol symbol-35px me-5">
+                                            <!-- <div class="symbol symbol-35px me-5">
                                                 <span class="symbol-label color-blue w-80px">
                                                     {{$budget->category->category_code}}</span>
 
-                                            </div>
+                                            </div> -->
                                             <div class="fw-400 d-block fs-6">
                                                 {{$budget->category->category_name}}
                                             </div>
@@ -93,9 +93,9 @@
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
                                                 <span
-                                                    class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
+                                                    class="fs-6 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
                                                 <span
-                                                    class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$budget['amount']}}</span>
+                                                    class="total-cost-span fs-6 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$budget['amount']}}</span>
                                             </div>
                                         </div>
                                     </td>
@@ -103,9 +103,9 @@
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
                                                 <span
-                                                    class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
+                                                    class="fs-6 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
                                                 <span
-                                                    class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$budget['used_amount']}}</span>
+                                                    class="total-cost-span fs-6 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$budget['used_amount']}}</span>
                                             </div>
                                         </div>
                                     </td>
@@ -118,9 +118,9 @@
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
                                                 <span
-                                                    class="fs-4 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
+                                                    class="fs-6 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span>
                                                 <span
-                                                    class="total-cost-span fs-4 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$remaining_budget}}</span>
+                                                    class="total-cost-span fs-6 fw-bold text-gray-800 me-2 lh-1 ls-n2">{{$remaining_budget}}</span>
                                             </div>
                                         </div>
                                     </td>

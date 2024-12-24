@@ -43,7 +43,7 @@ class stream extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:stream,stream_name',
+            'name' => 'required',
             'code' => 'required|unique:stream,stream_code',
             'campus' => 'required',
             'billingaddress' => 'required',
@@ -101,7 +101,7 @@ class stream extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|unique:stream,stream_name,'.$id,
+            'name' => 'required',
             'code' => 'required|unique:stream,stream_code,'.$id,
             'campus' => 'required',
             'billingaddress' => 'required',

@@ -72,11 +72,11 @@
                                         </div>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <!-- <div class="symbol symbol-35px me-5">
+                                            <div class="symbol symbol-35px me-5">
                                                 <span class="symbol-label color-blue w-80px">
                                                     {{$budget->category->category_code}}</span>
 
-                                            </div> -->
+                                            </div>
                                             <div class="fw-400 d-block fs-6">
                                                 {{$budget->category->category_name}}
                                             </div>

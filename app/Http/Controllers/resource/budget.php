@@ -211,4 +211,18 @@ class budget extends Controller
         return response()->json(['success' => 'The Budget has been deleted!']);
         
     }
+
+    public function getCategories($financialYearId)
+    {
+        $selectedCategoryIds = Budgets::where('financial_year_id', $financialYearId)->pluck('category_id');
+
+        $categories = Categories::whereNotIn('id', $selectedCategoryIds)
+        ->where('parent_category', null)
+        ->get(['id', 'category_name']);
+
+        return response()->json([
+            'success' => true,
+            'categories' => $categories,
+        ]);
+    }
 }

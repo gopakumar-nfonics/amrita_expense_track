@@ -105,3 +105,5 @@ Route::put('/userupdate', [App\Http\Controllers\HomeController::class, 'userupda
 Route::get('/support-center', function () {
     return view('support');
 })->name('support.center');
+
+Route::get('/getCategories/{financialYearId}', [\App\Http\Controllers\resource\budget::class, 'getCategories'])->name('getCategories');

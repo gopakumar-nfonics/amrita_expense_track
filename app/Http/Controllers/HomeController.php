@@ -16,6 +16,7 @@ use App\Mail\VendorRegistration;
 use App\Mail\AdminVendorRegistration;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Campus;
+use App\Models\Category;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -179,8 +180,10 @@ class HomeController extends Controller
 
             //print_r($categorybudgetused);exit();
 
+            $totalcatCount = Category::where('parent_category', NULL)->count();
 
-            return view('home', compact('budgettotalAmount', 'categoryWiseBudgets', 'vendors', 'PaidAmount', 'remainingBudget', 'usedPercentage', 'categorybudgetused'));
+
+            return view('home', compact('budgettotalAmount', 'categoryWiseBudgets', 'vendors', 'PaidAmount', 'remainingBudget', 'usedPercentage', 'categorybudgetused', 'totalcatCount'));
         }
     }
 

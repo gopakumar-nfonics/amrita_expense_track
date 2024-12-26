@@ -138,7 +138,7 @@
 
                                 <span class="badge badge-light-info  fs-7 count-info">
                                                    
-                                5 of 10 categories allocated
+                                {{count($categoryWiseBudgets)}} of {{$totalcatCount}} categories allocated
                                                     </span>
                                 </div>
                                 <!--end::Items-->
@@ -556,11 +556,7 @@
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
 
 <script>
-var usedPercentage = {
-    {
-        $usedPercentage
-    }
-};
+var usedPercentage = {{$usedPercentage}};
 var initMixedWidget4 = function() {
     var charts = document.querySelectorAll('.budgetused');
 

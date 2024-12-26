@@ -77,9 +77,9 @@
 									<div class="col-lg-8 fv-row">
 										<select class="form-control form-control-lg form-control-solid @error('category') is-invalid @enderror" id="category" name="category">
 											<option value="">--Select Category--</option>
-											@foreach($category as $cat)
+											<!-- @foreach($category as $cat)
 											<option value="{{ $cat->id }}" @if(old('category',$budget->category_id) == $cat->id) selected @endif>{{ $cat->category_name }}</option>
-											@endforeach
+											@endforeach -->
 										</select>
 										@error('category')<div class="invalid-feedback">{{ $message }}</div>@enderror
 									</div>
@@ -172,3 +172,32 @@
 	<!--end::Content wrapper-->
 
 	@endsection
+
+	@section('pageScripts')
+	<script>
+		document.getElementById('financialyear').addEventListener('change', function () {
+			const financialYearId = this.value;
+			const categorySelect = document.getElementById('category');
+
+			// Clear existing options
+			categorySelect.innerHTML = '<option value="">--Select Category--</option>';
+
+			if (financialYearId) {
+				// Make an AJAX request to fetch categories
+				fetch(`/getCategories/${financialYearId}`)
+					.then(response => response.json())
+					.then(data => {
+						if (data.success) {
+							data.categories.forEach(category => {
+								const option = document.createElement('option');
+								option.value = category.id;
+								option.textContent = category.category_name;
+								categorySelect.appendChild(option);
+							});
+						}
+					})
+					.catch(error => console.error('Error fetching categories:', error));
+			}
+		});
+	</script>
+@endsection

@@ -56,7 +56,7 @@
 									<!--end::Label-->
 									<!--begin::Col-->
 									<div class="col-lg-8 fv-row">
-										<select class="form-control form-control-lg form-control-solid @error('financialyear') is-invalid @enderror" id="financialyear" name="financialyear">
+										<select class="form-control form-control-lg form-control-solid @error('financialyear') is-invalid @enderror" id="financialyear" name="financialyear" disabled>
 											<option value="">--Select Year--</option>
 											@foreach($financialyears as $years)
 											<option value="{{ $years->id }}" @if(old('financialyear',$budget->financial_year_id) == $years->id) selected @endif>{{ $years->year }}</option>
@@ -75,11 +75,12 @@
 									<!--end::Label-->
 									<!--begin::Col-->
 									<div class="col-lg-8 fv-row">
-										<select class="form-control form-control-lg form-control-solid @error('category') is-invalid @enderror" id="category" name="category">
+										<select class="form-control form-control-lg form-control-solid @error('category') is-invalid @enderror" id="category" name="category" data-current-category-id="{{ $budget->category_id }}" disabled>
 											<option value="">--Select Category--</option>
-											<!-- @foreach($category as $cat)
+											
+											@foreach($category as $cat)
 											<option value="{{ $cat->id }}" @if(old('category',$budget->category_id) == $cat->id) selected @endif>{{ $cat->category_name }}</option>
-											@endforeach -->
+											@endforeach
 										</select>
 										@error('category')<div class="invalid-feedback">{{ $message }}</div>@enderror
 									</div>
@@ -172,32 +173,3 @@
 	<!--end::Content wrapper-->
 
 	@endsection
-
-	@section('pageScripts')
-	<script>
-		document.getElementById('financialyear').addEventListener('change', function () {
-			const financialYearId = this.value;
-			const categorySelect = document.getElementById('category');
-
-			// Clear existing options
-			categorySelect.innerHTML = '<option value="">--Select Category--</option>';
-
-			if (financialYearId) {
-				// Make an AJAX request to fetch categories
-				fetch(`/getCategories/${financialYearId}`)
-					.then(response => response.json())
-					.then(data => {
-						if (data.success) {
-							data.categories.forEach(category => {
-								const option = document.createElement('option');
-								option.value = category.id;
-								option.textContent = category.category_name;
-								categorySelect.appendChild(option);
-							});
-						}
-					})
-					.catch(error => console.error('Error fetching categories:', error));
-			}
-		});
-	</script>
-@endsection

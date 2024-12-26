@@ -44,6 +44,7 @@
                                     <!--begin::Heading-->
                                     <div class="d-flex flex-stack">
                                         <h3 class="m-0 text-white fw-bold fs-3">Allocation</h3>
+
                                         <div class="ms-1">
                                             <a type="button" title="View Report" href="{{route('catreport')}}"
                                                 class="btn btn-sm btn-icon btn-color-white btn-active-white btn-active-color-primary border-0 me-n3">
@@ -133,10 +134,18 @@
                                         </div>
                                         <!--end::Item-->
                                         @endforeach
+                                
+
+                                <span class="badge badge-light-info  fs-7 count-info">
+                                                   
+                                5 of 10 categories allocated
+                                                    </span>
                                 </div>
                                 <!--end::Items-->
+                                
                             </div>
                             <!--end::Body-->
+                            
                         </div>
                         <!--end::Mixed Widget 1-->
                     </div>
@@ -179,9 +188,10 @@
 
                                     @php
 
-                                    $budget_amount = $result['budget_amount'] ?? 0;
+                                    $budget_amount = $result[' budget_amount'] ?? 0;
                                         $total_milestone_amount=$result['total_milestone_amount'] ?? 0;
-                                        $catpaidPercentage=$budget_amount> 0 ? ($total_milestone_amount / $budget_amount)* 100 : 0;
+                                        $catpaidPercentage=$budget_amount> 0 ? ($total_milestone_amount /
+                                        $budget_amount)* 100 : 0;
                                         if (floor($catpaidPercentage) == $catpaidPercentage) {
                                         $catpaidPercentage = number_format_indian($catpaidPercentage, 0);
                                         } else {
@@ -546,7 +556,11 @@
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
 
 <script>
-var usedPercentage = {{$usedPercentage}};
+var usedPercentage = {
+    {
+        $usedPercentage
+    }
+};
 var initMixedWidget4 = function() {
     var charts = document.querySelectorAll('.budgetused');
 

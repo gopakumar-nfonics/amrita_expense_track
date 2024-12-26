@@ -778,6 +778,14 @@ font-size: 23px !important;
     padding: 0px !important;
 }
 
+.count-info
+{
+    position:absolute;
+    bottom: 17px;
+    right: 17px;
+    z-index: 9;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -814,3 +822,4 @@ font-size: 23px !important;
       max-width: 100%; /* Stack the tiles on top of each other */
     }
   }
+

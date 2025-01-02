@@ -151,7 +151,7 @@
     </table>
 
 
-    <table style="width:100%;margin:0px auto;">
+    <table style="width:100%;margin:0px auto; margin-bottom:10px;">
         <tr>
             <td style="padding-top:10px;">From</td>
         </tr>
@@ -255,7 +255,7 @@
 
 
 
-    <div class="certificate-footer" style="padding-top:10px;">
+    <div class="certificate-footer">
         <table style="width:100%">
             <tr>
 

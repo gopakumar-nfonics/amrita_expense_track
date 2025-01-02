@@ -256,7 +256,7 @@
 
 
     <div class="certificate-footer">
-        <table style="width:100%; margin-top:10px;">
+        <table style="width:100%">
             <tr>
 
                 <td style="padding-top:10px;">Approved By </td>

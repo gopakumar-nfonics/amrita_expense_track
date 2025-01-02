@@ -70,7 +70,7 @@
 .ro-no {
     font-weight: 600 !important;
     color: #333;
-    padding-top: 20px;
+    padding-top: 10px;
     font-size: 15px;
 }
 
@@ -136,8 +136,7 @@
 
         <tr>
             <td style="width:30%;text-align:left;padding: 0px;">
-                <p class="ro-no"> <span>Request#:
-                        {{$invoice->paymentRequests->payment_request_id}}</span></p>
+                <p class="ro-no"> &nbsp;</p>
             </td>
             <td style="width:40%;text-align:center;padding: 0px;"></td>
             <td style="width:30%;text-align:right;padding: 0px;">
@@ -259,16 +258,21 @@
     <div class="certificate-footer">
         <table style="width:100%">
             <tr>
-                <td>Prepared By : <b>Anagha</b> </td>
-                <td style="text-align:right; padding-right:90px">Approved By </td>
-            </tr>
-            <!-- <tr>
-                <td></td>
 
-            </tr> -->
+                <td style="padding-top:10px;">Approved By </td>
+            </tr>
+            <tr>
+                <td> <img alt="Logo" src="{{ public_path('assets/media/logos/a4-avv-no-sign-pr.jpg') }}"
+                        class="header-logo"></td>
+
+            </tr>
+            <tr>
+                <td style="padding-top:50px;">Prepared By : <b>Anagha</b> </td>
+
+            </tr>
         </table>
 
-        <img alt="Logo" src="{{ public_path('assets/media/logos/a4-avv-no-sign-pr.jpg') }}" class="header-logo">
+
         <img alt="Logo" src="{{ public_path('assets/media/logos/a4-avv-footer-logo.jpg') }}" class="header-logo">
 
     </div>

@@ -259,7 +259,7 @@
         <table style="width:100%">
             <tr>
 
-                <td style="padding-top:10px;">Approved By </td>
+                <td style="padding-top:15px;">Approved By </td>
             </tr>
             <tr>
                 <td> <img alt="Logo" src="{{ public_path('assets/media/logos/a4-avv-no-sign-pr.jpg') }}"

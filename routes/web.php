@@ -107,3 +107,5 @@ Route::get('/support-center', function () {
 })->name('support.center');
 
 Route::get('/getCategories/{financialYearId}', [\App\Http\Controllers\resource\budget::class, 'getCategories'])->name('getCategories');
+
+Route::get('getNextRoNumber', [\App\Http\Controllers\resource\lead::class, 'getNextRoNumber'])->name('getNextRoNumber');

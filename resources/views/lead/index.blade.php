@@ -531,10 +531,10 @@ function approve(proid, status) {
 
         var inputField = document.createElement('input');
         inputField.type = 'text';
-        inputField.name = 'cat_name';
+        inputField.name = 'ro_number';
         inputField.className = 'form-control form-control-lg ';
         inputField.placeholder = 'RO. Number';
-        inputField.value = 'AVV-0125-RO-003';
+        inputField.value = '';
 
         // Append the label and input field to the container
         inputContainer.appendChild(inputLabel);
@@ -587,6 +587,7 @@ function approve(proid, status) {
             .then((willApprove) => {
                 if (willApprove) {
                     var selectedProgram = selectBox.value;
+                    var ro_number = inputField.value;
                     if (selectedProgram === "") {
                         errorSpan.style.display = 'block';
                         return;
@@ -601,7 +602,8 @@ function approve(proid, status) {
                             _token: '{{ csrf_token() }}',
                             id: proid,
                             status: status,
-                            program: selectedProgram
+                            program: selectedProgram,
+                            ro_number: ro_number
                         },
                         beforeSend: function() {
                             $('.swal-modal').css('opacity', 0);
@@ -670,6 +672,18 @@ function approve(proid, status) {
                 swal('Error fetching programs.', {
                     icon: "error",
                 });
+            }
+        });
+
+        $.ajax({
+            url: "{{ route('getNextRoNumber') }}", // Define this route in your backend
+            type: 'GET',
+            success: function(data) {
+                inputField.value = data.next_ro; // Set the RO number
+            },
+            error: function(xhr) {
+                console.error('Error fetching RO number:', xhr);
+                
             }
         });
     } else {

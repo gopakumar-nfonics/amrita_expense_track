@@ -352,6 +352,19 @@ class lead extends Controller
         
         else{
 
+            $validatedData = $request->validate([
+                'ro_number' => 'required|string|max:255'
+            ]);
+
+            $existingRo = ProposalRo::where('proposal_ro', $validatedData['ro_number'])->exists();
+
+            if ($existingRo) {
+                return response()->json([
+                    'success' => false,
+                    'error' => 'The provided RO number is already in use.',
+                ]);
+            }
+
         $currentDate = new \DateTime();
         $currentMonth = $currentDate->format('m'); 
         $currentYear = $currentDate->format('y');
@@ -366,7 +379,7 @@ class lead extends Controller
         $proposal->programme_id = $selprogramme;
         $proposal->save();
 
-        $financialYear = $this->getShortFinancialYear();
+       /* $financialYear = $this->getShortFinancialYear();
             $prefix = 'AVV-'.$currentMonth.$currentYear.'-RO-';
     // Retrieve the highest existing code
     $latestCode = ProposalRo::where('proposal_ro', 'like', $prefix . '%')
@@ -380,12 +393,12 @@ class lead extends Controller
     }
 
     $nextNumber = str_pad($latestNumber + 1, 3, '0', STR_PAD_LEFT); // Adjust to 3 digits
-    $proposal_ro  = $prefix . $nextNumber;
+    $proposal_ro  = $prefix . $nextNumber;*/
 
 
             $proposalro = new ProposalRo();
             $proposalro->proposal_id    = $request->input('id');
-            $proposalro->proposal_ro = $proposal_ro;
+            $proposalro->proposal_ro = $request->input('ro_number');
             $proposalro->save();
 
 
@@ -522,6 +535,32 @@ class lead extends Controller
 
     return response()->json($programs);
 }
+
+public function getNextRoNumber()
+{
+    $financialYear = $this->getShortFinancialYear();
+    $currentDate = new \DateTime();
+        $currentMonth = $currentDate->format('m'); 
+        $currentYear = $currentDate->format('y');
+    $prefix = 'AVV-' . $currentMonth . $currentYear . '-RO-';
+
+    // Retrieve the highest existing code
+    $latestCode = ProposalRo::where('proposal_ro', 'like', $prefix . '%')
+        ->orderByRaw('CAST(SUBSTRING(proposal_ro, LENGTH(?) + 1) AS UNSIGNED) DESC', [$prefix])
+        ->pluck('proposal_ro')
+        ->first();
+
+    $latestNumber = 0;
+    if ($latestCode) {
+        $latestNumber = (int)substr($latestCode, strlen($prefix));
+    }
+
+    $nextNumber = str_pad($latestNumber + 1, 3, '0', STR_PAD_LEFT);
+    $nextRo = $prefix . $nextNumber;
+
+    return response()->json(['next_ro' => $nextRo]);
+}
+
 
     
 }

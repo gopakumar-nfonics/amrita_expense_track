@@ -334,7 +334,8 @@ select#programSelect {
                                             <input type="hidden" name="proposalid" id="proposalid" value="">
                                             <textarea name="reason" id="reason" class="form-control form-control-solid"
                                                 rows="5"></textarea>
-                                            <div class="fv-plugins-message-container invalid-feedback" id="reason-error"></div>
+                                            <div class="fv-plugins-message-container invalid-feedback"
+                                                id="reason-error"></div>
                                         </div>
                                         <!--end::Input group-->
 
@@ -458,10 +459,10 @@ $(document).ready(function() {
 
         // Check if reason is empty
         if (!reason.trim()) {
-            $('#reason-error').text('Rejection reason required.'); 
-            return; 
+            $('#reason-error').text('Rejection reason required.');
+            return;
         } else {
-            $('#reason-error').text(''); 
+            $('#reason-error').text('');
         }
 
         let formData = {
@@ -518,9 +519,36 @@ function approve(proid, status) {
 
         // Create custom select dropdown
         var content = document.createElement('div');
+
+        // Add the RO# input field and label
+        var inputContainer = document.createElement('div');
+        inputContainer.className = 'col-lg-12 fv-row d-flex mt-10';
+
+        var inputLabel = document.createElement('label');
+        inputLabel.className = 'col-form-label required fw-semibold fs-6 w-175px';
+        inputLabel.textContent = 'RO. Number : ';
+        inputLabel.style.textAlign = 'left'; // Align label content to the left
+
+        var inputField = document.createElement('input');
+        inputField.type = 'text';
+        inputField.name = 'cat_name';
+        inputField.className = 'form-control form-control-lg ';
+        inputField.placeholder = 'RO. Number';
+        inputField.value = 'AVV-0125-RO-003';
+
+        // Append the label and input field to the container
+        inputContainer.appendChild(inputLabel);
+        inputContainer.appendChild(inputField);
+
+        // Add the inputContainer to the content
+        content.appendChild(inputContainer);
+
+
+
+        // Create custom select dropdown
         var selectBox = document.createElement('select');
         selectBox.id = 'programSelect';
-        selectBox.className = 'form-control form-control-lg form-control-solid';
+        selectBox.className = 'form-control form-control-lg';
         selectBox.innerHTML = `<option value="">-- Select Programme --</option>`;
         content.appendChild(selectBox);
 

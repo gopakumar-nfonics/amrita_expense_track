@@ -277,9 +277,36 @@ function approve(proid, status) {
 
         // Create custom select dropdown
         var content = document.createElement('div');
+
+        // Add the RO# input field and label
+        var inputContainer = document.createElement('div');
+        inputContainer.className = 'col-lg-12 fv-row d-flex mt-10';
+
+        var inputLabel = document.createElement('label');
+        inputLabel.className = 'col-form-label required fw-semibold fs-6 w-175px';
+        inputLabel.textContent = 'RO. Number : ';
+        inputLabel.style.textAlign = 'left'; // Align label content to the left
+
+        var inputField = document.createElement('input');
+        inputField.type = 'text';
+        inputField.name = 'ro_number';
+        inputField.className = 'form-control form-control-lg ';
+        inputField.placeholder = 'RO. Number';
+        inputField.value = '';
+
+        // Append the label and input field to the container
+        inputContainer.appendChild(inputLabel);
+        inputContainer.appendChild(inputField);
+
+        // Add the inputContainer to the content
+        content.appendChild(inputContainer);
+
+
+
+        // Create custom select dropdown
         var selectBox = document.createElement('select');
         selectBox.id = 'programSelect';
-        selectBox.className = 'form-control form-control-lg form-control-solid';
+        selectBox.className = 'form-control form-control-lg';
         selectBox.innerHTML = `<option value="">-- Select Programme --</option>`;
         content.appendChild(selectBox);
 
@@ -318,6 +345,7 @@ function approve(proid, status) {
             .then((willApprove) => {
                 if (willApprove) {
                     var selectedProgram = selectBox.value;
+                    var ro_number = inputField.value;
                     if (selectedProgram === "") {
                         errorSpan.style.display = 'block';
                         return;
@@ -332,7 +360,8 @@ function approve(proid, status) {
                             _token: '{{ csrf_token() }}',
                             id: proid,
                             status: status,
-                            program: selectedProgram
+                            program: selectedProgram,
+                            ro_number: ro_number
                         },
                         beforeSend: function() {
                             $('.swal-modal').css('opacity', 0);
@@ -347,8 +376,8 @@ function approve(proid, status) {
                                     buttons: false,
                                 });
                                 setTimeout(() => {
+                                    //location.reload();
                                     window.location.href = '/lead';
-
                                 }, 1000);
                             } else {
                                 swal(response.error || 'Something went wrong.', {
@@ -404,7 +433,19 @@ function approve(proid, status) {
                 });
             }
         });
-    
+
+        $.ajax({
+            url: "{{ route('getNextRoNumber') }}", // Define this route in your backend
+            type: 'GET',
+            success: function(data) {
+                inputField.value = data.next_ro; // Set the RO number
+            },
+            error: function(xhr) {
+                console.error('Error fetching RO number:', xhr);
+                
+            }
+        });
+   
 }
 </script>
 

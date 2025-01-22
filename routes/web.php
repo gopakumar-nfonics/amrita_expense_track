@@ -20,6 +20,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::middleware(['auth'])->group(function () {
+
 Route::get('/home', function(){
     if ( Auth::user()->isAdmin() ) {
         return redirect(route('dashboard'));
@@ -34,20 +36,32 @@ Route::get('/home', function(){
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
+Route::group(['middleware' => 'checkRole'], function () {
 Route::resource('user',\App\Http\Controllers\resource\user::class);
+});
 Route::post('/user/deleteUser', [\App\Http\Controllers\resource\user::class, 'deleteUser'])->name('user.deleteUser');
+Route::group(['middleware' => 'checkRole'], function () {
 Route::resource('stream',\App\Http\Controllers\resource\stream::class);
 Route::resource('company',\App\Http\Controllers\resource\company::class);
 Route::resource('vendor',\App\Http\Controllers\resource\vendor::class);
+});
 Route::post('/vendor/approve', [\App\Http\Controllers\resource\vendor::class, 'approve'])->name('vendor.approve');
+Route::group(['middleware' => 'checkRole'], function () {
 Route::resource('category',\App\Http\Controllers\resource\category::class);
+});
 Route::post('/category/deletecat', [\App\Http\Controllers\resource\category::class, 'deletecat'])->name('category.deletecat');
+Route::group(['middleware' => 'checkRole'], function () {
 Route::resource('budget',\App\Http\Controllers\resource\budget::class);
+});
 Route::post('/budget/deletebudget', [\App\Http\Controllers\resource\budget::class, 'deletebudget'])->name('budget.deletebudget');
+Route::group(['middleware' => 'checkRole'], function () {
 Route::resource('payment',\App\Http\Controllers\resource\payment::class);
+});
 Route::get('/payment/{id}/updatepayment', [\App\Http\Controllers\resource\payment::class, 'updatepayment'])->name('payment.updatepayment');
+Route::group(['middleware' => 'checkRole'], function () {
 Route::resource('department',\App\Http\Controllers\resource\department::class);
 Route::resource('campus',\App\Http\Controllers\resource\campus::class);
+});
 Route::get('campus/getdepartments/{campusId}', [\App\Http\Controllers\resource\campus::class, 'getdepartments'])->name('campus.getdepartments');
 Route::resource('lead',\App\Http\Controllers\resource\lead::class);
 Route::post('/lead/approve', [\App\Http\Controllers\resource\lead::class, 'approve'])->name('lead.approve');
@@ -66,8 +80,6 @@ Route::get('/payment/create/{id?}', [\App\Http\Controllers\resource\payment::cla
 
 Route::get('/email', [App\Http\Controllers\HomeController::class, 'email'])->name('email');
 
-use App\Http\Controllers\ProposalController;
-
 Route::get('/lead/{id}/save-pdf', [\App\Http\Controllers\resource\lead::class, 'saveReleaseOrderAsPdf'])->name('lead.save-pdf');
 
 Route::get('/get-budget-details', [\App\Http\Controllers\resource\payment::class, 'getBudgetDetails']);
@@ -78,7 +90,7 @@ Route::post('/update-payment-status', [\App\Http\Controllers\resource\payment::c
 
 Route::post('/lead/reject', [\App\Http\Controllers\resource\lead::class, 'reject'])->name('lead.reject');
 
-
+Route::group(['middleware' => 'checkRole'], function () {
 Route::get('/catreport', [App\Http\Controllers\ReportsController::class, 'index'])->name('catreport');
 Route::post('/reportdata', [App\Http\Controllers\ReportsController::class, 'reportdata'])->name('reports.reportdata');
 Route::get('/vendorreport', [App\Http\Controllers\ReportsController::class, 'vendorreport'])->name('vendorreport');
@@ -86,12 +98,13 @@ Route::post('/vendordata', [App\Http\Controllers\ReportsController::class, 'vend
 
 Route::get('/programmereport', [App\Http\Controllers\ReportsController::class, 'programmereport'])->name('programmereport');
 Route::post('/programmedata', [App\Http\Controllers\ReportsController::class, 'programmedata'])->name('reports.programmedata');
-
+});
 Route::get('lead/rejectionreason/{proposal_id}', [\App\Http\Controllers\resource\lead::class, 'rejectionReason']);
+Route::group(['middleware' => 'checkRole'], function () {
 Route::get('/export-budget-report', [App\Http\Controllers\ReportsController::class, 'exportBudgetReport'])->name('reports.exportcatreport');
 Route::get('/export-vendor-report', [App\Http\Controllers\ReportsController::class, 'vendordataexport'])->name('reports.vendordataexport');
 Route::get('/exportprogrammedata', [App\Http\Controllers\ReportsController::class, 'exportprogrammedata'])->name('reports.programmedataexport');
-
+});
 Route::get('/lead/{id}/resubmit', [\App\Http\Controllers\resource\lead::class, 'edit'])->name('lead.resubmit');
 
 Route::get('getPrograms', [\App\Http\Controllers\resource\lead::class, 'getPrograms'])->name('getPrograms');
@@ -109,3 +122,5 @@ Route::get('/support-center', function () {
 Route::get('/getCategories/{financialYearId}', [\App\Http\Controllers\resource\budget::class, 'getCategories'])->name('getCategories');
 
 Route::get('getNextRoNumber', [\App\Http\Controllers\resource\lead::class, 'getNextRoNumber'])->name('getNextRoNumber');
+
+});

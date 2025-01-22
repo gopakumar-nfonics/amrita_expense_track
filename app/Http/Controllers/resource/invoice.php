@@ -15,6 +15,8 @@ use App\Mail\AdminInvoiceSubmit;
 use App\Mail\VendorInvoiceSubmit;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
+
 
 class invoice extends Controller
 {
@@ -143,6 +145,7 @@ class invoice extends Controller
      */
     public function show($id)
     {
+        $id = Crypt::decrypt($id);
         $invoice = Invoices::with(['proposal','milestone','vendor.banckaccount','vendor.states', 'proposalro'])->where('id', $id)->first();
         $number = $invoice->milestone->milestone_total_amount;
        $numbersWords = new Numbers_Words();

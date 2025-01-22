@@ -131,7 +131,7 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
-                                                <a href="{{ route('invoice.show',$request->invoice->id) }}"
+                                                <a href="{{ route('invoice.show',encrypt($request->invoice->id)) }}"
                                                     class="text-dark text-hover-primary fs-6 fw-bold ">
                                                     {{$request->invoice->invoice_id}} |
                                                     {{$request->invoice->milestone->milestone_title}}
@@ -153,7 +153,7 @@
                                         </div>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
-                                                <a href="{{ route('lead.show',$request->invoice->proposal->id) }}"
+                                                <a href="{{ route('lead.show',encrypt($request->invoice->proposal->id)) }}"
                                                     class="text-dark fw-bold text-muted text-hover-primary fs-8">
                                                     {{$request->invoice->proposal->proposal_title}}</a>
 

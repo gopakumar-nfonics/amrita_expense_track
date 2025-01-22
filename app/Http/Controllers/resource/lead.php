@@ -22,6 +22,7 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class lead extends Controller
 {
@@ -180,6 +181,7 @@ class lead extends Controller
      */
     public function show($id)
     {
+        $id = Crypt::decrypt($id);
         $proposal = Proposal::with(['paymentMilestones', 'vendor.states'])->find($id);
 
        
@@ -200,9 +202,21 @@ class lead extends Controller
     public function edit($id)
     {
         $proposal = Proposal::with(['paymentMilestones'])->find($id);
-        if(($proposal->proposal_status == 0 || $proposal->proposal_status == 2)){
+        /*if(($proposal->proposal_status == 0 || $proposal->proposal_status == 2)){
         return view('lead.edit', compact('proposal'));
+        }*/
+
+        $vendor = Vendor::where('id', $proposal->vendor_id)->first();
+
+        if (
+            (Auth::user()->isAdmin() || $vendor->user_id == Auth::user()->id) &&
+            ($proposal->proposal_status == 0 || $proposal->proposal_status == 2)
+        ) {
+            return view('lead.edit', compact('proposal'));
         }
+    
+        // Deny access if the conditions are not met
+        return redirect()->back()->with('error', 'You do not have permission to edit this proposal.');
     }
 
     /**

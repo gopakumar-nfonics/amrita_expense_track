@@ -120,7 +120,7 @@
                                         <div class="d-flex align-items-center">
 
                                             <div class="d-flex justify-content-start flex-column">
-                                                <a href="{{ route('invoice.show',$inv->id) }}"
+                                                <a href="{{ route('invoice.show',encrypt($inv->id)) }}"
                                                     class="text-dark fw-bold text-hover-primary fs-6">{{$inv->milestone->milestone_title}}
                                                 </a>
                                                 <span
@@ -199,7 +199,7 @@
 
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="{{ route('invoice.show',$inv->id) }}"
+                                                <a href="{{ route('invoice.show',encrypt($inv->id)) }}"
                                                     class="menu-link px-3">View </a>
                                             </div>
                                             <!--end::Menu item-->

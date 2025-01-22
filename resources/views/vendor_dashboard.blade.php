@@ -242,7 +242,7 @@
                                                     </div>
 
                                                     <div class="d-flex justify-content-start flex-column">
-                                                        <a href="{{ route('lead.show',$pro->id) }}"
+                                                        <a href="{{ route('lead.show',encrypt($pro->id)) }}"
                                                             class="text-dark fw-bold text-hover-primary fs-6">{{$pro->proposal_title}}</a>
                                                         <div class="text-gray-400 fw-semibold fs-9 my-1">
                                                             @if($pro->proposal_status == 0)

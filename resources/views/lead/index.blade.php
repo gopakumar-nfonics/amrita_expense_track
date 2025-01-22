@@ -135,7 +135,7 @@ select#programSelect {
                                         <div class="d-flex align-items-center">
 
                                             <div class="d-flex justify-content-start flex-column">
-                                                <a href="{{ route('lead.show',$pro->id) }}"
+                                                <a href="{{ route('lead.show', encrypt($pro->id)) }}"
                                                     class="text-dark fw-bold text-hover-primary fs-6  txt-capitalcase">{{$pro->proposal_title}}</a>
                                                 <span
                                                     class="d-flex justify-content-start text-muted fw-semibold text-muted d-block fs-8">Submitted
@@ -220,7 +220,7 @@ select#programSelect {
 
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="{{ route('lead.show',$pro->id) }}" class="menu-link px-3">View
+                                                <a href="{{ route('lead.show', encrypt($pro->id)) }}" class="menu-link px-3">View
                                                 </a>
                                             </div>
                                             <!--end::Menu item-->

@@ -123,4 +123,6 @@ Route::get('/getCategories/{financialYearId}', [\App\Http\Controllers\resource\b
 
 Route::get('getNextRoNumber', [\App\Http\Controllers\resource\lead::class, 'getNextRoNumber'])->name('getNextRoNumber');
 
+Route::get('/get-payment-details', [\App\Http\Controllers\resource\payment::class, 'getPaymentDetails'])->name('getPaymentDetails');
+
 });

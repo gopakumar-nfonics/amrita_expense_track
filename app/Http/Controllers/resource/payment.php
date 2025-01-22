@@ -19,6 +19,7 @@ use App\Mail\InvoicePaymentInitiation;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class payment extends Controller
 {
@@ -361,4 +362,26 @@ class payment extends Controller
 
         return response()->json(['error' => 'Payment request not found.']);
     }
+
+    public function getPaymentDetails(Request $request)
+{
+    $reqid = $request->input('reqid');
+    
+    // Fetch the payment details (modify according to your database structure)
+    $payment = PaymentRequest::where('id', $reqid)->first();
+
+    if ($payment) {
+
+        $utr_number = $payment->utr_number ?? null;
+        $transaction_date = $payment->transaction_date ?? \Carbon\Carbon::now()->format('Y-m-d');
+        
+        return response()->json([
+            'utr_number' => $utr_number,
+            'transaction_date' => $transaction_date,
+        ]);
+    }
+
+    return response()->json(['error' => 'Payment details not found'], 404);
+}
+
 }

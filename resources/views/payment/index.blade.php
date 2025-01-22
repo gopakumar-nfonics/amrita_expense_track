@@ -222,7 +222,7 @@
 
                                             <!--begin::Menu item-->
 
-                                            @if(!Auth::user()->isvendor() && $request->payment_status == "initiated")
+                                            @if(!Auth::user()->isvendor() && ($request->payment_status == "initiated" || $request->payment_status == "completed"))
                                             <div class="menu-item px-3">
                                                 <a href="#" onclick="updatepaymentstatus('{{$request->id}}');"
                                                     class="menu-link px-3">Update Payment Status</a>
@@ -370,92 +370,139 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
 
-    $('#budgettable').DataTable({
-        "iDisplayLength": 10,
-        "searching": true,
-        "ordering": false
+        $('#budgettable').DataTable({
+            "iDisplayLength": 10,
+            "searching": true,
+            "ordering": false
+        });
     });
-});
 </script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    flatpickr("#transactiondate", {
-        defaultDate: new Date(), // Sets the default date to the current date
-        dateFormat: "d-m-Y", // Use a standard format for backend compatibility
-        placeholder: "Select date" // Placeholder text
+    document.addEventListener('DOMContentLoaded', function() {
+        flatpickr("#transactiondate", {
+            defaultDate: new Date(), // Sets the default date to the current date
+            dateFormat: "d-m-Y", // Use a standard format for backend compatibility
+            placeholder: "Select date" // Placeholder text
+        });
     });
-});
 </script>
 
 <script>
-function updatepaymentstatus(rid) {
+    /*function updatepaymentstatus(rid) {
 
     $('#kt_modal_new_card').modal('show');
     $('#reqid').val(rid);
-}
-$(document).ready(function() {
-    $('#update_pay_status').on('submit', function(e) {
-        e.preventDefault();
-
-        let dateInput = $('#transactiondate')
-            .val(); // Assuming the date is in DD-MM-YYYY
-        let formattedDate = dateInput.split("-").reverse().join(
-            "-"); // Convert to YYYY-MM-DD
-
-        let formData = {
-            _token: '{{ csrf_token() }}',
-            utrnumber: $('#utrnumber').val(),
-            transactiondate: formattedDate,
-            reqid: $('#reqid').val(),
-        };
-
-        document.getElementById('loaderOverlay').style.display = 'flex';
+}*/
+    function updatepaymentstatus(rid) {
 
         $.ajax({
-            url: "{{ route('update.payment.status') }}",
-            type: "POST",
-            data: formData,
+            url: "{{ route('getPaymentDetails') }}",
+            type: "GET",
+            data: {
+                reqid: rid
+            },
             success: function(response) {
-                document.getElementById('loaderOverlay').style.display =
-                    'none';
-                if (response.success) {
-                    swal('Payment status updated successfully!', {
-                        icon: "success",
-                        buttons: false,
-                    });
-                    setTimeout(() => {
-                        location.reload();
-                    }, 1000);
+                $('#reqid').val(rid);
 
-                } else {
+              if(response.utr_number != null){
+                let utrNumber = response.utr_number;
+
+                if (utrNumber.startsWith('P2')) {
+                    utrNumber = utrNumber.replace(/^P2/, ''); // Remove 'P2' from the beginning
+                }
+
+
+                $('#utrnumber').val(utrNumber);
+            }else{
+                $('#utrnumber').val('');
+            }
+
+                let transactionDate = response.transaction_date;
+
+                // Format the date to day-month-year (dd-mm-yyyy)
+                let dateParts = transactionDate.split('-'); // Assuming input format is dd-mm-yyyy
+                if (dateParts.length === 3) {
+                    // If the date is in dd-mm-yyyy format, no change needed, but let's ensure it's consistent
+                    let formattedDate = dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
+                    $('#transactiondate').val(formattedDate); // Update the date input field
+                }
+
+
+               // $('#transactiondate').val(response.transaction_date);
+
+
+                $('#kt_modal_new_card').modal('show');
+            },
+            error: function(xhr) {
+                console.error("Error fetching payment details:", xhr);
+                alert("Failed to fetch payment details. Please try again.");
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        $('#update_pay_status').on('submit', function(e) {
+            e.preventDefault();
+
+            let dateInput = $('#transactiondate')
+                .val(); // Assuming the date is in DD-MM-YYYY
+            let formattedDate = dateInput.split("-").reverse().join(
+                "-"); // Convert to YYYY-MM-DD
+
+            let formData = {
+                _token: '{{ csrf_token() }}',
+                utrnumber: $('#utrnumber').val(),
+                transactiondate: formattedDate,
+                reqid: $('#reqid').val(),
+            };
+
+            document.getElementById('loaderOverlay').style.display = 'flex';
+
+            $.ajax({
+                url: "{{ route('update.payment.status') }}",
+                type: "POST",
+                data: formData,
+                success: function(response) {
                     document.getElementById('loaderOverlay').style.display =
                         'none';
-                    swal('Failed to update payment status', {
+                    if (response.success) {
+                        swal('Payment status updated successfully!', {
+                            icon: "success",
+                            buttons: false,
+                        });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+
+                    } else {
+                        document.getElementById('loaderOverlay').style.display =
+                            'none';
+                        swal('Failed to update payment status', {
+                            icon: "warning",
+                            buttons: false,
+                        });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+
+                    }
+                },
+                error: function(xhr) {
+                    swal('This UTR number already used.', {
                         icon: "warning",
                         buttons: false,
                     });
                     setTimeout(() => {
                         location.reload();
-                    }, 1000);
+                    }, 2000);
 
                 }
-            },
-            error: function(xhr) {
-                swal('This UTR number already used.', {
-                    icon: "warning",
-                    buttons: false,
-                });
-                setTimeout(() => {
-                    location.reload();
-                }, 2000);
+            });
 
-            }
         });
-
     });
-});
 </script>
 
 

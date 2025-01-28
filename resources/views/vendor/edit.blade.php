@@ -30,7 +30,7 @@
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<!--begin::Title-->
 					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-						Update Profile | {{ $vendor['email']}}</h1>
+						Edit Vendor | {{ $vendor['email']}}</h1>
 					<!--end::Title-->
 					<!--begin::Breadcrumb-->
 					<!--<ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">

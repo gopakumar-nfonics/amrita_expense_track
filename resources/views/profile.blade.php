@@ -80,7 +80,7 @@
                                      <div class="d-flex flex-column flex-md-row gap-5">
                                          <div class="flex-row-fluid">
                                              <!--begin::Label-->
-                                             <label class="required form-label">Name</label>
+                                             <label class="required form-label">Business Name</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
                                              <input type="text" name="name"

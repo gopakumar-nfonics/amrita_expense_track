@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Vendor as vendors;
 use App\Models\Company;
 use App\Models\Proposal;
+use App\Models\User;
+use App\Models\State;
 use App\Mail\VendorVerified;
 use App\Models\VendorBankAccount;
 use Illuminate\Support\Facades\Mail;
@@ -163,9 +165,19 @@ class vendor extends Controller
      */
     public function edit($id)
     {
-        $vendor=vendors::find($id);
-        $companies=Company::orderBy('company_name')->get();
-        return view('vendor.edit', compact('vendor','companies'));
+        $vendor = vendors::where('id', $id)->first();
+        $user = User::where('id', $vendor->user_id)->first();
+        $account_details = VendorBankAccount::where('vendor_id', $vendor->id)->first();
+        if (isset($vendor->company_id)) {
+            $company = Company::where('id', $vendor->company_id)->first();
+
+            // Ensure $companies is an array
+            $companies = $company ? $company->toArray() : [];
+        } else {
+            $companies = [];
+        }
+        $states = State::all();
+        return view('vendor.edit', compact('user', 'vendor', 'companies', 'states', 'account_details'));
     }
 
     /**
@@ -177,36 +189,88 @@ class vendor extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Validate the request data
         $request->validate([
-            'name' => 'required',
-            'code' => 'required|unique:vendor,vendor_code,'.$id,
-            'email' => 'required|string|email',
-            'phone' => 'required|max:15',
-            'company'=> 'required',
-            'address' => 'required',
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string|max:255',
+            'postcode' => 'required|string|max:10',
+            'city' => 'required|string|max:255',
+            'state' => 'required|string|max:255',
+            'gst' => 'nullable|string|max:15',
+            'pan' => 'nullable|string|max:10',
+            'address_2' => 'nullable|string|max:255',
+            'beneficiary_name' => 'required|string|max:255',
+            'account_no' => 'required|string|max:20',
+            'ifsc_code' => 'required|string|max:11',
+            'bank_name' => 'required|string|max:255',
+            'branch_name' => 'required|string|max:255',
+            'cn_person' => 'required|string|max:255',
+
         ]);
-    
-            try {
-                $vendor = vendors::findOrFail($id);
-                $vendor->vendor_name = $request->name;
-                $vendor->vendor_code = $request->code;
-                $vendor->email = $request->email;
-                $vendor->phone = $request->phone;
-                $vendor->company_id  = $request->company;
-                if ($request->has('gst')) {
-                    $vendor->gst = $request->gst;
-                }
-                if ($request->has('pan')) {
-                    $vendor->pan = $request->pan;
-                }
-                $vendor->address = $request->address;
-                $vendor->save();
-        
-                return redirect()->route('vendor.index')->with('success', 'Vendor Updated Successfully');
-            } catch (\Exception $e) {
-                // Log the exception message
-                return redirect()->back()->with('error', $e->getMessage());
+
+        try {
+            // Find the vendor
+            $vendor = Vendors::findOrFail($request->vid);
+
+            // Check if the vendor already has a company
+            if ($vendor->company) {
+                // Update the existing company's name
+                $vendor->company->company_name = $request->company;
+                $vendor->company->save();
+            } else {
+                // Create a new company if none exists
+                $company = new Company();
+                $company->company_name = $request->company;
+                $company->save();
+
+                $vendor->company_id = $company->id;
             }
+
+            // Update vendor details
+            $vendor->vendor_name = $request->name;
+            $vendor->phone = $request->phone;
+            $vendor->contact_person = $request->cn_person;
+            $vendor->gst = $request->gst ?? $vendor->gst;
+            $vendor->pan = $request->pan ?? $vendor->pan;
+            $vendor->address = $request->address;
+            $vendor->address_2 = $request->address_2 ?? $vendor->address_2;
+            $vendor->city = $request->city;
+            $vendor->postcode = $request->postcode;
+            $vendor->state = $request->state;
+            if ($vendor->vendor_status != 'verified') {
+                $vendor->vendor_status = 'profile updated';
+            }
+
+            $vendor->save();
+
+            $vendorBankAccount = VendorBankAccount::where('vendor_id', $request->vid)->firstOrFail();
+            $vendorBankAccount->beneficiary_name = $request->beneficiary_name;
+            $vendorBankAccount->account_no = $request->account_no;
+            $vendorBankAccount->ifsc_code = $request->ifsc_code;
+            $vendorBankAccount->bank_name = $request->bank_name;
+            $vendorBankAccount->branch_name = $request->branch_name;
+            $vendorBankAccount->vendor_id = $vendor->id; // If you need to associate it with a vendor
+            $vendorBankAccount->save();
+
+
+            $userId = $vendor->user_id;
+            $user = User::where('id', $userId)->first();
+
+            $user->first_name = $request->name;
+
+            $user->save();
+
+
+
+            return redirect()->route('vendor.index')->with('success', 'Vendor details Updated Successfully');
+        } catch (\Exception $e) {
+            // Log the exception
+            print_r($e->getMessage());
+            exit();
+            \Log::error('Vendor update failed: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred while updating the vendor.');
+        }
     }
 
     /**

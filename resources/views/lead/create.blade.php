@@ -3,8 +3,8 @@
 @section('content')
 <style>
     table tr:first-child td:nth-child(5) button {
-    display: none;
-}
+        display: none;
+    }
 </style>
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main" data-select2-id="select2-data-kt_app_main">
     <!--begin::Content wrapper-->
@@ -57,9 +57,9 @@
                         <div class="card">
                             <!--begin::Card body-->
                             <div class="card-body p-12">
-                            <div class="overlay" id="loaderOverlay">
-                             <div class="loader"></div>
-                         </div>
+                                <div class="overlay" id="loaderOverlay">
+                                    <div class="loader"></div>
+                                </div>
                                 <!--begin::Form-->
                                 <form id="kt_invoice_form" method="POST" action="{{route('lead.store')}}"
                                     enctype="multipart/form-data">
@@ -152,7 +152,8 @@
                                                             <textarea id="summernote" name="description"
                                                                 class="form-control mb-2 @error('description') is-invalid @enderror"></textarea>
                                                             @error('description')<div class="invalid-feedback">
-                                                                {{ $message }}</div> @enderror
+                                                                {{ $message }}
+                                                            </div> @enderror
                                                             <!--end::Editor-->
 
 
@@ -188,7 +189,8 @@
                                                                 value="{{ old('order_cost') }}"
                                                                 oninput="calculateTotalCost()" />
                                                             @error('order_cost')<div class="invalid-feedback">
-                                                                {{ $message }}</div> @enderror
+                                                                {{ $message }}
+                                                            </div> @enderror
                                                             <!--end::Editor-->
 
 
@@ -206,7 +208,8 @@
                                                                 value="{{ old('order_gst') }}"
                                                                 oninput="calculateTotalCost()" />
                                                             @error('order_gst')<div class="invalid-feedback">
-                                                                {{ $message }}</div> @enderror
+                                                                {{ $message }}
+                                                            </div> @enderror
                                                             <!--end::Editor-->
                                                         </div>
                                                         <!--end::Input group-->
@@ -231,7 +234,8 @@
                                                                     class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2 border-0 w-100 disabled-input @error('total_cost') is-invalid @enderror"
                                                                     value="{{ old('total_cost') }}" readonly />
                                                                 @error('total_cost')<div class="invalid-feedback">
-                                                                    {{ $message }}</div> @enderror
+                                                                    {{ $message }}
+                                                                </div> @enderror
                                                                 <!--end::Editor-->
                                                                 <!--end::Value-->
 
@@ -242,26 +246,26 @@
                                                         <!--begin::Input group-->
                                                         <div class="fv-row pt-0">
                                                             <div class="text-center">
-                                                                <label for="file-upload"
-                                                                    class="btn btn-sm btn-info w-100 mt-5 mb-1">
-                                                                    <!--begin::Svg Icon | path: icons/duotune/files/fil018.svg-->
+                                                                <label for="file-upload" class="btn btn-sm btn-info w-100 mt-5 mb-1">
                                                                     <span class="svg-icon svg-icon-2">
                                                                         <i class="fa-solid fa-upload"></i>
                                                                     </span>
-                                                                    <!--end::Svg Icon-->Upload File
-                                                                    <input type="file" id="file-upload" name="file"
-                                                                        class="d-none @error('file') is-invalid @enderror"
-                                                                        onchange="updateFileName()" />
+                                                                    Upload File
                                                                 </label>
+                                                                <input type="file" id="file-upload" name="file"
+                                                                    class="d-none @error('file') is-invalid @enderror"
+                                                                    onchange="updateFileName()" />
+
+                                                                <!-- Display Validation Error Message Below Input -->
+                                                                @error('file')
+                                                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                                                @enderror
                                                             </div>
 
-                                                            <!-- Display the selected file name here -->
-                                                            <div class="text-muted fs-7 w-200px" id="file-name">Upload
-                                                                reference document.</div>
-                                                            @error('file')<div class="invalid-feedback">
-                                                                {{ $message }}</div> @enderror
-                                                            <!--end::Description-->
+                                                            <!-- Display Selected File Name -->
+                                                            <div class="text-muted fs-7 w-200px" id="file-name">Upload reference document.</div>
                                                         </div>
+
 
                                                         <!--end::Input group-->
                                                     </div>
@@ -302,8 +306,8 @@
                                                                     <input type="text"
                                                                         class="form-control form-control-solid mb-2 @error('name.*') is-invalid @enderror"
                                                                         name="name[]" placeholder="Milestone Title">
-                                                                        @error('name.*')<div class="invalid-feedback milestone-error" >
-                                                                Milestone data is required</div> @enderror
+                                                                    @error('name.*')<div class="invalid-feedback milestone-error">
+                                                                        Milestone data is required</div> @enderror
                                                                 </td>
                                                                 <td>
                                                                     <input type="text"
@@ -459,7 +463,7 @@
 <!--end::Global Stylesheets Bundle-->
 
 <script>
-var hostUrl = "{{ asset('assets/') }}";
+    var hostUrl = "{{ asset('assets/') }}";
 </script>
 
 <!--begin::Global Javascript Bundle(mandatory for all pages)-->
@@ -485,80 +489,80 @@ var hostUrl = "{{ asset('assets/') }}";
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-$(document).ready(function() {
-    $('#summernote').summernote({
-        height: 125, // Set the editor height
-        placeholder: 'Add service description...',
-        tabsize: 2,
-        toolbar: [
-            // [groupName, [list of buttons]]
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['superscript', 'subscript']],
-            ['para', ['ul', 'ol']],
-        ]
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            height: 125, // Set the editor height
+            placeholder: 'Add service description...',
+            tabsize: 2,
+            toolbar: [
+                // [groupName, [list of buttons]]
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['superscript', 'subscript']],
+                ['para', ['ul', 'ol']],
+            ]
+        });
+
     });
 
-});
 
 
 
+    function calculateTotalCost() {
+        const costInput = document.getElementById('order_cost');
+        const gstInput = document.getElementById('order_gst');
+        const totalCostInput = document.getElementById('total_cost');
 
-function calculateTotalCost() {
-    const costInput = document.getElementById('order_cost');
-    const gstInput = document.getElementById('order_gst');
-    const totalCostInput = document.getElementById('total_cost');
+        // Get values from the input fields
+        const cost = parseFloat(costInput.value) || 0;
+        const gstPercentage = parseFloat(gstInput.value) || 0;
 
-    // Get values from the input fields
-    const cost = parseFloat(costInput.value) || 0;
-    const gstPercentage = parseFloat(gstInput.value) || 0;
-
-    // Calculate the total cost
-    const totalCost = cost + (cost * gstPercentage) / 100;
+        // Calculate the total cost
+        const totalCost = cost + (cost * gstPercentage) / 100;
 
 
-    // Update the total cost field
-    totalCostInput.value = totalCost.toFixed(2); // Set the value with two decimal places
+        // Update the total cost field
+        totalCostInput.value = totalCost.toFixed(2); // Set the value with two decimal places
 
-    setCurrencyFormatting('#total_cost');
-}
+        setCurrencyFormatting('#total_cost');
+    }
 </script>
 <script>
-function updateFileName() {
-    var input = document.getElementById('file-upload');
-    var fileName = input.files.length > 0 ? input.files[0].name : 'Upload reference document.';
-    document.getElementById('file-name').textContent = fileName;
-}
+    function updateFileName() {
+        var input = document.getElementById('file-upload');
+        var fileName = input.files.length > 0 ? input.files[0].name : 'Upload reference document.';
+        document.getElementById('file-name').textContent = fileName;
+    }
 </script>
 <script>
-document.getElementById('kt_invoice_form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
+    document.getElementById('kt_invoice_form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
 
-    // Show the SweetAlert confirmation dialog
-    swal({
-        title: "Are you sure?",
-        text: "Do you really want to submit this Proposal?",
-        icon: "warning",
-        buttons: {
-            cancel: {
-                text: "Cancel",
-                value: null,
-                visible: true,
-                closeModal: true,
+        // Show the SweetAlert confirmation dialog
+        swal({
+            title: "Are you sure?",
+            text: "Do you really want to submit this Proposal?",
+            icon: "warning",
+            buttons: {
+                cancel: {
+                    text: "Cancel",
+                    value: null,
+                    visible: true,
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "Submit",
+                    value: true,
+                    visible: true,
+                    closeModal: true
+                }
             },
-            confirm: {
-                text: "Submit",
-                value: true,
-                visible: true,
-                closeModal: true
+            dangerMode: true,
+        }).then((willSubmit) => {
+            if (willSubmit) {
+                document.getElementById('loaderOverlay').style.display = 'flex';
+                this.submit();
             }
-        },
-        dangerMode: true,
-    }).then((willSubmit) => {
-        if (willSubmit) {
-            document.getElementById('loaderOverlay').style.display = 'flex';
-            this.submit(); 
-        }
+        });
     });
-});
 </script>
 @endsection

@@ -232,7 +232,7 @@ class HomeController extends Controller
             $vendor = Vendor::findOrFail($request->vid);
 
             // Check if the vendor already has a company
-            if ($vendor->company) {
+           /* if ($vendor->company) {
                 // Update the existing company's name
                 $vendor->company->company_name = $request->company;
                 $vendor->company->save();
@@ -243,7 +243,30 @@ class HomeController extends Controller
                 $company->save();
 
                 $vendor->company_id = $company->id;
+            }*/
+
+            if ($request->company) {
+                // If a company name is provided, update or create a company
+                if ($vendor->company) {
+                    $vendor->company->company_name = $request->company;
+                    $vendor->company->save();
+                } else {
+                    $company = new Company();
+                    $company->company_name = $request->company;
+                    $company->save();
+            
+                    $vendor->company_id = $company->id;
+                    $vendor->save(); // Save the vendor with the new company_id
+                }
+            } else {
+                // If no company name is provided, delete the existing company (if any)
+                if ($vendor->company) {
+                    $vendor->company->forceDelete();
+                    $vendor->company_id = null;
+                    $vendor->save(); // Save the vendor with null company_id
+                }
             }
+            
 
             // Update vendor details
             $vendor->vendor_name = $request->name;
@@ -349,7 +372,7 @@ class HomeController extends Controller
             $vendor = Vendor::findOrFail($request->vid);
 
             // Check if the vendor already has a company
-            if ($vendor->company) {
+            /*if ($vendor->company) {
                 // Update the existing company's name
                 $vendor->company->company_name = $request->company;
                 $vendor->company->save();
@@ -360,7 +383,30 @@ class HomeController extends Controller
                 $company->save();
 
                 $vendor->company_id = $company->id;
+            }*/
+
+            if ($request->company) {
+                // If a company name is provided, update or create a company
+                if ($vendor->company) {
+                    $vendor->company->company_name = $request->company;
+                    $vendor->company->save();
+                } else {
+                    $company = new Company();
+                    $company->company_name = $request->company;
+                    $company->save();
+            
+                    $vendor->company_id = $company->id;
+                    $vendor->save(); // Save the vendor with the new company_id
+                }
+            } else {
+                // If no company name is provided, delete the existing company (if any)
+                if ($vendor->company) {
+                    $vendor->company->forceDelete();
+                    $vendor->company_id = null;
+                    $vendor->save(); // Save the vendor with null company_id
+                }
             }
+            
 
             // Update vendor details
             $vendor->vendor_name = $request->name;

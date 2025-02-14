@@ -236,7 +236,7 @@
                                                                 <input id="total_cost" name="total_cost"
                                                                     placeholder="0.00"
                                                                     class="fs-2hx fw-bold text-gray-800 me-2 lh-1 ls-n2 border-0 w-100 disabled-input @error('total_cost') is-invalid @enderror"
-                                                                    value="{{ old('total_cost', $proposal->proposal_total_cost) }}" readonly />
+                                                                    value="{{ old('total_cost', number_format_indian($proposal->proposal_total_cost)) }}" readonly />
                                                                 @error('total_cost')<div class="invalid-feedback">
                                                                     {{ $message }}
                                                                 </div> @enderror

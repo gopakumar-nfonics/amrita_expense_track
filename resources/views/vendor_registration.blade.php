@@ -85,7 +85,7 @@
                                      <div class="d-flex flex-column flex-md-row gap-5">
                                          <div class="flex-row-fluid">
                                              <!--begin::Label-->
-                                             <label class="required form-label">Business Name</label>
+                                             <label class="required form-label">Company name</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
                                              <input type="text" name="name"
@@ -99,7 +99,7 @@
 
                                          <div class="flex-row-fluid">
                                              <!--begin::Label-->
-                                             <label class="required form-label">Organisation</label>
+                                             <label class="form-label">Parent Company (Optional)</label>
                                              <!--end::Label-->
                                              <!--begin::Input-->
                                              <input type="text" name="company"

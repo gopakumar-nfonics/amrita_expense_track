@@ -31,7 +31,7 @@ var KTAppInvoicesCreate = (function () {
       //gstElement.value = gstRate.toFixed(2);
 
       // Calculate and display the total for this item
-      totalElement.innerText = numberFormat.to(totalAmount);
+      totalElement.innerText = formatCurrency(totalAmount);
 
       // Debugging line to check values
       console.log(`Item total for ${itemElement.dataset.item}: ${totalAmount}`);
@@ -42,7 +42,7 @@ var KTAppInvoicesCreate = (function () {
 
     // Update subtotal and grand total
     var subTotalElement = invoiceFormElement.querySelector('[data-kt-element="sub-total"]');
-    subTotalElement.innerText = numberFormat.to(subTotal);
+    subTotalElement.innerText = formatCurrency(subTotal);
 
     // Check if subTotal exceeds total_cost
     var totalCostElement = invoiceFormElement.querySelector('#total_cost');
@@ -153,6 +153,18 @@ var KTAppInvoicesCreate = (function () {
     
     // Debugging line to check the value being processed
     console.log(`Input value for ${input.name}: ${input.value}`);
+  };
+
+  function formatCurrency(value) {
+    const amount = parseFloat(value);
+    if (isNaN(amount)) {
+      return ''; // If invalid number, return empty string
+    }
+    return new Intl.NumberFormat('en-IN', { 
+        style: 'decimal',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    }).format(amount);
   };
 
   return {

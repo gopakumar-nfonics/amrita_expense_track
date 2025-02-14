@@ -96,7 +96,7 @@
                                                         <span class="svg-icon svg-icon-5 svg-icon-success ms-n1">
                                                             <i class="fa-solid fa-check light-green fs-8 me-1 "></i>
                                                         </span>
-                                                        <!--end::Svg Icon-->Payment Processed
+                                                        <!--end::Svg Icon-->Payment completed
                                                     </span>
                                                     @if($inv->paymentRequests)
                                                     <div>

@@ -248,7 +248,7 @@ select#programSelect {
                                                     class="menu-link px-3">Resubmit</a>
                                             </div>
                                             @endif
-                                            @if(Auth::user()->isvendor() && ($pro->proposal_status ==0 ))
+                                            @if(Auth::user()->isvendor())
                                             <div class="menu-item px-3">
                                                 <a href="{{ route('lead.edit',$pro->id) }}"
                                                     class="menu-link px-3">Edit</a>

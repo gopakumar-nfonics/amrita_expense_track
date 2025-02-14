@@ -290,7 +290,7 @@
 
                                                 <!--begin::Table-->
                                                 <div class="min-h-300px me-10 ">
-                                                    <label class="form-label color-blue">Payment Milestones</label>
+                                                    <label class="form-label color-blue">Payment Schedule</label>
                                                     <div class="text-muted fs-7 border-bottom">Mention the
                                                         specific points where payments are made, typically aligned with
                                                         the completion of key deliverables or phases.</div>
@@ -300,7 +300,7 @@
                                                         <thead>
                                                             <tr
                                                                 class="border-bottom fs-7 fw-bold text-gray-700 text-uppercase">
-                                                                <th class="min-w-200px w-275px">Milestone</th>
+                                                                <th class="min-w-200px w-275px">Payment Schedule</th>
                                                                 <th class="min-w-200px w-200px">Amount</th>
                                                                 <th class="min-w-100px w-100px">GST (%) </th>
                                                                 <th class="min-w-200px w-200px text-end">Total</th>
@@ -316,7 +316,7 @@
                                                                 <td class="pe-7">
                                                                     <input type="text"
                                                                         class="form-control form-control-solid mb-2"
-                                                                        name="name[]" placeholder="Milestone Title" value="{{ old('name', $milestone->milestone_title) }}">
+                                                                        name="name[]" placeholder="Schedule Title" value="{{ old('name', $milestone->milestone_title) }}">
 
                                                                 </td>
                                                                 <td>
@@ -368,8 +368,7 @@
                                                                 <th class="text-primary">
                                                                     <button
                                                                         class="btn btn-sm btn-success w-150px mt-0 mb-1"
-                                                                        data-kt-element="add-item">Add
-                                                                        Milestone</button>
+                                                                        data-kt-element="add-item">Add Schedule</button>
                                                                 </th>
                                                                 <th colspan="4"
                                                                     class="border-bottom border-bottom-dashed ps-0">

@@ -280,15 +280,12 @@
                                                             </span>
                                                             @endif
                                                         </div>
-                                                        <span
-                                                            class="text-muted fw-semibold text-muted d-block fs-8">Submitted
-                                                            on
-                                                            {{ \Carbon\Carbon::parse($pro->created_at)->format('d-M-Y') }}
-                                                            | No.
+                                                        
+                                                            <span
+                                                            class="text-muted fw-semibold text-muted d-block fs-8">No.
                                                             of
-                                                            Milestones
+                                                            Payment Schedules
                                                             : {{$total_milestone_count}}</span>
-
 
 
 

@@ -92,11 +92,11 @@
 
 
                                                             <!--begin::Label-->
-                                                            <label class="required form-label">Milestone</label>
+                                                            <label class="required form-label">Payment Schedule</label>
                                                             <select
                                                                 class="form-control form-control-lg  @error('milestone') is-invalid @enderror"
                                                                 id="milestone" name="milestone">
-                                                                <option value="">--Select Milestone--</option>
+                                                                <option value="">--Select Schedule--</option>
 
 
                                                             </select>
@@ -398,7 +398,7 @@ $(document).ready(function() {
                     // Clear the milestone dropdown
                     $('#milestone').empty();
                     $('#milestone').append(
-                        '<option value="">--Select Milestone--</option>');
+                        '<option value="">--Select Schedule--</option>');
 
                     // Populate the milestone dropdown with options
                     $.each(data.milestones, function(key, value) {

@@ -170,7 +170,7 @@ select#programSelect {
                                             <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
                                                 <thead>
                                                     <tr class="border-bottom fs-6 fw-bold text-muted">
-                                                        <th class="min-w-175px pb-2">Milestone</th>
+                                                        <th class="min-w-175px pb-2">Payment Schedule</th>
                                                         <!--<th class="min-w-70px text-start pb-2">Date</th>-->
                                                         <th class="min-w-70px text-end pb-2">Amount</th>
                                                         <th class="min-w-80px text-end pb-2">GST(%)</th>

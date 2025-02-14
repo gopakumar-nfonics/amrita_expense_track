@@ -159,7 +159,7 @@
                                                                         <thead>
                                                                             <tr
                                                                                 class="border-bottom fs-6 fw-bold text-muted">
-                                                                                <th class="min-w-175px pb-2">Milestone
+                                                                                <th class="min-w-175px pb-2">Payment Schedule
                                                                                 </th>
                                                                                 <th class="min-w-70px text-end pb-2">
                                                                                     Cost</th>

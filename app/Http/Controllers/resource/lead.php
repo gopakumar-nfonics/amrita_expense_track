@@ -214,8 +214,9 @@ class lead extends Controller
         $vendor = Vendor::where('id', $proposal->vendor_id)->first();
 
         if (
-            (Auth::user()->isAdmin() || $vendor->user_id == Auth::user()->id) &&
-            ($proposal->proposal_status == 0 || $proposal->proposal_status == 2)
+            (Auth::user()->isAdmin() || $vendor->user_id == Auth::user()->id)
+            /* &&
+            ($proposal->proposal_status == 0 || $proposal->proposal_status == 2)*/
         ) {
             return view('lead.edit', compact('proposal'));
         }

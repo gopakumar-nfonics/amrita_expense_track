@@ -282,8 +282,7 @@ class lead extends Controller
     
             $proposal->save();
             
-            //PaymentMilestone::where('proposal_id', $proposal->id)->delete();
-
+          
             $existingMilestoneIds = PaymentMilestone::where('proposal_id', $proposal->id)->pluck('id')->toArray();
             $requestMilestoneIds = $request->input('milestone_id', []);
 
@@ -313,7 +312,6 @@ class lead extends Controller
             }
         
             // Insert data into the database
-            // PaymentMilestone::insert($milestones);
 
             $toDelete = array_diff($existingMilestoneIds, $processedIds);
             PaymentMilestone::whereIn('id', $toDelete)->delete();

@@ -314,6 +314,7 @@
                                                             <tr class="border-bottom border-bottom-dashed"
                                                                 data-kt-element="item">
                                                                 <td class="pe-7">
+                                                                    <input type="hidden" id="milestone_id" name="milestone_id[]" value="{{$milestone->id}}">
                                                                     <input type="text"
                                                                         class="form-control form-control-solid mb-2"
                                                                         name="name[]" placeholder="Schedule Title" value="{{ old('name', $milestone->milestone_title) }}">

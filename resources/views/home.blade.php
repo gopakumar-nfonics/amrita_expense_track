@@ -189,7 +189,7 @@
 
                                     @php
 
-                                    $budget_amount = $result[' budget_amount'] ?? 0;
+                                    $budget_amount = $result['budget_amount'] ?? 0;
                                         $total_milestone_amount=$result['total_milestone_amount'] ?? 0;
                                         $catpaidPercentage=$budget_amount> 0 ? ($total_milestone_amount /
                                         $budget_amount)* 100 : 0;

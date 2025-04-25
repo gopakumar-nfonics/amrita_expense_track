@@ -282,11 +282,19 @@ class lead extends Controller
     
             $proposal->save();
             
-            PaymentMilestone::where('proposal_id', $proposal->id)->delete();
+            //PaymentMilestone::where('proposal_id', $proposal->id)->delete();
 
-            $milestones = [];
+            $existingMilestoneIds = PaymentMilestone::where('proposal_id', $proposal->id)->pluck('id')->toArray();
+            $requestMilestoneIds = $request->input('milestone_id', []);
+
+            $processedIds = [];
+
+            //$milestones = [];
             foreach ($request->input('name') as $index => $name) {
-                $milestones[] = [
+
+                $milestoneId = $requestMilestoneIds[$index] ?? null;
+
+                $data = [
                     'proposal_id' => $proposal->id,
                     'milestone_title' => $name,
                     'milestone_amount' => $request->input('amount')[$index],
@@ -294,10 +302,21 @@ class lead extends Controller
                     'milestone_total_amount' => $request->input('amount')[$index] * (1 + ($request->input('gst')[$index] / 100)), // Example GST calculation
                    
                 ];
+
+                if ($milestoneId) {
+                    PaymentMilestone::where('id', $milestoneId)->update($data);
+                    $processedIds[] = $milestoneId;
+                } else {
+                    $milestone = PaymentMilestone::create($data);
+                    $processedIds[] = $milestone->id;
+                }
             }
         
             // Insert data into the database
-             PaymentMilestone::insert($milestones);
+            // PaymentMilestone::insert($milestones);
+
+            $toDelete = array_diff($existingMilestoneIds, $processedIds);
+            PaymentMilestone::whereIn('id', $toDelete)->delete();
 
             
             return redirect()->route('lead.index')->with('success', 'Proposal Updated Successfully');

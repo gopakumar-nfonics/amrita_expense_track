@@ -59,7 +59,7 @@
                                     class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">{{$vendor->vendor_name}}</a>
                                 <!--end::Name-->
                                 <!--begin::Position-->
-                                <div class="fs-5 fw-semibold text-muted mb-6">{{$vendor->company->company_name}}</div>
+                                <div class="fs-5 fw-semibold text-muted mb-6">{{$vendor->company->company_name ?? ''}}</div>
                                 <!--end::Position-->
                                 <!--begin::Info-->
                                 <div class="d-flex flex-row flex-center">

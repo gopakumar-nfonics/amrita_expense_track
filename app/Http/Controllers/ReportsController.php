@@ -53,38 +53,51 @@ class ReportsController extends Controller
 
         // Build the query
         $query = Budgets::select('tbl_budget.*')
-            ->selectRaw('(SELECT COALESCE(SUM(payment_milestones.milestone_total_amount), 0) 
+    ->selectRaw('(SELECT COALESCE(SUM(payment_milestones.milestone_total_amount), 0) 
+                  FROM payment_request
+                  INNER JOIN invoices ON payment_request.invoice_id = invoices.id
+                  INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
+                  INNER JOIN proposal ON payment_milestones.proposal_id = proposal.id
+                  INNER JOIN tbl_category ON payment_request.category_id = tbl_category.id
+                  WHERE (payment_request.category_id = tbl_budget.category_id 
+                         OR tbl_category.parent_category = tbl_budget.category_id)
+                  AND payment_request.payment_status = "completed"
+                  AND proposal.proposal_year = tbl_budget.financial_year_id
+                 ) as used_amount')
+    ->from('tbl_budget')
+    ->leftJoin('tbl_category', 'tbl_budget.category_id', '=', 'tbl_category.id')
+    ->whereNull('tbl_budget.deleted_at')
+    ->with(['category' => function ($query) {
+        $query->select('tbl_category.*')
+            ->withCasts(['used_amount_by_subcategory' => 'decimal:2']) // optional for formatting
+            ->addSelect(DB::raw('(SELECT COALESCE(SUM(payment_milestones.milestone_total_amount), 0) 
                           FROM payment_request
                           INNER JOIN invoices ON payment_request.invoice_id = invoices.id
                           INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
-                          INNER JOIN tbl_category ON payment_request.category_id = tbl_category.id
-                          WHERE (payment_request.category_id = tbl_budget.category_id 
-                                 OR tbl_category.parent_category = tbl_budget.category_id)
-                          AND payment_request.payment_status = "completed") as used_amount')
-            ->from('tbl_budget')
-            ->leftJoin('tbl_category', 'tbl_budget.category_id', '=', 'tbl_category.id') // Join with tbl_category
-            ->whereNull('tbl_budget.deleted_at')
-            ->with(['category' => function ($query) {
-                $query->select('tbl_category.*')
-                    ->selectRaw('(SELECT COALESCE(SUM(payment_milestones.milestone_total_amount), 0) 
-                                    FROM payment_request
-                                    INNER JOIN invoices ON payment_request.invoice_id = invoices.id
-                                    INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
-                                    WHERE payment_request.category_id = tbl_category.id 
-                                    AND payment_request.payment_status = "completed") as used_amount_by_subcategory')
-                    ->whereNull('tbl_category.deleted_at')
-                    ->with(['children' => function ($subQuery) {
-                        $subQuery->select('tbl_category.*')
-                            ->selectRaw('(SELECT COALESCE(SUM(payment_milestones.milestone_total_amount), 0) 
-                                                 FROM payment_request
-                                                 INNER JOIN invoices ON payment_request.invoice_id = invoices.id
-                                                 INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
-                                                 WHERE payment_request.category_id = tbl_category.id 
-                                                 AND payment_request.payment_status = "completed") as used_amount')
-                            ->whereNull('tbl_category.deleted_at');
-                    }]);
-            }])
-            ->orderBy('id');
+                          INNER JOIN proposal ON payment_milestones.proposal_id = proposal.id
+                          WHERE payment_request.category_id = tbl_category.id 
+                          AND payment_request.payment_status = "completed"
+                          AND proposal.proposal_year = ' . (int) request()->get('financial_year_id', 0) . '
+                         ) as used_amount_by_subcategory'))
+            ->whereNull('tbl_category.deleted_at')
+            ->with(['children' => function ($subQuery) {
+                $subQuery->select('tbl_category.*')
+                    ->addSelect(DB::raw('(SELECT COALESCE(SUM(payment_milestones.milestone_total_amount), 0) 
+                                  FROM payment_request
+                                  INNER JOIN invoices ON payment_request.invoice_id = invoices.id
+                                  INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
+                                  INNER JOIN proposal ON payment_milestones.proposal_id = proposal.id
+                                  WHERE payment_request.category_id = tbl_category.id 
+                                  AND payment_request.payment_status = "completed"
+                                  AND proposal.proposal_year = ' . (int) request()->get('financial_year_id', 0) . '
+                                 ) as used_amount'))
+                    ->whereNull('tbl_category.deleted_at');
+            }]);
+    }])
+    ->orderBy('id');
+
+
+
 
         // Apply program filter if provided
         if ($categoryId) {

@@ -119,7 +119,8 @@
             <div class="d-flex flex-center flex-wrap px-5">
                 <!--begin::Links-->
                 <div class="d-flex fw-semibold text-primary fs-base">
-                    <a href="../../demo1/dist/pages/team.html" class="px-5" target="_blank">© 2024. Amrita Vishwa
+                    <a href="../../demo1/dist/pages/team.html" class="px-5" target="_blank">© {{ date('Y') }}. Amrita
+                        Vishwa
                         Vidyapeetham. All Rights Reserved.</a>
 
                 </div>

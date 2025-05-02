@@ -192,97 +192,85 @@ class payment extends Controller
     }
 
     public function getBudgetDetails(Request $request)
-    {
-        $categoryId = $request->input('category_id');
+{
+    $categoryId = $request->input('category_id');
+    $proposal_year =  $request->input('proposal_year');
 
-        $proposal_year =  $request->input('proposal_year');
-
-        if ($proposal_year) {
-            // If a specific proposal year is provided, use it
-            $financialYear = FinancialYear::find($proposal_year);
-        } else {
-
-        // Get the current financial year
+    if ($proposal_year) {
+        $financialYear = FinancialYear::find($proposal_year);
+    } else {
         $financialYear = FinancialYear::where('is_current', 1)->first();
-
-        }
-
-        if (!$financialYear) {
-            return response()->json([
-                'error' => 'Current financial year not found'
-            ], 404);
-        }
-
-        // Find the selected category
-        $category = Category::find($categoryId);
-
-        if (!$category) {
-            return response()->json([
-                'error' => 'Category not found'
-            ], 404);
-        }
-
-        $totalBudget = 0;
-        $usedBudget = 0;
-
-        // Get the budget for the selected category
-        $budget = Budget::where('category_id', $categoryId)
-            ->where('financial_year_id', $financialYear->id)
-            ->first();
-
-        if ($budget) {
-            $totalBudget = $budget->amount;
-        } else {
-            // If no budget found for the selected category, check for parent category
-            if ($category->parent_category) {
-                $parentBudget = Budget::where('category_id', $category->parent_category)
-                    ->where('financial_year_id', $financialYear->id)
-                    ->first();
-
-                if ($parentBudget) {
-                    $totalBudget = $parentBudget->amount;
-                }
-            }
-        }
-
-        
-        $usedBudget = PaymentRequest::where(function ($query) use ($category) {
-           
-            if ($category->parent_category) {
-                
-                $subCategoryIds = Category::where('parent_category', $category->parent_category)->pluck('id');
-
-                $subCategoryIds->push($category->parent_category);
-                $query->whereIn('category_id', $subCategoryIds);
-            } else {
-                
-                $query->where('category_id', $category->id);
-            }
-        })
-            ->where('payment_status', 'completed')
-            ->whereHas('invoice', function ($query) {
-                $query->whereHas('milestone', function ($milestoneQuery) {
-                    $milestoneQuery->selectRaw('SUM(milestone_total_amount) as total');
-                });
-            })
-            ->with('invoice.milestone')
-            ->get()
-            ->sum(function ($paymentRequest) {
-                return $paymentRequest->invoice->milestone->milestone_total_amount;
-            });
-
-
-        // Format the results
-        $formattedTotalBudget = number_format($totalBudget, 2, '.', ',');
-        $formattedUsedBudget = number_format($usedBudget, 2, '.', ',');
-
-        return response()->json([
-            'num_total_budget' => $formattedTotalBudget,
-            'num_used_budget' => $formattedUsedBudget,
-            'total_budget' => $totalBudget,
-            'used_budget' => $usedBudget
-        ]);
     }
+
+    if (!$financialYear) {
+        return response()->json([
+            'error' => 'Current financial year not found'
+        ], 404);
+    }
+
+    $category = Category::find($categoryId);
+
+    if (!$category) {
+        return response()->json([
+            'error' => 'Category not found'
+        ], 404);
+    }
+
+    $totalBudget = 0;
+    $usedBudget = 0;
+
+    $budget = Budget::where('category_id', $categoryId)
+        ->where('financial_year_id', $financialYear->id)
+        ->first();
+
+    if ($budget) {
+        $totalBudget = $budget->amount;
+    } else {
+        if ($category->parent_category) {
+            $parentBudget = Budget::where('category_id', $category->parent_category)
+                ->where('financial_year_id', $financialYear->id)
+                ->first();
+
+            if ($parentBudget) {
+                $totalBudget = $parentBudget->amount;
+            }
+        }
+    }
+
+    $usedBudget = PaymentRequest::where(function ($query) use ($category) {
+        if ($category->parent_category) {
+            $subCategoryIds = Category::where('parent_category', $category->parent_category)->pluck('id');
+            $subCategoryIds->push($category->parent_category);
+            $query->whereIn('category_id', $subCategoryIds);
+        } else {
+            $query->where('category_id', $category->id);
+        }
+    })
+    ->where('payment_status', 'completed')
+    ->whereHas('invoice', function ($invoiceQuery) use ($financialYear) {
+        $invoiceQuery->whereHas('milestone', function ($milestoneQuery) use ($financialYear) {
+            $milestoneQuery->whereHas('proposal', function ($proposalQuery) use ($financialYear) {
+                $proposalQuery->where('proposal_year', $financialYear->id);
+            });
+        });
+    })
+    ->with('invoice.milestone')
+    ->get()
+    ->sum(function ($paymentRequest) {
+        return $paymentRequest->invoice->milestone->milestone_total_amount;
+    });
+
+    $formattedTotalBudget = number_format($totalBudget, 2, '.', ',');
+    $formattedUsedBudget = number_format($usedBudget, 2, '.', ',');
+
+    return response()->json([
+        'num_total_budget' => $formattedTotalBudget,
+        'num_used_budget' => $formattedUsedBudget,
+        'total_budget' => $totalBudget,
+        'used_budget' => $usedBudget
+    ]);
+}
+
 
 
     public function getShortFinancialYear()

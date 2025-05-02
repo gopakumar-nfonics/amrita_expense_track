@@ -1,23 +1,23 @@
 @extends('layouts.admin')
 <style>
-    .swal-modal {
-        min-width: 600px;
-        padding: 40px 20px;
+.swal-modal {
+    min-width: 600px;
+    padding: 40px 20px;
 
-    }
+}
 
-    select#programSelect {
-        margin: 30px auto 15px;
-        cursor: pointer;
-    }
-    
+select#programSelect {
+    margin: 30px auto 15px;
+    cursor: pointer;
+}
 </style>
 
 @if(!Auth::user()->isvendor())
 <style>
-    #budgettable_wrapper .dataTables_filter {
+#budgettable_wrapper .dataTables_filter {
     display: flex;
     align-items: center;
+    justify-content: end;
 }
 </style>
 @endif
@@ -56,7 +56,7 @@
         <!--begin::Content container-->
         <div id="kt_app_content_container" class="app-container container-xxl">
 
-       
+
             <div class="card mb-5 mb-xl-8">
                 <!--begin::Header-->
                 <!-- <div class="card-header border-0 pt-5">
@@ -69,14 +69,14 @@
                 <div class="card-body py-3">
                     <!--begin::Table container-->
                     <div class="table-responsive">
-                    @if(!Auth::user()->isvendor())
-                    <select id="programmeFilter" class="form-select" style="width: 200px;">
-                                <option value="">All Programmes</option>
-                                @foreach($programmes as $programme)
-                                <option value="{{ $programme->stream_name }}">{{ $programme->stream_name }}</option>
-                                @endforeach
-                            </select>
-                    @endif
+                        @if(!Auth::user()->isvendor())
+                        <select id="programmeFilter" class="form-select" style="width: 200px;">
+                            <option value="">All Programmes</option>
+                            @foreach($programmes as $programme)
+                            <option value="{{ $programme->stream_name }}">{{ $programme->stream_name }}</option>
+                            @endforeach
+                        </select>
+                        @endif
                         <div class="overlay" id="loaderOverlay">
                             <div class="loader"></div>
                         </div>
@@ -239,7 +239,8 @@
 
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="{{ route('lead.show', encrypt($pro->id)) }}" class="menu-link px-3">View
+                                                <a href="{{ route('lead.show', encrypt($pro->id)) }}"
+                                                    class="menu-link px-3">View
                                                 </a>
                                             </div>
                                             <!--end::Menu item-->
@@ -448,18 +449,16 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
-   $(document).ready(function() {
+$(document).ready(function() {
     var table = $('#budgettable').DataTable({
         "iDisplayLength": 10,
         "ordering": false,
         "searching": true,
-        "columnDefs": [
-            {
-                "targets": -1, // last column
-                "visible": false,
-                "searchable": true
-            }
-        ]
+        "columnDefs": [{
+            "targets": -1, // last column
+            "visible": false,
+            "searchable": true
+        }]
     });
 
     $('#programmeFilter').appendTo('#budgettable_wrapper .dataTables_filter').css({
@@ -468,7 +467,7 @@
         'height': '45px'
     });
 
-    $('#programmeFilter').on('change', function () {
+    $('#programmeFilter').on('change', function() {
         var selectedProgramme = $(this).val();
 
         if (selectedProgramme) {
@@ -478,292 +477,291 @@
         }
     });
 });
-
 </script>
 
 <script>
-    function rejectpropposal(proid, status) {
+function rejectpropposal(proid, status) {
 
-        $('#rejectproposal').modal('show');
-        $('#proposalid').val(proid);
-    }
+    $('#rejectproposal').modal('show');
+    $('#proposalid').val(proid);
+}
 
-    $(document).ready(function() {
+$(document).ready(function() {
 
-        $('#reason').on('keyup', function() {
-            if ($(this).val().trim() !== '') {
-                $('#reason-error').text('');
-            }
-        });
+    $('#reason').on('keyup', function() {
+        if ($(this).val().trim() !== '') {
+            $('#reason-error').text('');
+        }
+    });
 
-        $('#rejectproposal-form').on('submit', function(e) {
-            e.preventDefault(); // Prevent the default form submission
+    $('#rejectproposal-form').on('submit', function(e) {
+        e.preventDefault(); // Prevent the default form submission
 
-            let reason = $('#reason').val();
+        let reason = $('#reason').val();
 
-            // Check if reason is empty
-            if (!reason.trim()) {
-                $('#reason-error').text('Rejection reason required.');
-                return;
-            } else {
-                $('#reason-error').text('');
-            }
+        // Check if reason is empty
+        if (!reason.trim()) {
+            $('#reason-error').text('Rejection reason required.');
+            return;
+        } else {
+            $('#reason-error').text('');
+        }
 
-            let formData = {
-                _token: '{{ csrf_token() }}',
-                reason: reason,
-                proid: $('#proposalid').val(),
-            };
+        let formData = {
+            _token: '{{ csrf_token() }}',
+            reason: reason,
+            proid: $('#proposalid').val(),
+        };
 
-            document.getElementById('loaderOverlay').style.display = 'flex';
+        document.getElementById('loaderOverlay').style.display = 'flex';
 
-            $.ajax({
-                url: "{{ route('lead.reject') }}",
-                type: "POST",
-                data: formData,
-                success: function(response) {
-                    document.getElementById('loaderOverlay').style.display = 'none';
-                    if (response.success) {
-                        swal('The Proposal has been rejected!', {
-                            icon: "success",
-                            buttons: false,
-                        });
-                        setTimeout(() => {
-                            location.reload();
-                        }, 1000);
-                    } else {
-                        swal('Failed to reject proposal', {
-                            icon: "warning",
-                            buttons: false,
-                        });
-                        setTimeout(() => {
-                            location.reload();
-                        }, 1000);
-                    }
-                },
-                error: function(xhr) {
-                    swal('An error occurred. Please try again', {
-                        icon: "error",
+        $.ajax({
+            url: "{{ route('lead.reject') }}",
+            type: "POST",
+            data: formData,
+            success: function(response) {
+                document.getElementById('loaderOverlay').style.display = 'none';
+                if (response.success) {
+                    swal('The Proposal has been rejected!', {
+                        icon: "success",
+                        buttons: false,
+                    });
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    swal('Failed to reject proposal', {
+                        icon: "warning",
                         buttons: false,
                     });
                     setTimeout(() => {
                         location.reload();
                     }, 1000);
                 }
-            });
+            },
+            error: function(xhr) {
+                swal('An error occurred. Please try again', {
+                    icon: "error",
+                    buttons: false,
+                });
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
         });
     });
+});
 
 
-    function approve(proid, status) {
-        if (status === 'approve') {
-            var title = 'Approve Proposal';
-            var text =
-                "Select Programme and approve proposal. Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.";
+function approve(proid, status) {
+    if (status === 'approve') {
+        var title = 'Approve Proposal';
+        var text =
+            "Select Programme and approve proposal. Once the approval process is completed, the RO will be generated and sent to the vendor's registered email address.";
 
-            // Create custom select dropdown
-            var content = document.createElement('div');
+        // Create custom select dropdown
+        var content = document.createElement('div');
 
-            // Add the RO# input field and label
-            var inputContainer = document.createElement('div');
-            inputContainer.className = 'col-lg-12 fv-row d-flex mt-10';
+        // Add the RO# input field and label
+        var inputContainer = document.createElement('div');
+        inputContainer.className = 'col-lg-12 fv-row d-flex mt-10';
 
-            var inputLabel = document.createElement('label');
-            inputLabel.className = 'col-form-label required fw-semibold fs-6 w-175px';
-            inputLabel.textContent = 'RO. Number : ';
-            inputLabel.style.textAlign = 'left'; // Align label content to the left
+        var inputLabel = document.createElement('label');
+        inputLabel.className = 'col-form-label required fw-semibold fs-6 w-175px';
+        inputLabel.textContent = 'RO. Number : ';
+        inputLabel.style.textAlign = 'left'; // Align label content to the left
 
-            var inputField = document.createElement('input');
-            inputField.type = 'text';
-            inputField.name = 'ro_number';
-            inputField.className = 'form-control form-control-lg ';
-            inputField.placeholder = 'RO. Number';
-            inputField.value = '';
+        var inputField = document.createElement('input');
+        inputField.type = 'text';
+        inputField.name = 'ro_number';
+        inputField.className = 'form-control form-control-lg ';
+        inputField.placeholder = 'RO. Number';
+        inputField.value = '';
 
-            // Append the label and input field to the container
-            inputContainer.appendChild(inputLabel);
-            inputContainer.appendChild(inputField);
+        // Append the label and input field to the container
+        inputContainer.appendChild(inputLabel);
+        inputContainer.appendChild(inputField);
 
-            // Add the inputContainer to the content
-            content.appendChild(inputContainer);
+        // Add the inputContainer to the content
+        content.appendChild(inputContainer);
 
 
 
-            // Create custom select dropdown
-            var selectBox = document.createElement('select');
-            selectBox.id = 'programSelect';
-            selectBox.className = 'form-control form-control-lg';
-            selectBox.innerHTML = `<option value="">-- Select Programme --</option>`;
-            content.appendChild(selectBox);
+        // Create custom select dropdown
+        var selectBox = document.createElement('select');
+        selectBox.id = 'programSelect';
+        selectBox.className = 'form-control form-control-lg';
+        selectBox.innerHTML = `<option value="">-- Select Programme --</option>`;
+        content.appendChild(selectBox);
 
-            var errorSpan = document.createElement('span');
-            errorSpan.id = 'programError';
-            errorSpan.className = 'badge badge-light-danger fs-6 py-3';
-            errorSpan.style.display = 'none';
-            errorSpan.textContent = 'Select Programme.';
-            content.appendChild(errorSpan);
+        var errorSpan = document.createElement('span');
+        errorSpan.id = 'programError';
+        errorSpan.className = 'badge badge-light-danger fs-6 py-3';
+        errorSpan.style.display = 'none';
+        errorSpan.textContent = 'Select Programme.';
+        content.appendChild(errorSpan);
 
-            // Show the SweetAlert
-            swal({
-                    title: title,
-                    text: text,
-                    icon: false,
-                    buttons: {
-                        cancel: {
-                            text: "Cancel",
-                            value: false,
-                            visible: true,
-                            className: "btn btn-light",
-                            closeModal: true,
-                        },
-                        confirm: {
-                            text: "Approve",
-                            value: true,
-                            visible: true,
-                            className: "btn btn-success",
-                            closeModal: false
-                        }
+        // Show the SweetAlert
+        swal({
+                title: title,
+                text: text,
+                icon: false,
+                buttons: {
+                    cancel: {
+                        text: "Cancel",
+                        value: false,
+                        visible: true,
+                        className: "btn btn-light",
+                        closeModal: true,
                     },
-                    dangerMode: true,
-                    content: content,
-                    closeOnConfirm: false
-                })
-                .then((willApprove) => {
-                    if (willApprove) {
-                        var selectedProgram = selectBox.value;
-                        var ro_number = inputField.value;
-                        if (selectedProgram === "") {
-                            errorSpan.style.display = 'block';
-                            return;
-                        } else {
-                            errorSpan.style.display = 'none';
-                        }
-
-                        $.ajax({
-                            url: "{{ route('lead.approve') }}",
-                            type: 'POST',
-                            data: {
-                                _token: '{{ csrf_token() }}',
-                                id: proid,
-                                status: status,
-                                program: selectedProgram,
-                                ro_number: ro_number
-                            },
-                            beforeSend: function() {
-                                $('.swal-modal').css('opacity', 0);
-                                document.getElementById('loaderOverlay').style.display = 'flex';
-                            },
-                            success: function(response) {
-                                document.getElementById('loaderOverlay').style.display = 'none';
-                                $('.swal-modal').css('opacity', 1);
-                                if (response.success) {
-                                    swal(response.success, {
-                                        icon: "success",
-                                        buttons: false,
-                                    });
-                                    setTimeout(() => {
-                                        location.reload();
-                                    }, 1000);
-                                } else {
-                                    swal(response.error || 'Something went wrong.', {
-                                        icon: "warning",
-                                        buttons: false,
-                                    });
-                                    setTimeout(() => {
-                                        location.reload();
-                                    }, 1000);
-                                }
-                            },
-                            error: function(xhr) {
-                                document.getElementById('loaderOverlay').style.display = 'none';
-                                swal('Error: Something went wrong.', {
-                                    icon: "error",
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            }
-                        });
+                    confirm: {
+                        text: "Approve",
+                        value: true,
+                        visible: true,
+                        className: "btn btn-success",
+                        closeModal: false
                     }
-                });
-
-            // Set a delay to ensure the SweetAlert modal content is loaded before accessing the Approve button
-            setTimeout(function() {
-                var approveButton = document.querySelector('.swal-button--confirm');
-                approveButton.disabled = true; // Disable initially
-
-                // Toggle "Approve" button based on selection
-                selectBox.addEventListener('change', function() {
-                    approveButton.disabled = (selectBox.value === "");
-                });
-            }, 200);
-
-            // Fetch programs dynamically
-            $.ajax({
-                url: "{{ route('getPrograms') }}",
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    console.log('Received data:', data);
-                    data.forEach(function(program) {
-                        var option = document.createElement('option');
-                        option.value = program.id;
-                        option.text = program.stream_name;
-                        selectBox.appendChild(option);
-                    });
                 },
-                error: function(xhr) {
-                    console.error('Error fetching programs:', xhr);
-                    swal('Error fetching programs.', {
-                        icon: "error",
+                dangerMode: true,
+                content: content,
+                closeOnConfirm: false
+            })
+            .then((willApprove) => {
+                if (willApprove) {
+                    var selectedProgram = selectBox.value;
+                    var ro_number = inputField.value;
+                    if (selectedProgram === "") {
+                        errorSpan.style.display = 'block';
+                        return;
+                    } else {
+                        errorSpan.style.display = 'none';
+                    }
+
+                    $.ajax({
+                        url: "{{ route('lead.approve') }}",
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: proid,
+                            status: status,
+                            program: selectedProgram,
+                            ro_number: ro_number
+                        },
+                        beforeSend: function() {
+                            $('.swal-modal').css('opacity', 0);
+                            document.getElementById('loaderOverlay').style.display = 'flex';
+                        },
+                        success: function(response) {
+                            document.getElementById('loaderOverlay').style.display = 'none';
+                            $('.swal-modal').css('opacity', 1);
+                            if (response.success) {
+                                swal(response.success, {
+                                    icon: "success",
+                                    buttons: false,
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            } else {
+                                swal(response.error || 'Something went wrong.', {
+                                    icon: "warning",
+                                    buttons: false,
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            }
+                        },
+                        error: function(xhr) {
+                            document.getElementById('loaderOverlay').style.display = 'none';
+                            swal('Error: Something went wrong.', {
+                                icon: "error",
+                            }).then(() => {
+                                location.reload();
+                            });
+                        }
                     });
                 }
             });
 
-            $.ajax({
-                url: "{{ route('getNextRoNumber') }}", // Define this route in your backend
-                type: 'GET',
-                success: function(data) {
-                    inputField.value = data.next_ro; // Set the RO number
-                },
-                error: function(xhr) {
-                    console.error('Error fetching RO number:', xhr);
+        // Set a delay to ensure the SweetAlert modal content is loaded before accessing the Approve button
+        setTimeout(function() {
+            var approveButton = document.querySelector('.swal-button--confirm');
+            approveButton.disabled = true; // Disable initially
 
-                }
+            // Toggle "Approve" button based on selection
+            selectBox.addEventListener('change', function() {
+                approveButton.disabled = (selectBox.value === "");
             });
-        } else {
-            swal('Invalid status', {
-                icon: "error"
-            });
-        }
-    }
+        }, 200);
 
-
-
-
-
-    function rejectionreason(proid) {
-
+        // Fetch programs dynamically
         $.ajax({
-            url: '/lead/rejectionreason/' +
-                proid, // The URL to send the AJAX request to
+            url: "{{ route('getPrograms') }}",
             type: 'GET',
             dataType: 'json',
             success: function(data) {
-
-
-                $('#reasoncmt').text(data.reason);
-
-                $('#rejectreason').modal('show');
-
-
+                console.log('Received data:', data);
+                data.forEach(function(program) {
+                    var option = document.createElement('option');
+                    option.value = program.id;
+                    option.text = program.stream_name;
+                    selectBox.appendChild(option);
+                });
             },
-
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText); // Log errors to console
+            error: function(xhr) {
+                console.error('Error fetching programs:', xhr);
+                swal('Error fetching programs.', {
+                    icon: "error",
+                });
             }
         });
-        //$('#rejectreason').modal('show');
+
+        $.ajax({
+            url: "{{ route('getNextRoNumber') }}", // Define this route in your backend
+            type: 'GET',
+            success: function(data) {
+                inputField.value = data.next_ro; // Set the RO number
+            },
+            error: function(xhr) {
+                console.error('Error fetching RO number:', xhr);
+
+            }
+        });
+    } else {
+        swal('Invalid status', {
+            icon: "error"
+        });
     }
+}
+
+
+
+
+
+function rejectionreason(proid) {
+
+    $.ajax({
+        url: '/lead/rejectionreason/' +
+            proid, // The URL to send the AJAX request to
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+
+
+            $('#reasoncmt').text(data.reason);
+
+            $('#rejectreason').modal('show');
+
+
+        },
+
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText); // Log errors to console
+        }
+    });
+    //$('#rejectreason').modal('show');
+}
 </script>
 
 @endsection

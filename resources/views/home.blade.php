@@ -25,16 +25,53 @@
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
+        <div id="kt_app_toolbar" class="app-toolbar pt-6 ">
+            <!--begin::Toolbar container-->
+            <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
+                <!--begin::Page title-->
+                <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+                    <!--begin::Title-->
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+                        Admin User Dashboard</h1>
+                    <!--end::Title-->
+                    <!--begin::Breadcrumb-->
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-6 my-0 pt-1">
+                        <!--begin::Item-->
+                        <li class="breadcrumb-item text-muted">
+                            <a href="../../demo1/dist/index.html" class="text-info">Overview of
+                                2025</a>
+                        </li>
 
+                    </ul>
+                    <!--end::Breadcrumb-->
+                </div>
+                <!--end::Page title-->
+                <!--begin::Actions-->
+                <div class="d-flex align-items-center gap-2 gap-lg-3">
+                    <!--begin::Secondary button-->
+                    <a href="#" class="text-dark fs-6" data-bs-toggle="modal"
+                        data-bs-target="#kt_modal_create_app">Select Year :</a>
+                    <!--end::Secondary button-->
+                    <select id="programmeFilter" class="form-select"
+                        style="width: 90px; padding: 5px 15px; cursor: pointer;">
+                        <option value="">2025</option>
+                        <option value="">2025</option>
+                        <option value="">2026</option>
+                    </select>
+                </div>
+                <!--end::Actions-->
+            </div>
+            <!--end::Toolbar container-->
+        </div>
         <!--begin::Content-->
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-fluid">
 
 
-                <div class="row g-5 g-xl-8 mt-1">
+                <div class="row g-5 g-xl-8 mt-4">
                     <!--begin::Col-->
-                    <div class="col-xl-4">
+                    <div class="col-xl-4 mt-0">
                         <!--begin::Mixed Widget 1-->
                         <div class="card card-xl-stretch mb-xl-8">
                             <!--begin::Body-->
@@ -152,7 +189,7 @@
                     </div>
                     <!--end::Col-->
                     <!--begin::Col-->
-                    <div class="col-xl-4">
+                    <div class="col-xl-4 mt-0">
                         <!--begin::Mixed Widget 1-->
                         <div class="card card-xl-stretch mb-xl-8">
                             <!--begin::Body-->
@@ -189,7 +226,7 @@
 
                                     @php
 
-                                    $budget_amount = $result['budget_amount'] ?? 0;
+                                    $budget_amount = $result[' budget_amount'] ?? 0;
                                         $total_milestone_amount=$result['total_milestone_amount'] ?? 0;
                                         $catpaidPercentage=$budget_amount> 0 ? ($total_milestone_amount /
                                         $budget_amount)* 100 : 0;
@@ -262,7 +299,7 @@
                     </div>
                     <!--end::Col-->
                     <!--begin::Col-->
-                    <div class="col-xl-4">
+                    <div class="col-xl-4 mt-0">
                         <!--begin::Mixed Widget 1-->
                         <div class="card card-xl-stretch mb-5 mb-xl-8">
                             <!--begin::Body-->
@@ -557,7 +594,11 @@
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
 
 <script>
-var usedPercentage = {{$usedPercentage }};
+var usedPercentage = {
+    {
+        $usedPercentage
+    }
+};
 var initMixedWidget4 = function() {
     var charts = document.querySelectorAll('.budgetused');
 

@@ -1,25 +1,77 @@
 @extends('layouts.admin')
 
 <style>
-.bottom {
-    display: flex;
-    justify-content: space-between;
-    /* Distribute space between elements */
-    align-items: center;
-    /* Align elements vertically in the center */
-}
+    .bottom {
+        display: flex;
+        justify-content: space-between;
+        /* Distribute space between elements */
+        align-items: center;
+        /* Align elements vertically in the center */
+    }
 </style>
 <style>
-.nav-scroll {
-    overflow-x: auto;
-    white-space: nowrap;
+    .nav-scroll {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .nav-item {
+        display: inline-block !important;
+        vertical-align: top;
+    }
+</style>
+
+<style>
+#page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(243 240 240 / 92%); /* or any bg color you want */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
 }
 
-.nav-item {
-    display: inline-block !important;
-    vertical-align: top;
+.loading-dots {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.loading-dots span {
+    width: 16px;
+    height: 16px;
+    margin:0px 3px !important;
+    background-color: #d63384; /* dot color */
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounce 0.6s infinite alternate;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+        opacity: 0.6;
+    }
+    to {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
 }
 </style>
+
 @section('content')
 <!--begin::Main-->
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -35,11 +87,10 @@
                         Admin User Dashboard</h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
-                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-6 my-0 pt-1">
+                    <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
-                            <a href="../../demo1/dist/index.html" class="text-info">Overview of
-                                2025</a>
+                            <a href="../../demo1/dist/index.html" class="text-info">Overview of {{$currentfinancialYear->year}} : Budget & Expense Summary</a>
                         </li>
 
                     </ul>
@@ -52,11 +103,14 @@
                     <a href="#" class="text-dark fs-6" data-bs-toggle="modal"
                         data-bs-target="#kt_modal_create_app">Select Year :</a>
                     <!--end::Secondary button-->
-                    <select id="programmeFilter" class="form-select"
+                    <select id="financialYearSelect" class="form-select"
                         style="width: 90px; padding: 5px 15px; cursor: pointer;">
-                        <option value="">2025</option>
-                        <option value="">2025</option>
-                        <option value="">2026</option>
+                        @foreach($financialyears as $year)
+                        <option value="{{ $year->year }}" {{  $year->year == $currentfinancialYear->year ? 'selected' : '' }}>
+                            {{ $year->year }}
+                        </option>
+                        @endforeach
+
                     </select>
                 </div>
                 <!--end::Actions-->
@@ -68,6 +122,16 @@
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-fluid">
 
+
+                <div id="page-loader">
+                    <div class="loading-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
 
                 <div class="row g-5 g-xl-8 mt-4">
                     <!--begin::Col-->
@@ -226,7 +290,7 @@
 
                                     @php
 
-                                    $budget_amount = $result[' budget_amount'] ?? 0;
+                                    $budget_amount = $result['budget_amount'] ?? 0;
                                         $total_milestone_amount=$result['total_milestone_amount'] ?? 0;
                                         $catpaidPercentage=$budget_amount> 0 ? ($total_milestone_amount /
                                         $budget_amount)* 100 : 0;
@@ -594,94 +658,105 @@
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
 
 <script>
-var usedPercentage = {
-    {
-        $usedPercentage
-    }
-};
-var initMixedWidget4 = function() {
-    var charts = document.querySelectorAll('.budgetused');
+    document.getElementById('financialYearSelect').addEventListener('change', function() {
 
-    [].slice.call(charts).map(function(element) {
-        var height = parseInt(window.getComputedStyle(element).height);
-
-        if (!element) {
-            return;
-        }
-
-        var color = element.getAttribute('data-kt-chart-color');
-
-        var baseColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-' + color);
-        var lightColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-' + color +
-            '-light');
-        var labelColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-gray-700');
-
-        var options = {
-            series: [usedPercentage], // Dynamically pass your used percentage here
-            chart: {
-                fontFamily: 'inherit',
-                height: height,
-                type: 'radialBar',
-            },
-            plotOptions: {
-                radialBar: {
-                    hollow: {
-                        margin: 0,
-                        size: "65%"
-                    },
-                    dataLabels: {
-                        showOn: "always",
-                        name: {
-                            show: false,
-                            fontWeight: '700'
-                        },
-                        value: {
-                            color: labelColor,
-                            fontSize: "30px",
-                            fontWeight: '700',
-                            offsetY: 12,
-                            show: true,
-                            formatter: function(val) {
-                                return val + '%';
-                            }
-                        }
-                    },
-                    track: {
-                        background: lightColor,
-                        strokeWidth: '100%'
-                    }
-                }
-            },
-            colors: [baseColor],
-            stroke: {
-                lineCap: "round",
-            },
-            labels: ["Progress"]
-        };
-
-        var chart = new ApexCharts(element, options);
-        chart.render();
+        document.getElementById('page-loader').style.display = 'flex';
+        const selectedYearId = this.value;
+        window.location.href = '?year=' + selectedYearId;
     });
-}
+</script>
 
-// Initialize the chart when the document is fully loaded
-document.addEventListener("DOMContentLoaded", function() {
-    initMixedWidget4();
-});
+<script>
+    var usedPercentage = {{$usedPercentage }};
+    var initMixedWidget4 = function() {
+        var charts = document.querySelectorAll('.budgetused');
+
+        [].slice.call(charts).map(function(element) {
+            var height = parseInt(window.getComputedStyle(element).height);
+
+            if (!element) {
+                return;
+            }
+
+            var color = element.getAttribute('data-kt-chart-color');
+
+            var baseColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-' + color);
+            var lightColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-' + color +
+                '-light');
+            var labelColor = getComputedStyle(document.documentElement).getPropertyValue('--kt-gray-700');
+
+            var options = {
+                series: [usedPercentage], // Dynamically pass your used percentage here
+                chart: {
+                    fontFamily: 'inherit',
+                    height: height,
+                    type: 'radialBar',
+                },
+                plotOptions: {
+                    radialBar: {
+                        hollow: {
+                            margin: 0,
+                            size: "65%"
+                        },
+                        dataLabels: {
+                            showOn: "always",
+                            name: {
+                                show: false,
+                                fontWeight: '700'
+                            },
+                            value: {
+                                color: labelColor,
+                                fontSize: "30px",
+                                fontWeight: '700',
+                                offsetY: 12,
+                                show: true,
+                                formatter: function(val) {
+                                    return val + '%';
+                                }
+                            }
+                        },
+                        track: {
+                            background: lightColor,
+                            strokeWidth: '100%'
+                        }
+                    }
+                },
+                colors: [baseColor],
+                stroke: {
+                    lineCap: "round",
+                },
+                labels: ["Progress"]
+            };
+
+            var chart = new ApexCharts(element, options);
+            chart.render();
+        });
+    }
+
+    // Initialize the chart when the document is fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        initMixedWidget4();
+    });
 </script>
 @endsection
 
 @section('pageScripts')
 <script>
-$(document).ready(function() {
-    $('#vendor-table').DataTable({
-        "pageLength": 10,
-        "ordering": false,
-        "searching": false,
-        "lengthChange": false,
-        "autoWidth": false,
+    $(document).ready(function() {
+        $('#vendor-table').DataTable({
+            "pageLength": 10,
+            "ordering": false,
+            "searching": false,
+            "lengthChange": false,
+            "autoWidth": false,
+        });
     });
-});
+</script>
+
+<script>
+ window.addEventListener('load', function () {
+        document.getElementById('page-loader').style.display = 'none';
+    });
 </script>
 
 @endsection

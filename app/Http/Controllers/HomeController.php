@@ -17,6 +17,7 @@ use App\Mail\AdminVendorRegistration;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Campus;
 use App\Models\Category;
+use App\Models\FinancialYear;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,7 +42,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
 
         if (Auth::user()->isvendor()) {
@@ -110,10 +111,30 @@ class HomeController extends Controller
             }
         } else {
 
-            $budgettotalAmount = Budget::sum('amount');
+            $Year = $request->query('year');
+            if (!$Year) {
+            $currentfinancialYear = FinancialYear::where('is_current', 1)->first();
+
+            $financialYearId = $currentfinancialYear->id;
+            }else{
+
+                $currentfinancialYear = FinancialYear::where('year', $Year)->first();
+
+            $financialYearId = $currentfinancialYear->id;
+
+            }
+
+            $budgettotalAmount = Budget::where('financial_year_id', $financialYearId)->sum('amount');
             $PaidAmount = PaymentMilestone::whereHas('invoice', function ($query) {
                 $query->where('invoice_status', 1);
-            })->sum('milestone_total_amount');
+            })
+            ->when($financialYearId, function ($query) use ($financialYearId) {
+                $query->whereHas('proposal', function ($subQuery) use ($financialYearId) {
+                    $subQuery->where('proposal_year', $financialYearId);
+                });
+            })
+            ->sum('milestone_total_amount');
+
             $remainingBudget = $budgettotalAmount - $PaidAmount;
 
             $usedPercentage = $budgettotalAmount > 0 ? ($PaidAmount / $budgettotalAmount) * 100 : 0;
@@ -127,40 +148,57 @@ class HomeController extends Controller
 
             $categoryWiseBudgets = Budget::with('category')
                 ->select('category_id', \DB::raw('SUM(amount) as total_amount'))
+                ->where('financial_year_id', $financialYearId)
                 ->groupBy('category_id')
                 ->orderBy('total_amount', 'DESC') // Order by total_amount in descending order
                 ->get();
 
             //$vendors = vendor::with('company')->where('vendor_status', 'verified')->orderBy('id')->get();
 
-            $vendors = Vendor::with(['company', 'proposals' => function ($query) {
-                $query->where('proposal_status', 1)
-                    ->select('vendor_id', \DB::raw('SUM(proposal_total_cost) as total_proposal_amount'))
-                    ->groupBy('vendor_id');
-            }, 'invoices' => function ($query) {
-                $query->where('invoice_status', 1)
-                    ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
-                    ->select('invoices.vendor_id', \DB::raw('SUM(payment_milestones.milestone_total_amount) as total_paid_amount'))
-                    ->groupBy('invoices.vendor_id');
-            }])
+            $vendors = Vendor::with([
+                'company',
+                'proposals' => function ($query) use ($financialYearId) {
+                    $query->where('proposal_status', 1)
+                        ->when(!is_null($financialYearId), function ($query) use ($financialYearId) {
+                            $query->where('proposal_year', $financialYearId); // Add year filter
+                        })
+                        ->select('vendor_id', \DB::raw('SUM(proposal_total_cost) as total_proposal_amount'))
+                        ->groupBy('vendor_id');
+                },
+                'invoices' => function ($query) use ($financialYearId) {
+                    $query->where('invoice_status', 1)
+                        ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
+                        ->join('proposal', 'payment_milestones.proposal_id', '=', 'proposal.id') // join proposal
+                        ->when(!is_null($financialYearId), function ($query) use ($financialYearId) {
+                            $query->where('proposal.proposal_year', $financialYearId); // Add year filter
+                        })
+                        ->select('invoices.vendor_id', \DB::raw('SUM(payment_milestones.milestone_total_amount) as total_paid_amount'))
+                        ->groupBy('invoices.vendor_id');
+                }
+            ])
                 ->where('vendor_status', 'verified')
                 ->orderBy('id')
                 ->get();
-            $totalMilestoneByCategory = PaymentMilestone::join('invoices', 'payment_milestones.id', '=', 'invoices.milestone_id')
-                ->join('payment_request', 'invoices.id', '=', 'payment_request.invoice_id')
-                ->leftJoin('tbl_category as child_category', 'payment_request.category_id', '=', 'child_category.id') // LEFT JOIN for child_category
-                ->leftJoin('tbl_category as parent_category', 'child_category.parent_category', '=', 'parent_category.id') // Get parent category from child category
-                ->where('payment_request.payment_status', 'completed') // Filter by payment status
-                ->select(
-                    DB::raw('COALESCE(parent_category.id, child_category.id) as parent_category_id'), // Get the parent category or fallback to child category
-                    DB::raw('COALESCE(parent_category.category_name, child_category.category_name) as parent_category_name'), // Get the parent category name or fallback
-                    DB::raw('SUM(payment_milestones.milestone_total_amount) as total_milestone_amount') // Sum the milestones for child categories under the same parent
-                )
-                ->groupBy('parent_category_id', 'parent_category_name') // Group by parent category instead of child category
-                ->orderBy('total_milestone_amount', 'DESC') // Order by total milestone amount
-                ->get();
+            
+                
 
-
+                $totalMilestoneByCategory = PaymentMilestone::join('invoices', 'payment_milestones.id', '=', 'invoices.milestone_id')
+                    ->join('payment_request', 'invoices.id', '=', 'payment_request.invoice_id')
+                    ->leftJoin('tbl_category as child_category', 'payment_request.category_id', '=', 'child_category.id') // LEFT JOIN for child_category
+                    ->leftJoin('tbl_category as parent_category', 'child_category.parent_category', '=', 'parent_category.id') // Get parent category from child category
+                    ->join('proposal', 'payment_milestones.proposal_id', '=', 'proposal.id') // join with proposal table
+                    ->where('payment_request.payment_status', 'completed') // Filter by payment status
+                    ->when($financialYearId, function ($query) use ($financialYearId) {
+                        $query->where('proposal.proposal_year', $financialYearId); // Filter by financial year
+                    })
+                    ->select(
+                        DB::raw('COALESCE(parent_category.id, child_category.id) as parent_category_id'), // Get the parent category or fallback to child category
+                        DB::raw('COALESCE(parent_category.category_name, child_category.category_name) as parent_category_name'), // Get the parent category name or fallback
+                        DB::raw('SUM(payment_milestones.milestone_total_amount) as total_milestone_amount') // Sum the milestones
+                    )
+                    ->groupBy('parent_category_id', 'parent_category_name') // Group by parent category
+                    ->orderBy('total_milestone_amount', 'DESC') // Order by total milestone amount
+                    ->get();
 
 
             $categorybudgetused = [];
@@ -183,7 +221,10 @@ class HomeController extends Controller
             $totalcatCount = Category::where('parent_category', NULL)->count();
 
 
-            return view('home', compact('budgettotalAmount', 'categoryWiseBudgets', 'vendors', 'PaidAmount', 'remainingBudget', 'usedPercentage', 'categorybudgetused', 'totalcatCount'));
+            $financialyears = FinancialYear::get();
+
+
+            return view('home', compact('budgettotalAmount', 'categoryWiseBudgets', 'vendors', 'PaidAmount', 'remainingBudget', 'usedPercentage', 'categorybudgetused', 'totalcatCount','financialyears','currentfinancialYear'));
         }
     }
 

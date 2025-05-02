@@ -28,13 +28,17 @@ class budget extends Controller
                       INNER JOIN invoices ON payment_request.invoice_id = invoices.id
                       INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
                       INNER JOIN tbl_category ON payment_request.category_id = tbl_category.id
+                      INNER JOIN proposal ON payment_milestones.proposal_id = proposal.id
                       WHERE (payment_request.category_id = tbl_budget.category_id 
                              OR tbl_category.parent_category = tbl_budget.category_id)
-                      AND payment_request.payment_status = "completed") as used_amount')
+                      AND payment_request.payment_status = "completed"
+                      AND proposal.proposal_year = tbl_budget.financial_year_id
+                     ) as used_amount')
         ->from('tbl_budget')
         ->whereNull('tbl_budget.deleted_at')
         ->orderByDesc('id')
         ->get();
+    
     
 
 

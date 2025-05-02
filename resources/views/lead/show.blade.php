@@ -123,7 +123,9 @@ select#programSelect {
                                     <span class="text-muted">Date</span>
                                     <span
                                         class="fs-5 text-gray-700">{{ \Carbon\Carbon::parse($proposal->proposal_date)->format('d F, Y') }}</span>
-
+                                        <span class="text-muted">Proposal Year</span>
+                                    <span
+                                        class="fs-5 text-gray-700">{{ $proposal->financialYear?->year ?? '-' }}</span>
                                     @if($proposal->file_path)
 
                                     <div class="symbol symbol-20px mt-5">

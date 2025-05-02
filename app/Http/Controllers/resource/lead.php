@@ -11,6 +11,7 @@ use App\Models\Proposal;
 use App\Models\PaymentMilestone;
 use Numbers_Words;
 use App\Models\ProposalRo;
+use App\Models\FinancialYear;
 use App\Mail\ProposalSubmit;
 use App\Mail\AdminProposalSubmit;
 use App\Mail\ApproveVendorProposal;
@@ -36,13 +37,15 @@ class lead extends Controller
         if(Auth::user()->isvendor()){
         $userId = Auth::user()->id;
         $vendor = Vendor::where('user_id', $userId)->first();
-        $proposal = Proposal::with(['proposalro', 'vendor','programme'])->where('vendor_id', $vendor->id)->orderByDesc('id')->get();
+        $proposal = Proposal::with(['proposalro', 'vendor','programme','financialYear'])->where('vendor_id', $vendor->id)->orderByDesc('id')->get();
         
         }else{
             
           $proposal = Proposal::with(['proposalro', 'vendor','programme'])->orderByDesc('id')->get();
         }
-        return view('lead.index',compact('proposal'));
+
+        $programmes = Stream::all();
+        return view('lead.index',compact('proposal','programmes'));
     }
 
     /**
@@ -55,7 +58,8 @@ class lead extends Controller
         $main_categories = Category::whereNull('parent_category')->with('children')->get();
         $vendors = Vendor::orderBy('vendor_name')->get();
         $stream = Stream::orderBy('stream_name')->get();
-        return view('lead.create',compact('main_categories','vendors','stream'));
+        $financialyears = FinancialYear::get();
+        return view('lead.create',compact('main_categories','vendors','stream','financialyears'));
     }
 
     /**
@@ -73,6 +77,7 @@ class lead extends Controller
             'order_gst' => 'required|numeric|min:0',
             'total_cost' => 'required',
             'invoice_due_date' => 'required|date',
+            'proposal_year' => 'required',
             'name.*' => 'required|string',
             'amount.*' => 'required|numeric',
             'gst.*' => 'required|numeric',
@@ -123,6 +128,7 @@ class lead extends Controller
             $proposal = new Proposal();
             $proposal->proposal_id  = $proposal_id;
             $proposal->proposal_date = $request->invoice_due_date;
+            $proposal->proposal_year = $request->proposal_year;
             $proposal->proposal_title = $request->proposal_title;
             $proposal->proposal_description = $request->description;
             $proposal->proposal_cost  = $request->order_cost;
@@ -187,7 +193,7 @@ class lead extends Controller
     public function show($id)
     {
         $id = Crypt::decrypt($id);
-        $proposal = Proposal::with(['paymentMilestones', 'vendor.states'])->find($id);
+        $proposal = Proposal::with(['paymentMilestones', 'vendor.states','financialYear'])->find($id);
 
        
         
@@ -207,6 +213,7 @@ class lead extends Controller
     public function edit($id)
     {
         $proposal = Proposal::with(['paymentMilestones'])->find($id);
+        $financialyears = FinancialYear::get();
         /*if(($proposal->proposal_status == 0 || $proposal->proposal_status == 2)){
         return view('lead.edit', compact('proposal'));
         }*/
@@ -218,7 +225,7 @@ class lead extends Controller
             /* &&
             ($proposal->proposal_status == 0 || $proposal->proposal_status == 2)*/
         ) {
-            return view('lead.edit', compact('proposal'));
+            return view('lead.edit', compact('proposal','financialyears'));
         }
     
         // Deny access if the conditions are not met
@@ -241,6 +248,7 @@ class lead extends Controller
             'order_gst' => 'required|numeric|min:0',
             'total_cost' => 'required',
             'invoice_due_date' => 'required|date',
+            'proposal_year' => 'required',
             'name.*' => 'required|string',
             'amount.*' => 'required|numeric',
             'gst.*' => 'required|numeric',
@@ -266,6 +274,7 @@ class lead extends Controller
             $proposal = Proposal::findOrFail($id);
 
             $proposal->proposal_date = $request->invoice_due_date;
+            $proposal->proposal_year = $request->proposal_year;
             $proposal->proposal_title = $request->proposal_title;
             $proposal->proposal_description = $request->description;
             $proposal->proposal_cost  = $request->order_cost;

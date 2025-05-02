@@ -72,6 +72,23 @@
                                             <div class="row pe-0 pb-5">
                                                 <div class="col-lg-12">
                                                     <div class="fv-row  d-flex justify-content-between">
+                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-7">
+
+
+                                                            <!--begin::Label-->
+                                                            <label class="required form-label">Title</label>
+                                                            <!--end::Label-->
+                                                            <!--begin::Select2-->
+                                                            <!--begin::Editor-->
+                                                            <input id="" name="proposal_title" placeholder="Proposal Title"
+                                                                class="form-control mb-2 @error('proposal_title') is-invalid @enderror"
+                                                                value="{{ old('proposal_title') }}" />
+                                                            @error('proposal_title')<div class="invalid-feedback">{{ $message }}
+                                                            </div> @enderror
+                                                            <!--end::Editor-->
+                                                            <!--end::Select2-->
+
+                                                        </div>
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-2">
                                                             <!--begin::Input group-->
 
@@ -121,23 +138,21 @@
 
 
                                                         </div>
-                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-9">
-
-
-                                                            <!--begin::Label-->
-                                                            <label class="required form-label">Title</label>
-                                                            <!--end::Label-->
-                                                            <!--begin::Select2-->
-                                                            <!--begin::Editor-->
-                                                            <input id="" name="proposal_title" placeholder="Proposal Title"
-                                                                class="form-control mb-2 @error('proposal_title') is-invalid @enderror"
-                                                                value="{{ old('proposal_title') }}" />
-                                                            @error('proposal_title')<div class="invalid-feedback">{{ $message }}
-                                                            </div> @enderror
-                                                            <!--end::Editor-->
-                                                            <!--end::Select2-->
-
+                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-2">
+                                                            <label class="form-label required">Proposal Year</label>
+                                                            <select name="proposal_year" class="form-select @error('proposal_year') is-invalid @enderror">
+                                                                <option value="">Select Year</option>
+                                                                @foreach($financialyears as $year)
+                                                                <option value="{{ $year->id }}" {{ old('proposal_year') == $year->id ? 'selected' : '' }}>
+                                                                    {{ $year->year }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                            @error('proposal_year')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                            @enderror
                                                         </div>
+
                                                     </div>
                                                     <div class="fv-row mt-5">
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-12">
@@ -307,7 +322,7 @@
                                                                         class="form-control form-control-solid mb-2 @error('name.*') is-invalid @enderror"
                                                                         name="name[]" placeholder="Schedule Title">
                                                                     @error('name.*')<div class="invalid-feedback milestone-error">
-                                                                    Payment Schedule is required</div> @enderror
+                                                                        Payment Schedule is required</div> @enderror
                                                                 </td>
                                                                 <td>
                                                                     <input type="text"

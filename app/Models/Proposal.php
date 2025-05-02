@@ -49,4 +49,10 @@ class Proposal extends Model
     {
         return $this->belongsTo(Stream::class, 'programme_id','id');
     }
+
+   public function financialYear()
+   {
+    return $this->belongsTo(FinancialYear::class, 'proposal_year');
+   }
+
 }

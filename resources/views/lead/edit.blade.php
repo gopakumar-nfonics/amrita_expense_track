@@ -54,8 +54,8 @@
                             <div class="card-body p-12">
                                 <!--begin::Form-->
                                 <div class="overlay" id="loaderOverlay">
-                             <div class="loader"></div>
-                         </div>
+                                    <div class="loader"></div>
+                                </div>
 
                                 <form id="kt_invoice_form" method="POST"
                                     action="{{ $proposal->proposal_status == 2 ? route('lead.store') : route('lead.update', $proposal->id) }}"
@@ -76,7 +76,24 @@
                                             <div class="row pe-0 pb-5">
                                                 <div class="col-lg-12">
                                                     <div class="fv-row  d-flex justify-content-between">
-                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-3">
+                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-7">
+
+
+                                                            <!--begin::Label-->
+                                                            <label class="required form-label">Title</label>
+                                                            <!--end::Label-->
+                                                            <!--begin::Select2-->
+                                                            <!--begin::Editor-->
+                                                            <input id="" name="proposal_title" placeholder="Proposal Title"
+                                                                class="form-control mb-2 @error('proposal_title') is-invalid @enderror"
+                                                                value="{{ old('proposal_title', $proposal->proposal_title) }}" />
+                                                            @error('proposal_title')<div class="invalid-feedback">{{ $message }}
+                                                            </div> @enderror
+                                                            <!--end::Editor-->
+                                                            <!--end::Select2-->
+
+                                                        </div>
+                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-2">
                                                             <!--begin::Input group-->
 
                                                             <!--begin::Label-->
@@ -125,23 +142,27 @@
 
 
                                                         </div>
-                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-9">
-
-
-                                                            <!--begin::Label-->
-                                                            <label class="required form-label">Title</label>
-                                                            <!--end::Label-->
-                                                            <!--begin::Select2-->
-                                                            <!--begin::Editor-->
-                                                            <input id="" name="proposal_title" placeholder="Proposal Title"
-                                                                class="form-control mb-2 @error('proposal_title') is-invalid @enderror"
-                                                                value="{{ old('proposal_title', $proposal->proposal_title) }}" />
-                                                            @error('proposal_title')<div class="invalid-feedback">{{ $message }}
-                                                            </div> @enderror
-                                                            <!--end::Editor-->
-                                                            <!--end::Select2-->
-
+                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-2">
+                                                            <label class="form-label required">Proposal Year</label>
+                                                            <select name="proposal_year" class="form-select @error('proposal_year') is-invalid @enderror">
+                                                                <option value="">Select Year</option>
+                                                                @foreach($financialyears as $year)
+                                                                <option value="{{ $year->id }}"
+                                                                    @if(old('proposal_year')==$year->id)
+                                                                    selected
+                                                                    @elseif(isset($proposal) && $proposal->proposal_year == $year->id)
+                                                                    selected
+                                                                    @endif>
+                                                                    {{ $year->year }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                            @error('proposal_year')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                            @enderror
                                                         </div>
+
+
                                                     </div>
                                                     <div class="fv-row mt-5">
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-12">
@@ -545,35 +566,35 @@
 </script>
 
 <script>
-document.getElementById('kt_invoice_form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
+    document.getElementById('kt_invoice_form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
 
-    // Show the SweetAlert confirmation dialog
-    swal({
-        title: "Are you sure?",
-        text: "Do you really want to submit this Proposal?",
-        icon: "warning",
-        buttons: {
-            cancel: {
-                text: "Cancel",
-                value: null,
-                visible: true,
-                closeModal: true,
+        // Show the SweetAlert confirmation dialog
+        swal({
+            title: "Are you sure?",
+            text: "Do you really want to submit this Proposal?",
+            icon: "warning",
+            buttons: {
+                cancel: {
+                    text: "Cancel",
+                    value: null,
+                    visible: true,
+                    closeModal: true,
+                },
+                confirm: {
+                    text: "Submit",
+                    value: true,
+                    visible: true,
+                    closeModal: true
+                }
             },
-            confirm: {
-                text: "Submit",
-                value: true,
-                visible: true,
-                closeModal: true
+            dangerMode: true,
+        }).then((willSubmit) => {
+            if (willSubmit) {
+                document.getElementById('loaderOverlay').style.display = 'flex';
+                this.submit();
             }
-        },
-        dangerMode: true,
-    }).then((willSubmit) => {
-        if (willSubmit) {
-            document.getElementById('loaderOverlay').style.display = 'flex';
-            this.submit(); 
-        }
+        });
     });
-});
 </script>
 @endsection

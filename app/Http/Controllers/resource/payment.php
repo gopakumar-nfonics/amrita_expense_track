@@ -195,10 +195,19 @@ class payment extends Controller
     {
         $categoryId = $request->input('category_id');
 
-        // Get the current financial year
-        $currentFinancialYear = FinancialYear::where('is_current', 1)->first();
+        $proposal_year =  $request->input('proposal_year');
 
-        if (!$currentFinancialYear) {
+        if ($proposal_year) {
+            // If a specific proposal year is provided, use it
+            $financialYear = FinancialYear::find($proposal_year);
+        } else {
+
+        // Get the current financial year
+        $financialYear = FinancialYear::where('is_current', 1)->first();
+
+        }
+
+        if (!$financialYear) {
             return response()->json([
                 'error' => 'Current financial year not found'
             ], 404);
@@ -218,7 +227,7 @@ class payment extends Controller
 
         // Get the budget for the selected category
         $budget = Budget::where('category_id', $categoryId)
-            ->where('financial_year_id', $currentFinancialYear->id)
+            ->where('financial_year_id', $financialYear->id)
             ->first();
 
         if ($budget) {
@@ -227,7 +236,7 @@ class payment extends Controller
             // If no budget found for the selected category, check for parent category
             if ($category->parent_category) {
                 $parentBudget = Budget::where('category_id', $category->parent_category)
-                    ->where('financial_year_id', $currentFinancialYear->id)
+                    ->where('financial_year_id', $financialYear->id)
                     ->first();
 
                 if ($parentBudget) {

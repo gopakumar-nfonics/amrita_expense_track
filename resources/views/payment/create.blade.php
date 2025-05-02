@@ -332,6 +332,7 @@
                                                         <input type="hidden"
                                                             value="{{$invoice->proposal->programme_id}}"
                                                             name="programme" id="programme">
+                                                            <input type="hidden" id="proposal_year" value="{{ $invoice->proposal->proposal_year }}">
                                                         <!--begin::Label-->
                                                         <label class="required form-label">Category</label>
                                                         <!--end::Label-->
@@ -541,7 +542,8 @@ function getallocatedbudget() {
         url: '/get-budget-details', // Replace with your actual endpoint
         type: 'GET',
         data: {
-            category_id: categoryId
+            category_id: categoryId,
+            proposal_year: $('#proposal_year').val()
         },
         success: function(response) {
             if (response.error) {

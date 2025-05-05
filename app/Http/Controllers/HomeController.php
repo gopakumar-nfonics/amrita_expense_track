@@ -57,23 +57,44 @@ class HomeController extends Controller
 
                 $vendor_id = $vendor->id;
 
+                $Year = $request->query('year');
+                if (!$Year) {
+                $currentfinancialYear = FinancialYear::where('is_current', 1)->first();
+    
+                $financialYearId = $currentfinancialYear->id;
+                }else{
+    
+                    $currentfinancialYear = FinancialYear::where('year', $Year)->first();
+    
+                $financialYearId = $currentfinancialYear->id;
+    
+                }
+
                 $vendordata = Vendor::with([
                     'company',
-                    'proposals' => function ($query) {
+                    'proposals' => function ($query) use ($financialYearId) {
                         $query->where('proposal_status', 1)
+                            ->when(!is_null($financialYearId), function ($query) use ($financialYearId) {
+                                $query->where('proposal_year', $financialYearId); // Filter by financial year
+                            })
                             ->select('vendor_id', \DB::raw('SUM(proposal_total_cost) as total_proposal_amount'))
                             ->groupBy('vendor_id');
                     },
-                    'invoices' => function ($query) {
+                    'invoices' => function ($query) use ($financialYearId) {
                         $query->where('invoice_status', 1)
                             ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
+                            ->join('proposal', 'payment_milestones.proposal_id', '=', 'proposal.id') // join proposal table
+                            ->when(!is_null($financialYearId), function ($query) use ($financialYearId) {
+                                $query->where('proposal.proposal_year', $financialYearId); // Filter by financial year
+                            })
                             ->select('invoices.vendor_id', \DB::raw('SUM(payment_milestones.milestone_total_amount) as total_paid_amount'))
                             ->groupBy('invoices.vendor_id');
                     }
                 ])
-                    ->where('vendor_status', 'verified')
-                    ->where('id', $vendor_id) // Fetch specific vendor by id
-                    ->first();
+                ->where('vendor_status', 'verified')
+                ->where('id', $vendor_id) // Fetch specific vendor by id
+                ->first();
+                
 
                 // Get the totals
                 $total_proposal_amount = $vendordata->proposals->isNotEmpty() ? $vendordata->proposals[0]->total_proposal_amount : 0;
@@ -88,26 +109,38 @@ class HomeController extends Controller
                 //$proposal = Proposal::where('vendor_id', $vendor->id)->orderBy('id')->get();
 
                 $proposal = Proposal::where('vendor_id', $vendor->id)
-    ->with(['invoices' => function ($query) {
-        $query->where('invoice_status', 1) // Add condition to filter by invoice_status
-            ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
-            ->select('invoices.proposal_id', 
-                DB::raw('COUNT(payment_milestones.id) as total_milestone_count'), 
-                DB::raw('SUM(payment_milestones.milestone_total_amount) as total_paid_amount'))
-            ->groupBy('invoices.proposal_id');
-    }])
-    ->with(['paymentMilestones' => function ($query) {
-        // Get the count and sum for all payment milestones related to each proposal
-        $query->select('id','proposal_id'); // Adjust fields as necessary
-    }])
-    ->orderBy('id')
-    ->get();
+                ->when(!is_null($financialYearId), function ($query) use ($financialYearId) {
+                    $query->where('proposal_year', $financialYearId); // Filter proposals by financial year
+                })
+                ->with([
+                    'invoices' => function ($query) use ($financialYearId) {
+                        $query->where('invoice_status', 1)
+                            ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
+                            ->when(!is_null($financialYearId), function ($query) use ($financialYearId) {
+                                $query->join('proposal', 'payment_milestones.proposal_id', '=', 'proposal.id')
+                                      ->where('proposal.proposal_year', $financialYearId); // Filter by financial year
+                            })
+                            ->select(
+                                'invoices.proposal_id',
+                                DB::raw('COUNT(payment_milestones.id) as total_milestone_count'),
+                                DB::raw('SUM(payment_milestones.milestone_total_amount) as total_paid_amount')
+                            )
+                            ->groupBy('invoices.proposal_id');
+                    },
+                    'paymentMilestones' => function ($query) {
+                        $query->select('id', 'proposal_id'); // Keep as is, or add filtering if needed
+                    }
+                ])
+                ->orderBy('id')
+                ->get();
+            
+
+
+                $financialyears = FinancialYear::get();
 
 
 
-
-
-                return view('vendor_dashboard', compact('total_proposal_amount', 'total_paid_amount', 'remainingBudget','paid_percentage','proposal'));
+                return view('vendor_dashboard', compact('total_proposal_amount', 'total_paid_amount', 'remainingBudget','paid_percentage','proposal','financialyears','currentfinancialYear'));
             }
         } else {
 

@@ -20,6 +20,57 @@
     vertical-align: top;
 }
 </style>
+
+<style>
+#page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(243 240 240 / 92%); /* or any bg color you want */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-dots {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.loading-dots span {
+    width: 16px;
+    height: 16px;
+    margin:0px 3px !important;
+    background-color: #d63384; /* dot color */
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounce 0.6s infinite alternate;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+        opacity: 0.6;
+    }
+    to {
+        transform: translateY(-10px);
+        opacity: 1;
+    }
+}
+</style>
 @section('content')
 <!--begin::Main-->
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
@@ -44,7 +95,7 @@
                     <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
                         <!--begin::Item-->
                         <li class="breadcrumb-item text-muted">
-                            <a href="../../demo1/dist/index.html" class="text-info">Overview of 2025 : Proposal &
+                            <a href="../../demo1/dist/index.html" class="text-info">Overview of {{$currentfinancialYear->year}} : Proposal &
                                 Payment Summary</a>
                         </li>
 
@@ -58,11 +109,13 @@
                     <a href="#" class="text-dark fs-6" data-bs-toggle="modal"
                         data-bs-target="#kt_modal_create_app">Select Year :</a>
                     <!--end::Secondary button-->
-                    <select id="programmeFilter" class="form-select"
+                    <select id="financialYearSelect" class="form-select"
                         style="width: 90px; padding: 5px 15px; cursor: pointer;">
-                        <option value="">2025</option>
-                        <option value="">2025</option>
-                        <option value="">2026</option>
+                        @foreach($financialyears as $year)
+                        <option value="{{ $year->year }}" {{  $year->year == $currentfinancialYear->year ? 'selected' : '' }}>
+                            {{ $year->year }}
+                        </option>
+                        @endforeach
                     </select>
                 </div>
                 <!--end::Actions-->
@@ -74,7 +127,16 @@
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-fluid">
-
+           
+            <div id="page-loader">
+                    <div class="loading-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
 
                 <div class="row g-5 g-xl-8 mt-4">
                     <!--begin::Col-->
@@ -486,7 +548,14 @@
 <!--end::App-->
 
 <script src="assets/js/custom/apps/ecommerce/reports/returns/returns.js"></script>
+<script>
+    document.getElementById('financialYearSelect').addEventListener('change', function() {
 
+        document.getElementById('page-loader').style.display = 'flex';
+        const selectedYearId = this.value;
+        window.location.href = '?year=' + selectedYearId;
+    });
+</script>
 <script>
 var usedPercentage = {
     {
@@ -576,6 +645,12 @@ $(document).ready(function() {
         "autoWidth": false,
     });
 });
+</script>
+
+<script>
+ window.addEventListener('load', function () {
+        document.getElementById('page-loader').style.display = 'none';
+    });
 </script>
 
 @endsection

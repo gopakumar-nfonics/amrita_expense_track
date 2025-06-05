@@ -126,3 +126,5 @@ Route::get('getNextRoNumber', [\App\Http\Controllers\resource\lead::class, 'getN
 Route::get('/get-payment-details', [\App\Http\Controllers\resource\payment::class, 'getPaymentDetails'])->name('getPaymentDetails');
 
 });
+
+Route::resource('noninvoicepayment',\App\Http\Controllers\resource\noninvoicepayment::class);

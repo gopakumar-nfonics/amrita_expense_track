@@ -15,6 +15,7 @@ use App\Models\Budget;
 use App\Models\FinancialYear;
 use Numbers_Words;
 use App\Mail\InvoicePaymentInitiation;
+use App\Models\NoninvoicePayment;
 
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
@@ -195,6 +196,7 @@ class payment extends Controller
 {
     $categoryId = $request->input('category_id');
     $proposal_year =  $request->input('proposal_year');
+    $excludePaymentId = $request->input('exclude_payment_id'); 
 
     if ($proposal_year) {
         $financialYear = FinancialYear::find($proposal_year);
@@ -237,6 +239,15 @@ class payment extends Controller
         }
     }
 
+    // Prepare category IDs to check for usage
+    $categoryIds = collect();
+    if ($category->parent_category) {
+        $categoryIds = Category::where('parent_category', $category->parent_category)->pluck('id');
+        $categoryIds->push($category->parent_category);
+    } else {
+        $categoryIds->push($category->id);
+    }
+
     $usedBudget = PaymentRequest::where(function ($query) use ($category) {
         if ($category->parent_category) {
             $subCategoryIds = Category::where('parent_category', $category->parent_category)->pluck('id');
@@ -260,6 +271,18 @@ class payment extends Controller
         return $paymentRequest->invoice->milestone->milestone_total_amount;
     });
 
+    // --- Used Budget from Non-Invoice Payments
+    $usedBudgetFromNonInvoice = NoninvoicePayment::whereIn('category_id', $categoryIds)
+        ->where('financial_year_id', $financialYear->id)
+        ->where('payment_status', 'completed');
+
+    // EXCLUDE current editing payment from used budget
+    if ($excludePaymentId) {
+        $usedBudgetFromNonInvoice->where('id', '!=', $excludePaymentId);
+    }
+    $usedBudgetFromNonInvoice = $usedBudgetFromNonInvoice->sum('amount');
+
+    $usedBudget = $usedBudget + $usedBudgetFromNonInvoice;
     $formattedTotalBudget = number_format($totalBudget, 2, '.', ',');
     $formattedUsedBudget = number_format($usedBudget, 2, '.', ',');
 

@@ -11,7 +11,7 @@
             </div>
             <div class="card-toolbar">
                 <a href="{{ route('noninvoicepayment.create') }}" class="btn btn-sm btn-primary">
-                    Add
+                    Add Payment
                 </a>
             </div>
         </div>

@@ -53,21 +53,28 @@
                                                     <div class="fv-row  d-flex justify-content-start gap-10">
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-4">
                                                             <label class="required form-label">Title</label>
-                                                            
-                                                            <input id="" name="title" placeholder="Title"
-                                                                class="form-control mb-2 @error('title') is-invalid @enderror"
-                                                                value="{{ old('title', $noninvoicepayments->title) }}" />
-                                                            @error('title')<div class="invalid-feedback">{{ $message }}
-                                                            </div> @enderror
+                                                            <input 
+                                                              id=""
+                                                              name="title"
+                                                              placeholder="Title"
+                                                              class="form-control mb-2 @error('title') is-invalid @enderror"
+                                                              value="{{ old('title', $noninvoicepayments->title) }}"
+                                                            />
+                                                            @error('title')
+                                                            <div class="invalid-feedback">{{ $message }}</div> 
+                                                            @enderror
                                                         </div>
 
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-3">
                                                             <label class="form-label required">Category</label>
                                                             <select
-                                                                class="form-select mb-2 @error('category') is-invalid @enderror"
-                                                                data-control="select2" data-hide-search="true"
-                                                                data-placeholder="Select Category" name="category"
-                                                                id="category" onchange="getallocatedbudget()"> 
+                                                              class="form-select mb-2 @error('category') is-invalid @enderror"
+                                                              data-control="select2"
+                                                              data-hide-search="true"
+                                                              data-placeholder="Select Category" name="category"
+                                                              id="category" 
+                                                              onchange="getallocatedbudget()"
+                                                            > 
                                                                 <option></option>
                                                                 @foreach ($main_categories as $main_category)
                                                                 @if ($main_category->children->isNotEmpty())
@@ -101,7 +108,10 @@
 
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-3">
                                                             <label class="form-label required">Program</label>
-                                                            <select name="program" class="form-select @error('program') is-invalid @enderror">
+                                                            <select 
+                                                              name="program"
+                                                              class="form-select @error('program') is-invalid @enderror"
+                                                            >
                                                                 <option value="">Select Program</option>
                                                                 @foreach($streams as $stream)
                                                                 <option 
@@ -126,7 +136,11 @@
                                                         
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-4">
                                                             <label class="form-label required">Year</label>
-                                                            <select name="year" id="year"class="form-select @error('year') is-invalid @enderror">
+                                                            <select
+                                                              name="year" 
+                                                              id="year" 
+                                                              class="form-select @error('year') is-invalid @enderror"
+                                                            >
                                                                 <option value="">Select Year</option>
                                                                 @foreach($financialyears as $year)
                                                                 <option value="{{ $year->id }}" {{ old('year', $noninvoicepayments->financial_year_id) == $year->id ? 'selected' : '' }}>
@@ -141,10 +155,13 @@
 
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-3">
                                                             <label class="form-label required">Date</label>
-                                                           <input id="noninvoice_date" name="noninvoice_date"
-                                                                    placeholder=""
-                                                                    class="form-control mb-2  @error('noninvoice_date') is-invalid @enderror"
-                                                                    value="{{ old('noninvoice_date', $noninvoicepayments->transaction_date) }}" />
+                                                            <input 
+                                                              id="noninvoice_date" 
+                                                              name="noninvoice_date"
+                                                              placeholder=""
+                                                              class="form-control mb-2  @error('noninvoice_date') is-invalid @enderror"
+                                                              value="{{ old('noninvoice_date', $noninvoicepayments->transaction_date) }}"
+                                                            />
                                                             @error('noninvoice_date')
                                                             <div class="invalid-feedback">{{ $message }}</div>
                                                             @enderror
@@ -153,11 +170,15 @@
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-3">
                                                             <label class="required form-label">Amount</label>
                                                             
-                                                            <input id="noninvoice_amount" name="amount" placeholder="Amount"
-                                                                class="form-control mb-2 @error('amount') is-invalid @enderror"
-                                                                value="{{ old('amount', $noninvoicepayments->amount) }}" />
-                                                            @error('amount')<div class="invalid-feedback">{{ $message }}
-                                                            </div> @enderror
+                                                            <input 
+                                                              id="noninvoice_amount" 
+                                                              name="amount" 
+                                                              placeholder="Amount"
+                                                              class="form-control mb-2 @error('amount') is-invalid @enderror"
+                                                              value="{{ old('amount', $noninvoicepayments->amount) }}" />
+                                                            @error('amount')
+                                                            <div class="invalid-feedback">{{ $message }}</div>
+                                                            @enderror
                                                         </div>
                                                     </div>
 
@@ -171,11 +192,15 @@
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-4">
                                                             <label class="form-label">UTR Number</label>
                                                             
-                                                            <input id="" name="utr_number" placeholder="UTR Number"
-                                                                class="form-control mb-2 @error('utr_number') is-invalid @enderror"
-                                                                value="{{ old('utr_number', $noninvoicepayments->utr_number) }}" />
-                                                            @error('utr_number')<div class="invalid-feedback">{{ $message }}
-                                                            </div> @enderror
+                                                            <input 
+                                                              id="" 
+                                                              name="utr_number" 
+                                                              placeholder="UTR Number"
+                                                              class="form-control mb-2 @error('utr_number') is-invalid @enderror"
+                                                              value="{{ old('utr_number', $noninvoicepayments->utr_number) }}" />
+                                                            @error('utr_number')
+                                                            <div class="invalid-feedback">{{ $message }}</div> 
+                                                            @enderror
                                                         </div>
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-8">
                                                             <label class="form-label">Remarks</label>
@@ -187,9 +212,7 @@
                                                               value="{{ old('remarks', $noninvoicepayments->remarks) }}"
                                                             />
 																@error('remarks')
-                                                                <div class="invalid-feedback">
-                                                                    {{ $message }}
-                                                                </div>
+                                                                <div class="invalid-feedback">{{ $message }}</div>
                                                                 @enderror
                                                         </div>
                                                     </div>

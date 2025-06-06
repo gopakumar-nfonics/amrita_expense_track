@@ -154,7 +154,7 @@
                                                 </a>
 											</div>				
 											<div class="menu-item px-3">
-												<a href="" class="menu-link px-3" data-kt-customer-table-filter="delete_row">
+												<a href="javascript:void(0)" onclick="removePayment('{{$payment->id}}')" class="menu-link px-3" data-kt-customer-table-filter="delete_row">
                                                     Delete
                                                 </a>
 											</div>					
@@ -188,6 +188,55 @@
             "ordering": false
         });
     });
+</script>
+
+<script>
+	function removePayment(paymentId) {
+		swal({
+			title: "Are you sure?",
+			text: "You want to remove this Non-Invoice Payment",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				$.ajax({
+					url: "/noninvoicepayment/" + paymentId,
+					type: 'DELETE',
+					data: {
+						_token: '{{ csrf_token() }}'
+					},
+					success: function(response) {
+						if (response.success) {
+							swal(response.success, {
+								icon: "success",
+								buttons: false,
+							});
+							setTimeout(() => {
+								location.reload();
+							}, 1000);
+						} else {
+							swal(response.error || 'Something went wrong.', {
+								icon: "warning",
+								buttons: false,
+							});
+							setTimeout(() => {
+								location.reload();
+							}, 1000);
+						}
+					},
+					error: function(xhr) {
+						swal('Error: Something went wrong.', {
+							icon: "error",
+						}).then(() => {
+							location.reload();
+						});
+					}
+				});
+			}
+		});
+	}
 </script>
 
 @endsection

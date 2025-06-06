@@ -171,6 +171,13 @@ class noninvoicepayment extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $noninvoicepayments = noninvoicepayments::findOrFail($id);
+            $noninvoicepayments->forceDelete();
+            
+            return response()->json(['success' => 'Non Invoice Payment Deleted Successfully']);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }

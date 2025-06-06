@@ -68,6 +68,7 @@ class invoice extends Controller
             'invoice_number' => 'required|string|max:255',
             'invoice_date' => 'required|date',
             'file' => 'required|file|mimes:pdf,doc,docx|max:2048', // Adjust file validation as needed
+            'description' => 'required|string',
         ]);
 
         try {
@@ -99,7 +100,7 @@ class invoice extends Controller
             $invoices->milestone_id = $request->milestone;
             $invoices->invoice_number = $request->invoice_number;
             $invoices->invoice_date  = $request->invoice_date;
-
+            $invoices->invoice_notes = $request->description;
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
                 $customFilename = $invoice_id.'.' . $file->getClientOriginalExtension();

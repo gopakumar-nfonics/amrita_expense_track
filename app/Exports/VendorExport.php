@@ -30,7 +30,7 @@ class VendorExport implements FromArray, WithEvents
     $data[] = ['Amrita Vishwa Vidyapeetham (ASE/ASA)', '', '', '', '', '', '', '', '',''];
     $data[] = ['Vendor Wise - Payment Reports', '', '', '', '', '', '', '','', ''];
     $data[] = ["Period: From {$formattedStartDate} To {$formattedEndDate}", '', '', '', '', '', '', '','', ''];
-    $data[] = ['#', 'Vendor', 'Proposal', 'RO #', 'Milestone', 'Invoice #', 'Payment Date','UTR #', 'Amount', 'Total'];
+    $data[] = ['#', 'Vendor', 'Proposal', 'RO #', 'Milestone', 'Invoice #', 'Invoice Description','Payment Date','UTR #', 'Amount', 'Total'];
 
     $serialNumber = 1; // Initialize serial number for vendors
 
@@ -50,6 +50,7 @@ class VendorExport implements FromArray, WithEvents
                         $proposal['proposal_ro'],     // RO (only for first milestone)
                         $milestones[0]['milestone_name'], // First Milestone Name
                         $milestones[0]['invoice_id'], // First Milestone Invoice #
+                        $milestones[0]['invoice_notes'],
                         $milestones[0]['transaction_date'], // First Milestone Payment Date
                         $milestones[0]['milestone_amount'], // First Milestone Amount
                         $milestones[0]['utr_number'], // First utr_number
@@ -72,6 +73,7 @@ class VendorExport implements FromArray, WithEvents
                         '', // RO (leave empty for subsequent milestones)
                         $milestones[$i]['milestone_name'], // Milestone
                         $milestones[$i]['invoice_id'], // Invoice #
+                        $milestones[$i]['invoice_notes'],
                         $milestones[$i]['transaction_date'], // Payment Date
                         $milestones[$i]['milestone_amount'], // Amount
                         $milestones[$i]['utr_number'],
@@ -91,7 +93,8 @@ class VendorExport implements FromArray, WithEvents
         // Total row
         $data[] = [
             '',
-             '',
+            '',
+            '',
             '',
             '',
             '',
@@ -114,18 +117,18 @@ class VendorExport implements FromArray, WithEvents
                 $rowCount = 5; // Starting after headers (first 4 rows for titles and headers)
     
                 // Title row styling
-                $sheet->mergeCells('A1:J1');
-                $sheet->mergeCells('A2:J2');
-                $sheet->mergeCells('A3:J3');
-                $this->applyTitleStyle($sheet, 'A1:J1');
-                $this->applyTitleStyle($sheet, 'A2:J2');
-                $this->applyTitleStyle($sheet, 'A3:J3');
+                $sheet->mergeCells('A1:K1');
+                $sheet->mergeCells('A2:K2');
+                $sheet->mergeCells('A3:K3');
+                $this->applyTitleStyle($sheet, 'A1:K1');
+                $this->applyTitleStyle($sheet, 'A2:K2');
+                $this->applyTitleStyle($sheet, 'A3:K3');
     
                 // Header row styling
-                $sheet->getStyle('A4:J4')->applyFromArray($this->getHeaderStyle());
+                $sheet->getStyle('A4:K4')->applyFromArray($this->getHeaderStyle());
     
                 // Apply default font and vertical alignment
-                $sheet->getStyle('A:J')->applyFromArray([
+                $sheet->getStyle('A:K')->applyFromArray([
                     'font' => ['name' => 'Verdana', 'size' => 11],
                     'alignment' => ['vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER],
                 ]);
@@ -134,8 +137,8 @@ class VendorExport implements FromArray, WithEvents
 
                 
             // Bold and align specific columns (C, E, F, G)
-            $this->applyBoldRightAlign($sheet, 'I');
             $this->applyBoldRightAlign($sheet, 'J');
+            $this->applyBoldRightAlign($sheet, 'K');
 
             // Set column widths
             $sheet->getColumnDimension('A')->setWidth(5);
@@ -144,10 +147,11 @@ class VendorExport implements FromArray, WithEvents
             $sheet->getColumnDimension('D')->setWidth(25);
             $sheet->getColumnDimension('E')->setWidth(30);
             $sheet->getColumnDimension('F')->setWidth(20);
-            $sheet->getColumnDimension('G')->setWidth(20);
+            $sheet->getColumnDimension('G')->setWidth(50);
             $sheet->getColumnDimension('H')->setWidth(25);
             $sheet->getColumnDimension('I')->setWidth(25);
             $sheet->getColumnDimension('J')->setWidth(25);
+            $sheet->getColumnDimension('K')->setWidth(25);
     
                 // Iterate over each vendor and their proposals
                 foreach ($this->vendorData as $vendor) {
@@ -181,22 +185,23 @@ class VendorExport implements FromArray, WithEvents
                         if ($milestoneCount > 1) {
                             $sheet->mergeCells("C$rowCount:C" . ($rowCount + $milestoneCount - 1));
                             $sheet->mergeCells("D$rowCount:D" . ($rowCount + $milestoneCount - 1));
-                            $sheet->mergeCells("J$rowCount:J" . ($rowCount + $milestoneCount - 1)); // Merge total amount column
+                            $sheet->mergeCells("K$rowCount:K" . ($rowCount + $milestoneCount - 1)); // Merge total amount column
                         }
     
                         // Set the proposal title and RO number in the first row for this proposal
                         $sheet->setCellValue("C$rowCount", $proposal['proposal_title']);
                         $sheet->setCellValue("D$rowCount", $proposal['proposal_ro']);
-                        $sheet->setCellValue("J$rowCount", $proposal['total_milestone_amount']);
+                        $sheet->setCellValue("K$rowCount", $proposal['total_milestone_amount']);
     
                         // Loop through each milestone for this proposal
                         foreach ($proposal['milestones'] as $milestone) {
                             // Set the milestone details for each milestone row
                             $sheet->setCellValue("E$rowCount", $milestone['milestone_name']);
                             $sheet->setCellValue("F$rowCount", $milestone['invoice_id']);
-                            $sheet->setCellValue("G$rowCount", $milestone['transaction_date']);
-                            $sheet->setCellValue("H$rowCount", $milestone['utr_number']);
-                            $sheet->setCellValue("I$rowCount", $milestone['milestone_amount']);
+                            $sheet->setCellValue("G$rowCount", $milestone['invoice_notes']);
+                            $sheet->setCellValue("H$rowCount", $milestone['transaction_date']);
+                            $sheet->setCellValue("I$rowCount", $milestone['utr_number']);
+                            $sheet->setCellValue("J$rowCount", $milestone['milestone_amount']);
     
                             // Increment the row count after processing each milestone
                             $rowCount++;
@@ -206,18 +211,18 @@ class VendorExport implements FromArray, WithEvents
     
                 $lastRow = $rowCount+1; // $rowIndex is the current row after all category and subcategory rows
 
-                $sheet->getStyle("A$lastRow:J$lastRow")->applyFromArray($this->getTotalRowStyle());
+                $sheet->getStyle("A$lastRow:K$lastRow")->applyFromArray($this->getTotalRowStyle());
                 
-                $sheet->mergeCells("A$lastRow:I$lastRow");
+                $sheet->mergeCells("A$lastRow:J$lastRow");
 
                 $sheet->setCellValue("A$lastRow", 'Grand Total ');
                 //$sheet->setCellValue("H$lastRow", number_format_indian($this->grandTotalAmount)); // Accessing the class property
-                $sheet->setCellValue("j$lastRow", number_format_indian($this->grandTotalProposalAmount)); // Accessing the class property
+                $sheet->setCellValue("k$lastRow", number_format_indian($this->grandTotalProposalAmount)); // Accessing the class property
 
                 $sheet->getStyle("A$lastRow:I$lastRow")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
                 
                 // Apply borders to the data range
-                $sheet->getStyle("A1:J$rowCount")->applyFromArray([
+                $sheet->getStyle("A1:K$rowCount")->applyFromArray([
                     'borders' => [
                         'allBorders' => [
                             'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,

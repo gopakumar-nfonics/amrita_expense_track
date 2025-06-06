@@ -270,6 +270,25 @@
                                                     </div>
 
                                                 </div>
+                                                <div class="col-lg-12">
+                                                    <div class="fv-row mt-5">
+                                                        <div class="fs-6 fw-bold text-gray-700 col-lg-12">
+                                                            <label class="required form-label">
+                                                                Description
+                                                            </label>
+                                                            
+                                                            <!--begin::Editor-->
+                                                            <textarea id="" name="description"
+                                                                class="form-control mb-2 @error('description') is-invalid @enderror"></textarea>
+                                                            @error('description')<div class="invalid-feedback">
+                                                                {{ $message }}
+                                                            </div> @enderror
+                                                            <!--end::Editor-->
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
 
 
 

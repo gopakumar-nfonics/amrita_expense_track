@@ -212,7 +212,7 @@ class ReportsController extends Controller
         $query->where('proposal_status', 1)
             ->with(['invoices' => function ($query) use ($request) {
                 $query->where('invoice_status', 1)
-                    ->select('id', 'invoice_id', 'proposal_id', 'invoice_status', 'milestone_id')
+                    ->select('id', 'invoice_id', 'proposal_id', 'invoice_status', 'milestone_id', 'invoice_notes')
                     ->with(['paymentRequests' => function ($query) use ($request) {
                         $query->select('id', 'invoice_id', 'transaction_date', 'utr_number');
                         
@@ -292,7 +292,8 @@ class ReportsController extends Controller
                                 'milestone_amount' => number_format_indian($milestone->milestone_total_amount ?? 0),
                                 'invoice_id' => $invoice->invoice_id,
                                 'transaction_date' => $invoice->paymentRequests ? Carbon::parse($invoice->paymentRequests->transaction_date)->format('d-m-Y') : null,
-                                'utr_number' => $invoice->paymentRequests ? $invoice->paymentRequests->utr_number : null
+                                'utr_number' => $invoice->paymentRequests ? $invoice->paymentRequests->utr_number : null,
+                                'invoice_notes' => $invoice->invoice_notes,
                             ];
                             if($milestoneDetails['transaction_date']!=null)
                             {

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\Campus;
 use App\Models\Category;
 use App\Models\FinancialYear;
+use App\Models\NoninvoicePayment;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -168,6 +169,13 @@ class HomeController extends Controller
             })
             ->sum('milestone_total_amount');
 
+            // --- Used Budget by Non-Invoice Payments
+            $nonInvoiceAmount = NoninvoicePayment::where('payment_status', 'completed')
+                ->where('financial_year_id', $financialYearId)
+                ->sum('amount');
+            
+            $PaidAmount = $PaidAmount + $nonInvoiceAmount;
+
             $remainingBudget = $budgettotalAmount - $PaidAmount;
 
             $usedPercentage = $budgettotalAmount > 0 ? ($PaidAmount / $budgettotalAmount) * 100 : 0;
@@ -234,20 +242,69 @@ class HomeController extends Controller
                     ->get();
 
 
-            $categorybudgetused = [];
-            foreach ($totalMilestoneByCategory as $milestone) {
-                // Use parent_category_id directly since child categories are grouped under parent
-                $categoryIdToUse = $milestone->parent_category_id;
+                $nonInvoicePaidByCategory = NoninvoicePayment::leftJoin('tbl_category as child_category', 'noninvoice_payment.category_id', '=', 'child_category.id')
+                    ->leftJoin('tbl_category as parent_category', 'child_category.parent_category', '=', 'parent_category.id')
+                    ->where('noninvoice_payment.payment_status', 'completed')
+                    ->where('noninvoice_payment.financial_year_id', $financialYearId)
+                    ->select(
+                        DB::raw('COALESCE(parent_category.id, child_category.id) as parent_category_id'),
+                        DB::raw('COALESCE(parent_category.category_name, child_category.category_name) as parent_category_name'),
+                        DB::raw('SUM(noninvoice_payment.amount) as total_noninvoice_amount')
+                    )
+                    ->groupBy('parent_category_id', 'parent_category_name')
+                    ->get();
 
-                $categorybudgetused[] = [
+
+
+            // $categorybudgetused = [];
+            // foreach ($totalMilestoneByCategory as $milestone) {
+            //     // Use parent_category_id directly since child categories are grouped under parent
+            //     $categoryIdToUse = $milestone->parent_category_id;
+
+            //     $categorybudgetused[] = [
+            //         'parent_category_id' => $milestone->parent_category_id,
+            //         'parent_category_name' => $milestone->parent_category_name,
+            //         'total_milestone_amount' => $milestone->total_milestone_amount,
+            //         'budget_amount' => $categoryWiseBudgets->where('category_id', $categoryIdToUse)->sum('total_amount') // Sum the budget based on parent category
+            //     ];
+            // }
+
+            $categoryPayments = [];
+
+            // Step 1: Add milestone payments
+            foreach ($totalMilestoneByCategory as $milestone) {
+                $categoryPayments[$milestone->parent_category_id] = [
                     'parent_category_id' => $milestone->parent_category_id,
                     'parent_category_name' => $milestone->parent_category_name,
-                    'total_milestone_amount' => $milestone->total_milestone_amount,
-                    'budget_amount' => $categoryWiseBudgets->where('category_id', $categoryIdToUse)->sum('total_amount') // Sum the budget based on parent category
+                    'total_milestone_amount' => $milestone->total_milestone_amount
                 ];
             }
 
+            // Step 2: Merge non-invoice payments
+            foreach ($nonInvoicePaidByCategory as $noninvoice) {
+                $id = $noninvoice->parent_category_id;
 
+                if (isset($categoryPayments[$id])) {
+                    $categoryPayments[$id]['total_milestone_amount'] += $noninvoice->total_noninvoice_amount;
+                } else {
+                    $categoryPayments[$id] = [
+                        'parent_category_id' => $id,
+                        'parent_category_name' => $noninvoice->parent_category_name,
+                        'total_milestone_amount' => $noninvoice->total_noninvoice_amount
+                    ];
+                }
+            }
+
+            $categorybudgetused = [];
+
+            foreach ($categoryPayments as $categoryId => $data) {
+                $categorybudgetused[] = [
+                    'parent_category_id' => $data['parent_category_id'],
+                    'parent_category_name' => $data['parent_category_name'],
+                    'total_milestone_amount' => $data['total_milestone_amount'],
+                    'budget_amount' => $categoryWiseBudgets->where('category_id', $categoryId)->sum('total_amount')
+                ];
+            }
 
             //print_r($categorybudgetused);exit();
 

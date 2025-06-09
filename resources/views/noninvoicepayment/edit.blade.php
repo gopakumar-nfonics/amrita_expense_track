@@ -140,6 +140,7 @@
                                                               name="year" 
                                                               id="year" 
                                                               class="form-select @error('year') is-invalid @enderror"
+                                                              onchange="getallocatedbudget(document.getElementById('category'))"
                                                             >
                                                                 <option value="">Select Year</option>
                                                                 @foreach($financialyears as $year)
@@ -314,6 +315,7 @@
         document.getElementById("catname").innerText = parentCategoryName;
 
         const categoryId = selectElement.value;
+        const selectedYear = document.getElementById("year").value;
         const currentPaymentId = $('#noninvoicepayment_id').val();
 
         // AJAX request to get budget details
@@ -322,7 +324,7 @@
             type: 'GET',
             data: {
                 category_id: categoryId,
-                proposal_year: $('#year').val(),
+                proposal_year: selectedYear,
                 exclude_payment_id: currentPaymentId 
             },
             success: function(response) {
@@ -331,22 +333,33 @@
                     return;
                 }
 
-                const totalBudget = response.total_budget;
-                const usedBudget = response.used_budget;
+                // const totalBudget = response.total_budget;
+                // const usedBudget = response.used_budget;
+
+                const totalBudget = parseFloat(response.total_budget) || 0;
+                const usedBudget = parseFloat(response.used_budget) || 0;
+
                 $('#total_budget').val(totalBudget)
                 $('#used_budget').val(usedBudget)
 
-                const formatedBudget = response.num_total_budget;
-                const formatedusedBudget = response.num_used_budget;
+                // const formatedBudget = response.num_total_budget;
+                // const formatedusedBudget = response.num_used_budget;
 
-                const usedPercentage = (usedBudget / totalBudget) * 100;
-                const remainingPercentage = 100 - usedPercentage;
+                const formatedBudget = totalBudget.toFixed(2);
+                const formatedusedBudget = usedBudget.toFixed(2);
+
+                // const usedPercentage = (usedBudget / totalBudget) * 100;
+                // const remainingPercentage = 100 - usedPercentage;
+
+                const usedPercentage = totalBudget > 0 ? (usedBudget / totalBudget) * 100 : 0;
+                const remainingPercentage = totalBudget > 0 ? 100 - usedPercentage : 0;
 
                 // Set global remaining budget
                 remainingBudget = totalBudget - usedBudget;
 
                 // Update progress bar
-                document.querySelector('#allocate_status .bg-success').style.width = `${usedPercentage}%`;
+                // document.querySelector('#allocate_status .bg-success').style.width = `${usedPercentage}%`;
+                document.querySelector('#allocate_status .bg-success').style.width = `${usedPercentage.toFixed(2)}%`;
 
                 // Validate initially
                 validateAmountAgainstBudget();

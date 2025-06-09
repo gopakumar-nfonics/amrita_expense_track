@@ -174,6 +174,7 @@
                                                             <input 
                                                               id="noninvoice_amount" 
                                                               name="amount" 
+                                                              type="number"
                                                               placeholder="Amount"
                                                               class="form-control mb-2 @error('amount') is-invalid @enderror"
                                                               value="{{ old('amount', $noninvoicepayments->amount) }}" />

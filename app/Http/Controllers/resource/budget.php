@@ -23,30 +23,36 @@ class budget extends Controller
     {
 
         $budgets = Budgets::select('tbl_budget.*')
-        ->selectRaw('(SELECT SUM(payment_milestones.milestone_total_amount) 
-                      FROM payment_request
-                      INNER JOIN invoices ON payment_request.invoice_id = invoices.id
-                      INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
-                      INNER JOIN tbl_category ON payment_request.category_id = tbl_category.id
-                      INNER JOIN proposal ON payment_milestones.proposal_id = proposal.id
-                      WHERE (payment_request.category_id = tbl_budget.category_id 
-                             OR tbl_category.parent_category = tbl_budget.category_id)
-                      AND payment_request.payment_status = "completed"
-                      AND proposal.proposal_year = tbl_budget.financial_year_id
-                     ) as used_amount')
-        ->from('tbl_budget')
-        ->whereNull('tbl_budget.deleted_at')
-        ->orderByDesc('id')
-        ->get();
+        ->selectRaw('(
+            COALESCE((
+                SELECT SUM(payment_milestones.milestone_total_amount) 
+                FROM payment_request
+                INNER JOIN invoices ON payment_request.invoice_id = invoices.id
+                INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
+                INNER JOIN tbl_category ON payment_request.category_id = tbl_category.id
+                INNER JOIN proposal ON payment_milestones.proposal_id = proposal.id
+                WHERE (payment_request.category_id = tbl_budget.category_id 
+                    OR tbl_category.parent_category = tbl_budget.category_id)
+                AND payment_request.payment_status = "completed"
+                AND proposal.proposal_year = tbl_budget.financial_year_id
+            ), 0)
+            +
+            COALESCE((
+                SELECT SUM(noninvoice_payment.amount)
+                FROM noninvoice_payment
+                INNER JOIN tbl_category ON noninvoice_payment.category_id = tbl_category.id
+                WHERE (noninvoice_payment.category_id = tbl_budget.category_id 
+                    OR tbl_category.parent_category = tbl_budget.category_id)
+                AND noninvoice_payment.payment_status = "completed"
+                AND noninvoice_payment.financial_year_id = tbl_budget.financial_year_id
+            ), 0)
+        ) as used_amount')
+    ->from('tbl_budget')
+    ->whereNull('tbl_budget.deleted_at')
+    ->orderByDesc('id')
+    ->get();
     
-    
-
-
-
-   // dd($budgets);
-
-
-        //print_r($budgets);exit();
+   
         return view('budget.index',['budgets'=>$budgets]);
     }
 

@@ -36,9 +36,9 @@ class invoice extends Controller
               $invoices = Invoices::with(['milestone', 'vendor', 'proposalro','paymentRequests'])->orderByDesc('id')->get();
             }
 
-            //print_r( $invoices);exit();
+        $paymentStatuses = ['completed', 'pending', 'failed', 'initiated'];
 
-        return view('invoice.index',compact('invoices'));
+        return view('invoice.index', compact('invoices', 'paymentStatuses'));
     }
 
     /**

@@ -1,23 +1,22 @@
 @extends('layouts.admin')
 
+<style>
+    #budgettable_wrapper .dataTables_filter {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+    }
+</style>
+
 @section('content')
 <div class="d-flex flex-column flex-column-fluid">
     <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
-        <!--begin::Toolbar container-->
         <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
-            <!--begin::Page title-->
             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                <!--begin::Title-->
-                <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Invoice
-                    Listing</h1>
-                <!--end::Title-->
-                <!--begin::Breadcrumb-->
-                <!-- <ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
-											
-										</ul> -->
-                <!--end::Breadcrumb-->
+                <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+                    Invoice Listing
+                </h1>
             </div>
-            <!--end::Page title-->
             <!--begin::Button-->
             @if (Auth::user()->isvendor())
             <div class="card-toolbar">
@@ -28,7 +27,6 @@
             @endif
             <!--end::Button-->
         </div>
-        <!--end::Toolbar container-->
     </div>
     <div id="kt_app_content" class="app-content flex-column-fluid">
         <!--begin::Content container-->
@@ -45,6 +43,16 @@
                 <div class="card-body py-3">
                     <!--begin::Table container-->
                     <div class="table-responsive">
+                        <select 
+                          id="statusFilter"
+                          class="form-select"
+                          style="width: 200px;"
+                        >
+                            <option value="">--Payment Status--</option>
+                             @foreach($paymentStatuses as $status)
+                            <option value="{{ $status }}">{{ ucfirst($status) }}</option>
+                             @endforeach
+                        </select>
                         <!--begin::Table-->
                         <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
                             id="budgettable">
@@ -59,6 +67,7 @@
                                     @endif
                                     <th class="min-w-150px">Cost</th>
                                     <th class="min-w-150px text-center">Actions</th>
+                                    <th style="display:none">Status</th>
                                 </tr>
                             </thead>
                             <!--end::Table head-->
@@ -115,7 +124,7 @@
                                             </div>
                                         </div>
 
-
+                                    </td>
                                     <td>
                                         <div class="d-flex align-items-center">
 
@@ -208,6 +217,17 @@
                                         </div>
                                         <!--end::Menu-->
                                     </td>
+                                    <td style="display:none">
+                                        @if($inv->invoice_status == 0)
+                                            pending
+                                        @elseif($inv->invoice_status == 1)
+                                            completed
+                                        @elseif($inv->invoice_status == 2)
+                                            initiated
+                                        @else
+                                            unknown
+                                        @endif
+                                    </td>
                                 </tr>
 
                                 @empty
@@ -234,13 +254,33 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    $('#budgettable').DataTable({
-        "iDisplayLength": 10,
-        "searching": true,
-        "ordering": false,
+    $(document).ready(function() {
+        var table = $('#budgettable').DataTable({
+            "iDisplayLength": 10,
+            "searching": true,
+            "ordering": false,
+            "columnDefs": [{
+                "targets": -1,
+                "visible": false,
+                "searchable": true
+            }]
+        });
+        $('#statusFilter').appendTo('#budgettable_wrapper .dataTables_filter').css({
+            'margin-left': '20px',
+            'width': '200px',
+            'height': '45px'
+        });
+
+        $('#statusFilter').on('change', function() {
+            var selectedStatus = $(this).val();
+
+            if (selectedStatus) {
+                table.column(-1).search('^' + selectedStatus + '$', true, false).draw();
+            } else {
+                table.column(-1).search('').draw();
+            }
+        });
     });
-});
 </script>
 
 @endsection

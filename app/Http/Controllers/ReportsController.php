@@ -32,7 +32,9 @@ class ReportsController extends Controller
         ->orderBy('category_name')
         ->get();
 
-        $financialYears = FinancialYear::orderBy('year', 'desc')->get();
+       $financialYears = FinancialYear::orderByDesc('is_current')
+        ->orderByDesc('year')
+        ->get();
 
         return view('reports.index',compact('category', 'financialYears'));
     }
@@ -51,46 +53,77 @@ class ReportsController extends Controller
         $start = $request->input('start', 0);
         $length = $request->input('length', 10);
 
-        // Build the query
-        $query = Budgets::select('tbl_budget.*')
-    ->selectRaw('(SELECT COALESCE(SUM(payment_milestones.milestone_total_amount), 0) 
-                  FROM payment_request
-                  INNER JOIN invoices ON payment_request.invoice_id = invoices.id
-                  INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
-                  INNER JOIN proposal ON payment_milestones.proposal_id = proposal.id
-                  INNER JOIN tbl_category ON payment_request.category_id = tbl_category.id
-                  WHERE (payment_request.category_id = tbl_budget.category_id 
-                         OR tbl_category.parent_category = tbl_budget.category_id)
-                  AND payment_request.payment_status = "completed"
-                  AND proposal.proposal_year = tbl_budget.financial_year_id
-                 ) as used_amount')
-    ->from('tbl_budget')
+    $query = Budgets::select('tbl_budget.*')
+    ->selectRaw('(
+        COALESCE((
+            SELECT SUM(payment_milestones.milestone_total_amount)
+            FROM payment_request
+            INNER JOIN invoices ON payment_request.invoice_id = invoices.id
+            INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
+            INNER JOIN proposal ON payment_milestones.proposal_id = proposal.id
+            INNER JOIN tbl_category ON payment_request.category_id = tbl_category.id
+            WHERE (payment_request.category_id = tbl_budget.category_id 
+                   OR tbl_category.parent_category = tbl_budget.category_id)
+              AND payment_request.payment_status = "completed"
+              AND proposal.proposal_year = tbl_budget.financial_year_id
+        ), 0) +
+        COALESCE((
+            SELECT SUM(noninvoice_payment.amount)
+            FROM noninvoice_payment
+            INNER JOIN tbl_category ON noninvoice_payment.category_id = tbl_category.id
+            WHERE (noninvoice_payment.category_id = tbl_budget.category_id 
+                   OR tbl_category.parent_category = tbl_budget.category_id)
+              AND noninvoice_payment.payment_status = "completed"
+              AND noninvoice_payment.financial_year_id = tbl_budget.financial_year_id
+        ), 0)
+    ) as used_amount')
     ->leftJoin('tbl_category', 'tbl_budget.category_id', '=', 'tbl_category.id')
     ->whereNull('tbl_budget.deleted_at')
-    ->with(['category' => function ($query) {
+    ->with(['category' => function ($query) use ($financialYearId) {
         $query->select('tbl_category.*')
-            ->withCasts(['used_amount_by_subcategory' => 'decimal:2']) // optional for formatting
-            ->addSelect(DB::raw('(SELECT COALESCE(SUM(payment_milestones.milestone_total_amount), 0) 
-                          FROM payment_request
-                          INNER JOIN invoices ON payment_request.invoice_id = invoices.id
-                          INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
-                          INNER JOIN proposal ON payment_milestones.proposal_id = proposal.id
-                          WHERE payment_request.category_id = tbl_category.id 
-                          AND payment_request.payment_status = "completed"
-                          AND proposal.proposal_year = ' . (int) request()->get('financial_year_id', 0) . '
-                         ) as used_amount_by_subcategory'))
+            ->withCasts(['used_amount_by_subcategory' => 'decimal:2'])
+            ->addSelect(DB::raw('(
+                COALESCE((
+                    SELECT SUM(payment_milestones.milestone_total_amount)
+                    FROM payment_request
+                    INNER JOIN invoices ON payment_request.invoice_id = invoices.id
+                    INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
+                    INNER JOIN proposal ON payment_milestones.proposal_id = proposal.id
+                    WHERE payment_request.category_id = tbl_category.id
+                      AND payment_request.payment_status = "completed"
+                      ' . ($financialYearId ? 'AND proposal.proposal_year = ' . (int)$financialYearId : '') . '
+                ), 0) +
+                COALESCE((
+                    SELECT SUM(noninvoice_payment.amount)
+                    FROM noninvoice_payment
+                    WHERE noninvoice_payment.category_id = tbl_category.id
+                      AND noninvoice_payment.payment_status = "completed"
+                      ' . ($financialYearId ? 'AND noninvoice_payment.financial_year_id = ' . (int)$financialYearId : '') . '
+                ), 0)
+            ) as used_amount_by_subcategory'))
             ->whereNull('tbl_category.deleted_at')
-            ->with(['children' => function ($subQuery) {
+            ->with(['children' => function ($subQuery) use ($financialYearId) {
                 $subQuery->select('tbl_category.*')
-                    ->addSelect(DB::raw('(SELECT COALESCE(SUM(payment_milestones.milestone_total_amount), 0) 
-                                  FROM payment_request
-                                  INNER JOIN invoices ON payment_request.invoice_id = invoices.id
-                                  INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
-                                  INNER JOIN proposal ON payment_milestones.proposal_id = proposal.id
-                                  WHERE payment_request.category_id = tbl_category.id 
-                                  AND payment_request.payment_status = "completed"
-                                  AND proposal.proposal_year = ' . (int) request()->get('financial_year_id', 0) . '
-                                 ) as used_amount'))
+                    ->addSelect(DB::raw('(
+                        COALESCE((
+                            SELECT SUM(payment_milestones.milestone_total_amount)
+                            FROM payment_request
+                            INNER JOIN invoices ON payment_request.invoice_id = invoices.id
+                            INNER JOIN payment_milestones ON invoices.milestone_id = payment_milestones.id
+                            INNER JOIN proposal ON payment_milestones.proposal_id = proposal.id
+                            WHERE payment_request.category_id = tbl_category.id
+                              AND payment_request.payment_status = "completed"
+                              ' . ($financialYearId ? 'AND proposal.proposal_year = ' . (int)$financialYearId : '') . '
+                             
+                        ), 0) +
+                        COALESCE((
+                            SELECT SUM(noninvoice_payment.amount)
+                            FROM noninvoice_payment
+                            WHERE noninvoice_payment.category_id = tbl_category.id
+                              AND noninvoice_payment.payment_status = "completed"
+                              ' . ($financialYearId ? 'AND noninvoice_payment.financial_year_id = ' . (int)$financialYearId : '') . '
+                        ), 0)
+                    ) as used_amount'))
                     ->whereNull('tbl_category.deleted_at');
             }]);
     }])
@@ -147,7 +180,7 @@ class ReportsController extends Controller
                 'balance' => number_format_indian($budget->amount - $budget->used_amount), // Balance calculated and formatted
             ];
         }
-
+        
         $financialYear = FinancialYear::find($financialYearId);
 
         // Check if the financial year exists

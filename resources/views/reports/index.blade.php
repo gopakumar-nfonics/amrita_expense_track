@@ -75,7 +75,6 @@
                                         Financial Year
                                     </label>
                                     <select class="form-select form-select-solid fw-bold p-2 px-4 fs-7" id="financial_year" name="financial_year">
-                                        <option value="">Select Year</option>
                                         @foreach($financialYears as $year)
                                             <option value="{{ $year->id }}" @if(old('financial_year') == $year->id) selected @endif>
                                                 {{ $year->year }}

@@ -430,7 +430,27 @@ public function programmedata(Request $request)
         }
 
         $query->groupBy('payment_request.stream_id', 'payment_request.category_id', 'transaction_date');
-    }]);
+    }, 
+        'nonInvoicePayments' => function ($query) use ($startDate, $endDate) {
+            $query->select(
+                    'stream_id',
+                    'category_id',
+                    'transaction_date',
+                    DB::raw('SUM(amount) as total_noninvoice')
+                )
+                ->where('payment_status', 'completed');
+
+            if ($startDate) {
+                $query->where('transaction_date', '>=', Carbon::parse($startDate));
+            }
+            if ($endDate) {
+                $query->where('transaction_date', '<=', Carbon::parse($endDate));
+            }
+
+            $query->groupBy('stream_id', 'category_id', 'transaction_date');
+        }
+
+    ]);
 
 // Apply program filter if provided
 if ($programmeId) {
@@ -442,16 +462,6 @@ if ($searchValue) {
     $query->where('stream_name', 'LIKE', "%$searchValue%"); // Filter streams by name
 }
 
-
-
-    // Print the SQL query and bindings
-    // $sql = $query->toSql();
-    // $bindings = $query->getBindings();
-
-    // echo "SQL Query: " . $sql . "\n";
-    // echo "Bindings: " . json_encode($bindings) . "\n";
-
-   // exit(1);
     // Get total count before pagination
     $totalCount = $query->count();
 
@@ -493,6 +503,26 @@ if ($searchValue) {
             }
         }
 
+        foreach ($stream->nonInvoicePayments as $nonInvoice) {
+            if ($nonInvoice->transaction_date != null) {
+                $category = Category::with('children')->find($nonInvoice->category_id);
+
+                if ($category) {
+                    $parentCategoryName = $category->parent ? $category->parent->category_name : $category->category_name;
+
+                    if (!isset($categoriesArray[$parentCategoryName])) {
+                        $categoriesArray[$parentCategoryName] = [
+                            'category_name' => $parentCategoryName,
+                            'total_expense' => 0,
+                            'dop' => $nonInvoice->transaction_date,
+                        ];
+                    }
+
+                    $categoriesArray[$parentCategoryName]['total_expense'] += $nonInvoice->total_noninvoice;
+                    $totalProgramExpense += $nonInvoice->total_noninvoice;
+                }
+            }
+        }
     
         // Push stream-wise data along with total program expense
         $this->data[] = [

@@ -28,4 +28,8 @@ class Stream extends Model
     {
         return $this->hasMany(PaymentRequest::class, 'stream_id');
     }
+    public function nonInvoicePayments()
+    {
+        return $this->hasMany(NonInvoicePayment::class);
+    }
 }

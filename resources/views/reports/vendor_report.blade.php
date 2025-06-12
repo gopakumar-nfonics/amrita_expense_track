@@ -134,6 +134,7 @@
                                     <th class="pe-5">DOP</th>
                                     <th class="text-end pe-5">Amount</th>
                                     <th class="text-end pe-5">Total</th>
+                                    <th class="text-end pe-5">Balance Payable</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -175,7 +176,11 @@ $(document).ready(function() {
                     d.vendor = $('#vendor').val(); // Send selected vendor
                     d.start_date = $('#start_date').val(); // Send selected start date
                     d.end_date = $('#end_date').val(); // Send selected end date
-                }
+                },
+                dataSrc: function(json) {
+                console.log("Data Only:", json.data); // Logs just the data array
+                return json.data; // Important to return it for DataTables to work
+            }
             },
             preDrawCallback: function(settings) {
                 currentVendor = ''; // Reset vendor tracking
@@ -260,6 +265,15 @@ $(document).ready(function() {
                             let milestoneCount = proposal.milestones.length;
                             return `<p class="allocated fs-5 text-gray-800 py-2 sub-cat-disp fw-bold ls-n1 text-end"" style="min-height:${40*milestoneCount}px;padding-top:${(40*milestoneCount/2)-10}px !important;">&#x20b9;${proposal.total_milestone_amount}</p>`;
                         }).join('');
+                    }
+                },
+                {
+                    data: 'balance_payable',
+                    name: 'balance_payable',
+                    render: function(data, type, row, meta) {
+                        
+                        return '<p class="fs-5 text-gray-800 p-2 fw-bold ls-n1 text-end sub-cat-disp">'
+                            + '&#8377;' + data + '</p>';
                     }
                 },
             ],

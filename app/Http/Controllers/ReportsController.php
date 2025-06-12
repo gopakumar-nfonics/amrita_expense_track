@@ -244,7 +244,8 @@ class ReportsController extends Controller
     $query = Vendor::with(['proposals' => function ($query) use ($request) {
         $query->where('proposal_status', 1)
             ->with(['invoices' => function ($query) use ($request) {
-                $query->where('invoice_status', 1)
+                $query
+                // ->where('invoice_status', 1)
                     ->select('id', 'invoice_id', 'proposal_id', 'invoice_status', 'milestone_id', 'invoice_notes')
                     ->with(['paymentRequests' => function ($query) use ($request) {
                         $query->select('id', 'invoice_id', 'transaction_date', 'utr_number');
@@ -345,9 +346,35 @@ class ReportsController extends Controller
             }
         }
 
+        // if (!empty($vendorDetails['proposals'])) {
+        //     $this->vendorData[] = $vendorDetails;
+        //     // session(['vendor_data' => $this->vendorData]);
+        // }
+       
         if (!empty($vendorDetails['proposals'])) {
+
+            $totalBalancePayable = 0;
+
+            foreach ($vendor->proposals as $proposal) {
+                foreach ($proposal->paymentMilestones as $milestone) {
+                    
+                    $allInvoicesForMilestone = $proposal->invoices->where('milestone_id', $milestone->id);
+
+                    if ($allInvoicesForMilestone->isNotEmpty()) {
+                      
+                        $hasCompleted = $allInvoicesForMilestone->contains(function ($inv) {
+                            return $inv->invoice_status == 1;
+                        });
+
+                        if (!$hasCompleted) {
+                            $totalBalancePayable += $milestone->milestone_total_amount;
+                        }
+                    }
+                }
+            }
+
+            $vendorDetails['balance_payable'] = number_format_indian($totalBalancePayable, 2, '.', ',');
             $this->vendorData[] = $vendorDetails;
-            // session(['vendor_data' => $this->vendorData]);
         }
     }
 

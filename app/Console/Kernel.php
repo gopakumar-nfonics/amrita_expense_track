@@ -15,8 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-    //    $schedule->command('digest:weekly')->weeklyOn(1, '10:00')->timezone('Asia/Kolkata');
-        $schedule->command('digest:weekly')->everyMinute()->timezone('Asia/Kolkata');
+       $schedule->command('digest:weekly')->weeklyOn(1, '10:00')->timezone('Asia/Kolkata');
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Staff;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Designation;
 
 class staffs extends Controller
 {
@@ -16,7 +17,7 @@ class staffs extends Controller
      */
     public function index()
     {
-        $staffs = Staff::orderByDesc('id') ->get(); 
+        $staffs = Staff::with('designation')->orderByDesc('id') ->get(); 
         return view('staff.index', compact('staffs'));
     }
 
@@ -27,7 +28,8 @@ class staffs extends Controller
      */
     public function create()
     {
-        return view('staff.create');
+        $designation = Designation::orderBy('title')->get();
+        return view('staff.create', compact('designation'));
     }
 
     /**
@@ -42,6 +44,7 @@ class staffs extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:tbl_staff',
             'password' => 'required|string|min:8',
+            'designation' => 'required',
         ]);
     
         try {
@@ -50,6 +53,7 @@ class staffs extends Controller
             $staff->email = $request->email;
             $staff->password = bcrypt($request->password);
             $staff->created_by = Auth::id();
+            $staff->designation_id = $request->designation;
             $staff->save();
     
             return redirect()->route('staffs.index')->with('success', 'Staff Created Successfully');
@@ -79,7 +83,8 @@ class staffs extends Controller
     public function edit($id)
     {
         $staffs = Staff::find($id);
-        return view('staff.edit', compact('staffs'));
+        $designation = Designation::orderBy('title')->get();
+        return view('staff.edit', compact('staffs', 'designation'));
     }
 
     /**
@@ -95,6 +100,7 @@ class staffs extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:tbl_staff,email,'.$id,
             'password' => 'nullable|string|min:8',
+            'designation' => 'required',
         ]);
     
         try {
@@ -105,6 +111,7 @@ class staffs extends Controller
             if($request->filled('password')){
                 $staff->password = bcrypt($request->password);
             }
+            $staff->designation_id = $request->designation;
             $staff->save();
     
             return redirect()->route('staffs.index')->with('success', 'Staff Updated Successfully');

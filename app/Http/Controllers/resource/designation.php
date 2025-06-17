@@ -5,6 +5,7 @@ namespace App\Http\Controllers\resource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Designation as designations;
+use App\Models\Staff;
 
 class designation extends Controller
 {
@@ -116,6 +117,13 @@ class designation extends Controller
     {
         try {
             $designation = designations::findOrFail($id);
+
+            $staffCount = Staff::where('designation_id', $designation->id)->count();
+        
+            if ($staffCount > 0) {
+                return response()->json(['error' => 'Cannot delete designation associated with a staff.']);
+            }
+
             $designation->forceDelete();
             
             return response()->json(['success' => 'Designation Deleted Successfully']);

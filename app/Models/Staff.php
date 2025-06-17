@@ -22,4 +22,8 @@ class Staff extends Model
         'password',
         'remember_token',
     ];
+    public function designation()
+    {
+        return $this->belongsTo(Designation::class, 'designation_id');
+    }
 }

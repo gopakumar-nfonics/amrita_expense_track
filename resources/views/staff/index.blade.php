@@ -10,8 +10,9 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Staff
-                        Listing</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+                        Staff Listing
+                    </h1>
                     <!--end::Title-->
 
                 </div>
@@ -32,10 +33,10 @@
                 <div class="card mb-5 mb-xl-8">
                     <!--begin::Header-->
                     <!-- <div class="card-header border-0 pt-5">
-                   <h3 class="card-title align-items-start flex-column">
-                    <span class="card-label fw-bold fs-3 mb-1">User List</span>
-                   </h3>
-                  </div> -->
+                           <h3 class="card-title align-items-start flex-column">
+                            <span class="card-label fw-bold fs-3 mb-1">User List</span>
+                           </h3>
+                          </div> -->
 
                     <div class="card-body py-3">
                         <div class="table-responsive">
@@ -45,6 +46,7 @@
                                         <th class="w-50px">#</th>
                                         <th class="min-w-200px">Name</th>
                                         <th class="min-w-150px">Email</th>
+                                        <th class="min-w-150px">Designation</th>
                                         <th class="min-w-150px text-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -68,6 +70,13 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="fw-400 d-block fs-6">
                                                         {{ $staff->email }}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="fw-400 d-block fs-6">
+                                                        {{ $staff->designation->title }}
                                                     </div>
                                                 </div>
                                             </td>

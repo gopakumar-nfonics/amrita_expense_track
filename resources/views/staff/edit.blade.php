@@ -76,6 +76,28 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="row mb-6">
+                                        <!--begin::Label-->
+                                        <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                            <span>Designation</span></label>
+                                        <!--end::Label-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-8 fv-row">
+                                            <select name="designation" aria-label="Select a designation"
+                                                class="form-select form-select-solid form-select-lg fw-semibold @error('designation') is-invalid @enderror">
+                                                <option value="">Select a Designation</option>
+                                                @foreach ($designation as $designation)
+                                                    <option value="{{ $designation->id }}"
+                                                        @if (old('designation', $designation->id) == $designation->id) selected @endif>
+                                                        {{ $designation->title }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('designation')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
                                 </div>
 
                                 <div class="card-footer d-flex justify-content-end py-6 px-9">

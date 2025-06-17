@@ -114,9 +114,9 @@
                                         <!--end::Label-->
                                         <!--begin::Col-->
                                         <div class="col-lg-8 fv-row">
-                                            <select name="designation" aria-label="Select a Role"
+                                            <select name="designation" aria-label="Select Designation"
                                                 class="form-select form-select-solid form-select-lg fw-semibold @error('designation') is-invalid @enderror">
-                                                <option value="">Select a Designation</option>
+                                                <option value="">--Select Designation--</option>
                                                 @foreach ($designation as $designation)
                                                     <option value="{{ $designation->id }}"
                                                         @if (old('designation') == $designation->id) selected @endif>

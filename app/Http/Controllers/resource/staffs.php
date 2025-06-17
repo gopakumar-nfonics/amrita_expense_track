@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Staff;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Designation;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\StaffImport;
 
 class staffs extends Controller
 {
@@ -138,4 +140,42 @@ class staffs extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    public function importstaff()
+    {
+        return view('staff.import');        
+    }
+
+    public function import(Request $request)
+    {
+        \Log::info('Import request received');
+
+        $request->validate([
+            'importstaff' => 'required',
+        ]);
+
+        try {
+            \Log::info('File validation passed.');
+            $file = $request->file('importstaff');
+            \Log::info('File received: ' );
+           
+            $import = new StaffImport();
+
+            Excel::import($import, $file);
+
+            $failures = $import->failures();
+
+            if (count($failures) > 0) {
+                \Log::warning('Import completed with failures.');
+                return redirect()->back()->with('error', 'Some rows failed validation.')->with('failures', $failures);
+            }
+
+            \Log::info('Import completed successfully.');
+            return redirect()->route('staffs.index')->with('success', ' Staffs has been imported successfully...!');
+        } catch (\Exception $e) {
+            \Log::error('Error during import: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Import failed.');
+        }
+    }
+
 }

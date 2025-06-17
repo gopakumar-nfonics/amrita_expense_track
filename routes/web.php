@@ -128,7 +128,8 @@ Route::get('/get-payment-details', [\App\Http\Controllers\resource\payment::clas
 });
 
 Route::resource('noninvoicepayment',\App\Http\Controllers\resource\noninvoicepayment::class);
-Route::resource('staffs',\App\Http\Controllers\resource\staffs::class);
 Route::resource('designation',\App\Http\Controllers\resource\designation::class);
 
-
+Route::get('/staffs/importstaff', [\App\Http\Controllers\resource\staffs::class, 'importstaff'])->name('staffs.import');
+Route::post('/staffs/import', [App\Http\Controllers\resource\staffs::class, 'import'])->name('staffs.importproceed');
+Route::resource('staffs',\App\Http\Controllers\resource\staffs::class);

@@ -874,7 +874,6 @@
                                         </div>
                                         <!--end:Menu sub-->
                                     </div>
-                                    
                                 @endif
 
                                 @if (!empty(Auth::user()->isAdmin()))
@@ -987,7 +986,8 @@
                                         <!--end:Menu content-->
                                     </div>
                                     <!--begin:Menu item-->
-                                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['staffs.index', 'staffs.create', 'staffs.import'])) show @endif">
                                         <!--begin:Menu link-->
                                         <span class="menu-link">
                                             <span class="menu-icon">
@@ -1025,7 +1025,17 @@
                                                 <!--end:Menu link-->
                                             </div>
                                             <!--end:Menu item-->
-
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['staffs.import'])) active @endif"
+                                                    href="{{ route('staffs.import') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Import Staff</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
                                         </div>
                                         <!--end:Menu sub-->
                                     </div>

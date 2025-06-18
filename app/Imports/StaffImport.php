@@ -37,7 +37,7 @@ class StaffImport implements ToCollection, WithHeadingRow, WithValidation, Skips
                 if (!$designation) {
                     $designation = Designation::create([
                         'title' => $designationName,
-                        'code' => strtoupper(substr($designationName, 0, 3))
+                        'code' => $this->generateDesignationCode($designationName)
                     ]);
                 }
                 \Log::info('Designation created/found: ' . json_encode($designation->toArray()));
@@ -55,6 +55,33 @@ class StaffImport implements ToCollection, WithHeadingRow, WithValidation, Skips
                 \Log::error('Error importing row: ' . json_encode($row) . ' - ' . $e->getMessage());
             }
         }
+    }
+
+    private function generateDesignationCode($designationName)
+    {
+        // Generate acronym from first letters of each word
+        $words = preg_split('/\s+/', $designationName);
+        $acronym = '';
+        foreach ($words as $word) {
+            $acronym .= strtoupper($word[0]);
+        }
+
+        // If acronym is too short, fallback to first 3 letters
+        if (strlen($acronym) < 2) {
+            $acronym = strtoupper(substr($designationName, 0, 3));
+        }
+
+        // Ensure uniqueness of code
+        $baseCode = $acronym;
+        $code = $baseCode;
+        $counter = 1;
+
+        while (Designation::where('code', $code)->exists()) {
+            $code = $baseCode . $counter;
+            $counter++;
+        }
+
+        return $code;
     }
 
     public function rules(): array

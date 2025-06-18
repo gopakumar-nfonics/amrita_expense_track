@@ -151,7 +151,9 @@ class staffs extends Controller
         \Log::info('Import request received');
 
         $request->validate([
-            'importstaff' => 'required',
+            'importstaff' => 'required|mimes:xlsx,xls,csv,txt',
+        ], [], [
+            'importstaff' => 'Import File'
         ]);
 
         try {

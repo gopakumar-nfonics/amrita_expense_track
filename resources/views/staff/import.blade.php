@@ -107,8 +107,9 @@
                                                     Import File
                                                 </span>
                                             </label>
-                                            <input class="form-control form-control-lg" name="importstaff" id="formFileSm"
-                                                type="file" />
+                                            <input
+                                                class="form-control form-control-lg @error('importstaff') is-invalid @enderror"
+                                                name="importstaff" id="formFileSm" type="file" />
                                             @error('importstaff')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror

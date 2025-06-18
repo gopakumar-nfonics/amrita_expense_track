@@ -97,13 +97,12 @@ class StaffImport implements ToCollection, WithHeadingRow, WithValidation, Skips
     public function customValidationMessages()
     {
         return [
-            'name.required' => 'Name is required.',
-            'name.string' => 'Name must be a string.',
-            'email.required' => 'Email is required.',
-            'email.email' => 'Email must be a valid email address.',
-            'email.unique' => 'Email has already been taken.',
-            'password.required' => 'Password is required.',
-            'designation.required' => 'Designation is required.',
+            '*.name.required' => 'Name is required.',
+            '*.email.required' => 'Email is required.',
+            '*.email.email' => 'Email must be a valid email address.',
+            '*.email.unique' => 'Email has already been taken.',
+            '*.password.required' => 'Password is required.',
+            '*.designation.required' => 'Designation is required.',
         ];
     }
 

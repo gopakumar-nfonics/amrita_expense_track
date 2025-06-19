@@ -117,7 +117,19 @@ class travelmode extends Controller
     public function destroy($id)
     {
         try {
-            $mode = mode::findOrFail($id);
+            $mode = mode::with(['designations', 'children.designations'])->findOrFail($id);
+
+            if ($mode->designations->count() > 0) {
+                return response()->json(['error' => 'Cannot delete: Travel Mode is assigned to designations.']);
+            }
+
+            // Check if any child mode is assigned
+            foreach ($mode->children as $child) {
+                if ($child->designations->count() > 0) {
+                    return response()->json(['error' => 'Cannot delete: Child travel modes are assigned to designations.']);
+                }
+            }
+
             $mode->forceDelete();
             
             return response()->json(['success' => 'Travel Mode Deleted Successfully']);

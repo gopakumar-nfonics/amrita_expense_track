@@ -15,4 +15,9 @@ class Designation extends Model
         'title',
         'code',
     ];
+
+    public function travelModes()
+    {
+        return $this->belongsToMany(TravelMode::class, 'designation_travel_modes', 'designation_id', 'travel_mode_id');
+    }
 }

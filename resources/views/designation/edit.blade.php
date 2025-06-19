@@ -53,6 +53,37 @@
                                             @enderror
                                         </div>
                                     </div>
+
+                                    <div class="row mb-6">
+                                        <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                            Travel Mode
+                                        </label>
+                                        <div class="col-lg-8 fv-row">
+                                            <select
+                                                class="form-control form-control-lg form-control-solid @error('travel_mode') is-invalid @enderror"
+                                                name="travel_mode[]" multiple>
+                                                @foreach ($travelModes as $parent)
+                                                    @if ($parent->children->count())
+                                                        @foreach ($parent->children as $child)
+                                                            <option value="{{ $child->id }}"
+                                                                {{ in_array($child->id, old('travel_mode', $designations->travelModes->pluck('id')->toArray())) ? 'selected' : '' }}>
+                                                                {{ $parent->name }} : {{ $child->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    @else
+                                                        <option value="{{ $parent->id }}"
+                                                            {{ in_array($parent->id, old('travel_mode', $designations->travelModes->pluck('id')->toArray())) ? 'selected' : '' }}>
+                                                            {{ $parent->name }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                            @error('travel_mode')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <div class="card-footer d-flex justify-content-end py-6 px-9">

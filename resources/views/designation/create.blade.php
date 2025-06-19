@@ -73,6 +73,41 @@
                                             @enderror
                                         </div>
                                     </div>
+
+                                    <div class="row mb-6">
+                                        <!--begin::Label-->
+                                        <label class="col-lg-4 col-form-label fw-semibold fs-6">
+                                            Travel Mode
+                                        </label>
+                                        <!--end::Label-->
+                                        <!--begin::Col-->
+                                        <div class="col-lg-8 fv-row">
+                                            <select
+                                                class="form-control form-control-lg form-control-solid @error('travel_mode') is-invalid @enderror"
+                                                name="travel_mode[]" multiple>
+                                                @foreach ($travelModes as $parent)
+                                                    @if ($parent->children->count())
+                                                        @foreach ($parent->children as $child)
+                                                            <option class="pb-1" value="{{ $child->id }}"
+                                                                {{ in_array($child->id, old('travel_mode', [])) ? 'selected' : '' }}>
+                                                                {{ $parent->name }} : {{ $child->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    @else
+                                                        <option value="{{ $parent->id }}"
+                                                            {{ in_array($parent->id, old('travel_mode', [])) ? 'selected' : '' }}>
+                                                            {{ $parent->name }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                            @error('travel_mode')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <!--end::Col-->
+                                    </div>
+
                                 </div>
                                 <!--end::Card body-->
                                 <!--begin::Actions-->

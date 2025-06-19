@@ -22,4 +22,9 @@ class TravelMode extends Model
     {
         return $this->hasMany(TravelMode::class, 'parent_mode');
     }
+
+    public function designations()
+    {
+        return $this->belongsToMany(Designation::class, 'designation_travel_modes', 'travel_mode_id', 'designation_id');
+    }
 }

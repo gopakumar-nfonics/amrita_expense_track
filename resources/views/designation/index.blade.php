@@ -33,10 +33,10 @@
                 <div class="card mb-5 mb-xl-8">
                     <!--begin::Header-->
                     <!-- <div class="card-header border-0 pt-5">
-                               <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label fw-bold fs-3 mb-1">User List</span>
-                               </h3>
-                              </div> -->
+                                       <h3 class="card-title align-items-start flex-column">
+                                        <span class="card-label fw-bold fs-3 mb-1">User List</span>
+                                       </h3>
+                                      </div> -->
 
                     <div class="card-body py-3">
                         <div class="table-responsive">
@@ -44,8 +44,9 @@
                                 <thead>
                                     <tr class="fw-bold">
                                         <th class="w-50px">#</th>
-                                        <th class="min-w-200px">Title</th>
+                                        <th class="min-w-150px">Title</th>
                                         <th class="min-w-150px">Code</th>
+                                        <th class="min-w-200px">Travel Modes</th>
                                         <th class="min-w-150px text-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -69,6 +70,13 @@
                                                 <div class="d-flex align-items-center">
                                                     <div class="fw-400 d-block fs-6">
                                                         {{ $designation->code }}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="fw-400 d-block fs-6">
+                                                        {{ $designation->travelModes->pluck('name')->implode(', ') }}
                                                     </div>
                                                 </div>
                                             </td>

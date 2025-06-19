@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Designation as designations;
 use App\Models\Staff;
+use App\Models\TravelMode;
 
 class designation extends Controller
 {
@@ -16,7 +17,7 @@ class designation extends Controller
      */
     public function index()
     {
-        $designations = designations::orderByDesc('id') ->get(); 
+        $designations = designations::with('travelModes')->orderByDesc('id')->get(); 
         return view('designation.index', compact('designations'));
     }
 
@@ -27,7 +28,8 @@ class designation extends Controller
      */
     public function create()
     {
-        return view('designation.create');
+        $travelModes = TravelMode::with('children')->whereNull('parent_mode')->orderBy('name')->get();
+        return view('designation.create', compact('travelModes'));
     }
 
     /**
@@ -48,6 +50,10 @@ class designation extends Controller
             $designation->title = $request->title;    
             $designation->code = $request->code;
             $designation->save();
+
+            if ($request->filled('travel_mode')) {
+                $designation->travelModes()->attach($request->travel_mode);
+            }
     
             return redirect()->route('designation.index')->with('success', 'Designation Created Successfully');
         } catch (\Exception $e) {
@@ -75,8 +81,9 @@ class designation extends Controller
      */
     public function edit($id)
     {
-        $designations = designations::find($id);
-        return view('designation.edit', compact('designations'));
+        $designations = designations::with('travelModes')->findOrFail($id);
+        $travelModes = TravelMode::with('children')->whereNull('parent_mode')->orderBy('name')->get();
+        return view('designation.edit', compact('designations', 'travelModes'));
     }
 
     /**
@@ -99,6 +106,9 @@ class designation extends Controller
             $designation->title = $request->title;
             $designation->code = $request->code;
             $designation->save();
+
+            // Sync travel modes
+            $designation->travelModes()->sync($request->travel_mode ?? []);
     
             return redirect()->route('designation.index')->with('success', 'Designation Updated Successfully');
         } catch (\Exception $e) {

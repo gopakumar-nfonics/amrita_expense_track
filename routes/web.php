@@ -133,3 +133,5 @@ Route::resource('designation',\App\Http\Controllers\resource\designation::class)
 Route::get('/staffs/importstaff', [\App\Http\Controllers\resource\staffs::class, 'importstaff'])->name('staffs.import');
 Route::post('/staffs/import', [App\Http\Controllers\resource\staffs::class, 'import'])->name('staffs.importproceed');
 Route::resource('staffs',\App\Http\Controllers\resource\staffs::class);
+
+Route::resource('travelmode',\App\Http\Controllers\resource\travelmode::class);

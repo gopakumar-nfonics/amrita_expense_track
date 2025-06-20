@@ -831,7 +831,7 @@
 
                                     <!--end:Menu item-->
 
-                                    <div data-kt-menu-trigger="click"
+                                    {{-- <div data-kt-menu-trigger="click"
                                         class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['designation.index', 'designation.create'])) show @endif">
                                         <!--begin:Menu link-->
                                         <span class="menu-link">
@@ -873,9 +873,9 @@
 
                                         </div>
                                         <!--end:Menu sub-->
-                                    </div>
+                                    </div> --}}
 
-                                    <div data-kt-menu-trigger="click"
+                                    {{-- <div data-kt-menu-trigger="click"
                                         class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['travelmode.index', 'travelmode.create'])) show @endif">
                                         <!--begin:Menu link-->
                                         <span class="menu-link">
@@ -917,7 +917,7 @@
 
                                         </div>
                                         <!--end:Menu sub-->
-                                    </div>
+                                    </div> --}}
                                     
                                 @endif
 
@@ -1022,7 +1022,7 @@
 
                                     <!--end:Menu item-->
                                 @endif
-                                @if (Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
+                                {{-- @if (Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
                                     <div class="menu-item pt-5">
                                         <!--begin:Menu content-->
                                         <div class="menu-content">
@@ -1084,7 +1084,7 @@
                                         </div>
                                         <!--end:Menu sub-->
                                     </div>
-                                @endif
+                                @endif --}}
 
 
                             </div>

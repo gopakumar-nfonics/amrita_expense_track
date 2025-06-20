@@ -239,7 +239,7 @@ $(document).ready(function() {
                 [1, 'asc']
             ], // Set initial order by the 'category' column
             pageLength: 10, // Set default page length if needed
-            lengthChange: false, // Disable length menu
+            lengthChange: true, // Disable length menu
             ordering: false,
             searching: false // Disable the search box
         });

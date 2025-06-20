@@ -245,7 +245,7 @@ $(document).ready(function() {
                 return row.stream_name; // Assign a unique identifier for each row
             },
             pageLength: 10,
-            lengthChange: false,
+            lengthChange: true,
             ordering: false,
             searching: false
         });

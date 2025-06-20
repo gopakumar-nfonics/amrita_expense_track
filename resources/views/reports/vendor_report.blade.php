@@ -279,7 +279,7 @@ $(document).ready(function() {
             ],
             order: [],
             pageLength: 10,
-            lengthChange: false,
+            lengthChange: true,
             ordering: false,
             searching: false
         });

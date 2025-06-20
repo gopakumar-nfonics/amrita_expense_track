@@ -135,3 +135,4 @@ Route::post('/staffs/import', [App\Http\Controllers\resource\staffs::class, 'imp
 Route::resource('staffs',\App\Http\Controllers\resource\staffs::class);
 
 Route::resource('travelmode',\App\Http\Controllers\resource\travelmode::class);
+Route::resource('city',\App\Http\Controllers\resource\city::class);

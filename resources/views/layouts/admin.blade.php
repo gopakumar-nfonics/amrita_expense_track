@@ -831,7 +831,52 @@
 
                                     <!--end:Menu item-->
 
-                                    {{-- <div data-kt-menu-trigger="click"
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['city.index', 'city.create'])) show @endif"
+                                    >
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-city"></i>
+                                            </span>
+                                            <span class="menu-title">City</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['city.index'])) active @endif"
+                                                    href="{{ route('city.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">City List</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link  @if (in_array(Route::currentRouteName(), ['city.create'])) active @endif"
+                                                    href="{{ route('city.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Create City</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+
+                                        </div>
+                                        <!--end:Menu sub-->
+                                    </div>
+
+                                    <div data-kt-menu-trigger="click"
                                         class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['designation.index', 'designation.create'])) show @endif">
                                         <!--begin:Menu link-->
                                         <span class="menu-link">
@@ -873,9 +918,9 @@
 
                                         </div>
                                         <!--end:Menu sub-->
-                                    </div> --}}
+                                    </div>
 
-                                    {{-- <div data-kt-menu-trigger="click"
+                                    <div data-kt-menu-trigger="click"
                                         class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['travelmode.index', 'travelmode.create'])) show @endif">
                                         <!--begin:Menu link-->
                                         <span class="menu-link">
@@ -917,8 +962,7 @@
 
                                         </div>
                                         <!--end:Menu sub-->
-                                    </div> --}}
-                                    
+                                    </div>
                                 @endif
 
                                 @if (!empty(Auth::user()->isAdmin()))
@@ -1022,7 +1066,7 @@
 
                                     <!--end:Menu item-->
                                 @endif
-                                {{-- @if (Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
+                                @if (Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
                                     <div class="menu-item pt-5">
                                         <!--begin:Menu content-->
                                         <div class="menu-content">
@@ -1084,7 +1128,7 @@
                                         </div>
                                         <!--end:Menu sub-->
                                     </div>
-                                @endif --}}
+                                @endif
 
 
                             </div>

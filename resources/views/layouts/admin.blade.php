@@ -675,6 +675,59 @@
                                         <!--end:Menu sub-->
                                     </div>
 
+                                    <!-- DA & Allowance -->
+                                    <div class="menu-item pt-5">
+                                        <div class="menu-content">
+                                            <span class="menu-heading fw-bold text-uppercase fs-7">DA &
+                                                Accommodation</span>
+                                        </div>
+                                    </div>
+
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['dailyallowanceaccommodation.index', 'dailyallowanceaccommodation.create'])) show @endif">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-money-check"></i>
+                                            </span>
+                                            <span class="menu-title">DA & Accommodation</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['dailyallowanceaccommodation.index'])) active @endif"
+                                                    href="{{ route('dailyallowanceaccommodation.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">DA & ACC List</span>
+                                                </a>
+
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['dailyallowanceaccommodation.create'])) active @endif"
+                                                    href="{{ route('dailyallowanceaccommodation.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Configure DA & ACC</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+
+                                        </div>
+                                        <!--end:Menu sub-->
+                                    </div>
+
 
 
 
@@ -832,8 +885,7 @@
                                     <!--end:Menu item-->
 
                                     <div data-kt-menu-trigger="click"
-                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['city.index', 'city.create'])) show @endif"
-                                    >
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['city.index', 'city.create'])) show @endif">
                                         <!--begin:Menu link-->
                                         <span class="menu-link">
                                             <span class="menu-icon">

@@ -30,6 +30,6 @@ class Stream extends Model
     }
     public function nonInvoicePayments()
     {
-        return $this->hasMany(NonInvoicePayment::class);
+        return $this->hasMany(NoninvoicePayment::class);
     }
 }

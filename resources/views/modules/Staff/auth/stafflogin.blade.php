@@ -10,7 +10,7 @@
 
         <!--begin::Aside-->
         <div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-1"
-            style="background-image: url(assets/media/misc/auth-bg.png)">
+            style="background-color: #105073;">
             <!--begin::Content-->
             <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
                 <!--begin::Logo-->
@@ -19,20 +19,18 @@
                 </a>
                 <!--end::Logo-->
                 <!--begin::Image-->
-                <img class="d-none d-lg-block mx-auto w-200px w-md-50 w-lg-400px"
-                    src="assets/media/misc/auth-screens.png" alt="" />
+                <img class="d-none d-lg-block mx-auto w-200px w-md-50"
+                    src="assets/media/misc/business-presentation.png" alt="" />
                 <!--end::Image-->
                 <!--begin::Title-->
-                <h1 class="d-none d-lg-block text-white fs-1 fw-bolder text-center mt-6">Budgeting & Expense Tracking
-                    Solution</h1>
+                <h1 class="d-none d-lg-block text-white fs-1 fw-bolder text-center mt-6">Streamlined DA & Travel Claim Solution</h1>
                 <!--end::Title-->
                 <!--begin::Text-->
-                <div class="d-none d-lg-block text-white fs-base text-center">Effortlessly track expenses,
-                    <a href="#" class="opacity-75-hover text-warning fw-bold me-1">set budgets,</a>and stay in control
-                    of your
-                    <br />financial health with our
-                    <a href="#" class="opacity-75-hover text-warning fw-bold me-1">intuitive budgeting & expense
-                        tracking solution.</a>
+                <div class="d-none d-lg-block text-white fs-base text-center">
+
+                    Easily log your <a href="#" class="opacity-75-hover text-warning fw-bold me-1">travel and daily allowance (DA) claims, </a>track submissions, <br /> and <a href="#" class="opacity-75-hover text-warning fw-bold me-1">stay updated on approvals </a>with the user-friendly claim tracking system.
+
+
                 </div>
                 <!--end::Text-->
             </div>

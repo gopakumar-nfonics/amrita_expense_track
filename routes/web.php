@@ -137,3 +137,4 @@ Route::resource('staffs',\App\Http\Controllers\resource\staffs::class);
 Route::resource('travelmode',\App\Http\Controllers\resource\travelmode::class);
 Route::resource('city',\App\Http\Controllers\resource\city::class);
 Route::resource('dailyallowanceaccommodation',\App\Http\Controllers\resource\dailyallowanceaccommodation::class);
+Route::get('/designation/{id}/available-tiers',[\App\Http\Controllers\resource\dailyallowanceaccommodation::class, 'getAvailableTiers']);

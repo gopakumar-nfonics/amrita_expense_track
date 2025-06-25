@@ -136,4 +136,15 @@ class dailyallowanceaccommodation extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
+
+    public function getAvailableTiers($designationId)
+    {
+        $assignedTierIds = DAAModel::where('designation_id', $designationId)
+                            ->pluck('city_tier_id');
+
+        $availableTiers = Tier::whereNotIn('id', $assignedTierIds)->get();
+
+        return response()->json($availableTiers);
+    }
+
 }

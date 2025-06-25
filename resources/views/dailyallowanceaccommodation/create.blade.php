@@ -51,7 +51,7 @@
                                         <!--end::Label-->
                                         <!--begin::Col-->
                                         <div class="col-lg-8 fv-row">
-                                            <select name="designation"
+                                            <select name="designation" id="designation-select"
                                                 class="form-select form-select-solid form-select-lg fw-semibold @error('designation') is-invalid @enderror">
                                                 <option value="">--Select Designation--</option>
                                                 @foreach ($designations as $designation)
@@ -75,14 +75,9 @@
                                         <!--end::Label-->
                                         <!--begin::Col-->
                                         <div class="col-lg-8 fv-row">
-                                            <select name="tier"
+                                            <select name="tier" id="tier-select"
                                                 class="form-select form-select-solid form-select-lg fw-semibold @error('tier') is-invalid @enderror">
                                                 <option value="">--Select City Tier--</option>
-                                                @foreach ($tiers as $tier)
-                                                    <option value="{{ $tier->id }}"
-                                                        @if (old('tier') == $tier->id) selected @endif>
-                                                        {{ $tier->name }}</option>
-                                                @endforeach
                                             </select>
                                             @error('tier')
                                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -96,6 +91,7 @@
                                         <!--begin::Label-->
                                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">
                                             Allowance Amount
+                                            <span class="text-muted">(Per Day)</span>
                                         </label>
                                         <div class="col-lg-8 fv-row">
                                             <div class="input-group">
@@ -116,6 +112,7 @@
                                     <div class="row mb-6">
                                         <label class="col-lg-4 col-form-label required fw-semibold fs-6">
                                             Accommodation Amount
+                                            <span class="text-muted">(Per Day)</span>
                                         </label>
                                         <div class="col-lg-8 fv-row">
                                             <div class="input-group">
@@ -153,4 +150,26 @@
             <!--end::Content-->
         </div>
         <!--end::Content wrapper-->
+    @endsection
+
+    @section('pageScripts')
+        <script>
+            document.getElementById('designation-select').addEventListener('change', function() {
+                const designationId = this.value;
+
+                fetch(`/designation/${designationId}/available-tiers`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const tierSelect = document.getElementById('tier-select');
+                        tierSelect.innerHTML = '<option value="">--Select City Tier--</option>';
+
+                        data.forEach(tier => {
+                            const option = document.createElement('option');
+                            option.value = tier.id;
+                            option.textContent = tier.name;
+                            tierSelect.appendChild(option);
+                        });
+                    });
+            });
+        </script>
     @endsection

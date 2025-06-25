@@ -52,7 +52,7 @@
                                                 <label class="required form-label">
                                                     From Date
                                                 </label>
-                                                <input type="date" name="from_date"
+                                                <input type="date" name="from_date" id="from_date"
                                                     class="form-control form-control-solid @error('from_date') is-invalid @enderror"
                                                     value="{{ old('from_date') }}">
                                                 @error('from_date')
@@ -63,7 +63,7 @@
                                                 <label class="required form-label">
                                                     To Date
                                                 </label>
-                                                <input type="date" name="to_date"
+                                                <input type="date" name="to_date" id="to_date"
                                                     class="form-control form-control-solid @error('to_date') is-invalid @enderror"
                                                     value="{{ old('to_date') }}">
                                                 @error('to_date')
@@ -330,6 +330,7 @@
 @section('pageScripts')
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{ asset('assets/js/custom/apps/expense/create.js') }}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>
         const perDayAllowance = {{ $allowance ? $allowance->allowance_amount : 0 }};
@@ -371,6 +372,54 @@
 
             fromDateInput.addEventListener('change', calculateAmounts);
             toDateInput.addEventListener('change', calculateAmounts);
+        });
+    </script>
+
+    <script>
+        document.getElementById('kt_invoice_form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Show the SweetAlert confirmation dialog
+            swal({
+                title: "Are you sure?",
+                text: "Do you really want to submit this Expense?",
+                icon: "warning",
+                buttons: {
+                    cancel: {
+                        text: "Cancel",
+                        value: null,
+                        visible: true,
+                        closeModal: true,
+                    },
+                    confirm: {
+                        text: "Submit",
+                        value: true,
+                        visible: true,
+                        closeModal: true
+                    }
+                },
+                dangerMode: true,
+            }).then((willSubmit) => {
+                if (willSubmit) {
+                    document.getElementById('loaderOverlay').style.display = 'flex';
+                    this.submit();
+                }
+            });
+        });
+    </script>
+    <script>
+        flatpickr("#from_date", {
+            defaultDate: new Date(),
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "Y-m-d"
+        });
+
+        flatpickr("#to_date", {
+            defaultDate: new Date(),
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "Y-m-d"
         });
     </script>
 @endsection

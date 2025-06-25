@@ -18,4 +18,9 @@ class Staff extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function designation()
+    {
+        return $this->belongsTo(\App\Models\Designation::class, 'designation_id');
+    }
 }

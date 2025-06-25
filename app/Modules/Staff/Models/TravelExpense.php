@@ -13,8 +13,11 @@ class TravelExpense extends Model
 
     protected $fillable = [
         'staff_id',
+        'title',
         'from_date',
         'to_date',
+        'source_city',
+        'destination_city',
         'amount',
         'status',
     ];

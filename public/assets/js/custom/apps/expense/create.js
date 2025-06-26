@@ -81,8 +81,26 @@ var KTAppTravelExpense = (function () {
       
     });
   
-  }; 
+  };
 
+  var bindFileInputChange = function (row) {
+    const fileInput = row.querySelector('.file-input');
+    const fileNameDisplay = row.querySelector('.file-name');
+    const uploadLabel = row.querySelector('.upload-label');
+  
+    if (fileInput && fileNameDisplay && uploadLabel) {
+      
+      fileInput.addEventListener('change', function () {
+        const fileName = this.files[0]?.name || 'Document';
+        fileNameDisplay.textContent = fileName;
+      });
+  
+      uploadLabel.addEventListener('click', function () {
+        fileInput.click();
+      });
+    }
+  };
+  
   return {
     init: function () {
       formElement = document.querySelector("#kt_invoice_form");
@@ -111,6 +129,26 @@ var KTAppTravelExpense = (function () {
         // Reset fare input
         newRow.querySelector('input[name="fare[]"]').value = '';
 
+        // Reset additional expense input if it exists
+        const additionalInput = newRow.querySelector('input[name="additional_expense_desc[]"]');
+        if (additionalInput) {
+          additionalInput.value = '';              // Clear old value
+          additionalInput.style.display = 'none';  // Ensure it's hidden by default
+          additionalInput.required = false;        // Reset required state
+        }
+
+        // Reset file input
+        const fileInput = newRow.querySelector('.file-input');
+        if (fileInput) {
+          fileInput.value = ''; // Clear file
+        }
+
+        // Reset file name display
+        const fileNameDisplay = newRow.querySelector('.file-name');
+        if (fileNameDisplay) {
+          fileNameDisplay.textContent = 'Document'; // Set to default
+        }
+
         formElement.querySelector('[data-kt-element="items"] tbody').appendChild(newRow);
 
         updateDirectionOptions(newRow);
@@ -126,6 +164,8 @@ var KTAppTravelExpense = (function () {
         newRow.querySelector('input[name="fare[]"]').addEventListener('input', function () {
           calculateTotals();
         });
+
+        bindFileInputChange(newRow);
       });
 
       // Initial row handlers
@@ -141,6 +181,7 @@ var KTAppTravelExpense = (function () {
         calculateTotals();
       });
 
+      bindFileInputChange(firstRow);
       calculateTotals();
     }
   };

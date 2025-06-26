@@ -2,7 +2,7 @@
 
 @section('content')
     <style>
-        table tr:first-child td:nth-child(4) button {
+        table tr:first-child td:nth-child(5) button {
             display: none;
         }
     </style>
@@ -101,7 +101,7 @@
                                                     <option value="">--Select City--</option>
                                                     @foreach ($cities as $city)
                                                         <option value="{{ $city->id }}"
-                                                            {{ old('source_city') == $city->id ? 'selected' : '' }}>
+                                                            {{ old('destination_city') == $city->id ? 'selected' : '' }}>
                                                             {{ $city->name }}
                                                         </option>
                                                     @endforeach
@@ -171,7 +171,10 @@
                                                             <th class="min-w-150px w-150px">
                                                                 Amount
                                                             </th>
-                                                            <th class="min-w-75px w-75px text-end">
+                                                            <th class="min-w-150px w-150px">
+                                                                Upload File
+                                                            </th>
+                                                            <th class="min-w-50px w-50px text-end">
                                                                 Remove
                                                             </th>
                                                         </tr>
@@ -180,7 +183,7 @@
                                                     <tbody data-kt-element="item-template">
                                                         <tr class="border-bottom border-bottom-dashed"
                                                             data-kt-element="item">
-                                                            <td class="pe-7">
+                                                            <td class="">
                                                                 <select name="direction[]" data-kt-element="direction"
                                                                     class="form-select form-select-solid @error('direction.*') is-invalid @enderror">
                                                                     <option value="">--Select--</option>
@@ -205,6 +208,7 @@
                                                                     @endforeach
                                                                 </select>
                                                                 <!-- JS will inject the additional input here -->
+                                                                
                                                                 {{-- @error('travel_modes.*')
                                                                     <div class="invalid-feedback">
                                                                         Expenditure is required.
@@ -212,7 +216,7 @@
                                                                 @enderror --}}
                                                             </td>
 
-                                                            <td class="ps-0">
+                                                            <td class="">
                                                                 <input
                                                                     class="form-control form-control-solid @error('fare.*') is-invalid @enderror"
                                                                     type="decimal" name="fare[]" data-kt-element="fare"
@@ -222,6 +226,26 @@
                                                                         Amount is required.
                                                                     </div>
                                                                 @enderror --}}
+                                                            </td>
+
+                                                            <td>
+                                                                <label class="btn btn-sm btn-info px-2 py-1 upload-label">
+                                                                    <span class="svg-icon svg-icon-2">
+                                                                        <i class="fa-solid fa-upload"></i>
+                                                                    </span>
+                                                                    Upload
+                                                                </label>
+                                                                <input type="file" name="file[]"
+                                                                    class="file-input d-none @error('file.*') is-invalid @enderror" />
+
+                                                                @error('file.*')
+                                                                    <div class="invalid-feedback d-block">{{ $message }}
+                                                                    </div>
+                                                                @enderror
+                                                                <div class="text-muted fs-7 mt-1 text-truncate file-name"
+                                                                    style="max-width: 100px; overflow: hidden; white-space: nowrap;">
+                                                                    Document..
+                                                                </div>
                                                             </td>
 
                                                             <td class="pt-5 text-end">

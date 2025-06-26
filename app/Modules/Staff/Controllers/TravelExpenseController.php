@@ -50,7 +50,13 @@ class TravelExpenseController extends Controller
             'direction.*' => 'required',
             'travel_modes.*' => 'required',
             'fare.*' => 'required',
-        ]);
+            'file.*' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
+        ],
+        [
+            'file.mimes' => 'Only pdf, doc, and docx files are allowed.',
+            'file.max' => 'The file size must not exceed 20MB.',
+        ]
+    );
 
         // Calculate total fare
         $subTotal = array_sum($request->fare);
@@ -102,14 +108,32 @@ class TravelExpenseController extends Controller
                     : ($mode ? $mode->name : null);
             }
 
+            $file_path = null;
+            if ($request->hasFile("file.$index")) {
+                $file = $request->file("file.$index");
+
+                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $extension = $file->getClientOriginalExtension();
+                $slug = \Str::of($originalName)
+                        ->lower()
+                        ->replace(['_', ' '], '-'); // Replace underscores/spaces with hyphens
+
+                $formattedName = ucwords((string) $slug, '-');
+                $filename = $formattedName . '_' . time() . '.' . $extension;
+
+                $path = $file->storeAs('expense_document', $filename, 'public');
+                $file_path = $path;
+            }
+
             TravelExpenseDetail::create([
                 'travel_expense_id' => $travelExpense->id,
                 'head' => $head,
                 'expenditure' => $expenditure,
                 'amount' => $request->fare[$index],
+                'file_path' => $file_path ?? null,
             ]);
         }
 
-        return redirect()->back()->with('success', 'Travel expense submitted successfully.');
+        return redirect()->route('travel.index')->with('success', 'Travel expense submitted successfully.');
     }
 }

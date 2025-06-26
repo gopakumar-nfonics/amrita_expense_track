@@ -16,5 +16,6 @@ class TravelExpenseDetail extends Model
         'head',
         'expenditure',
         'amount',
+        'file_path'
     ];
 }

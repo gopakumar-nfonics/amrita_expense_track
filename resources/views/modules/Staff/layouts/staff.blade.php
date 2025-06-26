@@ -266,7 +266,7 @@
 
                                 <!--begin:Menu item-->
                                  <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('category.index','category.create'))) show  @endif">
+                                    class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('travel.index','travel.create'))) show  @endif">
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
                                         <span class="menu-icon">
@@ -281,8 +281,8 @@
                                         <!--begin:Menu item-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
-                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('category.index'))) active  @endif"
-                                                href="{{route('category.index')}}">
+                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('travel.index'))) active  @endif"
+                                                href="{{route('travel.index')}}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
@@ -293,7 +293,7 @@
                                         <!--end:Menu item-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
-                                            <a class="menu-link  @if(in_array(Route::currentRouteName(),array('category.create'))) active  @endif"
+                                            <a class="menu-link  @if(in_array(Route::currentRouteName(),array('travel.create'))) active  @endif"
                                                 href="{{route('travel.create')}}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>

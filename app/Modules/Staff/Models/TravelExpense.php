@@ -27,4 +27,14 @@ class TravelExpense extends Model
     {
         return $this->belongsTo(Staff::class, 'staff_id');
     }
+
+    public function sourceCity()
+    {
+        return $this->belongsTo(\App\Models\City::class, 'source_city');
+    }
+
+    public function destinationCity()
+    {
+        return $this->belongsTo(\App\Models\City::class, 'destination_city');
+    }
 }

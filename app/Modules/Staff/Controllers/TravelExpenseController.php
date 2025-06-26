@@ -29,6 +29,14 @@ class TravelExpenseController extends Controller
         return view('modules.Staff.travel.create', compact('cities', 'travelModes', 'allowance'));
     }
 
+    public function index()
+    {
+        $expenses = TravelExpense::with(['sourceCity', 'destinationCity'])
+                                   ->orderBy('title')
+                                   ->get();
+        return view('modules.Staff.travel.index', compact('expenses'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([

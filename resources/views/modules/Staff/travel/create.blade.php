@@ -176,7 +176,7 @@
 
                                             <!-- Submit Button -->
                                             <div class="d-flex justify-content-end pt-10">
-                                                <button type="submit" class="btn btn-primary">
+                                                <button type="submit" class="btn btn-primary" id="submitBtn" disabled>
                                                     Submit
                                                 </button>
                                             </div>
@@ -240,6 +240,41 @@
             toDateInput.addEventListener('change', calculateAmounts);
         });
     </script>
+
+    <script>
+        const form = document.getElementById('kt_invoice_form');
+        const submitBtn = document.getElementById('submitBtn');
+
+        const requiredFields = [
+            'title',
+            'from_date',
+            'to_date',
+            'source_city',
+            'destination_city',
+            'allowance_amount',
+            'accommodation_amount',
+            'advance_amount'
+        ];
+
+        function validateFormFields() {
+            let allFilled = true;
+            for (let name of requiredFields) {
+                const field = form.querySelector(`[name="${name}"]`);
+                if (!field || !field.value.trim()) {
+                    allFilled = false;
+                    break;
+                }
+            }
+            submitBtn.disabled = !allFilled;
+        }
+
+        // Attach input event listeners
+        form.addEventListener('input', validateFormFields);
+
+        // Initial check (in case some fields are pre-filled)
+        window.addEventListener('DOMContentLoaded', validateFormFields);
+    </script>
+
 
     <script>
         document.getElementById('kt_invoice_form').addEventListener('submit', function(event) {

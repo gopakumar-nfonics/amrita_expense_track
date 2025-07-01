@@ -248,7 +248,7 @@
             // Show the SweetAlert confirmation dialog
             swal({
                 title: "Are you sure?",
-                text: "Do you really want to submit this Expense?",
+                text: "Do you really want to submit this Advance Request?",
                 icon: "warning",
                 buttons: {
                     cancel: {

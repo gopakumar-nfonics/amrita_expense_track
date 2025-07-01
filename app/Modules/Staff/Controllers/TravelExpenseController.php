@@ -63,7 +63,7 @@ class TravelExpenseController extends Controller
             'source_city' => $request->source_city,
             'destination_city' => $request->destination_city,
             'amount' => 0,
-            'status' => 'advance_requested', // default
+            'status' => 'advance_requested',
             'advance_amount' => $request->advance_amount,
         ]);
 
@@ -114,10 +114,10 @@ class TravelExpenseController extends Controller
             'direction.*' => 'required',
             'travel_modes.*' => 'required',
             'fare.*' => 'required',
-            'file.*' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
+            'file.*' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png,webp|max:20480',
         ],
         [
-            'file.mimes' => 'Only pdf, doc, and docx files are allowed.',
+            'file.mimes' => 'Only pdf, doc, docx, jpg, jpeg, png, and webp files are allowed.',
             'file.max' => 'The file size must not exceed 20MB.',
         ]);
 

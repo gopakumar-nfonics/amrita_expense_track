@@ -4,7 +4,7 @@ use App\Modules\Staff\Controllers\Auth\StaffLoginController;
 use App\Modules\Staff\Controllers\StaffController;
 use App\Modules\Staff\Controllers\TravelExpenseController;
 
-Route::prefix('staff')->group(function () {
+Route::middleware(['web'])->prefix('staff')->group(function () {
     Route::get('login', [StaffLoginController::class, 'showLoginForm'])->name('staff.login');
     Route::post('login', [StaffLoginController::class, 'login']);
     Route::post('logout', [StaffLoginController::class, 'logout'])->name('staff.logout');

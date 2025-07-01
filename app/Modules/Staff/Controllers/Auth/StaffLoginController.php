@@ -19,7 +19,9 @@ class StaffLoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('staff')->attempt($credentials)) {
-            return redirect()->intended('/staff/dashboard');
+            // return redirect()->intended('/staff/dashboard');
+            return redirect('/staff/dashboard');
+
         }
 
         return back()->withErrors(['email' => 'Invalid credentials.']);

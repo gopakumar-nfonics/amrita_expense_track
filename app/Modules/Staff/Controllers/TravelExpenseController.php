@@ -47,19 +47,8 @@ class TravelExpenseController extends Controller
             'destination_city' => 'required',
             'allowance_amount' => 'required',
             'accommodation_amount' => 'required',
-            'direction.*' => 'required',
-            'travel_modes.*' => 'required',
-            'fare.*' => 'required',
-            'file.*' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
-        ],
-        [
-            'file.mimes' => 'Only pdf, doc, and docx files are allowed.',
-            'file.max' => 'The file size must not exceed 20MB.',
-        ]
-    );
-
-        // Calculate total fare
-        $subTotal = array_sum($request->fare);
+            'advance_amount' => 'required',
+        ]);
 
         // Calculate days between
         $from = Carbon::parse($request->from_date);
@@ -73,8 +62,9 @@ class TravelExpenseController extends Controller
             'to_date' => $request->to_date,
             'source_city' => $request->source_city,
             'destination_city' => $request->destination_city,
-            'amount' => $subTotal,
-            'status' => 'pending', // default
+            'amount' => 0,
+            'status' => 'advance_requested', // default
+            'advance_amount' => $request->advance_amount,
         ]);
 
         // Save DA
@@ -91,6 +81,54 @@ class TravelExpenseController extends Controller
             'head' => 'ACC',
             'expenditure' => '₹' . number_format($request->accommodation_amount / max($days, 1)) . ' per day for ' . $days . ' ' . \Str::plural('day', $days),
             'amount' => $request->accommodation_amount,
+        ]);
+
+        return redirect()->route('travel.index')->with('success', 'Advance request submitted successfully.');
+    }
+
+    public function submit_expense($id)
+    {
+        $expense = TravelExpense::findOrFail($id);
+        $cities = City::orderBy('name')->get();
+        $staff = Auth::user();
+
+        $travelModes = [];
+        if ($staff && $staff->designation) {
+            $travelModes = $staff->designation->travelModes()->with('parent')->orderBy('name')->get();
+            $allowance = DailyAllowanceAccommodation::where('designation_id', $staff->designation_id)
+                                                    ->first();
+        }
+
+        $daDetail = $expense->details->firstWhere('head', 'DA');
+        $accDetail = $expense->details->firstWhere('head', 'ACC');
+    
+        $daAmount = $daDetail?->amount ?? 0;
+        $accAmount = $accDetail?->amount ?? 0;
+
+        return view('modules.Staff.travel.submit', compact('expense', 'cities', 'travelModes', 'allowance', 'daAmount', 'accAmount'));
+    }
+
+    public function expense_store(Request $request, $id)
+    {
+        $request->validate([
+            'direction.*' => 'required',
+            'travel_modes.*' => 'required',
+            'fare.*' => 'required',
+            'file.*' => 'nullable|file|mimes:pdf,doc,docx|max:20480',
+        ],
+        [
+            'file.mimes' => 'Only pdf, doc, and docx files are allowed.',
+            'file.max' => 'The file size must not exceed 20MB.',
+        ]);
+
+        // Calculate total fare
+        $subTotal = array_sum($request->fare);
+
+        $travelExpense = TravelExpense::findOrFail($id);
+  
+        $travelExpense->update([
+            'amount' => $subTotal,
+            'status' => 'expense_submitted', // default
         ]);
 
         // Save each travel fare row

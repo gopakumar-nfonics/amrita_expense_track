@@ -298,7 +298,7 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">Add Expense</span>
+                                                <span class="menu-title">Request Advance</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>

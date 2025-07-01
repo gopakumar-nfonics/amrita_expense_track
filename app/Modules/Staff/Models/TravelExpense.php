@@ -20,6 +20,7 @@ class TravelExpense extends Model
         'destination_city',
         'amount',
         'status',
+        'advance_amount',
     ];
 
     // (optional) relationship to Staff
@@ -37,4 +38,9 @@ class TravelExpense extends Model
     {
         return $this->belongsTo(\App\Models\City::class, 'destination_city');
     }
+    public function details()
+    {
+        return $this->hasMany(TravelExpenseDetail::class, 'travel_expense_id');
+    }
+
 }

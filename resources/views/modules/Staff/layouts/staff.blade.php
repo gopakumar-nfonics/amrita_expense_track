@@ -5,7 +5,7 @@
 
 <head>
     <base href="" />
-    <title>{{config('app.name')}}</title>
+    <title>{{ config('app.name') }}</title>
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ url('/') }}/assets/media/logos/favicon.ico" />
     <!--begin::Fonts(mandatory for all pages)-->
@@ -18,7 +18,8 @@
         type="text/css" />
     <link href="{{ url('/') }}/assets/plugins/custom/bootstrap-datepicker/bootstrap-datepicker.min599c.css?v4.0.2"
         rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="{{ url('/') }}/assets/plugins/custom/timepicker/jquery-timepicker.min599c.css?v4.0.2">
+    <link rel="stylesheet"
+        href="{{ url('/') }}/assets/plugins/custom/timepicker/jquery-timepicker.min599c.css?v4.0.2">
 
     <!--end::Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
@@ -72,7 +73,8 @@
                     <!--begin::Mobile logo-->
                     <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                         <a href="" class="d-lg-none">
-                            <img alt="Logo" src="{{ url('/') }}/assets/media/avatars/300-1.jpg" class="h-30px" />
+                            <img alt="Logo" src="{{ url('/') }}/assets/media/avatars/300-1.jpg"
+                                class="h-30px" />
                         </a>
                     </div>
                     <!--end::Mobile logo-->
@@ -89,16 +91,16 @@
                             <!--begin::User menu-->
                             <div class="app-navbar-item ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
                                 <!--begin::Menu wrapper-->
-                                
+
                                 <div class="cursor-pointer symbol symbol-35px symbol-md-40px"
                                     data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                                     data-kt-menu-placement="bottom-end">
-                                   
+
                                     <span class="symbol-label bg-danger text-white br-radius-50">
-                                        {{ strtoupper(substr(Auth::user()->name, 0, 2));}}
+                                        {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
                                     </span>
 
-                                   
+
                                 </div>
                                 <!--begin::User account menu-->
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
@@ -106,7 +108,7 @@
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-3">
                                         <div class="menu-content d-flex align-items-center px-3">
-                                          
+
                                             <!--begin::Username-->
                                             <div class="d-flex flex-column">
                                                 <div class="fw-bold d-flex align-items-center fs-6">
@@ -115,7 +117,7 @@
                                                         style="text-transform: capitalize">Staff</span>
                                                 </div>
                                                 <a href=""
-                                                    class="fw-semibold text-muted text-hover-primary fs-7">{{Auth::user()->email}}</a>
+                                                    class="fw-semibold text-muted text-hover-primary fs-7">{{ Auth::user()->email }}</a>
                                             </div>
                                             <!--end::Username-->
                                         </div>
@@ -126,9 +128,9 @@
                                     <!--end::Menu separator-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5">
-                                       
+
                                         <a href="{{ route('userprofile') }}" class="menu-link px-5">My Profile</a>
-                                       
+
                                     </div>
                                     <!--end::Menu item-->
 
@@ -184,7 +186,7 @@
                     <!--begin::Logo-->
                     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
                         <!--begin::Logo image-->
-                        <a href="{{route('dashboard')}}">
+                        <a href="{{ route('dashboard') }}">
                             <img alt="Logo" src="{{ url('/') }}/assets/media/logos/logo.svg"
                                 class="h-35px app-sidebar-logo-default" />
                             <img alt="Logo" src="{{ url('/') }}/assets/media/logos/logo-small.png"
@@ -222,15 +224,15 @@
                             data-kt-scroll-wrappers="#kt_app_sidebar_menu" data-kt-scroll-offset="5px"
                             data-kt-scroll-save-state="true">
                             <!--begin::Menu-->
-                            <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu"
-                                data-kt-menu="true" data-kt-menu-expand="false">
-                               
+                            <div class="menu menu-column menu-rounded menu-sub-indention px-3"
+                                id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
+
                                 <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
+                                {{-- <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
                                     <!--begin:Menu link-->
                                     <a href="{{route('staff.dashboard')}}">
                                         <span
-                                            class="menu-link @if(in_array(Route::currentRouteName(),array('dashboard'))) active  @endif">
+                                            class="menu-link @if (in_array(Route::currentRouteName(), ['dashboard'])) active  @endif">
                                             <span class="menu-icon">
                                                 <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                                                 <span class="svg-icon svg-icon-2">
@@ -252,7 +254,7 @@
                                         </span>
                                     </a>
                                     <!--end:Menu link-->
-                                </div>
+                                </div> --}}
 
                                 <div class="menu-item pt-5">
                                     <!--begin:Menu content-->
@@ -265,8 +267,8 @@
 
 
                                 <!--begin:Menu item-->
-                                 <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('travel.index','travel.create'))) show  @endif">
+                                <div data-kt-menu-trigger="click"
+                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['travel.index', 'travel.create'])) show @endif">
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
                                         <span class="menu-icon">
@@ -281,8 +283,8 @@
                                         <!--begin:Menu item-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
-                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('travel.index'))) active  @endif"
-                                                href="{{route('travel.index')}}">
+                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['travel.index'])) active @endif"
+                                                href="{{ route('travel.index') }}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
@@ -293,8 +295,8 @@
                                         <!--end:Menu item-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
-                                            <a class="menu-link  @if(in_array(Route::currentRouteName(),array('travel.create'))) active  @endif"
-                                                href="{{route('travel.create')}}">
+                                            <a class="menu-link  @if (in_array(Route::currentRouteName(), ['travel.create'])) active @endif"
+                                                href="{{ route('travel.create') }}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
@@ -308,7 +310,7 @@
 
                                 <!--end:Menu item-->
 
-                               
+
                             </div>
                             <!--end::Menu-->
                         </div>
@@ -332,7 +334,7 @@
 
                 <!--begin::Javascript-->
                 <script>
-                var hostUrl = "assets/";
+                    var hostUrl = "assets/";
                 </script>
                 <!--begin::Global Javascript Bundle(mandatory for all pages)-->
                 <script src="{{ url('/') }}/assets/plugins/global/plugins.bundle.js"></script>
@@ -364,54 +366,52 @@
                 <script src="{{ url('/') }}/assets/js/custom/utilities/modals/new-target.js"></script>
                 <script src="{{ url('/') }}/assets/js/custom/utilities/modals/users-search.js"></script>
                 <script src="{{ url('/') }}/assets/js/alertify/alertify.min.js"></script>
-                <script src="{{ url('/') }}/assets/plugins/custom/timepicker/jquery.timepicker.min599c.js?v4.0.2">
-                </script>
-                <script
-                    src="{{ url('/') }}/assets/plugins/custom/bootstrap-datepicker/bootstrap-datepicker.min599c.js?v4.0.2">
+                <script src="{{ url('/') }}/assets/plugins/custom/timepicker/jquery.timepicker.min599c.js?v4.0.2"></script>
+                <script src="{{ url('/') }}/assets/plugins/custom/bootstrap-datepicker/bootstrap-datepicker.min599c.js?v4.0.2">
                 </script>
                 <script src="{{ url('/') }}/assets/js/custom/custom.js"></script>
                 <!--end::Custom Javascript-->
                 <!--end::Javascript-->
                 <script>
-                $(document).ready(function() {
-                    @if(Session::has('success'))
-                    alertify.success(`{{Session::get('success')}}`);
-                    @endif
+                    $(document).ready(function() {
+                        @if (Session::has('success'))
+                            alertify.success(`{{ Session::get('success') }}`);
+                        @endif
 
-                    @if(Session::has('error'))
-                    alertify.error(`{{Session::get('error')}}`);
-                    @endif
+                        @if (Session::has('error'))
+                            alertify.error(`{{ Session::get('error') }}`);
+                        @endif
 
 
-                });
+                    });
                 </script>
 
                 <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Get the sidebar toggle button
-                    const sidebarToggle = document.getElementById('kt_app_sidebar_toggle');
-                    const body = document.body;
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // Get the sidebar toggle button
+                        const sidebarToggle = document.getElementById('kt_app_sidebar_toggle');
+                        const body = document.body;
 
-                    function isPaymentRequestPage() {
-                        // return window.location.href.includes('/payment/create');
-                        return 0;
-                    }
-
-                    function toggleSidebarMinimize() {
-                        if (isPaymentRequestPage()) {
-                            // Add the class to minimize the sidebar
-                            sidebarToggle.classList.add('active');
-                            // Add the data attribute to the body
-                            body.setAttribute('data-kt-app-sidebar-minimize', 'on');
-                        } else {
-                            // Remove the class to restore the sidebar
-                            sidebarToggle.classList.remove('active');
-                            // Remove the data attribute from the body
-                            body.removeAttribute('data-kt-app-sidebar-minimize');
+                        function isPaymentRequestPage() {
+                            // return window.location.href.includes('/payment/create');
+                            return 0;
                         }
-                    }
-                    toggleSidebarMinimize();
-                });
+
+                        function toggleSidebarMinimize() {
+                            if (isPaymentRequestPage()) {
+                                // Add the class to minimize the sidebar
+                                sidebarToggle.classList.add('active');
+                                // Add the data attribute to the body
+                                body.setAttribute('data-kt-app-sidebar-minimize', 'on');
+                            } else {
+                                // Remove the class to restore the sidebar
+                                sidebarToggle.classList.remove('active');
+                                // Remove the data attribute from the body
+                                body.removeAttribute('data-kt-app-sidebar-minimize');
+                            }
+                        }
+                        toggleSidebarMinimize();
+                    });
                 </script>
 
 

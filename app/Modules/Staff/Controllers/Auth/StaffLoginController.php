@@ -20,7 +20,7 @@ class StaffLoginController extends Controller
 
         if (Auth::guard('staff')->attempt($credentials)) {
             // return redirect()->intended('/staff/dashboard');
-            return redirect('/staff/dashboard');
+            return redirect('/staff/travel-expense/index');
 
         }
 

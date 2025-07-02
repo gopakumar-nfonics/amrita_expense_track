@@ -113,7 +113,7 @@ class travelexpense extends Controller
             'category_id'        => $request->category,
             'stream_id'       => $request->programme,
             'status'             => 'advance_received',
-            'final_amount'     => $request->approved_amount,
+            'final_amount'     => 0,
         ]);
     
         return redirect()->back()->with('success', 'Advance request approved successfully.');

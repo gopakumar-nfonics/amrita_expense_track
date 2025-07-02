@@ -108,13 +108,13 @@
                                     data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                                     data-kt-menu-placement="bottom-end">
                                     @if (Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
-                                    <img src="{{ !empty(Auth::user()->thumbnail_path) ? asset(Auth::user()->thumbnail_path) : url('/assets/media/avatars/300-1.jpg') }}"
-                                        alt="user" />
+                                        <img src="{{ !empty(Auth::user()->thumbnail_path) ? asset(Auth::user()->thumbnail_path) : url('/assets/media/avatars/300-1.jpg') }}"
+                                            alt="user" />
                                     @endif
                                     @if (Auth::user()->isvendor())
-                                    <span class="symbol-label bg-danger text-white br-radius-50">
-                                        {{ strtoupper(substr(Auth::user()->first_name, 0, 2)) }}
-                                    </span>
+                                        <span class="symbol-label bg-danger text-white br-radius-50">
+                                            {{ strtoupper(substr(Auth::user()->first_name, 0, 2)) }}
+                                        </span>
                                     @endif
                                 </div>
                                 <!--begin::User account menu-->
@@ -141,7 +141,7 @@
                                                 <div class="fw-bold d-flex align-items-center fs-6">
                                                     {{ Auth::user()->first_name }}
                                                     @if (Auth::user()->last_name)
-                                                    {{ Auth::user()->last_name }}
+                                                        {{ Auth::user()->last_name }}
                                                     @endif
                                                     <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2"
                                                         style="text-transform: capitalize">{{ Auth::user()->role }}</span>
@@ -159,10 +159,10 @@
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5">
                                         @if (Auth::user()->isvendor())
-                                        <a href="{{ route('profile') }}" class="menu-link px-5">My Profile</a>
+                                            <a href="{{ route('profile') }}" class="menu-link px-5">My Profile</a>
                                         @else
-                                        <a href="{{ route('userprofile') }}" class="menu-link px-5">My
-                                            Profile</a>
+                                            <a href="{{ route('userprofile') }}" class="menu-link px-5">My
+                                                Profile</a>
                                         @endif
                                     </div>
                                     <!--end::Menu item-->
@@ -260,212 +260,212 @@
                             <div class="menu menu-column menu-rounded menu-sub-indention px-3"
                                 id="#kt_app_sidebar_menu" data-kt-menu="true" data-kt-menu-expand="false">
                                 @if (Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
-                                    <!--begin:Menu link-->
-                                    <a href="{{ route('dashboard') }}">
-                                        <span class="menu-link @if (in_array(Route::currentRouteName(), ['dashboard'])) active @endif">
-                                            <span class="menu-icon">
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                                                <span class="svg-icon svg-icon-2">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <rect x="2" y="2" width="9" height="9"
-                                                            rx="2" fill="currentColor" />
-                                                        <rect opacity="0.3" x="13" y="2" width="9"
-                                                            height="9" rx="2" fill="currentColor" />
-                                                        <rect opacity="0.3" x="13" y="13" width="9"
-                                                            height="9" rx="2" fill="currentColor" />
-                                                        <rect opacity="0.3" x="2" y="13" width="9"
-                                                            height="9" rx="2" fill="currentColor" />
-                                                    </svg>
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
+                                        <!--begin:Menu link-->
+                                        <a href="{{ route('dashboard') }}">
+                                            <span class="menu-link @if (in_array(Route::currentRouteName(), ['dashboard'])) active @endif">
+                                                <span class="menu-icon">
+                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                                                    <span class="svg-icon svg-icon-2">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24"
+                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect x="2" y="2" width="9" height="9"
+                                                                rx="2" fill="currentColor" />
+                                                            <rect opacity="0.3" x="13" y="2" width="9"
+                                                                height="9" rx="2" fill="currentColor" />
+                                                            <rect opacity="0.3" x="13" y="13" width="9"
+                                                                height="9" rx="2" fill="currentColor" />
+                                                            <rect opacity="0.3" x="2" y="13" width="9"
+                                                                height="9" rx="2" fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->
                                                 </span>
-                                                <!--end::Svg Icon-->
+                                                <span class="menu-title">Dashboard</span>
                                             </span>
-                                            <span class="menu-title">Dashboard</span>
-                                        </span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                </div>
-
-                                <div class="menu-item pt-5">
-                                    <!--begin:Menu content-->
-                                    <div class="menu-content">
-                                        <span class="menu-heading fw-bold text-uppercase fs-7">Report Center</span>
+                                        </a>
+                                        <!--end:Menu link-->
                                     </div>
-                                    <!--end:Menu content-->
-                                </div>
 
-
-
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-print"></i>
-                                        </span>
-                                        <span class="menu-title">Reports</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link" href="{{ route('vendorreport') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Vendor Wise</span>
-                                            </a>
-                                            <!--end:Menu link-->
+                                    <div class="menu-item pt-5">
+                                        <!--begin:Menu content-->
+                                        <div class="menu-content">
+                                            <span class="menu-heading fw-bold text-uppercase fs-7">Report Center</span>
                                         </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link" href="{{ route('programmereport') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Programme Wise</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link" href="{{ route('catreport') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Budget & Usage</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-
+                                        <!--end:Menu content-->
                                     </div>
-                                    <!--end:Menu sub-->
-                                </div>
-
-                                <!--end:Menu item-->
 
 
 
-
-
-
-
-                                <div class="menu-item pt-5">
-                                    <!--begin:Menu content-->
-                                    <div class="menu-content">
-                                        <span class="menu-heading fw-bold text-uppercase fs-7">Invoice &
-                                            Payments</span>
-                                    </div>
-                                    <!--end:Menu content-->
-                                </div>
-
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['payment.index', 'payment.create'])) show @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-
-                                            <i class="fa-solid fa-money-check-dollar"></i>
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-print"></i>
+                                            </span>
+                                            <span class="menu-title">Reports</span>
+                                            <span class="menu-arrow"></span>
                                         </span>
-                                        <span class="menu-title">Payments</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['payment.index'])) active @endif"
-                                                href="{{ route('payment.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Payments List</span>
-                                            </a>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link" href="{{ route('vendorreport') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Vendor Wise</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link" href="{{ route('programmereport') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Programme Wise</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link" href="{{ route('catreport') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Budget & Usage</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
 
                                         </div>
+                                        <!--end:Menu sub-->
+                                    </div>
 
-                                        <div class="menu-item">
+                                    <!--end:Menu item-->
 
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['noninvoicepayment.index'])) active @endif"
-                                                href="{{ route('noninvoicepayment.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Non-Invoice Payments</span>
-                                            </a>
 
+
+
+
+
+
+                                    <div class="menu-item pt-5">
+                                        <!--begin:Menu content-->
+                                        <div class="menu-content">
+                                            <span class="menu-heading fw-bold text-uppercase fs-7">Invoice &
+                                                Payments</span>
                                         </div>
+                                        <!--end:Menu content-->
+                                    </div>
 
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <!-- <a class="menu-link @if (in_array(Route::currentRouteName(), ['payment.create'])) active @endif"
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['payment.index', 'payment.create'])) show @endif">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+
+                                                <i class="fa-solid fa-money-check-dollar"></i>
+                                            </span>
+                                            <span class="menu-title">Payments</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['payment.index'])) active @endif"
+                                                    href="{{ route('payment.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Payments List</span>
+                                                </a>
+
+                                            </div>
+
+                                            <div class="menu-item">
+
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['noninvoicepayment.index'])) active @endif"
+                                                    href="{{ route('noninvoicepayment.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Non-Invoice Payments</span>
+                                                </a>
+
+                                            </div>
+
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <!-- <a class="menu-link @if (in_array(Route::currentRouteName(), ['payment.create'])) active @endif"
                                                 href="{{ route('payment.create') }}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
                                                 <span class="menu-title">Payment Request</span>
                                             </a> -->
-                                            <!--end:Menu link-->
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+
                                         </div>
-                                        <!--end:Menu item-->
-
+                                        <!--end:Menu sub-->
                                     </div>
-                                    <!--end:Menu sub-->
-                                </div>
 
-                                <!--end:Menu item-->
+                                    <!--end:Menu item-->
                                 @endif
                                 @if (Auth::user()->isvendor())
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
-                                    <!--begin:Menu link-->
-                                    <a href="{{ route('dashboard') }}">
-                                        <span class="menu-link @if (in_array(Route::currentRouteName(), ['dashboard'])) active @endif">
-                                            <span class="menu-icon">
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                                                <span class="svg-icon svg-icon-2">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <rect x="2" y="2" width="9" height="9"
-                                                            rx="2" fill="currentColor" />
-                                                        <rect opacity="0.3" x="13" y="2" width="9"
-                                                            height="9" rx="2" fill="currentColor" />
-                                                        <rect opacity="0.3" x="13" y="13" width="9"
-                                                            height="9" rx="2" fill="currentColor" />
-                                                        <rect opacity="0.3" x="2" y="13" width="9"
-                                                            height="9" rx="2" fill="currentColor" />
-                                                    </svg>
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
+                                        <!--begin:Menu link-->
+                                        <a href="{{ route('dashboard') }}">
+                                            <span class="menu-link @if (in_array(Route::currentRouteName(), ['dashboard'])) active @endif">
+                                                <span class="menu-icon">
+                                                    <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                                                    <span class="svg-icon svg-icon-2">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24"
+                                                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect x="2" y="2" width="9" height="9"
+                                                                rx="2" fill="currentColor" />
+                                                            <rect opacity="0.3" x="13" y="2" width="9"
+                                                                height="9" rx="2" fill="currentColor" />
+                                                            <rect opacity="0.3" x="13" y="13" width="9"
+                                                                height="9" rx="2" fill="currentColor" />
+                                                            <rect opacity="0.3" x="2" y="13" width="9"
+                                                                height="9" rx="2" fill="currentColor" />
+                                                        </svg>
+                                                    </span>
+                                                    <!--end::Svg Icon-->
                                                 </span>
-                                                <!--end::Svg Icon-->
+                                                <span class="menu-title">Dashboard</span>
                                             </span>
-                                            <span class="menu-title">Dashboard</span>
-                                        </span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                </div>
-                                <div class="menu-item pt-5">
-                                    <!--begin:Menu content-->
-                                    <div class="menu-content">
-                                        <span class="menu-heading fw-bold text-uppercase fs-7">Invoice &
-                                            Proposals</span>
+                                        </a>
+                                        <!--end:Menu link-->
                                     </div>
-                                    <!--end:Menu content-->
-                                </div>
+                                    <div class="menu-item pt-5">
+                                        <!--begin:Menu content-->
+                                        <div class="menu-content">
+                                            <span class="menu-heading fw-bold text-uppercase fs-7">Invoice &
+                                                Proposals</span>
+                                        </div>
+                                        <!--end:Menu content-->
+                                    </div>
                                 @endif
                                 <!--begin:Menu item-->
                                 <div data-kt-menu-trigger="click"
@@ -495,19 +495,19 @@
                                         </div>
                                         <!--end:Menu item-->
                                         @if (Auth::user()->isvendor())
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['invoice.create'])) active @endif"
-                                                href="{{ route('invoice.create') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Submit Invoice</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['invoice.create'])) active @endif"
+                                                    href="{{ route('invoice.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Submit Invoice</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
                                         @endif
                                     </div>
                                     <!--end:Menu sub-->
@@ -543,19 +543,19 @@
                                         </div>
                                         <!--end:Menu item-->
                                         @if (Auth::user()->isvendor())
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['lead.create'])) active @endif"
-                                                href="{{ route('lead.create') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Create Proposal</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['lead.create'])) active @endif"
+                                                    href="{{ route('lead.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Create Proposal</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
                                         @endif
                                     </div>
                                     <!--end:Menu sub-->
@@ -568,9 +568,9 @@
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
                                         <span class="menu-icon">
-                                            <i class="fa-solid fa-file-word"></i>
+                                            <i class="fa-solid fa-plane"></i>
                                         </span>
-                                        <span class="menu-title">Expenses</span>
+                                        <span class="menu-title">Travel Expenses</span>
                                         <span class="menu-arrow"></span>
                                     </span>
                                     <!--end:Menu link-->
@@ -584,191 +584,191 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">Expense List</span>
+                                                <span class="menu-title">Travel Expense List</span>
                                             </a>
 
                                         </div>
                                         <!--end:Menu item-->
-                                        
+
                                     </div>
                                     <!--end:Menu sub-->
                                 </div>
 
 
                                 @if (Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
-                                <!--end:Menu item-->
-                                <div class="menu-item mt-5">
-                                    <!--begin:Menu content-->
-                                    <div class="menu-content">
-                                        <span class="menu-heading fw-bold text-uppercase fs-7">Vendor</span>
-                                    </div>
-                                    <!--end:Menu content-->
-                                </div>
-
-
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['vendor.index', 'vendor.create'])) show @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-shop f-15 p-0"></i>
-                                        </span>
-                                        <span class="menu-title">Vendor</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['vendor.index'])) active @endif"
-                                                href="{{ route('vendor.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Vendor List</span>
-                                            </a>
-                                            <!--end:Menu link-->
+                                    <!--end:Menu item-->
+                                    <div class="menu-item mt-5">
+                                        <!--begin:Menu content-->
+                                        <div class="menu-content">
+                                            <span class="menu-heading fw-bold text-uppercase fs-7">Vendor</span>
                                         </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <!-- <a class="menu-link  @if (in_array(Route::currentRouteName(), ['vendor.create'])) active @endif"
+                                        <!--end:Menu content-->
+                                    </div>
+
+
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['vendor.index', 'vendor.create'])) show @endif">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-shop f-15 p-0"></i>
+                                            </span>
+                                            <span class="menu-title">Vendor</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['vendor.index'])) active @endif"
+                                                    href="{{ route('vendor.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Vendor List</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <!-- <a class="menu-link  @if (in_array(Route::currentRouteName(), ['vendor.create'])) active @endif"
                                                 href="{{ route('vendor.create') }}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
                                                 <span class="menu-title">Create Vendor</span>
                                             </a> -->
-                                            <!--end:Menu link-->
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+
                                         </div>
-                                        <!--end:Menu item-->
-
+                                        <!--end:Menu sub-->
                                     </div>
-                                    <!--end:Menu sub-->
-                                </div>
 
-                                <!--end:Menu item-->
+                                    <!--end:Menu item-->
 
-                                <div class="menu-item pt-5">
-                                    <!--begin:Menu content-->
-                                    <div class="menu-content">
-                                        <span class="menu-heading fw-bold text-uppercase fs-7">Budget</span>
+                                    <div class="menu-item pt-5">
+                                        <!--begin:Menu content-->
+                                        <div class="menu-content">
+                                            <span class="menu-heading fw-bold text-uppercase fs-7">Budget</span>
+                                        </div>
+                                        <!--end:Menu content-->
                                     </div>
-                                    <!--end:Menu content-->
-                                </div>
 
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['budget.index', 'budget.create'])) show @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['budget.index', 'budget.create'])) show @endif">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-indian-rupee-sign"></i>
+                                            </span>
+                                            <span class="menu-title">Budget Allocation</span>
+                                            <span class="menu-arrow"></span>
                                         </span>
-                                        <span class="menu-title">Budget Allocation</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
 
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['budget.index'])) active @endif"
-                                                href="{{ route('budget.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Budget List</span>
-                                            </a>
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['budget.index'])) active @endif"
+                                                    href="{{ route('budget.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Budget List</span>
+                                                </a>
+
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['budget.create'])) active @endif"
+                                                    href="{{ route('budget.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Allocate Budget</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
 
                                         </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['budget.create'])) active @endif"
-                                                href="{{ route('budget.create') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Allocate Budget</span>
-                                            </a>
-                                            <!--end:Menu link-->
+                                        <!--end:Menu sub-->
+                                    </div>
+
+                                    <!-- DA & Allowance -->
+                                    <div class="menu-item pt-5">
+                                        <div class="menu-content">
+                                            <span class="menu-heading fw-bold text-uppercase fs-7">DA &
+                                                Accommodation</span>
                                         </div>
-                                        <!--end:Menu item-->
-
                                     </div>
-                                    <!--end:Menu sub-->
-                                </div>
 
-                                <!-- DA & Allowance -->
-                                <div class="menu-item pt-5">
-                                    <div class="menu-content">
-                                        <span class="menu-heading fw-bold text-uppercase fs-7">DA &
-                                            Accommodation</span>
-                                    </div>
-                                </div>
-
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['dailyallowanceaccommodation.index', 'dailyallowanceaccommodation.create'])) show @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-money-check"></i>
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['dailyallowanceaccommodation.index', 'dailyallowanceaccommodation.create'])) show @endif">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-money-check"></i>
+                                            </span>
+                                            <span class="menu-title">DA & Accommodation</span>
+                                            <span class="menu-arrow"></span>
                                         </span>
-                                        <span class="menu-title">DA & Accommodation</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
 
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['dailyallowanceaccommodation.index'])) active @endif"
-                                                href="{{ route('dailyallowanceaccommodation.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">DA & ACC List</span>
-                                            </a>
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['dailyallowanceaccommodation.index'])) active @endif"
+                                                    href="{{ route('dailyallowanceaccommodation.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">DA & ACC List</span>
+                                                </a>
+
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['dailyallowanceaccommodation.create'])) active @endif"
+                                                    href="{{ route('dailyallowanceaccommodation.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Configure DA & ACC</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
 
                                         </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['dailyallowanceaccommodation.create'])) active @endif"
-                                                href="{{ route('dailyallowanceaccommodation.create') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Configure DA & ACC</span>
-                                            </a>
-                                            <!--end:Menu link-->
+                                        <!--end:Menu sub-->
+                                    </div>
+
+
+
+
+                                    <div class="menu-item pt-5">
+                                        <!--begin:Menu content-->
+                                        <div class="menu-content">
+                                            <span class="menu-heading fw-bold text-uppercase fs-7">Masters</span>
                                         </div>
-                                        <!--end:Menu item-->
-
+                                        <!--end:Menu content-->
                                     </div>
-                                    <!--end:Menu sub-->
-                                </div>
-
-
-
-
-                                <div class="menu-item pt-5">
-                                    <!--begin:Menu content-->
-                                    <div class="menu-content">
-                                        <span class="menu-heading fw-bold text-uppercase fs-7">Masters</span>
-                                    </div>
-                                    <!--end:Menu content-->
-                                </div>
 
 
 
@@ -777,435 +777,435 @@
 
 
 
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['category.index', 'category.create'])) show @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-object-ungroup f-15 p-0"></i>
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['category.index', 'category.create'])) show @endif">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-object-ungroup f-15 p-0"></i>
+                                            </span>
+                                            <span class="menu-title">Category</span>
+                                            <span class="menu-arrow"></span>
                                         </span>
-                                        <span class="menu-title">Category</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['category.index'])) active @endif"
-                                                href="{{ route('category.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Category List</span>
-                                            </a>
-                                            <!--end:Menu link-->
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['category.index'])) active @endif"
+                                                    href="{{ route('category.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Category List</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link  @if (in_array(Route::currentRouteName(), ['category.create'])) active @endif"
+                                                    href="{{ route('category.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Create Category</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
                                         </div>
-                                        <!--end:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link  @if (in_array(Route::currentRouteName(), ['category.create'])) active @endif"
-                                                href="{{ route('category.create') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Create Category</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
+                                        <!--end:Menu sub-->
                                     </div>
-                                    <!--end:Menu sub-->
-                                </div>
 
-                                <!--end:Menu item-->
+                                    <!--end:Menu item-->
 
 
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['stream.index', 'stream.create'])) show @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-code-branch fa-rotate-90 f-15 p-0"></i>
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['stream.index', 'stream.create'])) show @endif">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-code-branch fa-rotate-90 f-15 p-0"></i>
+                                            </span>
+                                            <span class="menu-title">Programme</span>
+                                            <span class="menu-arrow"></span>
                                         </span>
-                                        <span class="menu-title">Programme</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['stream.index'])) active @endif"
-                                                href="{{ route('stream.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Programme List</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link  @if (in_array(Route::currentRouteName(), ['stream.create'])) active @endif"
-                                                href="{{ route('stream.create') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Create Programme</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['stream.index'])) active @endif"
+                                                    href="{{ route('stream.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Programme List</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link  @if (in_array(Route::currentRouteName(), ['stream.create'])) active @endif"
+                                                    href="{{ route('stream.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Create Programme</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
 
+                                        </div>
+                                        <!--end:Menu sub-->
                                     </div>
-                                    <!--end:Menu sub-->
-                                </div>
 
 
 
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['department.index', 'department.create'])) show @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-graduation-cap f-15 p-0"></i>
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['department.index', 'department.create'])) show @endif">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-graduation-cap f-15 p-0"></i>
+                                            </span>
+                                            <span class="menu-title">Department</span>
+                                            <span class="menu-arrow"></span>
                                         </span>
-                                        <span class="menu-title">Department</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['department.index'])) active @endif"
-                                                href="{{ route('department.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Department List</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link  @if (in_array(Route::currentRouteName(), ['department.create'])) active @endif"
-                                                href="{{ route('department.create') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Create Department</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['department.index'])) active @endif"
+                                                    href="{{ route('department.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Department List</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link  @if (in_array(Route::currentRouteName(), ['department.create'])) active @endif"
+                                                    href="{{ route('department.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Create Department</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
 
+                                        </div>
+                                        <!--end:Menu sub-->
                                     </div>
-                                    <!--end:Menu sub-->
-                                </div>
 
-                                @if (!empty(Auth::user()->isAdmin()))
-                                <!--end:Menu item-->
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['campus.index', 'campus.create'])) show @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-tents f-15 p-0"></i>
+                                    @if (!empty(Auth::user()->isAdmin()))
+                                        <!--end:Menu item-->
+                                        <div data-kt-menu-trigger="click"
+                                            class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['campus.index', 'campus.create'])) show @endif">
+                                            <!--begin:Menu link-->
+                                            <span class="menu-link">
+                                                <span class="menu-icon">
+                                                    <i class="fa-solid fa-tents f-15 p-0"></i>
+                                                </span>
+                                                <span class="menu-title">Campus</span>
+                                                <span class="menu-arrow"></span>
+                                            </span>
+                                            <!--end:Menu link-->
+                                            <!--begin:Menu sub-->
+                                            <div class="menu-sub menu-sub-accordion">
+                                                <!--begin:Menu item-->
+                                                <div class="menu-item">
+                                                    <!--begin:Menu link-->
+                                                    <a class="menu-link @if (in_array(Route::currentRouteName(), ['campus.index'])) active @endif"
+                                                        href="{{ route('campus.index') }}">
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span>
+                                                        </span>
+                                                        <span class="menu-title">Campus List</span>
+                                                    </a>
+                                                    <!--end:Menu link-->
+                                                </div>
+                                                <!--end:Menu item-->
+                                                <!--begin:Menu item-->
+                                                <div class="menu-item">
+                                                    <!--begin:Menu link-->
+                                                    <a class="menu-link  @if (in_array(Route::currentRouteName(), ['campus.create'])) active @endif"
+                                                        href="{{ route('campus.create') }}">
+                                                        <span class="menu-bullet">
+                                                            <span class="bullet bullet-dot"></span>
+                                                        </span>
+                                                        <span class="menu-title">Create Campus</span>
+                                                    </a>
+                                                    <!--end:Menu link-->
+                                                </div>
+                                                <!--end:Menu item-->
+
+                                            </div>
+                                            <!--end:Menu sub-->
+                                        </div>
+                                    @endif
+
+                                    <!--end:Menu item-->
+
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['city.index', 'city.create'])) show @endif">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-city"></i>
+                                            </span>
+                                            <span class="menu-title">City</span>
+                                            <span class="menu-arrow"></span>
                                         </span>
-                                        <span class="menu-title">Campus</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['campus.index'])) active @endif"
-                                                href="{{ route('campus.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Campus List</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link  @if (in_array(Route::currentRouteName(), ['campus.create'])) active @endif"
-                                                href="{{ route('campus.create') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Create Campus</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['city.index'])) active @endif"
+                                                    href="{{ route('city.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">City List</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link  @if (in_array(Route::currentRouteName(), ['city.create'])) active @endif"
+                                                    href="{{ route('city.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Create City</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
 
+                                        </div>
+                                        <!--end:Menu sub-->
                                     </div>
-                                    <!--end:Menu sub-->
-                                </div>
+
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['designation.index', 'designation.create'])) show @endif">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-id-card"></i>
+                                            </span>
+                                            <span class="menu-title">Designation</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['designation.index'])) active @endif"
+                                                    href="{{ route('designation.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Designation List</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link  @if (in_array(Route::currentRouteName(), ['designation.create'])) active @endif"
+                                                    href="{{ route('designation.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Create Designation</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+
+                                        </div>
+                                        <!--end:Menu sub-->
+                                    </div>
+
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['travelmode.index', 'travelmode.create'])) show @endif">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-truck-plane"></i>
+                                            </span>
+                                            <span class="menu-title">Travel Mode</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['travelmode.index'])) active @endif"
+                                                    href="{{ route('travelmode.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Travel Mode List</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link  @if (in_array(Route::currentRouteName(), ['travelmode.create'])) active @endif"
+                                                    href="{{ route('travelmode.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Create Travel Mode</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+
+                                        </div>
+                                        <!--end:Menu sub-->
+                                    </div>
                                 @endif
 
-                                <!--end:Menu item-->
-
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['city.index', 'city.create'])) show @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-city"></i>
-                                        </span>
-                                        <span class="menu-title">City</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['city.index'])) active @endif"
-                                                href="{{ route('city.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">City List</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link  @if (in_array(Route::currentRouteName(), ['city.create'])) active @endif"
-                                                href="{{ route('city.create') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Create City</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-
-                                    </div>
-                                    <!--end:Menu sub-->
-                                </div>
-
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['designation.index', 'designation.create'])) show @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-id-card"></i>
-                                        </span>
-                                        <span class="menu-title">Designation</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['designation.index'])) active @endif"
-                                                href="{{ route('designation.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Designation List</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link  @if (in_array(Route::currentRouteName(), ['designation.create'])) active @endif"
-                                                href="{{ route('designation.create') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Create Designation</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-
-                                    </div>
-                                    <!--end:Menu sub-->
-                                </div>
-
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['travelmode.index', 'travelmode.create'])) show @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-truck-plane"></i>
-                                        </span>
-                                        <span class="menu-title">Travel Mode</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['travelmode.index'])) active @endif"
-                                                href="{{ route('travelmode.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Travel Mode List</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link  @if (in_array(Route::currentRouteName(), ['travelmode.create'])) active @endif"
-                                                href="{{ route('travelmode.create') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Create Travel Mode</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-
-                                    </div>
-                                    <!--end:Menu sub-->
-                                </div>
-                                @endif
-
 
                                 @if (!empty(Auth::user()->isAdmin()))
-                                <!--end:Menu item-->
-                                <div class="menu-item pt-5">
-                                    <!--begin:Menu content-->
-                                    <div class="menu-content">
-                                        <span class="menu-heading fw-bold text-uppercase fs-7">User</span>
+                                    <!--end:Menu item-->
+                                    <div class="menu-item pt-5">
+                                        <!--begin:Menu content-->
+                                        <div class="menu-content">
+                                            <span class="menu-heading fw-bold text-uppercase fs-7">User</span>
+                                        </div>
+                                        <!--end:Menu content-->
                                     </div>
-                                    <!--end:Menu content-->
-                                </div>
-                                <!--begin:Menu item-->
+                                    <!--begin:Menu item-->
 
-                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-users f-15 p-0"></i>
+                                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-users f-15 p-0"></i>
+                                            </span>
+                                            <span class="menu-title">BUET User</span>
+                                            <span class="menu-arrow"></span>
                                         </span>
-                                        <span class="menu-title">BUET User</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['user.index'])) active @endif"
-                                                href="{{ route('user.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">User List</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['user.create'])) active @endif"
-                                                href="{{ route('user.create') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Create User</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['user.index'])) active @endif"
+                                                    href="{{ route('user.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">User List</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['user.create'])) active @endif"
+                                                    href="{{ route('user.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Create User</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
 
+                                        </div>
+                                        <!--end:Menu sub-->
                                     </div>
-                                    <!--end:Menu sub-->
-                                </div>
 
 
 
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['staffs.index', 'staffs.create', 'staffs.import'])) show @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-user-tie"></i>
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['staffs.index', 'staffs.create', 'staffs.import'])) show @endif">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-user-tie"></i>
+                                            </span>
+                                            <span class="menu-title">Staff</span>
+                                            <span class="menu-arrow"></span>
                                         </span>
-                                        <span class="menu-title">Staff</span>
-                                        <span class="menu-arrow"></span>
-                                    </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['staffs.index'])) active @endif"
-                                                href="{{ route('staffs.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Staff List</span>
-                                            </a>
-                                            <!--end:Menu link-->
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['staffs.index'])) active @endif"
+                                                    href="{{ route('staffs.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Staff List</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['staffs.create'])) active @endif"
+                                                    href="{{ route('staffs.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Create Staff</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['staffs.import'])) active @endif"
+                                                    href="{{ route('staffs.import') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Import Staff</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
                                         </div>
-                                        <!--end:Menu item-->
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['staffs.create'])) active @endif"
-                                                href="{{ route('staffs.create') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Create Staff</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['staffs.import'])) active @endif"
-                                                href="{{ route('staffs.import') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Import Staff</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
+                                        <!--end:Menu sub-->
                                     </div>
-                                    <!--end:Menu sub-->
-                                </div>
-                                <!--end:Menu item-->
+                                    <!--end:Menu item-->
                                 @endif
                             </div>
                             <!--end::Menu-->
@@ -1271,12 +1271,12 @@
                 <!--end::Javascript-->
                 <script>
                     $(document).ready(function() {
-                        @if(Session::has('success'))
-                        alertify.success(`{{ Session::get('success') }}`);
+                        @if (Session::has('success'))
+                            alertify.success(`{{ Session::get('success') }}`);
                         @endif
 
-                        @if(Session::has('error'))
-                        alertify.error(`{{ Session::get('error') }}`);
+                        @if (Session::has('error'))
+                            alertify.error(`{{ Session::get('error') }}`);
                         @endif
 
 

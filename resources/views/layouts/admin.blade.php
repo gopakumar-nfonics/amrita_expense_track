@@ -563,6 +563,37 @@
 
                                 <!--end:Menu item-->
 
+                                <div data-kt-menu-trigger="click"
+                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['travelexpense.index'])) show @endif">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="fa-solid fa-file-word"></i>
+                                        </span>
+                                        <span class="menu-title">Expenses</span>
+                                        <span class="menu-arrow"></span>
+                                    </span>
+                                    <!--end:Menu link-->
+                                    <!--begin:Menu sub-->
+                                    <div class="menu-sub menu-sub-accordion">
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+
+                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['travelexpense.index'])) active @endif"
+                                                href="{{ route('travelexpense.index') }}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Expense List</span>
+                                            </a>
+
+                                        </div>
+                                        <!--end:Menu item-->
+                                        
+                                    </div>
+                                    <!--end:Menu sub-->
+                                </div>
+
 
                                 @if (Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
                                 <!--end:Menu item-->

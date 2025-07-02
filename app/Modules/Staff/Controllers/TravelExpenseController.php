@@ -10,6 +10,7 @@ use App\Models\City;
 use App\Models\TravelMode;
 use App\Models\DailyAllowanceAccommodation;
 use App\Modules\Staff\Models\TravelExpenseDetail;
+use App\Models\FinancialYear;
 use Carbon\Carbon;
 
 class TravelExpenseController extends Controller
@@ -31,10 +32,19 @@ class TravelExpenseController extends Controller
 
     public function index()
     {
+        $staffId = auth()->guard('staff')->id();
         $expenses = TravelExpense::with(['sourceCity', 'destinationCity'])
+                                   ->where('staff_id', $staffId)
                                    ->orderBy('title')
                                    ->get();
-        return view('modules.Staff.travel.index', compact('expenses'));
+
+        $financialyears = FinancialYear::get();
+        // Calculate totals
+        $totalAmount = $expenses->sum('amount');
+        $totalFinal = $expenses->sum('final_amount');
+        $balance = $totalAmount - $totalFinal;
+
+        return view('modules.Staff.travel.index', compact('expenses', 'totalAmount', 'totalFinal', 'balance', 'financialyears'));
     }
 
     public function store(Request $request)

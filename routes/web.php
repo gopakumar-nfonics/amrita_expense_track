@@ -138,3 +138,5 @@ Route::resource('travelmode',\App\Http\Controllers\resource\travelmode::class);
 Route::resource('city',\App\Http\Controllers\resource\city::class);
 Route::resource('dailyallowanceaccommodation',\App\Http\Controllers\resource\dailyallowanceaccommodation::class);
 Route::get('/designation/{id}/available-tiers',[\App\Http\Controllers\resource\dailyallowanceaccommodation::class, 'getAvailableTiers']);
+Route::resource('travelexpense',\App\Http\Controllers\resource\travelexpense::class);
+Route::post('/travel/approve', [\App\Http\Controllers\resource\travelexpense::class, 'approve_advance'])->name('travel.approveadvance');

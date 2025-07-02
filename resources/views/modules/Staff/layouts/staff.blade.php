@@ -231,191 +231,191 @@
                                 {{-- <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
                                     <!--begin:Menu link-->
                                     <a href="{{route('staff.dashboard')}}">
-                                        <span
-                                            class="menu-link @if (in_array(Route::currentRouteName(), ['dashboard'])) active  @endif">
-                                            <span class="menu-icon">
-                                                <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
-                                                <span class="svg-icon svg-icon-2">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <rect x="2" y="2" width="9" height="9" rx="2"
-                                                            fill="currentColor" />
-                                                        <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2"
-                                                            fill="currentColor" />
-                                                        <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2"
-                                                            fill="currentColor" />
-                                                        <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2"
-                                                            fill="currentColor" />
-                                                    </svg>
-                                                </span>
-                                                <!--end::Svg Icon-->
-                                            </span>
-                                            <span class="menu-title">Dashboard</span>
+                                <span
+                                    class="menu-link @if (in_array(Route::currentRouteName(), ['dashboard'])) active  @endif">
+                                    <span class="menu-icon">
+                                        <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
+                                        <span class="svg-icon svg-icon-2">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="2" y="2" width="9" height="9" rx="2"
+                                                    fill="currentColor" />
+                                                <rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2"
+                                                    fill="currentColor" />
+                                                <rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2"
+                                                    fill="currentColor" />
+                                                <rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2"
+                                                    fill="currentColor" />
+                                            </svg>
                                         </span>
-                                    </a>
-                                    <!--end:Menu link-->
-                                </div> --}}
-
-                                <div class="menu-item pt-5">
-                                    <!--begin:Menu content-->
-                                    <div class="menu-content">
-                                        <span class="menu-heading fw-bold text-uppercase fs-7">Expenses</span>
-                                    </div>
-                                    <!--end:Menu content-->
-                                </div>
-
-
-
-                                <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['travel.index', 'travel.create'])) show @endif">
-                                    <!--begin:Menu link-->
-                                    <span class="menu-link">
-                                        <span class="menu-icon">
-                                            <i class="fa-solid fa-object-ungroup f-15 p-0"></i>
-                                        </span>
-                                        <span class="menu-title">Expenses</span>
-                                        <span class="menu-arrow"></span>
+                                        <!--end::Svg Icon-->
                                     </span>
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
-                                    <div class="menu-sub menu-sub-accordion">
-                                        <!--begin:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['travel.index'])) active @endif"
-                                                href="{{ route('travel.index') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Expense List</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                        <!--end:Menu item-->
-                                        <div class="menu-item">
-                                            <!--begin:Menu link-->
-                                            <a class="menu-link  @if (in_array(Route::currentRouteName(), ['travel.create'])) active @endif"
-                                                href="{{ route('travel.create') }}">
-                                                <span class="menu-bullet">
-                                                    <span class="bullet bullet-dot"></span>
-                                                </span>
-                                                <span class="menu-title">Request Advance</span>
-                                            </a>
-                                            <!--end:Menu link-->
-                                        </div>
-                                    </div>
-                                    <!--end:Menu sub-->
+                                    <span class="menu-title">Dashboard</span>
+                                </span>
+                                </a>
+                                <!--end:Menu link-->
+                            </div> --}}
+
+                            <div class="menu-item pt-5">
+                                <!--begin:Menu content-->
+                                <div class="menu-content">
+                                    <span class="menu-heading fw-bold text-uppercase fs-7">My Expenses</span>
                                 </div>
-
-                                <!--end:Menu item-->
-
-
+                                <!--end:Menu content-->
                             </div>
-                            <!--end::Menu-->
+
+
+
+                            <!--begin:Menu item-->
+                            <div data-kt-menu-trigger="click"
+                                class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['travel.index', 'travel.create'])) show @endif">
+                                <!--begin:Menu link-->
+                                <span class="menu-link">
+                                    <span class="menu-icon">
+                                        <i class="fa-solid fa-object-ungroup f-15 p-0"></i>
+                                    </span>
+                                    <span class="menu-title">Expenses</span>
+                                    <span class="menu-arrow"></span>
+                                </span>
+                                <!--end:Menu link-->
+                                <!--begin:Menu sub-->
+                                <div class="menu-sub menu-sub-accordion">
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link @if (in_array(Route::currentRouteName(), ['travel.index'])) active @endif"
+                                            href="{{ route('travel.index') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Expense List</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                    <!--end:Menu item-->
+                                    <div class="menu-item">
+                                        <!--begin:Menu link-->
+                                        <a class="menu-link  @if (in_array(Route::currentRouteName(), ['travel.create'])) active @endif"
+                                            href="{{ route('travel.create') }}">
+                                            <span class="menu-bullet">
+                                                <span class="bullet bullet-dot"></span>
+                                            </span>
+                                            <span class="menu-title">Request Advance</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                    </div>
+                                </div>
+                                <!--end:Menu sub-->
+                            </div>
+
+                            <!--end:Menu item-->
+
+
                         </div>
-                        <!--end::Menu wrapper-->
+                        <!--end::Menu-->
                     </div>
-                    <!--end::sidebar menu-->
-                    <!--begin::Footer-->
-                    <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
-
-                        <span class="footer-label">2024© Amrita Vishwa Vidyapeetham</span>
-                        <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
-
-                        <!--end::Svg Icon-->
-                        </a>
-                    </div>
-                    <!--end::Footer-->
+                    <!--end::Menu wrapper-->
                 </div>
-                <!--end::Sidebar-->
+                <!--end::sidebar menu-->
+                <!--begin::Footer-->
+                <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
 
-                @yield('content')
+                    <span class="footer-label">2024© Amrita Vishwa Vidyapeetham</span>
+                    <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
 
-                <!--begin::Javascript-->
-                <script>
-                    var hostUrl = "assets/";
-                </script>
-                <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-                <script src="{{ url('/') }}/assets/plugins/global/plugins.bundle.js"></script>
-                <script src="{{ url('/') }}/assets/js/scripts.bundle.js"></script>
-                <!--end::Global Javascript Bundle-->
-                <!--begin::Vendors Javascript(used for this page only)-->
-                <script src="{{ url('/') }}/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
-                <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-                <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-                <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
-                <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
-                <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-                <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
-                <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
-                <script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
-                <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
-                <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
-                <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
-                <script src="{{ url('/') }}/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-                <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-                <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
-                <!--end::Vendors Javascript-->
-                <!--begin::Custom Javascript(used for this page only)-->
-                <script src="{{ url('/') }}/assets/js/widgets.bundle.js"></script>
-                <script src="{{ url('/') }}/assets/js/custom/widgets.js"></script>
-                <script src="{{ url('/') }}/assets/js/custom/apps/chat/chat.js"></script>
-                <script src="{{ url('/') }}/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-                <script src="{{ url('/') }}/assets/js/custom/utilities/modals/create-app.js"></script>
-                <script src="{{ url('/') }}/assets/js/custom/utilities/modals/new-target.js"></script>
-                <script src="{{ url('/') }}/assets/js/custom/utilities/modals/users-search.js"></script>
-                <script src="{{ url('/') }}/assets/js/alertify/alertify.min.js"></script>
-                <script src="{{ url('/') }}/assets/plugins/custom/timepicker/jquery.timepicker.min599c.js?v4.0.2"></script>
-                <script src="{{ url('/') }}/assets/plugins/custom/bootstrap-datepicker/bootstrap-datepicker.min599c.js?v4.0.2">
-                </script>
-                <script src="{{ url('/') }}/assets/js/custom/custom.js"></script>
-                <!--end::Custom Javascript-->
-                <!--end::Javascript-->
-                <script>
-                    $(document).ready(function() {
-                        @if (Session::has('success'))
-                            alertify.success(`{{ Session::get('success') }}`);
-                        @endif
+                    <!--end::Svg Icon-->
+                    </a>
+                </div>
+                <!--end::Footer-->
+            </div>
+            <!--end::Sidebar-->
 
-                        @if (Session::has('error'))
-                            alertify.error(`{{ Session::get('error') }}`);
-                        @endif
+            @yield('content')
+
+            <!--begin::Javascript-->
+            <script>
+                var hostUrl = "assets/";
+            </script>
+            <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+            <script src="{{ url('/') }}/assets/plugins/global/plugins.bundle.js"></script>
+            <script src="{{ url('/') }}/assets/js/scripts.bundle.js"></script>
+            <!--end::Global Javascript Bundle-->
+            <!--begin::Vendors Javascript(used for this page only)-->
+            <script src="{{ url('/') }}/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+            <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+            <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+            <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+            <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+            <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+            <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+            <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+            <script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
+            <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
+            <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
+            <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
+            <script src="{{ url('/') }}/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+            <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+            <!--end::Vendors Javascript-->
+            <!--begin::Custom Javascript(used for this page only)-->
+            <script src="{{ url('/') }}/assets/js/widgets.bundle.js"></script>
+            <script src="{{ url('/') }}/assets/js/custom/widgets.js"></script>
+            <script src="{{ url('/') }}/assets/js/custom/apps/chat/chat.js"></script>
+            <script src="{{ url('/') }}/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+            <script src="{{ url('/') }}/assets/js/custom/utilities/modals/create-app.js"></script>
+            <script src="{{ url('/') }}/assets/js/custom/utilities/modals/new-target.js"></script>
+            <script src="{{ url('/') }}/assets/js/custom/utilities/modals/users-search.js"></script>
+            <script src="{{ url('/') }}/assets/js/alertify/alertify.min.js"></script>
+            <script src="{{ url('/') }}/assets/plugins/custom/timepicker/jquery.timepicker.min599c.js?v4.0.2"></script>
+            <script src="{{ url('/') }}/assets/plugins/custom/bootstrap-datepicker/bootstrap-datepicker.min599c.js?v4.0.2">
+            </script>
+            <script src="{{ url('/') }}/assets/js/custom/custom.js"></script>
+            <!--end::Custom Javascript-->
+            <!--end::Javascript-->
+            <script>
+                $(document).ready(function() {
+                    @if(Session::has('success'))
+                    alertify.success(`{{ Session::get('success') }}`);
+                    @endif
+
+                    @if(Session::has('error'))
+                    alertify.error(`{{ Session::get('error') }}`);
+                    @endif
 
 
-                    });
-                </script>
+                });
+            </script>
 
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        // Get the sidebar toggle button
-                        const sidebarToggle = document.getElementById('kt_app_sidebar_toggle');
-                        const body = document.body;
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Get the sidebar toggle button
+                    const sidebarToggle = document.getElementById('kt_app_sidebar_toggle');
+                    const body = document.body;
 
-                        function isPaymentRequestPage() {
-                            // return window.location.href.includes('/payment/create');
-                            return 0;
+                    function isPaymentRequestPage() {
+                        // return window.location.href.includes('/payment/create');
+                        return 0;
+                    }
+
+                    function toggleSidebarMinimize() {
+                        if (isPaymentRequestPage()) {
+                            // Add the class to minimize the sidebar
+                            sidebarToggle.classList.add('active');
+                            // Add the data attribute to the body
+                            body.setAttribute('data-kt-app-sidebar-minimize', 'on');
+                        } else {
+                            // Remove the class to restore the sidebar
+                            sidebarToggle.classList.remove('active');
+                            // Remove the data attribute from the body
+                            body.removeAttribute('data-kt-app-sidebar-minimize');
                         }
-
-                        function toggleSidebarMinimize() {
-                            if (isPaymentRequestPage()) {
-                                // Add the class to minimize the sidebar
-                                sidebarToggle.classList.add('active');
-                                // Add the data attribute to the body
-                                body.setAttribute('data-kt-app-sidebar-minimize', 'on');
-                            } else {
-                                // Remove the class to restore the sidebar
-                                sidebarToggle.classList.remove('active');
-                                // Remove the data attribute from the body
-                                body.removeAttribute('data-kt-app-sidebar-minimize');
-                            }
-                        }
-                        toggleSidebarMinimize();
-                    });
-                </script>
+                    }
+                    toggleSidebarMinimize();
+                });
+            </script>
 
 
-                @yield('pageScripts')
+            @yield('pageScripts')
 </body>
 <!--end::Body-->
 

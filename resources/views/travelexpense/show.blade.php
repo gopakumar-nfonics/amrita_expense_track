@@ -63,28 +63,23 @@
                                             <br>
                                             Period : {{ \Carbon\Carbon::parse($expense->from_date)->format('d-M-Y') }} -
                                             {{ \Carbon\Carbon::parse($expense->to_date)->format('d-M-Y') }}
-                                            <br>
-                                            Category : {{ $expense->category->category_name ?? 'N/A' }}
-                                            <br>
-                                            Programme : {{ $expense->stream->stream_name ?? 'N/A' }}
-                                            <br>
-                                            Associated With : {{ $expense->associated ?? 'N/A' }}
                                         </span>
                                     </div>
-                                    {{-- <div class="d-flex flex-column">
-                                        <span class="text-muted">Associated With</span>
-                                        <span class="fs-5 text-gray-700">
-                                            {{ $expense->associated ?? 'N/A' }}
+                                    <div class="d-flex flex-column">
+                                        <span class="text-muted">Category :
+                                            <span class="fs-6 text-gray-700">
+                                                {{ $expense->category->category_name ?? 'N/A' }}
+                                            </span>
                                         </span>
-                                        <span class="text-muted">Category</span>
-                                        <span class="fs-5 text-gray-700">
-                                            {{ $expense->category->category_name ?? 'N/A' }}
+                                        <span class="text-muted">Programme :
+                                            <span class="fs-6 text-gray-700">
+                                                {{ $expense->stream->stream_name ?? 'N/A' }}
+                                            </span>
                                         </span>
-                                        <span class="text-muted">Programme</span>
-                                        <span class="fs-5 text-gray-700">
-                                            {{ $expense->stream->stream_name ?? 'N/A' }}
-                                        </span>
-                                    </div> --}}
+                                        <span class="text-muted">Associated With : <span class="fs-6 text-gray-700">
+                                                {{ $expense->associated ?? 'N/A' }}
+                                            </span></span>
+                                    </div>
                                 </div>
                                 <!--end::Text-->
                             </div>
@@ -115,7 +110,7 @@
                                                                 Amount
                                                             </th>
                                                             <th class="min-w-150px pb-2">
-                                                                File
+                                                                Reference Document
                                                             </th>
                                                         </tr>
                                                     </thead>

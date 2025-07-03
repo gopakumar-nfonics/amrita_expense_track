@@ -16,6 +16,7 @@ Route::middleware(['web'])->prefix('staff')->group(function () {
         Route::post('travel-expense/store', [TravelExpenseController::class, 'store'])->name('travel.store');
         Route::get('travel-expense/submit/{id}', [TravelExpenseController::class, 'submit_expense'])->name('travel.submit');
         Route::post('submit-expense/{id}', [TravelExpenseController::class, 'expense_store'])->name('travel.expense.store');
+        Route::get('/get-allowance', [TravelExpenseController::class, 'getAllowance'])->name('travel.getAllowance');
         
     });
 

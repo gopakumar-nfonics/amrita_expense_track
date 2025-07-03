@@ -23,11 +23,9 @@ class TravelExpenseController extends Controller
         $travelModes = [];
         if ($staff && $staff->designation) {
             $travelModes = $staff->designation->travelModes()->with('parent')->orderBy('name')->get();
-            $allowance = DailyAllowanceAccommodation::where('designation_id', $staff->designation_id)
-                                                    ->first();
         }
 
-        return view('modules.Staff.travel.create', compact('cities', 'travelModes', 'allowance'));
+        return view('modules.Staff.travel.create', compact('cities', 'travelModes'));
     }
 
     public function index()
@@ -35,16 +33,16 @@ class TravelExpenseController extends Controller
         $staffId = auth()->guard('staff')->id();
         $expenses = TravelExpense::with(['sourceCity', 'destinationCity'])
                                    ->where('staff_id', $staffId)
-                                   ->orderBy('title')
+                                   ->orderBy('id', 'desc')
                                    ->get();
 
         $financialyears = FinancialYear::get();
         // Calculate totals
         $totalAmount = $expenses->sum('amount');
-        $totalFinal = $expenses->sum('final_amount');
-        $balance = $totalAmount - $totalFinal;
+        $totalAdvance = $expenses->sum('advance_amount');
+        // $balance = $totalAmount - $totalAdvance;
 
-        return view('modules.Staff.travel.index', compact('expenses', 'totalAmount', 'totalFinal', 'balance', 'financialyears'));
+        return view('modules.Staff.travel.index', compact('expenses', 'totalAmount', 'totalAdvance', 'financialyears'));
     }
 
     public function store(Request $request)
@@ -94,6 +92,30 @@ class TravelExpenseController extends Controller
         ]);
 
         return redirect()->route('travel.index')->with('success', 'Advance request submitted successfully.');
+    }
+
+    public function getAllowance(Request $request)
+    {
+        $designationId = Auth::user()->designation_id;
+        $destinationCityId = $request->input('city_id');
+
+        $city = City::find($destinationCityId);
+        if (!$city || !$designationId) {
+            return response()->json(['error' => 'Invalid input'], 400);
+        }
+
+        $allowance = DailyAllowanceAccommodation::where('designation_id', $designationId)
+            ->where('city_tier_id', $city->tier_id) // Make sure your city model has a `tier` field
+            ->first();
+
+        if (!$allowance) {
+            return response()->json(['error' => 'No allowance found'], 404);
+        }
+
+        return response()->json([
+            'allowance_amount' => $allowance->allowance_amount,
+            'accommodation_amount' => $allowance->accommodation_amount,
+        ]);
     }
 
     public function submit_expense($id)

@@ -116,7 +116,7 @@
                                     <div class="d-flex text-center flex-column text-white pt-3">
 
                                         <span class="fw-bold fs-1 pt-1">
-                                            &#x20b9;{{ number_format($totalFinal) }}
+                                            &#x20b9;{{ number_format($totalAdvance) }}
                                         </span>
                                     </div>
                                     <!--end::Balance-->
@@ -149,7 +149,8 @@
                                     <!--begin::Balance-->
                                     <div class="d-flex text-center flex-column text-white pt-3">
                                         <span class="fw-bold fs-1 pt-1">
-                                            &#x20b9;{{ number_format($balance) }}
+                                            {{-- &#x20b9;{{ number_format($balance) }} --}}
+                                            &#x20b9;0
                                         </span>
                                     </div>
                                     <!--end::Balance-->
@@ -277,7 +278,7 @@
 
                                                         {!! $expense->amount > 0
                                                             ? '<span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            class="fs-2 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span><span class="total-cost-span fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">' .
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            class="fs-2 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span><span class="total-cost-span fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">' .
                                                                 $expense->amount .
                                                                 '</span>'
                                                             : 'NA' !!}
@@ -421,52 +422,4 @@
         });
     </script>
 
-    {{-- <script>
-        function removeDesignation(designationId) {
-            swal({
-                    title: "Are you sure?",
-                    text: "You want to remove this Designation",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $.ajax({
-                            url: "/designation/" + designationId,
-                            type: 'DELETE',
-                            data: {
-                                _token: '{{ csrf_token() }}',
-},
-success: function(response) {
-if (response.success) {
-swal(response.success, {
-icon: "success",
-buttons: false,
-});
-setTimeout(() => {
-location.reload();
-}, 1000);
-} else {
-swal(response.error || 'Something went wrong.', {
-icon: "warning",
-buttons: false,
-});
-setTimeout(() => {
-location.reload();
-}, 1000);
-}
-},
-error: function(xhr) {
-swal('Error: Something went wrong.', {
-icon: "error",
-}).then(() => {
-location.reload();
-});
-}
-});
-}
-});
-}
-</script> --}}
 @endsection

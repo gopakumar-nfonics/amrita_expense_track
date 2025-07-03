@@ -132,7 +132,8 @@
                                                     </span>
                                                     <input type="number" name="allowance_amount"
                                                         class=" read-only form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('allowance_amount') is-invalid @enderror"
-                                                        placeholder="" value="{{ old('allowance_amount') }}" readonly />
+                                                        placeholder="DA Amount" value="{{ old('allowance_amount') }}"
+                                                        readonly />
                                                 </div>
                                                 @error('allowance_amount')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -149,8 +150,8 @@
                                                     </span>
                                                     <input type="number" name="accommodation_amount"
                                                         class=" read-only form-control form-control-lg form-control-solid @error('accommodation_amount') is-invalid @enderror"
-                                                        placeholder="" value="{{ old('accommodation_amount') }}"
-                                                        readonly />
+                                                        placeholder="Accommodation Amount"
+                                                        value="{{ old('accommodation_amount') }}" readonly />
                                                 </div>
                                                 @error('accommodation_amount')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -198,7 +199,7 @@
     <script src="{{ asset('assets/js/custom/apps/expense/create.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <script>
+    {{-- <script>
         const perDayAllowance = {{ $allowance ? $allowance->allowance_amount : 0 }};
         const perDayAccommodation = {{ $allowance ? $allowance->accommodation_amount : 0 }};
 
@@ -238,6 +239,110 @@
 
             fromDateInput.addEventListener('change', calculateAmounts);
             toDateInput.addEventListener('change', calculateAmounts);
+        });
+    </script> --}}
+    <script>
+        let perDayAllowance = 0;
+        let perDayAccommodation = 0;
+
+        // function calculateAmounts() {
+        //     const fromDate = new Date($('#from_date').val());
+        //     const toDate = new Date($('#to_date').val());
+
+        //     if (!isNaN(fromDate) && !isNaN(toDate) && toDate >= fromDate) {
+        //         const totalDays = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24));
+
+        //         const totalAllowance = perDayAllowance * totalDays;
+        //         const totalAccommodation = perDayAccommodation * totalDays;
+
+        //         $('[name="allowance_amount"]').val(totalAllowance);
+        //         $('[name="accommodation_amount"]').val(totalAccommodation);
+
+        //         if (totalDays > 0) {
+        //             $('.days-count').text(`[${totalDays} Day${totalDays !== 1 ? 's' : ''}]`);
+        //         } else {
+        //             $('.days-count').text('');
+        //         }
+
+        //     } else {
+        //         $('[name="allowance_amount"]').val('');
+        //         $('[name="accommodation_amount"]').val('');
+        //         $('.days-count').text('');
+        //     }
+        // }
+        function calculateAmounts() {
+            const fromDate = new Date($('#from_date').val());
+            const toDate = new Date($('#to_date').val());
+
+            if (!isNaN(fromDate) && !isNaN(toDate) && toDate >= fromDate) {
+                const totalDays = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24));
+
+                if (totalDays > 0) {
+                    const totalAllowance = perDayAllowance * totalDays;
+                    const totalAccommodation = perDayAccommodation * totalDays;
+
+                    $('[name="allowance_amount"]').val(totalAllowance);
+                    $('[name="accommodation_amount"]').val(totalAccommodation);
+
+                    $('.days-count').text(`[${totalDays} Day${totalDays !== 1 ? 's' : ''}]`);
+                } else {
+                    // Clear if total days is zero
+                    $('[name="allowance_amount"]').val('');
+                    $('[name="accommodation_amount"]').val('');
+                    $('.days-count').text('');
+                }
+
+            } else {
+                // Clear if dates are invalid
+                $('[name="allowance_amount"]').val('');
+                $('[name="accommodation_amount"]').val('');
+                $('.days-count').text('');
+            }
+        }
+
+
+
+        function fetchAllowance() {
+            const cityId = $('#destination_city').val();
+            console.log("Sending city_id to backend:", cityId);
+            if (!cityId) return;
+
+            $.ajax({
+                url: "{{ route('travel.getAllowance') }}",
+                type: 'GET',
+                data: {
+                    city_id: cityId
+                },
+                dataType: 'json',
+                success: function(response) {
+                    console.log("Response received:", response);
+                    perDayAllowance = parseFloat(response.allowance_amount) || 0;
+                    perDayAccommodation = parseFloat(response.accommodation_amount) || 0;
+
+                    calculateAmounts(); // re-calculate with updated values
+                },
+                error: function(xhr, status, error) {
+                    console.error('Failed to fetch allowance data:', error);
+                    perDayAllowance = 0;
+                    perDayAccommodation = 0;
+                    calculateAmounts();
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            $('#from_date, #to_date').on('change', function() {
+                calculateAmounts();
+            });
+
+            $('#destination_city').on('change', function() {
+                fetchAllowance();
+            });
+
+            // Optionally trigger calculation if fields are pre-filled
+            if ($('#from_date').val() && $('#to_date').val()) {
+                calculateAmounts();
+            }
         });
     </script>
 

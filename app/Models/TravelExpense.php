@@ -21,6 +21,7 @@ class TravelExpense extends Model
         'financial_year_id',
         'category_id',
         'stream_id',
+        'associated',
         'amount',
         'status',
         'advance_amount',
@@ -39,6 +40,14 @@ class TravelExpense extends Model
     public function destinationCity()
     {
         return $this->belongsTo(City::class, 'destination_city');
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+    public function stream()
+    {
+        return $this->belongsTo(Stream::class, 'stream_id');
     }
     public function details()
     {

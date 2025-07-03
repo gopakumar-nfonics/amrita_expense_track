@@ -8,6 +8,8 @@ use App\Models\TravelExpense as TravelExpenseModel;
 use App\Models\Stream;
 use App\Models\Category;
 use App\Models\FinancialYear;
+use Illuminate\Support\Facades\Crypt;
+use Numbers_Words;
 
 class travelexpense extends Controller
 {
@@ -59,7 +61,19 @@ class travelexpense extends Controller
      */
     public function show($id)
     {
-        //
+        $id = Crypt::decrypt($id);
+        $expense = TravelExpenseModel::with(['staff','sourceCity', 'destinationCity', 'category', 'stream', 'details'])->find($id);
+
+        $totalAmount = $expense->amount;
+        $advanceAmount = $expense->advance_amount;
+        $numbersWords = new Numbers_Words();
+        $total_words = $numbersWords->toWords($totalAmount);
+        $advance_words = $numbersWords->toWords($advanceAmount);
+
+        $settleAmount = $totalAmount - $advanceAmount;
+        $settle_words = $numbersWords->toWords($settleAmount);
+
+        return view('travelexpense.show',compact('expense', 'total_words', 'advance_words', 'settleAmount', 'settle_words'));
     }
 
     /**
@@ -103,6 +117,7 @@ class travelexpense extends Controller
             'year'        => 'required',
             'category'    => 'required',
             'programme'   => 'required',
+            'associated'  => 'required',
             'approved_amount' => 'required',
         ]);
     
@@ -111,12 +126,28 @@ class travelexpense extends Controller
         $expense->update([
             'financial_year_id'  => $request->year,
             'category_id'        => $request->category,
-            'stream_id'       => $request->programme,
+            'stream_id'          => $request->programme,
+            'advance_amount'     => $request->approved_amount,
+            'associated'         => $request->associated,
             'status'             => 'advance_received',
-            'final_amount'     => 0,
         ]);
     
         return redirect()->back()->with('success', 'Advance request approved successfully.');
+    }
+
+    public function settle_expense(Request $request)
+    {
+           
+        $expense = TravelExpenseModel::findOrFail($request->expense_id);
+    
+        $expense->status = 'expense_settled';
+        $expense->final_amount = $request->settle_amount;
+        $expense->save();
+    
+        return response()->json([
+            'message' => 'Expense Settled Successfully.',
+            'redirect' => route('travelexpense.index')
+        ]);
     }
 
 }

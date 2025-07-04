@@ -46,6 +46,26 @@ class budget extends Controller
                 AND noninvoice_payment.payment_status = "completed"
                 AND noninvoice_payment.financial_year_id = tbl_budget.financial_year_id
             ), 0)
+            +
+            COALESCE((
+                SELECT SUM(advance_amount)
+                FROM tbl_travel_expenses
+                INNER JOIN tbl_category ON tbl_travel_expenses.category_id = tbl_category.id
+                WHERE (tbl_travel_expenses.category_id = tbl_budget.category_id 
+                    OR tbl_category.parent_category = tbl_budget.category_id)
+                AND tbl_travel_expenses.status IN ("advance_received", "expense_submitted")
+                AND tbl_travel_expenses.financial_year_id = tbl_budget.financial_year_id
+            ), 0)
+            +
+            COALESCE((
+                SELECT SUM(amount)
+                FROM tbl_travel_expenses
+                INNER JOIN tbl_category ON tbl_travel_expenses.category_id = tbl_category.id
+                WHERE (tbl_travel_expenses.category_id = tbl_budget.category_id 
+                    OR tbl_category.parent_category = tbl_budget.category_id)
+                AND tbl_travel_expenses.status = "expense_settled"
+                AND tbl_travel_expenses.financial_year_id = tbl_budget.financial_year_id
+            ), 0)
         ) as used_amount')
     ->from('tbl_budget')
     ->whereNull('tbl_budget.deleted_at')

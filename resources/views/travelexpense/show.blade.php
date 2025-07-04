@@ -276,7 +276,7 @@
 
             Swal.fire({
                 title: 'Are you sure?',
-                text: 'This will settle the travel expense.',
+                text: 'This will settle the travel expense reimbursement.',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Approve',

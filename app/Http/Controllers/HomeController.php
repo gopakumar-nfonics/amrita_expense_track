@@ -176,6 +176,21 @@ class HomeController extends Controller
             
             $PaidAmount = $PaidAmount + $nonInvoiceAmount;
 
+            //Travel Expense
+            $travelAdvanceReceived = DB::table('tbl_travel_expenses')
+                ->whereIn('status', ['advance_received', 'expense_submitted'])
+                ->where('financial_year_id', $financialYearId)
+                ->sum('advance_amount');
+
+            $travelExpenseSettled = DB::table('tbl_travel_expenses')
+                ->where('status', 'expense_settled')
+                ->where('financial_year_id', $financialYearId)
+                ->sum('amount');
+
+            $travelExpenseAmount = $travelAdvanceReceived + $travelExpenseSettled;
+
+            $PaidAmount += $travelExpenseAmount;
+
             $remainingBudget = $budgettotalAmount - $PaidAmount;
 
             $usedPercentage = $budgettotalAmount > 0 ? ($PaidAmount / $budgettotalAmount) * 100 : 0;
@@ -186,15 +201,12 @@ class HomeController extends Controller
                 $usedPercentage = number_format($usedPercentage, 2);
             }
 
-
             $categoryWiseBudgets = Budget::with('category')
                 ->select('category_id', \DB::raw('SUM(amount) as total_amount'))
                 ->where('financial_year_id', $financialYearId)
                 ->groupBy('category_id')
                 ->orderBy('total_amount', 'DESC') // Order by total_amount in descending order
                 ->get();
-
-            //$vendors = vendor::with('company')->where('vendor_status', 'verified')->orderBy('id')->get();
 
             $vendors = Vendor::with([
                 'company',
@@ -221,8 +233,6 @@ class HomeController extends Controller
                 ->orderBy('id')
                 ->get();
             
-                
-
                 $totalMilestoneByCategory = PaymentMilestone::join('invoices', 'payment_milestones.id', '=', 'invoices.milestone_id')
                     ->join('payment_request', 'invoices.id', '=', 'payment_request.invoice_id')
                     ->leftJoin('tbl_category as child_category', 'payment_request.category_id', '=', 'child_category.id') // LEFT JOIN for child_category
@@ -254,23 +264,35 @@ class HomeController extends Controller
                     ->groupBy('parent_category_id', 'parent_category_name')
                     ->get();
 
-
-
-            // $categorybudgetused = [];
-            // foreach ($totalMilestoneByCategory as $milestone) {
-            //     // Use parent_category_id directly since child categories are grouped under parent
-            //     $categoryIdToUse = $milestone->parent_category_id;
-
-            //     $categorybudgetused[] = [
-            //         'parent_category_id' => $milestone->parent_category_id,
-            //         'parent_category_name' => $milestone->parent_category_name,
-            //         'total_milestone_amount' => $milestone->total_milestone_amount,
-            //         'budget_amount' => $categoryWiseBudgets->where('category_id', $categoryIdToUse)->sum('total_amount') // Sum the budget based on parent category
-            //     ];
-            // }
-
+                $travelAdvanceByCategory = DB::table('tbl_travel_expenses as te')
+                    ->leftJoin('tbl_category as child_category', 'te.category_id', '=', 'child_category.id')
+                    ->leftJoin('tbl_category as parent_category', 'child_category.parent_category', '=', 'parent_category.id')
+                    ->whereIn('te.status', ['advance_received', 'expense_submitted'])
+                    ->where('te.financial_year_id', $financialYearId)
+                    ->select(
+                        DB::raw('COALESCE(parent_category.id, child_category.id) as parent_category_id'),
+                        DB::raw('COALESCE(parent_category.category_name, child_category.category_name) as parent_category_name'),
+                        DB::raw('SUM(te.advance_amount) as total_travel_amount')
+                    )
+                    ->groupBy('parent_category_id', 'parent_category_name')
+                    ->get();
+                
+                $travelSettledByCategory = DB::table('tbl_travel_expenses as te')
+                    ->leftJoin('tbl_category as child_category', 'te.category_id', '=', 'child_category.id')
+                    ->leftJoin('tbl_category as parent_category', 'child_category.parent_category', '=', 'parent_category.id')
+                    ->where('te.status', 'expense_settled')
+                    ->where('te.financial_year_id', $financialYearId)
+                    ->select(
+                        DB::raw('COALESCE(parent_category.id, child_category.id) as parent_category_id'),
+                        DB::raw('COALESCE(parent_category.category_name, child_category.category_name) as parent_category_name'),
+                        DB::raw('SUM(te.amount) as total_travel_amount')
+                    )
+                    ->groupBy('parent_category_id', 'parent_category_name')
+                    ->get();
+                
+            $travelExpenseByCategory = $travelAdvanceByCategory->merge($travelSettledByCategory);
+                
             $categoryPayments = [];
-
             // Step 1: Add milestone payments
             foreach ($totalMilestoneByCategory as $milestone) {
                 $categoryPayments[$milestone->parent_category_id] = [
@@ -295,8 +317,22 @@ class HomeController extends Controller
                 }
             }
 
-            $categorybudgetused = [];
+            foreach ($travelExpenseByCategory as $travel) {
+                $id = $travel->parent_category_id;
+            
+                if (isset($categoryPayments[$id])) {
+                    $categoryPayments[$id]['total_milestone_amount'] += $travel->total_travel_amount;
+                } else {
+                    $categoryPayments[$id] = [
+                        'parent_category_id' => $id,
+                        'parent_category_name' => $travel->parent_category_name,
+                        'total_milestone_amount' => $travel->total_travel_amount
+                    ];
+                }
+            }
+            
 
+            $categorybudgetused = [];
             foreach ($categoryPayments as $categoryId => $data) {
                 $categorybudgetused[] = [
                     'parent_category_id' => $data['parent_category_id'],
@@ -305,14 +341,10 @@ class HomeController extends Controller
                     'budget_amount' => $categoryWiseBudgets->where('category_id', $categoryId)->sum('total_amount')
                 ];
             }
-
-            //print_r($categorybudgetused);exit();
-
+            
             $totalcatCount = Category::where('parent_category', NULL)->count();
 
-
             $financialyears = FinancialYear::get();
-
 
             return view('home', compact('budgettotalAmount', 'categoryWiseBudgets', 'vendors', 'PaidAmount', 'remainingBudget', 'usedPercentage', 'categorybudgetused', 'totalcatCount','financialyears','currentfinancialYear'));
         }

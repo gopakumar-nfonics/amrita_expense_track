@@ -16,6 +16,7 @@ use App\Models\FinancialYear;
 use Numbers_Words;
 use App\Mail\InvoicePaymentInitiation;
 use App\Models\NoninvoicePayment;
+use App\Models\TravelExpense;
 
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
@@ -282,7 +283,20 @@ class payment extends Controller
     }
     $usedBudgetFromNonInvoice = $usedBudgetFromNonInvoice->sum('amount');
 
-    $usedBudget = $usedBudget + $usedBudgetFromNonInvoice;
+    // --- Used Budget from Travel Expenses
+    $travelAdvanceAmount = TravelExpense::whereIn('category_id', $categoryIds)
+        ->where('financial_year_id', $financialYear->id)
+        ->where('status', ['advance_received', 'expense_submitted'])
+        ->sum('advance_amount');
+
+    $travelSettledAmount = TravelExpense::whereIn('category_id', $categoryIds)
+        ->where('financial_year_id', $financialYear->id)
+        ->where('status', 'expense_settled')
+        ->sum('amount');
+
+    $usedTravelBudget = $travelAdvanceAmount + $travelSettledAmount;
+
+    $usedBudget = $usedBudget + $usedBudgetFromNonInvoice + $usedTravelBudget;
     $formattedTotalBudget = number_format($totalBudget, 2, '.', ',');
     $formattedUsedBudget = number_format($usedBudget, 2, '.', ',');
 

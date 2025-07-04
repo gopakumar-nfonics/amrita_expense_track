@@ -40,9 +40,11 @@ class TravelExpenseController extends Controller
         // Calculate totals
         $totalAmount = $expenses->sum('amount');
         $totalAdvance = $expenses->sum('advance_amount');
-        // $balance = $totalAmount - $totalAdvance;
+        $totalFinal = $expenses->sum('final_amount');
+        $totalDisbursed = $totalAdvance + $totalFinal;
+        $balance = $totalAmount - ($totalAdvance + $totalFinal);
 
-        return view('modules.Staff.travel.index', compact('expenses', 'totalAmount', 'totalAdvance', 'financialyears'));
+        return view('modules.Staff.travel.index', compact('expenses', 'totalAmount', 'totalAdvance', 'financialyears', 'balance', 'totalDisbursed'));
     }
 
     public function store(Request $request)

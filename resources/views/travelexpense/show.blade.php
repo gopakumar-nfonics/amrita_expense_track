@@ -279,8 +279,12 @@
                 text: 'This will settle the travel expense.',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, approve it!',
-                cancelButtonText: 'Cancel'
+                confirmButtonText: 'Approve',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn' // Add your custom class for cancel button
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
 

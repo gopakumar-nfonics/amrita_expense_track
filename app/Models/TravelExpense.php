@@ -26,6 +26,8 @@ class TravelExpense extends Model
         'status',
         'advance_amount',
         'final_amount',
+        'advancepayment_date',
+        'settlement_date',
     ];
 
     public function staff()

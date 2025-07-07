@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\FinancialYear;
 use Illuminate\Support\Facades\Crypt;
 use Numbers_Words;
+use Carbon\Carbon;
 
 class travelexpense extends Controller
 {
@@ -28,7 +29,9 @@ class travelexpense extends Controller
             ->with(['children', 'budgets'])
             ->get();
 
-        $years = FinancialYear::orderBy('year')->get();
+        $years = FinancialYear::orderByDesc('is_current')
+            ->orderBy('year')
+            ->get();
         return view('travelexpense.index', compact('expenses', 'programmes', 'main_categories', 'years'));
     }
 
@@ -126,9 +129,13 @@ class travelexpense extends Controller
             'programme'   => 'required',
             'associated'  => 'required',
             'approved_amount' => 'required',
+            'advance_date' => 'required|date',
         ]);
 
         $expense = TravelExpenseModel::findOrFail($request->expense_id);
+        if ($request->advance_date) {
+            $advanceDate = Carbon::createFromFormat('d-M-Y', $request->advance_date)->format('Y-m-d');
+        }
 
         $expense->update([
             'financial_year_id'  => $request->year,
@@ -137,6 +144,7 @@ class travelexpense extends Controller
             'advance_amount'     => $request->approved_amount,
             'associated'         => $request->associated,
             'status'             => 'advance_received',
+            'advancepayment_date'=> $advanceDate,
         ]);
 
         return redirect()->back()->with('success', 'Advance request approved successfully.');
@@ -149,6 +157,9 @@ class travelexpense extends Controller
 
         $expense->status = 'expense_settled';
         $expense->final_amount = $request->settle_amount;
+        if ($request->settlement_date) {
+            $expense->settlement_date = Carbon::createFromFormat('d-M-Y', $request->settlement_date)->format('Y-m-d');
+        }
         $expense->save();
 
         return response()->json([

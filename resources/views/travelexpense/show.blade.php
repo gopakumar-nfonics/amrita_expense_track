@@ -69,7 +69,8 @@
                                             <span class="d-block color-blue  fs-6 ms-0 mb-3">
                                                 Settlement Date : <input
                                                     class="form-control d-inline p-2 px-4  flatpickr-input w-150px  fs-7"
-                                                    placeholder="Date" name="start_date" id="start_date" type="text">
+                                                    placeholder="Date" name="settlement_date" id="start_date"
+                                                    type="text">
                                             </span>
                                         @endif
                                         <span class="text-muted">Category :
@@ -285,6 +286,7 @@
     <script>
         $('#approveExpenseBtn').on('click', function() {
             const expenseId = $(this).data('expense-id');
+            let settlementDate = $('#start_date').val();
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -306,7 +308,8 @@
                         data: {
                             _token: "{{ csrf_token() }}",
                             expense_id: expenseId,
-                            settle_amount: {{ $settleAmount ?? 0 }}
+                            settle_amount: {{ $settleAmount ?? 0 }},
+                            settlement_date: settlementDate
                         },
                         success: function(response) {
                             Swal.fire({

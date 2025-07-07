@@ -249,7 +249,12 @@ class TravelExpenseController extends Controller
         $advance_words = $numbersWords->toWords($advanceAmount);
 
         $settleAmount = $totalAmount - $advanceAmount;
-        $settle_words = $numbersWords->toWords($settleAmount);
+        // Check if negative
+        if ($settleAmount < 0) {
+            $settle_words = 'minus ' . $numbersWords->toWords(abs($settleAmount));
+        } else {
+            $settle_words = $numbersWords->toWords($settleAmount);
+        }
 
         return view('modules.Staff.travel.show',compact('expense', 'total_words', 'advance_words', 'settleAmount', 'settle_words'));
     }

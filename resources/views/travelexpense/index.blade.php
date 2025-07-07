@@ -274,7 +274,7 @@
                                                         <select class="form-select" name="year" id="year"
                                                             onchange="getallocatedbudget(document.getElementById('category'))"
                                                             required>
-                                                            <option value="">-- Select Year --</option>
+                                                            {{-- <option value="">-- Select Year --</option> --}}
                                                             @foreach ($years as $year)
                                                                 <option value="{{ $year->id }}">
                                                                     {{ $year->year }}
@@ -288,9 +288,8 @@
                                                         <label class="form-label required">
                                                             Advance Date
                                                         </label>
-                                                        <input type="number" name="start_date" id="start_date"
-                                                            class="form-control w-150px">
-
+                                                        <input type="number" name="advance_date" id="start_date"
+                                                            class="form-control w-150px" required>
                                                     </div>
                                                 </div>
 

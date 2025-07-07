@@ -46,14 +46,17 @@
                             <!-- begin::Header-->
                             <div class="flex-sm-row mb-2">
                                 <!--end::Logo-->
-                                <div class="text-sm-start">
+                                {{-- <div class="text-sm-start">
                                     <a href="#" class="d-block w-100 fs-1 ms-sm-auto mb-2 color-blue txt-uppercase">
                                         {{ ucfirst($expense->title) }}
                                     </a>
-                                </div>
+                                </div> --}}
                                 <!--begin::Text-->
                                 <div class="d-flex  justify-content-between text-sm-start fw-semibold fs-7 text-muted">
                                     <div class="d-flex flex-column">
+                                        <span class="d-block w-100 fs-1 ms-sm-auto mb-2 color-blue txt-uppercase">
+                                            {{ ucfirst($expense->title) }}
+                                        </span>
                                         <span class="fs-5 text-gray-900">
                                             {{ $expense->staff->name }} | {{ $expense->staff->email }}
                                         </span>
@@ -76,9 +79,26 @@
                                                 {{ $expense->stream->stream_name ?? 'N/A' }}
                                             </span>
                                         </span>
-                                        <span class="text-muted">Associated With : <span class="fs-6 text-gray-700">
+                                        <span class="text-muted">Associated With :
+                                            <span class="fs-6 text-gray-700">
                                                 {{ $expense->associated ?? 'N/A' }}
-                                            </span></span>
+                                            </span>
+                                        </span>
+                                        @if ($expense->advancepayment_date)
+                                            <span class="text-muted">Advance Date :
+                                                <span class="fs-6 text-gray-700">
+                                                    {{ \Carbon\Carbon::parse($expense->advancepayment_date)->format('d-M-Y') }}
+                                                </span>
+                                            </span>
+                                        @endif
+                                        @if ($expense->settlement_date)
+                                            <span class="text-muted">Settlement Date :
+                                                <span class="fs-6 text-gray-700">
+                                                    {{ \Carbon\Carbon::parse($expense->settlement_date)->format('d-M-Y') }}
+                                                </span>
+                                            </span>
+                                        @endif
+
                                     </div>
                                 </div>
                                 <!--end::Text-->

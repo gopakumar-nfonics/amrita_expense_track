@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('modules.Staff.layouts.staff')
 
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
@@ -20,7 +20,7 @@
                         Approve Travel Expense
                     </button> --}}
 
-                    <a href="{{ route('travelexpense.index') }}" class="btn btn-sm btn-primary">
+                    <a href="{{ route('travel.index') }}" class="btn btn-sm btn-primary">
                         Back to List
                     </a>
 
@@ -46,13 +46,14 @@
                             <!-- begin::Header-->
                             <div class="flex-sm-row mb-2">
                                 <!--end::Logo-->
-
+                                <div class="text-sm-start">
+                                    <a href="#" class="d-block w-100 fs-1 ms-sm-auto mb-2 color-blue txt-uppercase">
+                                        {{ ucfirst($expense->title) }}
+                                    </a>
+                                </div>
                                 <!--begin::Text-->
                                 <div class="d-flex  justify-content-between text-sm-start fw-semibold fs-7 text-muted">
                                     <div class="d-flex flex-column">
-                                        <span class="d-block w-100 fs-1 ms-sm-auto mb-2 color-blue txt-uppercase">
-                                            {{ ucfirst($expense->title) }}
-                                        </span>
                                         <span class="fs-5 text-gray-900">
                                             {{ $expense->staff->name }} | {{ $expense->staff->email }}
                                         </span>
@@ -65,13 +66,6 @@
                                         </span>
                                     </div>
                                     <div class="d-flex flex-column">
-                                        @if ($expense->status === 'expense_submitted')
-                                            <span class="d-block color-blue  fs-6 ms-0 mb-3">
-                                                Settlement Date : <input
-                                                    class="form-control d-inline p-2 px-4  flatpickr-input w-150px  fs-7"
-                                                    placeholder="Date" name="start_date" id="start_date" type="text">
-                                            </span>
-                                        @endif
                                         <span class="text-muted">Category :
                                             <span class="fs-6 text-gray-700">
                                                 {{ $expense->category->category_name ?? 'N/A' }}
@@ -176,20 +170,20 @@
                                                         <tr>
                                                             <td colspan="2"></td>
                                                             <td class="text-dark fw-bolder text-sm-end pb-0">
-                                                                <span class="fs-5 text-gray-800">
+                                                                <span class="fs-5 fw-bold text-gray-800 txt-uppercase">
                                                                     Advance Paid :
                                                                 </span>
                                                             </td>
                                                             <td colspan=""
-                                                                class="text-dark fw-bolder text-end fs-5 pb-0 ">
+                                                                class="text-dark fw-bolder text-end fs-5 pb-0 "
+                                                                style="font-size:18px !important;">
                                                                 <div>
                                                                     <span
-                                                                        class="fs-5 fw-semibold text-gray-500 align-self-start me-1">
+                                                                        class="fs-3 fw-semibold text-gray-500 align-self-start me-1">
                                                                         &#x20b9;
                                                                     </span>
-                                                                    <span class="fs-5 text-gray-800">
-
-                                                                        {{ number_format((float) $expense->advance_amount, 2) }}
+                                                                    <span class="fs-3 fw-bold text-gray-800">
+                                                                        {{ $expense->advance_amount }}
                                                                     </span>
                                                                 </div>
                                                             </td>
@@ -198,20 +192,20 @@
                                                             <td></td>
                                                             <td colspan="2"
                                                                 class="text-dark fw-bolder text-sm-end fs-2  py-0">
-                                                                <span class="fs-5  text-gray-800 ">
+                                                                <span class="fs-5 fw-bold text-gray-800 txt-uppercase">
                                                                     Total Claimed :
                                                                 </span>
                                                             </td>
                                                             <td colspan=""
-                                                                class="text-dark fw-bolder text-end fs-2  py-0">
+                                                                class="text-dark fw-bolder text-end fs-2  py-0"
+                                                                style="font-size:18px !important;">
                                                                 <div>
                                                                     <span
-                                                                        class="fs-5 fw-semibold text-gray-500 align-self-start me-1">
+                                                                        class="fs-3 fw-semibold text-gray-500 align-self-start me-1">
                                                                         &#x20b9;
                                                                     </span>
-                                                                    <span class="fs-5  text-gray-800">
-
-                                                                        {{ number_format((float) $expense->amount, 2) }}
+                                                                    <span class="fs-3 fw-bold text-gray-800">
+                                                                        {{ $expense->amount }}
                                                                     </span>
                                                                 </div>
                                                             </td>
@@ -220,12 +214,13 @@
                                                             <td></td>
                                                             <td colspan="2"
                                                                 class="text-dark fw-bolder text-sm-end fs-3 py-0  br-0">
-                                                                <span class="fs-5 fw-bold text-info ">
+                                                                <span class="fs-5 fw-bold text-info txt-uppercase">
                                                                     Amount to be Settled :
                                                                 </span>
                                                             </td>
                                                             <td colspan=""
-                                                                class="text-dark fw-bolder text-end fs-2 py-0 br-0">
+                                                                class="text-dark fw-bolder text-end fs-2 py-0 br-0"
+                                                                style=" font-size:18px !important;">
                                                                 <div>
                                                                     <span
                                                                         class="fs-3 fw-semibold text-info align-self-start me-1">
@@ -241,8 +236,8 @@
                                                         <tr>
                                                             <td colspan="4"
                                                                 class="text-dark text-sm-end fs-3 py-0  br-0">
-                                                                <div class="fs-6 text-gray-600">
-                                                                    [ {{ ucfirst($settle_words) }} Rupees Only.]
+                                                                <div class="fs-4 text-gray-500">
+                                                                    ({{ ucfirst($settle_words) }} Rupees Only.)
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -251,15 +246,8 @@
                                             </div>
                                         </div>
 
-                                        @if ($expense->status === 'expense_submitted')
-                                            <div class="d-flex justify-content-end">
-                                                <button type="submit" class="btn btn-sm btn-success me-5"
-                                                    id="approveExpenseBtn" data-expense-id="{{ $expense->id }}">
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Approve Travel Expense
-                                                </button>
-                                            </div>
-                                        @endif
+
+
 
                                         <!--end::Table-->
                                     </div>
@@ -279,70 +267,4 @@
             <!--end::Content container-->
         </div>
     </div>
-@endsection
-@section('pageScripts')
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script>
-        $('#approveExpenseBtn').on('click', function() {
-            const expenseId = $(this).data('expense-id');
-
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'This will settle the travel expense reimbursement.',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Approve',
-                cancelButtonText: 'Cancel',
-                customClass: {
-                    confirmButton: 'btn btn-primary',
-                    cancelButton: 'btn' // Add your custom class for cancel button
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-
-                    $.ajax({
-                        url: "{{ route('travel.settle') }}",
-                        method: "POST",
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            expense_id: expenseId,
-                            settle_amount: {{ $settleAmount ?? 0 }}
-                        },
-                        success: function(response) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Success',
-                                text: response.message,
-                                timer: 1500,
-                                showConfirmButton: false
-                            });
-
-                            setTimeout(() => {
-                                window.location.href = response.redirect;
-                            }, 1500);
-                        },
-                        error: function() {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: 'Something went wrong!'
-                            });
-                        }
-                    });
-                }
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get today's date
-            const today = new Date();
-
-            // Initialize flatpickr on #start_date
-            flatpickr("#start_date", {
-                defaultDate: today, // Sets default to today
-                dateFormat: "d-M-Y", // Desired date format
-            });
-        });
-    </script>
 @endsection

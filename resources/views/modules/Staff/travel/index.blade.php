@@ -421,6 +421,15 @@
                                                 </a>
                                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-150px py-4"
                                                     data-kt-menu="true">
+                                                    @if ($expense->status != 'advance_requested')
+                                                        <div class="menu-item px-3">
+                                                            <a href="{{ route('travel.show', encrypt($expense->id)) }}"
+                                                                class="menu-link px-3"
+                                                                data-kt-customer-table-filter="delete_row">
+                                                                View
+                                                            </a>
+                                                        </div>
+                                                    @endif
                                                     @if ($expense->status === 'advance_received')
                                                         <div class="menu-item px-3">
                                                             <a href="{{ route('travel.submit', $expense->id) }}"
@@ -429,13 +438,16 @@
                                                             </a>
                                                         </div>
                                                     @endif
-                                                    <div class="menu-item px-3">
-                                                        <a href="javascript:void(0)" onclick=""
-                                                            class="menu-link px-3"
-                                                            data-kt-customer-table-filter="delete_row">
-                                                            Delete
-                                                        </a>
-                                                    </div>
+                                                    @if ($expense->status === 'advance_requested')
+                                                        <div class="menu-item px-3">
+                                                            <a href="javascript:void(0)"
+                                                                onclick="removeExpense('{{ $expense->id }}')"
+                                                                class="menu-link px-3"
+                                                                data-kt-customer-table-filter="delete_row">
+                                                                Delete
+                                                            </a>
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>
@@ -484,5 +496,54 @@
         window.addEventListener('load', function() {
             document.getElementById('page-loader').style.display = 'none';
         });
+    </script>
+    <script>
+        function removeExpense(expenseId) {
+            swal({
+                    title: "Are you sure?",
+                    text: "You want to remove this Advance Request",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: "{{ route('travel.delete') }}",
+                            type: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                                id: expenseId,
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    swal(response.success, {
+                                        icon: "success",
+                                        buttons: false,
+                                    });
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 1000);
+                                } else {
+                                    swal(response.error || 'Something went wrong.', {
+                                        icon: "warning",
+                                        buttons: false,
+                                    });
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 1000);
+                                }
+                            },
+                            error: function(xhr) {
+                                swal('Error: Something went wrong.', {
+                                    icon: "error",
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            }
+                        });
+                    }
+                });
+        }
     </script>
 @endsection

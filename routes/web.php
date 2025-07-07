@@ -141,3 +141,4 @@ Route::get('/designation/{id}/available-tiers',[\App\Http\Controllers\resource\d
 Route::resource('travelexpense',\App\Http\Controllers\resource\travelexpense::class);
 Route::post('/travel/approve', [\App\Http\Controllers\resource\travelexpense::class, 'approve_advance'])->name('travel.approveadvance');
 Route::post('/travel/settle', [\App\Http\Controllers\resource\travelexpense::class, 'settle_expense'])->name('travel.settle');
+Route::post('/travel/delete', [\App\Http\Controllers\resource\travelexpense::class, 'deleteExpense'])->name('travel.deleterequest');

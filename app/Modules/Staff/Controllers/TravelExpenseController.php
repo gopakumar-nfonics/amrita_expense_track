@@ -12,6 +12,8 @@ use App\Models\DailyAllowanceAccommodation;
 use App\Modules\Staff\Models\TravelExpenseDetail;
 use App\Models\FinancialYear;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Crypt;
+use Numbers_Words;
 
 class TravelExpenseController extends Controller
 {
@@ -221,23 +223,35 @@ class TravelExpenseController extends Controller
         return redirect()->route('travel.index')->with('success', 'Travel expense submitted successfully.');
     }
 
-    public function deletebudget(Request $request)
+    public function deleteExpense(Request $request)
     {
-
-        $budgets = Budgets::findOrFail($request->id);
-
-        if (!$budgets) {
-            return response()->json(['error' => 'Budget not found.'], 404);
+        $expense = TravelExpense::findOrFail($request->id);
+        if (!$expense) {
+            return response()->json(['error' => 'Advance Request not found.'], 404);
         }
-
-        $paymentRequestCount = PaymentRequest::where('category_id', $budgets->category_id)->count();
-        
-        if ($paymentRequestCount > 0) {
-            return response()->json(['error' => 'Cannot delete budget associated with a payment request.']);
-        }
-
-        $budgets->forceDelete();
-        return response()->json(['success' => 'The Budget has been deleted!']);
+        $expense->forceDelete();
+        return response()->json(['success' => 'Advance Request has been deleted!']);
         
     }
+
+    public function show($id)
+    {
+        $id = Crypt::decrypt($id);
+        $staffId = auth()->guard('staff')->id();
+        $expense = TravelExpense::with(['staff','sourceCity', 'destinationCity', 'category', 'stream', 'details'])
+        ->where('staff_id', $staffId)
+        ->find($id);
+
+        $totalAmount = $expense->amount;
+        $advanceAmount = $expense->advance_amount;
+        $numbersWords = new Numbers_Words();
+        $total_words = $numbersWords->toWords($totalAmount);
+        $advance_words = $numbersWords->toWords($advanceAmount);
+
+        $settleAmount = $totalAmount - $advanceAmount;
+        $settle_words = $numbersWords->toWords($settleAmount);
+
+        return view('modules.Staff.travel.show',compact('expense', 'total_words', 'advance_words', 'settleAmount', 'settle_words'));
+    }
+
 }

@@ -42,5 +42,13 @@ class TravelExpense extends Model
     {
         return $this->hasMany(TravelExpenseDetail::class, 'travel_expense_id');
     }
+    public function category()
+    {
+        return $this->belongsTo(\App\Models\Category::class, 'category_id');
+    }
+    public function stream()
+    {
+        return $this->belongsTo(\App\Models\Stream::class, 'stream_id');
+    }
 
 }

@@ -156,4 +156,15 @@ class travelexpense extends Controller
             'redirect' => route('travelexpense.index')
         ]);
     }
+
+    public function deleteExpense(Request $request)
+    {
+        $expense = TravelExpenseModel::findOrFail($request->id);
+        if (!$expense) {
+            return response()->json(['error' => 'Advance Requst not found.'], 404);
+        }
+        $expense->forceDelete();
+        return response()->json(['success' => 'Advance Request has been deleted!']);
+        
+    }
 }

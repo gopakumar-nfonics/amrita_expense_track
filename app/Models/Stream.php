@@ -12,7 +12,7 @@ class Stream extends Model
 
     protected $table = 'stream';
 
-    protected $fillable = ['stream_name', 'stream_code','campus_id','department_id'];
+    protected $fillable = ['stream_name', 'stream_code', 'campus_id', 'department_id'];
 
     public function department()
     {
@@ -34,6 +34,7 @@ class Stream extends Model
     }
     public function travelExpenses()
     {
-        return $this->hasMany(TravelExpense::class);
+        //return $this->hasMany(TravelExpense::class);
+        return $this->hasMany(TravelExpense::class, 'stream_id');
     }
 }

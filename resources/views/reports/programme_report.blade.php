@@ -14,8 +14,8 @@
                 <!--end::Title-->
                 <!--begin::Breadcrumb-->
                 <!-- <ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
-											
-										</ul> -->
+
+                                                        </ul> -->
                 <!--end::Breadcrumb-->
             </div>
             <!--end::Page title-->
@@ -36,10 +36,10 @@
             <div class="card mb-5 mb-xl-8">
                 <!--begin::Header-->
                 <!-- <div class="card-header border-0 pt-5">
-											<h3 class="card-title align-items-start flex-column">
-												<span class="card-label fw-bold fs-3 mb-1">Category List</span>
-											</h3>
-										</div> -->
+                                                            <h3 class="card-title align-items-start flex-column">
+                                                                <span class="card-label fw-bold fs-3 mb-1">Category List</span>
+                                                            </h3>
+                                                        </div> -->
                 <!--end::Header-->
                 <!--begin::Body-->
                 <div class="card-body py-3">
@@ -71,38 +71,20 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="d-flex align-items-center ms-2">
-                                    <label for="start-date" class="me-3 w-75px text-muted fs-7">
-                                        Date Period
+
+                                <div class="d-flex align-items-center me-6 ms-3">
+                                    <label for="financial_year" class="me-1 w-100px text-muted fs-7 me-0">
+                                        Year
                                     </label>
-                                    <div class="position-relative d-flex align-items-center">
-                                        <!--begin::Icon-->
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
-                                        <span class="svg-icon svg-icon-2 position-absolute mx-4">
-                                            <i class="fa-solid fa-calendar-days"></i>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                        <!--end::Icon-->
-                                        <!--begin::Datepicker-->
-                                        <input
-                                            class="form-control form-control-solid p-2 px-4 ps-12 flatpickr-input w-150px  fs-7"
-                                            placeholder="Start Date" name="start_date" id="start_date" type="text">
-                                        <!--end::Datepicker-->
-                                    </div>
-                                    <div class="position-relative d-flex align-items-center ms-3">
-                                        <!--begin::Icon-->
-                                        <!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
-                                        <span class="svg-icon svg-icon-2 position-absolute mx-4">
-                                            <i class="fa-solid fa-calendar-days"></i>
-                                        </span>
-                                        <!--end::Svg Icon-->
-                                        <!--end::Icon-->
-                                        <!--begin::Datepicker-->
-                                        <input
-                                            class="form-control form-control-solid p-2 px-4 ps-12 flatpickr-input w-150px fs-7"
-                                            placeholder="End Date" name="end_date" id="end_date" type="text">
-                                        <!--end::Datepicker-->
-                                    </div>
+                                    <select class="form-select form-select-solid fw-bold p-2 px-4 fs-7"
+                                        id="financial_year" name="financial_year">
+                                        @foreach ($financialYears as $year)
+                                        <option value="{{ $year->id }}" @if (old('financial_year')==$year->id) selected
+                                            @endif>
+                                            {{ $year->year }}
+                                        </option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                             </div>
@@ -164,8 +146,7 @@ $(document).ready(function() {
                 data: function(d) {
                     d._token = "{{ csrf_token() }}";
                     d.programme_id = $('#stream').val(); // Send selected program ID as a parameter
-                    d.start_date = $('#start_date').val(); // Capture the start date
-                    d.end_date = $('#end_date').val(); // Capture the end date
+                    d.financial_year = $('#financial_year').val();
                 }
             },
             columns: [{
@@ -254,7 +235,7 @@ $(document).ready(function() {
     loadData(); // Initial load
 
     // Event listener for the vendor select and date inputs
-    $('#stream, #start_date, #end_date').on('change', function() {
+    $('#stream, #financial_year').on('change', function() {
         $('#categorytable').DataTable().destroy(); // Destroy the old table instance
         loadData(); // Load the table again with the new filters
     });

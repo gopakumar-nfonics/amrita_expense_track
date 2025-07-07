@@ -7,6 +7,59 @@
             vertical-align: middle !important;
         }
     </style>
+    <style>
+        #page-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(243 240 240 / 92%);
+            /* or any bg color you want */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loading-dots {
+            display: block;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .loading-dots span {
+            width: 16px;
+            height: 16px;
+            margin: 0px 3px !important;
+            background-color: #d63384;
+            /* dot color */
+            border-radius: 50%;
+            display: inline-block;
+            animation: bounce 0.6s infinite alternate;
+        }
+
+        .loading-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+                opacity: 0.6;
+            }
+
+            to {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+    </style>
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid">
 
@@ -45,9 +98,9 @@
                     <!--end::Secondary button-->
                     <select id="financialYearSelect" class="form-select"
                         style="width: 90px; padding: 5px 15px; cursor: pointer;">
-
+                        <option value="">Year</option>
                         @foreach ($financialyears as $year)
-                            <option value="{{ $year->year }}">
+                            <option value="{{ $year->year }}" {{ request('year') == $year->year ? 'selected' : '' }}>
                                 {{ $year->year }}
                             </option>
                         @endforeach
@@ -63,6 +116,16 @@
         <div id="kt_app_content" class="app-content flex-column-fluid">
             <!--begin::Content container-->
             <div id="kt_app_content_container" class="app-container container-xxl">
+
+                <div id="page-loader">
+                    <div class="loading-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
 
                 <div class="row g-5 g-xl-8 mt-4">
                     <!--begin::Col-->
@@ -197,12 +260,9 @@
                                 <thead>
                                     <tr class="fw-bold">
                                         <th class="w-50px">#</th>
-                                        {{-- <th class="min-w-150px">Title</th> --}}
                                         <th class="min-w-200px">Trip Details</th>
                                         <th class="min-w-100px">Expense (&#x20b9;)</th>
                                         <th class="min-w-200px">Payments (&#x20b9;)</th>
-                                        {{-- <th class="min-w-100px">Payment (%)</th> --}}
-
                                         <th class="min-w-150px text-center">Actions</th>
                                     </tr>
                                 </thead>
@@ -215,8 +275,8 @@
                                                         {{ $key + 1 }}
                                                     </div>
                                                 </div>
+                                            </td>
                                             <td>
-
                                                 <div class="d-flex align-items-center">
                                                     <div class="fw-400 d-block fs-6 fw-bold ">
                                                         {{ ucfirst($expense->title) }}
@@ -244,8 +304,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {{-- </td>
-                                            <td> --}}
 
                                                 <div class="d-flex align-items-center">
 
@@ -271,13 +329,11 @@
                                                 </span>
                                             </td>
                                             <td>
-
                                                 <div class="d-flex align-items-center">
                                                     <div class="fw-400 d-block fs-6">
 
                                                         {!! $expense->amount > 0
-                                                            ? '<span
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            class="fs-2 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span><span class="total-cost-span fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">' .
+                                                            ? '<span class="fs-2 fw-semibold text-gray-500 align-self-start me-0">&#x20b9;</span><span class="total-cost-span fs-2 fw-bold text-gray-800 me-2 lh-1 ls-n2">' .
                                                                 $expense->amount .
                                                                 '</span>'
                                                             : 'NA' !!}
@@ -286,7 +342,6 @@
                                             </td>
 
                                             <td>
-
                                                 <div class="d-flex align-items-center">
                                                     <div class="fw-400 d-block fs-6"><span class="w-100px">Advance &nbsp;
                                                             &nbsp;:</span>
@@ -296,7 +351,6 @@
                                                             class="total-cost-span fs-6 fw-bold text-gray-800 me-2 lh-1 ls-n2">
                                                             {{ $expense->advance_amount }}</span>
                                                     </div>
-
                                                 </div>
 
                                                 <div class="d-flex align-items-center">
@@ -358,10 +412,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-
                                             </td>
-
 
                                             <td class="text-center">
                                                 <a href="#" class="btn btn-sm btn-light btn-active-light-primary"
@@ -378,11 +429,6 @@
                                                             </a>
                                                         </div>
                                                     @endif
-                                                    {{-- <div class="menu-item px-3">
-                                                        <a href="" class="menu-link px-3">
-                                                            Edit
-                                                        </a>
-                                                    </div> --}}
                                                     <div class="menu-item px-3">
                                                         <a href="javascript:void(0)" onclick=""
                                                             class="menu-link px-3"
@@ -395,7 +441,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4">No data found</td>
+                                            <td colspan="5">No data found</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -418,6 +464,25 @@
                 "recordsTotal": 3615,
                 "pagingType": "full_numbers"
             });
+        });
+    </script>
+    <script>
+        document.getElementById('financialYearSelect').addEventListener('change', function() {
+            document.getElementById('page-loader').style.display = 'flex';
+            const selectedYearId = this.value;
+
+            // Redirect accordingly
+            if (selectedYearId) {
+                window.location.href = '?year=' + selectedYearId;
+            } else {
+                // No year selected: load base route (no query string)
+                window.location.href = window.location.pathname;
+            }
+        });
+    </script>
+    <script>
+        window.addEventListener('load', function() {
+            document.getElementById('page-loader').style.display = 'none';
         });
     </script>
 @endsection

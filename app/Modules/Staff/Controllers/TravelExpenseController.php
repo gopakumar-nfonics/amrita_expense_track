@@ -28,15 +28,27 @@ class TravelExpenseController extends Controller
         return view('modules.Staff.travel.create', compact('cities', 'travelModes'));
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $staffId = auth()->guard('staff')->id();
-        $expenses = TravelExpense::with(['sourceCity', 'destinationCity'])
-                                   ->where('staff_id', $staffId)
-                                   ->orderBy('id', 'desc')
-                                   ->get();
-
+        $Year = $request->query('year');
         $financialyears = FinancialYear::get();
+
+        $query = TravelExpense::with(['sourceCity', 'destinationCity'])
+            ->where('staff_id', $staffId)
+            ->orderBy('id', 'desc');
+
+        if ($Year) {
+            $financialYear = FinancialYear::where('year', $Year)->first();
+
+            if ($financialYear) {
+                $query->where('financial_year_id', $financialYear->id);
+            }
+        }
+
+        // Get the results
+        $expenses = $query->get();
+
         // Calculate totals
         $totalAmount = $expenses->sum('amount');
         $totalAdvance = $expenses->sum('advance_amount');
@@ -207,5 +219,25 @@ class TravelExpenseController extends Controller
         }
 
         return redirect()->route('travel.index')->with('success', 'Travel expense submitted successfully.');
+    }
+
+    public function deletebudget(Request $request)
+    {
+
+        $budgets = Budgets::findOrFail($request->id);
+
+        if (!$budgets) {
+            return response()->json(['error' => 'Budget not found.'], 404);
+        }
+
+        $paymentRequestCount = PaymentRequest::where('category_id', $budgets->category_id)->count();
+        
+        if ($paymentRequestCount > 0) {
+            return response()->json(['error' => 'Cannot delete budget associated with a payment request.']);
+        }
+
+        $budgets->forceDelete();
+        return response()->json(['success' => 'The Budget has been deleted!']);
+        
     }
 }

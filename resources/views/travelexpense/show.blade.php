@@ -148,7 +148,8 @@
                                                                     <div class="d-flex align-items-center">
                                                                         @if ($detail->file_path)
                                                                             <div class="ms-0">
-                                                                                <i class="fa-regular fa-file"></i>
+                                                                                <i
+                                                                                    class="fa-regular fa-file text-primary"></i>
                                                                                 <a href="{{ Storage::url($detail->file_path) }}"
                                                                                     target="_blank" class="fw-semibold">
                                                                                     <u>Reference Document</u>
@@ -157,7 +158,7 @@
                                                                         @else
                                                                             <div class="ms-0 text-muted fst-italic">
                                                                                 <i class="fa-regular fa-file"></i>
-                                                                                No Reference Document Submitted
+                                                                                Not Available
                                                                             </div>
                                                                         @endif
                                                                     </div>
@@ -168,12 +169,13 @@
                                                         <!--begin::Grand total-->
                                                         <tr>
                                                             <td colspan="2"></td>
-                                                            <td class="text-dark fw-bolder text-sm-start">
+                                                            <td class="text-dark fw-bolder text-sm-end pb-0">
                                                                 <span class="fs-5 fw-bold text-gray-800 txt-uppercase">
-                                                                    Advance Amount :
+                                                                    Advance Paid :
                                                                 </span>
                                                             </td>
-                                                            <td colspan="" class="text-dark fw-bolder text-end fs-5"
+                                                            <td colspan=""
+                                                                class="text-dark fw-bolder text-end fs-5 pb-0 "
                                                                 style="font-size:18px !important;">
                                                                 <div>
                                                                     <span
@@ -183,20 +185,19 @@
                                                                     <span class="fs-3 fw-bold text-gray-800">
                                                                         {{ $expense->advance_amount }}
                                                                     </span>
-                                                                    {{-- <div class="text-muted fs-6 text-gray-600">
-                                                                        {{ ucfirst($advance_words) }} Rupees Only.
-                                                                    </div> --}}
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td colspan="2"></td>
-                                                            <td class="text-dark fw-bolder text-sm-start fs-2">
+                                                            <td></td>
+                                                            <td colspan="2"
+                                                                class="text-dark fw-bolder text-sm-end fs-2  py-0">
                                                                 <span class="fs-5 fw-bold text-gray-800 txt-uppercase">
-                                                                    Total Amount :
+                                                                    Total Claimed :
                                                                 </span>
                                                             </td>
-                                                            <td colspan="" class="text-dark fw-bolder text-end fs-2 "
+                                                            <td colspan=""
+                                                                class="text-dark fw-bolder text-end fs-2  py-0"
                                                                 style="font-size:18px !important;">
                                                                 <div>
                                                                     <span
@@ -206,32 +207,37 @@
                                                                     <span class="fs-3 fw-bold text-gray-800">
                                                                         {{ $expense->amount }}
                                                                     </span>
-                                                                    {{-- <div class="text-muted fs-6 text-gray-600">
-                                                                        {{ ucfirst($total_words) }} Rupees Only.
-                                                                    </div> --}}
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td colspan="2"></td>
-                                                            <td class="text-dark fw-bolder text-sm-start fs-2">
-                                                                <span class="fs-5 fw-bold text-gray-800 txt-uppercase">
-                                                                    Settlement Amount :
+                                                            <td></td>
+                                                            <td colspan="2"
+                                                                class="text-dark fw-bolder text-sm-end fs-3 py-0  br-0">
+                                                                <span class="fs-5 fw-bold text-info txt-uppercase">
+                                                                    Amount to be Settled :
                                                                 </span>
                                                             </td>
-                                                            <td colspan="" class="text-dark fw-bolder text-end fs-2 "
-                                                                style="font-size:18px !important;">
+                                                            <td colspan=""
+                                                                class="text-dark fw-bolder text-end fs-2 py-0 br-0"
+                                                                style=" font-size:18px !important;">
                                                                 <div>
                                                                     <span
-                                                                        class="fs-3 fw-semibold text-gray-500 align-self-start me-1">
+                                                                        class="fs-3 fw-semibold text-info align-self-start me-1">
                                                                         &#x20b9;
                                                                     </span>
-                                                                    <span class="fs-3 fw-bold text-gray-800">
+                                                                    <span class="fs-3 fw-bold text-info">
                                                                         {{ number_format((float) $settleAmount, 2) }}
                                                                     </span>
-                                                                    {{-- <div class="text-muted fs-6 text-gray-600">
-                                                                        {{ ucfirst($settle_words) }} Rupees Only.
-                                                                    </div> --}}
+
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4"
+                                                                class="text-dark text-sm-end fs-3 py-0  br-0">
+                                                                <div class="fs-4 text-gray-500">
+                                                                    ({{ ucfirst($settle_words) }} Rupees Only.)
                                                                 </div>
                                                             </td>
                                                         </tr>

@@ -67,7 +67,7 @@
                                     <div class="d-flex flex-column">
                                               <span class="d-block color-blue  fs-6 ms-0 mb-3">
                                        Settlement Date :       <input
-                                            class="form-control d-inline p-2 px-4  flatpickr-input w-125px  fs-7"
+                                            class="form-control d-inline p-2 px-4  flatpickr-input w-150px  fs-7"
                                             placeholder="Date" name="start_date" id="start_date" type="text">
                                         </span>
                                         <span class="text-muted">Category :
@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize flatpickr on #start_date
     flatpickr("#start_date", {
         defaultDate: today,         // Sets default to today
-        dateFormat: "d-m-Y",        // Desired date format
+        dateFormat: "d-M-Y",        // Desired date format
     });
 });
 

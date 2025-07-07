@@ -264,7 +264,8 @@
 
                                         <div class="modal-body">
 
-                                            <div class="mb-3">
+                                            <div class="d-flex  justify-content-between mb-5 ">
+                                                 <div>
                                                 <label class="form-label required">Year</label>
                                                 <select class="form-select" name="year" id="year"
                                                     onchange="getallocatedbudget(document.getElementById('category'))"
@@ -276,6 +277,17 @@
                                                     </option>
                                                     @endforeach
                                                 </select>
+                                                </div>
+                                                   <div>
+                         
+
+                                            <label class="form-label required">
+                                                    Advance Date
+                                                </label>
+                                                <input type="number" name="start_date" id="start_date"
+                                                    class="form-control w-150px">
+                                       
+                                                </div>
                                             </div>
 
                                             <div class="mb-3">
@@ -527,5 +539,18 @@
         submitBtn.querySelector('.indicator-label').style.display = 'none';
         submitBtn.querySelector('.indicator-progress').style.display = 'inline-block';
     });
+</script>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Get today's date
+    const today = new Date();
+
+    // Initialize flatpickr on #start_date
+    flatpickr("#start_date", {
+        defaultDate: today,         // Sets default to today
+        dateFormat: "d-M-Y",        // Desired date format
+    });
+});
+
 </script>
 @endsection

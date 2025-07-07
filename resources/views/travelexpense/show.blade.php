@@ -46,14 +46,13 @@
                             <!-- begin::Header-->
                             <div class="flex-sm-row mb-2">
                                 <!--end::Logo-->
-                                <div class="text-sm-start">
-                                    <a href="#" class="d-block w-100 fs-1 ms-sm-auto mb-2 color-blue txt-uppercase">
-                                        {{ ucfirst($expense->title) }}
-                                    </a>
-                                </div>
+                           
                                 <!--begin::Text-->
                                 <div class="d-flex  justify-content-between text-sm-start fw-semibold fs-7 text-muted">
                                     <div class="d-flex flex-column">
+                                           <span class="d-block w-100 fs-1 ms-sm-auto mb-2 color-blue txt-uppercase">
+                                        {{ ucfirst($expense->title) }}
+                                        </span>
                                         <span class="fs-5 text-gray-900">
                                             {{ $expense->staff->name }} | {{ $expense->staff->email }}
                                         </span>
@@ -66,6 +65,11 @@
                                         </span>
                                     </div>
                                     <div class="d-flex flex-column">
+                                              <span class="d-block color-blue  fs-6 ms-0 mb-3">
+                                       Settlement Date :       <input
+                                            class="form-control d-inline p-2 px-4  flatpickr-input w-125px  fs-7"
+                                            placeholder="Date" name="start_date" id="start_date" type="text">
+                                        </span>
                                         <span class="text-muted">Category :
                                             <span class="fs-6 text-gray-700">
                                                 {{ $expense->category->category_name ?? 'N/A' }}
@@ -326,5 +330,20 @@
                 }
             });
         });
+
+        
     </script>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Get today's date
+    const today = new Date();
+
+    // Initialize flatpickr on #start_date
+    flatpickr("#start_date", {
+        defaultDate: today,         // Sets default to today
+        dateFormat: "d-m-Y",        // Desired date format
+    });
+});
+
+</script>
 @endsection

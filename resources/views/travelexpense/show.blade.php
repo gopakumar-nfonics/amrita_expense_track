@@ -187,7 +187,8 @@
                                                                         &#x20b9;
                                                                     </span>
                                                                     <span class="fs-5 text-gray-800">
-                                                                        {{ $expense->advance_amount }}
+                                                        
+                                                                         {{ number_format((float) $expense->advance_amount, 2) }}
                                                                     </span>
                                                                 </div>
                                                             </td>
@@ -209,7 +210,8 @@
                                                                         &#x20b9;
                                                                     </span>
                                                                     <span class="fs-5  text-gray-800">
-                                                                        {{ $expense->amount }}
+                                                                
+                                                                         {{ number_format((float) $expense->amount, 2) }}
                                                                     </span>
                                                                 </div>
                                                             </td>

@@ -32,4 +32,8 @@ class Stream extends Model
     {
         return $this->hasMany(NoninvoicePayment::class);
     }
+    public function travelExpenses()
+    {
+        return $this->hasMany(TravelExpense::class);
+    }
 }

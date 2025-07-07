@@ -75,6 +75,24 @@ class ReportsController extends Controller
                    OR tbl_category.parent_category = tbl_budget.category_id)
               AND noninvoice_payment.payment_status = "completed"
               AND noninvoice_payment.financial_year_id = tbl_budget.financial_year_id
+        ), 0) +
+        COALESCE((
+            SELECT SUM(advance_amount)
+            FROM tbl_travel_expenses
+            INNER JOIN tbl_category ON tbl_travel_expenses.category_id = tbl_category.id
+            WHERE (tbl_travel_expenses.category_id = tbl_budget.category_id 
+                OR tbl_category.parent_category = tbl_budget.category_id)
+            AND tbl_travel_expenses.status IN ("advance_received", "expense_submitted")
+            AND tbl_travel_expenses.financial_year_id = tbl_budget.financial_year_id
+        ), 0) +
+        COALESCE((
+            SELECT SUM(amount)
+            FROM tbl_travel_expenses
+            INNER JOIN tbl_category ON tbl_travel_expenses.category_id = tbl_category.id
+            WHERE (tbl_travel_expenses.category_id = tbl_budget.category_id 
+                OR tbl_category.parent_category = tbl_budget.category_id)
+            AND tbl_travel_expenses.status = "expense_settled"
+            AND tbl_travel_expenses.financial_year_id = tbl_budget.financial_year_id
         ), 0)
     ) as used_amount')
     ->leftJoin('tbl_category', 'tbl_budget.category_id', '=', 'tbl_category.id')
@@ -99,6 +117,20 @@ class ReportsController extends Controller
                     WHERE noninvoice_payment.category_id = tbl_category.id
                       AND noninvoice_payment.payment_status = "completed"
                       ' . ($financialYearId ? 'AND noninvoice_payment.financial_year_id = ' . (int)$financialYearId : '') . '
+                ), 0) +
+                COALESCE((
+                    SELECT SUM(advance_amount)
+                    FROM tbl_travel_expenses
+                    WHERE tbl_travel_expenses.category_id = tbl_category.id
+                    AND tbl_travel_expenses.status IN ("advance_received", "expense_submitted")
+                    ' . ($financialYearId ? 'AND tbl_travel_expenses.financial_year_id = ' . (int)$financialYearId : '') . '
+                ), 0) +
+                COALESCE((
+                    SELECT SUM(amount)
+                    FROM tbl_travel_expenses
+                    WHERE tbl_travel_expenses.category_id = tbl_category.id
+                    AND tbl_travel_expenses.status = "expense_settled"
+                    ' . ($financialYearId ? 'AND tbl_travel_expenses.financial_year_id = ' . (int)$financialYearId : '') . '
                 ), 0)
             ) as used_amount_by_subcategory'))
             ->whereNull('tbl_category.deleted_at')
@@ -122,6 +154,20 @@ class ReportsController extends Controller
                             WHERE noninvoice_payment.category_id = tbl_category.id
                               AND noninvoice_payment.payment_status = "completed"
                               ' . ($financialYearId ? 'AND noninvoice_payment.financial_year_id = ' . (int)$financialYearId : '') . '
+                        ), 0) +
+                        COALESCE((
+                            SELECT SUM(advance_amount)
+                            FROM tbl_travel_expenses
+                            WHERE tbl_travel_expenses.category_id = tbl_category.id
+                            AND tbl_travel_expenses.status IN ("advance_received", "expense_submitted")
+                            ' . ($financialYearId ? 'AND tbl_travel_expenses.financial_year_id = ' . (int)$financialYearId : '') . '
+                        ), 0) +
+                        COALESCE((
+                            SELECT SUM(amount)
+                            FROM tbl_travel_expenses
+                            WHERE tbl_travel_expenses.category_id = tbl_category.id
+                            AND tbl_travel_expenses.status = "expense_settled"
+                            ' . ($financialYearId ? 'AND tbl_travel_expenses.financial_year_id = ' . (int)$financialYearId : '') . '
                         ), 0)
                     ) as used_amount'))
                     ->whereNull('tbl_category.deleted_at');
@@ -426,18 +472,7 @@ public function programmedata(Request $request)
     $endDate = $request->input('end_date'); // Get end date
 
     // Fetch all streams with their payment requests
-    $query = Stream::whereHas('paymentRequests', function ($query) use ($startDate, $endDate) {
-        $query->where('payment_status', 'completed');
-
-        // Apply date filters within whereHas to ensure the Stream has relevant paymentRequests
-        if ($startDate) {
-            $query->where('transaction_date', '>=', Carbon::parse($startDate));
-        }
-        if ($endDate) {
-            $query->where('transaction_date', '<=', Carbon::parse($endDate));
-        }
-    })
-    ->with(['paymentRequests' => function ($query) use ($startDate, $endDate) { // Apply filters here too
+    $query = Stream::with(['paymentRequests' => function ($query) use ($startDate, $endDate) { // Apply filters here too
         $query->select(
                 'payment_request.stream_id',
                 'payment_request.category_id', 
@@ -475,6 +510,27 @@ public function programmedata(Request $request)
             }
 
             $query->groupBy('stream_id', 'category_id', 'transaction_date');
+        },
+        'travelExpenses' => function ($query) {
+        $query->select(
+        'stream_id',
+        'category_id',
+        DB::raw("
+        SUM(
+        CASE
+        WHEN status IN ('advance_received', 'expense_submitted') THEN advance_amount
+        WHEN status = 'expense_settled' THEN amount
+        ELSE 0
+        END
+        ) as total_travel
+        ")
+        )
+        ->whereIn('status', [
+        'advance_received',
+        'expense_submitted',
+        'expense_settled'
+        ])
+        ->groupBy('stream_id', 'category_id');
         }
 
     ]);
@@ -494,6 +550,15 @@ if ($searchValue) {
 
     // Apply pagination
     $streams = $query->skip($start)->take($length)->get();
+
+    $streams = $streams->filter(function ($stream) {
+        return $stream->paymentRequests->isNotEmpty()
+        || $stream->nonInvoicePayments->isNotEmpty()
+        || $stream->travelExpenses->isNotEmpty();
+        });
+
+        $filteredCount = $streams->count();
+
 
     // Initialize the data array
     $this->data = []; 
@@ -550,6 +615,29 @@ if ($searchValue) {
                 }
             }
         }
+
+        foreach ($stream->travelExpenses as $travel) {
+            if ($travel->total_travel > 0) {
+            $category = Category::with('children')->find($travel->category_id);
+    
+            if ($category) {
+            $parentCategoryName = $category->parent
+            ? $category->parent->category_name
+            : $category->category_name;
+    
+            if (!isset($categoriesArray[$parentCategoryName])) {
+            $categoriesArray[$parentCategoryName] = [
+            'category_name' => $parentCategoryName,
+            'total_expense' => 0,
+            'dop' => null, // or $travel->updated_at if you want
+            ];
+            }
+    
+            $categoriesArray[$parentCategoryName]['total_expense'] += $travel->total_travel;
+            $totalProgramExpense += $travel->total_travel;
+            }
+            }
+            }
     
         // Push stream-wise data along with total program expense
         $this->data[] = [

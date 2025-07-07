@@ -20,13 +20,13 @@ class travelexpense extends Controller
      */
     public function index()
     {
-        $expenses = TravelExpenseModel::with(['staff','sourceCity', 'destinationCity'])
-                                   ->orderBy('id', 'desc')
-                                   ->get();
+        $expenses = TravelExpenseModel::with(['staff', 'sourceCity', 'destinationCity'])
+            ->orderBy('id', 'desc')
+            ->get();
         $programmes = Stream::orderBy('stream_name')->get();
         $main_categories = Category::whereNull('parent_category')
-                        ->with(['children', 'budgets'])
-                        ->get();
+            ->with(['children', 'budgets'])
+            ->get();
 
         $years = FinancialYear::orderBy('year')->get();
         return view('travelexpense.index', compact('expenses', 'programmes', 'main_categories', 'years'));
@@ -62,7 +62,7 @@ class travelexpense extends Controller
     public function show($id)
     {
         $id = Crypt::decrypt($id);
-        $expense = TravelExpenseModel::with(['staff','sourceCity', 'destinationCity', 'category', 'stream', 'details'])->find($id);
+        $expense = TravelExpenseModel::with(['staff', 'sourceCity', 'destinationCity', 'category', 'stream', 'details'])->find($id);
 
         $totalAmount = $expense->amount;
         $advanceAmount = $expense->advance_amount;
@@ -71,9 +71,16 @@ class travelexpense extends Controller
         $advance_words = $numbersWords->toWords($advanceAmount);
 
         $settleAmount = $totalAmount - $advanceAmount;
-        $settle_words = $numbersWords->toWords($settleAmount);
 
-        return view('travelexpense.show',compact('expense', 'total_words', 'advance_words', 'settleAmount', 'settle_words'));
+
+        // Check if negative
+        if ($settleAmount < 0) {
+            $settle_words = 'minus ' . $numbersWords->toWords(abs($settleAmount));
+        } else {
+            $settle_words = $numbersWords->toWords($settleAmount);
+        }
+
+        return view('travelexpense.show', compact('expense', 'total_words', 'advance_words', 'settleAmount', 'settle_words'));
     }
 
     /**
@@ -120,9 +127,9 @@ class travelexpense extends Controller
             'associated'  => 'required',
             'approved_amount' => 'required',
         ]);
-    
+
         $expense = TravelExpenseModel::findOrFail($request->expense_id);
-    
+
         $expense->update([
             'financial_year_id'  => $request->year,
             'category_id'        => $request->category,
@@ -131,23 +138,22 @@ class travelexpense extends Controller
             'associated'         => $request->associated,
             'status'             => 'advance_received',
         ]);
-    
+
         return redirect()->back()->with('success', 'Advance request approved successfully.');
     }
 
     public function settle_expense(Request $request)
     {
-           
+
         $expense = TravelExpenseModel::findOrFail($request->expense_id);
-    
+
         $expense->status = 'expense_settled';
         $expense->final_amount = $request->settle_amount;
         $expense->save();
-    
+
         return response()->json([
             'message' => 'Expense Settled Successfully.',
             'redirect' => route('travelexpense.index')
         ]);
     }
-
 }

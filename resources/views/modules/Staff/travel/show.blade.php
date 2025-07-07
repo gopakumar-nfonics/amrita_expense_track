@@ -208,56 +208,56 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
+                                                        @if ($expense->amount > 0)
+                                                            <tr>
+                                                                <td></td>
+                                                                <td colspan="2"
+                                                                    class="text-dark fw-bolder text-sm-end fs-2  py-0">
+                                                                    <span class="fs-5  text-gray-800 ">
+                                                                        Total Claimed :
+                                                                    </span>
+                                                                </td>
+                                                                <td class="text-dark fw-bolder text-end fs-2  py-0">
+                                                                    <div>
+                                                                        <span
+                                                                            class="fs-5 fw-semibold text-gray-500 align-self-start me-1">
+                                                                            &#x20b9;
+                                                                        </span>
+                                                                        <span class="fs-5  text-gray-800">
+                                                                            {{ number_format((float) $expense->amount, 2) }}
+                                                                        </span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td colspan="2"
+                                                                    class="text-dark fw-bolder text-sm-end fs-3 py-0  br-0">
+                                                                    <span class="fs-5 fw-bold text-info ">
+                                                                        Amount to be Settled :
+                                                                    </span>
+                                                                </td>
+                                                                <td class="text-dark fw-bolder text-end fs-2 py-0 br-0">
+                                                                    <div>
+                                                                        <span
+                                                                            class="fs-3 fw-semibold text-info align-self-start me-1">
+                                                                            &#x20b9;
+                                                                        </span>
+                                                                        <span class="fs-3 fw-bold text-info">
+                                                                            {{ number_format((float) $settleAmount, 2) }}
+                                                                        </span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                         <tr>
-                                                            <td></td>
-                                                            <td colspan="2"
-                                                                class="text-dark fw-bolder text-sm-end fs-2  py-0">
-                                                                <span class="fs-5 fw-bold text-gray-800 txt-uppercase">
-                                                                    Total Claimed :
-                                                                </span>
-                                                            </td>
-                                                            <td colspan=""
-                                                                class="text-dark fw-bolder text-end fs-2  py-0"
-                                                                style="font-size:18px !important;">
-                                                                <div>
-                                                                    <span
-                                                                        class="fs-3 fw-semibold text-gray-500 align-self-start me-1">
-                                                                        &#x20b9;
-                                                                    </span>
-                                                                    <span class="fs-3 fw-bold text-gray-800">
-                                                                        {{ $expense->amount }}
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td></td>
-                                                            <td colspan="2"
-                                                                class="text-dark fw-bolder text-sm-end fs-3 py-0  br-0">
-                                                                <span class="fs-5 fw-bold text-info txt-uppercase">
-                                                                    Amount to be Settled :
-                                                                </span>
-                                                            </td>
-                                                            <td colspan=""
-                                                                class="text-dark fw-bolder text-end fs-2 py-0 br-0"
-                                                                style=" font-size:18px !important;">
-                                                                <div>
-                                                                    <span
-                                                                        class="fs-3 fw-semibold text-info align-self-start me-1">
-                                                                        &#x20b9;
-                                                                    </span>
-                                                                    <span class="fs-3 fw-bold text-info">
-                                                                        {{ number_format((float) $settleAmount, 2) }}
-                                                                    </span>
-
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="4"
-                                                                class="text-dark text-sm-end fs-3 py-0  br-0">
-                                                                <div class="fs-4 text-gray-500">
-                                                                    ({{ ucfirst($settle_words) }} Rupees Only.)
+                                                            <td colspan="4" class="text-dark text-sm-end fs-3 py-0 br-0">
+                                                                <div class="fs-6 text-gray-600">
+                                                                    @if ($expense->amount > 0)
+                                                                        [ {{ ucfirst($settle_words) }} Rupees Only.]
+                                                                    @else
+                                                                        [ {{ ucfirst($advance_words) }} Rupees Only.]
+                                                                    @endif
                                                                 </div>
                                                             </td>
                                                         </tr>

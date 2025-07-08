@@ -33,8 +33,9 @@ class TravelExpenseController extends Controller
     public function index(Request $request)
     {
         $staffId = auth()->guard('staff')->id();
-        $Year = $request->query('year');
-        $financialyears = FinancialYear::get();
+        $currentYear = FinancialYear::where('is_current', 1)->first();
+        $financialyears = FinancialYear::orderByDesc('is_current')->orderByDesc('year')->get();
+        $Year = $request->query('year') ?? $currentYear?->year;
 
         $query = TravelExpense::with(['sourceCity', 'destinationCity'])
             ->where('staff_id', $staffId)
@@ -58,7 +59,7 @@ class TravelExpenseController extends Controller
         $totalDisbursed = $totalAdvance + $totalFinal;
         $balance = $totalAmount - ($totalAdvance + $totalFinal);
 
-        return view('modules.Staff.travel.index', compact('expenses', 'totalAmount', 'totalAdvance', 'financialyears', 'balance', 'totalDisbursed'));
+        return view('modules.Staff.travel.index', compact('expenses', 'totalAmount', 'totalAdvance', 'financialyears', 'balance', 'totalDisbursed', 'currentYear'));
     }
 
     public function store(Request $request)
@@ -74,6 +75,10 @@ class TravelExpenseController extends Controller
             'advance_amount' => 'required',
         ]);
 
+        $currentYearId = FinancialYear::where('is_current', 1)->value('id') 
+            ?? FinancialYear::orderByDesc('year')->value('id');
+
+
         // Calculate days between
         $from = Carbon::parse($request->from_date);
         $to = Carbon::parse($request->to_date);
@@ -86,6 +91,7 @@ class TravelExpenseController extends Controller
             'to_date' => $request->to_date,
             'source_city' => $request->source_city,
             'destination_city' => $request->destination_city,
+            'financial_year_id' => $currentYearId,
             'amount' => 0,
             'status' => 'advance_requested',
             'advance_amount' => $request->advance_amount,

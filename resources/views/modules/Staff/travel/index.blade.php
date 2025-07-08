@@ -98,9 +98,10 @@
                     <!--end::Secondary button-->
                     <select id="financialYearSelect" class="form-select"
                         style="width: 90px; padding: 5px 15px; cursor: pointer;">
-                        <option value="">Year</option>
+                        {{-- <option value="">Year</option> --}}
                         @foreach ($financialyears as $year)
-                            <option value="{{ $year->year }}" {{ request('year') == $year->year ? 'selected' : '' }}>
+                            <option value="{{ $year->year }}"
+                                {{ request('year', $currentYear->year ?? '') == $year->year ? 'selected' : '' }}>
                                 {{ $year->year }}
                             </option>
                         @endforeach

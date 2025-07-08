@@ -18,6 +18,7 @@ class TravelExpense extends Model
         'to_date',
         'source_city',
         'destination_city',
+        'financial_year_id',
         'amount',
         'status',
         'advance_amount',

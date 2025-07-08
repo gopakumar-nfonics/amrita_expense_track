@@ -252,7 +252,11 @@ class TravelExpenseController extends Controller
         // Check if negative
         if ($settleAmount < 0) {
             $settle_words = 'minus ' . $numbersWords->toWords(abs($settleAmount));
-        } else {
+        }
+        elseif($settleAmount == 0){
+            $settle_words = '';
+        }
+         else {
             $settle_words = $numbersWords->toWords($settleAmount);
         }
 

@@ -253,17 +253,20 @@
                                                                 </td>
                                                             </tr>
                                                         @endif
-                                                        <tr>
-                                                            <td colspan="4" class="text-dark text-sm-end fs-3 py-0 br-0">
-                                                                <div class="fs-6 text-gray-600">
-                                                                    @if ($expense->amount > 0)
-                                                                        [ {{ ucfirst($settle_words) }} Rupees Only.]
-                                                                    @else
-                                                                        [ {{ ucfirst($advance_words) }} Rupees Only.]
-                                                                    @endif
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                        @if ($settleAmount != 0)
+                                                            <tr>
+                                                                <td colspan="4"
+                                                                    class="text-dark text-sm-end fs-3 py-0 br-0">
+                                                                    <div class="fs-6 text-gray-600">
+                                                                        @if ($expense->amount > 0 && $settleAmount != 0)
+                                                                            [ {{ ucfirst($settle_words) }} Rupees Only.]
+                                                                        @else
+                                                                            [ {{ ucfirst($advance_words) }} Rupees Only.]
+                                                                        @endif
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                     </tbody>
                                                 </table>
                                             </div>

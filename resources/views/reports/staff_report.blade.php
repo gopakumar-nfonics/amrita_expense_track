@@ -96,7 +96,7 @@
 
                             <!-- Right Side (Download Button) -->
                             <div class="d-flex ms-auto">
-                                <a href="{{ route('reports.vendordataexport') }}" class="btn btn-sm btn-success">
+                                <a href="{{ route('reports.staffdataexport') }}" class="btn btn-sm btn-success">
                                     <i class="fa-solid fa-download"></i> Download Report
                                 </a>
                             </div>
@@ -148,7 +148,7 @@ $(document).ready(function() {
                 },
                 {
                     data: 'name',
-                    title: "Name"
+                    title: "Staff"
                 },
                 {
                     data: 'trip',
@@ -160,17 +160,26 @@ $(document).ready(function() {
                 },
                 {
                     data: 'expense',
-                    title: "Expense"
+                    title: "Expense",
+                    render: function(data, type, row) {
+                        return `<p class="sub-expense-disp fs-7 fw-bold ls-n1 text-end">&#x20b9;<span class="total-cost-span">${data}</span></p>`;
+                    }
                 },
                 {
                     data: 'paid',
-                    title: "Paid"
+                    title: "Paid",
+                    render: function(data, type, row) {
+                        return `<p class="sub-expense-disp fs-7 fw-bold ls-n1 text-end">&#x20b9;<span class="total-cost-span">${data}</span></p>`;
+                    }
                 },
                 {
                     data: 'balance',
-                    title: "Balance"
-                },
+                    title: "Balance",
+                    render: function(data, type, row) {
+                        return `<p class="sub-expense-disp fs-7 fw-bold ls-n1 text-end">&#x20b9;<span class="total-cost-span">${data}</span></p>`;
+                    },
 
+                }
             ],
             rowCallback: function(row, data, index) {
                 if (data.rowspan > 0) {
@@ -178,7 +187,8 @@ $(document).ready(function() {
                     $('td:eq(1)', row).attr('rowspan', data.rowspan);
                 } else {
                     $('td:eq(0)', row).remove();
-                    $('td:eq(0)', row).remove(); // second remove: previous td[1] shifted to td[0]
+                    $('td:eq(0)', row)
+                        .remove(); // second remove: previous td[1] shifted to td[0]
                 }
             }
         });

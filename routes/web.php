@@ -102,6 +102,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/staffreport', [App\Http\Controllers\ReportsController::class, 'staffreport'])->name('staffreport');
         Route::post('/staffdata', [App\Http\Controllers\ReportsController::class, 'staffdata'])->name('reports.staffdata');
 
+        Route::get('/export-staff-report', [App\Http\Controllers\ReportsController::class, 'staffdataexport'])->name('reports.staffdataexport');
     });
     Route::get('lead/rejectionreason/{proposal_id}', [\App\Http\Controllers\resource\lead::class, 'rejectionReason']);
     Route::group(['middleware' => 'checkRole'], function () {

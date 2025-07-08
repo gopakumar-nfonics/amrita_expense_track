@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\BudgetReportExport;
 use App\Exports\VendorExport;
+use App\Exports\StaffExport;
+
 use App\Exports\ProgramDataExport;
 
 class ReportsController extends Controller
@@ -669,6 +671,18 @@ class ReportsController extends Controller
             ];
         }
 
+        $financialYear = FinancialYear::find($financialYearId);
+
+        // Check if the financial year exists
+        if ($financialYear) {
+            // Store the year in the session instead of the ID
+            session(['financial_year' => $financialYear->year]);
+        } else {
+            // Handle the case where the financial year is not found
+            session(['financial_year' => null]); // or handle as needed
+        }
+
+
         // session(['program_data' => $this->data]);
         session([
             'program_data' => $this->data
@@ -688,10 +702,9 @@ class ReportsController extends Controller
     {
 
         $expProgramData = session('program_data', []);
-        $startDate = session('start_date');
-        $endDate = session('end_date');
+        $financialYear = session('financial_year');
 
-        return Excel::download(new ProgramDataExport($expProgramData, $startDate, $endDate), 'BUET_PRGM_Report.xlsx');
+        return Excel::download(new ProgramDataExport($expProgramData, $financialYear), 'BUET_PRGM_Report.xlsx');
 
     }
 
@@ -714,7 +727,7 @@ class ReportsController extends Controller
         $financial_year = $request->input('financial_year');
 
 
-        session()->forget(['staff_data']);
+        session()->forget(['staff_data', 'year']);
 
         $query = Staff::with([
             'travelexpense' => function ($q) use ($financial_year) {
@@ -784,10 +797,9 @@ class ReportsController extends Controller
                     'name' => $first ? $staff->name : '',
                     'trip' => $tripLabel ?? '',
                     'dateperiod' => $dateperiod ?? '',
-                    'expense' => number_format($expenseAmount),
-                    'paid' => number_format($paidamount),
-                    'balance' => number_format($balance),
-                    //'total' => number_format($total),
+                    'expense' => number_format_indian($expenseAmount),
+                    'paid' => number_format_indian($paidamount),
+                    'balance' => number_format_indian($balance),
                     'rowspan' => $first ? $tripCount : 0, // For JS rowspan logic
                 ];
 
@@ -797,9 +809,11 @@ class ReportsController extends Controller
             $serial++;
         }
 
+        $year = FinancialYear::find($financial_year)?->year;
         // Save session data for future export
         session([
-            'staff_data' => $staffList
+            'staff_data' => $staffList,
+            'year' => $year,
         ]);
 
         return response()->json([
@@ -810,7 +824,13 @@ class ReportsController extends Controller
         ]);
     }
 
+    public function staffdataexport()
+    {
+        $expstaffData = session('staff_data', []);
+        $year = session('year');
 
+        return Excel::download(new StaffExport($expstaffData, $year), 'BUET_SR_Report.xlsx');
+    }
 
 
 

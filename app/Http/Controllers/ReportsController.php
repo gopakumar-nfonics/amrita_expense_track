@@ -12,6 +12,7 @@ use App\Models\Vendor;
 use Carbon\Carbon;
 use App\Models\Stream;
 use App\Models\Category;
+use App\Models\Staff;
 use Illuminate\Support\Facades\DB;
 
 use Maatwebsite\Excel\Facades\Excel;
@@ -24,6 +25,8 @@ class ReportsController extends Controller
     public $vendorData = [];
     public $data = [];
     public $categories = [];
+
+    public $staff = [];
 
     public function index()
     {
@@ -472,64 +475,64 @@ class ReportsController extends Controller
     }
 
     public function programmedata(Request $request)
-{
-    // Get search value and pagination parameters
-    $searchValue = $request->input('search.value');
-    $start = $request->input('start', 0);
-    $length = $request->input('length', 10);
-    $programmeId = $request->input('programme_id'); // Get the selected program ID
+    {
+        // Get search value and pagination parameters
+        $searchValue = $request->input('search.value');
+        $start = $request->input('start', 0);
+        $length = $request->input('length', 10);
+        $programmeId = $request->input('programme_id'); // Get the selected program ID
+
+        // Clear the session data for program_data
+        session()->forget(['program_data']);  // Remove program_data from session
+
+
+        $financialYearId = $request->input('financial_year');
+
+        // Fetch all streams with their payment requests
+        $query = Stream::with([
+            'paymentRequests' => function ($query) use ($financialYearId) { // Apply filters here too
+                $query->select(
+                    'payment_request.stream_id',
+                    'payment_request.category_id',
+                    'transaction_date',
+                    DB::raw('COALESCE(SUM(payment_milestones.milestone_total_amount), 0) as total_expense')
+                )
+                    ->join('invoices', 'payment_request.invoice_id', '=', 'invoices.id')
+                    ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
+                    ->join('proposal', 'payment_milestones.proposal_id', '=', 'proposal.id')
+                    ->where('payment_request.payment_status', 'completed');
+
+                if ($financialYearId) {
+                    $query->where('proposal.proposal_year', $financialYearId);
+                }
+
+                // Apply date filters here to limit data within the date range for grouping
     
-    // Clear the session data for program_data
-    session()->forget(['program_data']);  // Remove program_data from session
 
-
-    $financialYearId = $request->input('financial_year');
-
-    // Fetch all streams with their payment requests
-    $query = Stream::with(['paymentRequests' => function ($query)  use ($financialYearId)
-    { // Apply filters here too
-        $query->select(
-                'payment_request.stream_id',
-                'payment_request.category_id', 
-                'transaction_date',
-                DB::raw('COALESCE(SUM(payment_milestones.milestone_total_amount), 0) as total_expense') 
-            )
-            ->join('invoices', 'payment_request.invoice_id', '=', 'invoices.id')
-            ->join('payment_milestones', 'invoices.milestone_id', '=', 'payment_milestones.id')
-            ->join('proposal', 'payment_milestones.proposal_id', '=', 'proposal.id')
-            ->where('payment_request.payment_status', 'completed');
-
-            if ($financialYearId) {
-                $query->where('proposal.proposal_year', $financialYearId);
-            }
-
-        // Apply date filters here to limit data within the date range for grouping
-        
-
-        $query->groupBy('payment_request.stream_id', 'payment_request.category_id', 'transaction_date');
-    }, 
-        'nonInvoicePayments' => function ($query) use ($financialYearId){
-            $query->select(
+                $query->groupBy('payment_request.stream_id', 'payment_request.category_id', 'transaction_date');
+            },
+            'nonInvoicePayments' => function ($query) use ($financialYearId) {
+                $query->select(
                     'stream_id',
                     'category_id',
                     'transaction_date',
                     DB::raw('SUM(amount) as total_noninvoice')
                 )
-                ->where('payment_status', 'completed');
+                    ->where('payment_status', 'completed');
 
                 if ($financialYearId) {
-                       $query->where('financial_year_id', $financialYearId);
-                     }
-                
-                
+                    $query->where('financial_year_id', $financialYearId);
+                }
 
-            $query->groupBy('stream_id', 'category_id', 'transaction_date');
-        },
-        'travelExpenses' => function ($query) use ($financialYearId) {
-        $query->select(
-        'stream_id',
-        'category_id',
-        DB::raw("
+
+
+                $query->groupBy('stream_id', 'category_id', 'transaction_date');
+            },
+            'travelExpenses' => function ($query) use ($financialYearId) {
+                $query->select(
+                    'stream_id',
+                    'category_id',
+                    DB::raw("
         SUM(
         CASE
         WHEN status IN ('advance_received', 'expense_submitted') THEN advance_amount
@@ -538,147 +541,147 @@ class ReportsController extends Controller
         END
         ) as total_travel
         ")
-        )
-        ->whereIn('status', [
-        'advance_received',
-        'expense_submitted',
-        'expense_settled'
+                )
+                    ->whereIn('status', [
+                        'advance_received',
+                        'expense_submitted',
+                        'expense_settled'
+                    ]);
+
+                if ($financialYearId) {
+                    $query->where('financial_year_id', $financialYearId);
+                }
+
+                $query->groupBy('stream_id', 'category_id');
+            }
+
         ]);
 
-        if ($financialYearId) {
-             $query->where('financial_year_id', $financialYearId);
-             }
-                
-        $query->groupBy('stream_id', 'category_id');
+        // Apply program filter if provided
+        if ($programmeId) {
+            $query->where('id', $programmeId);
         }
 
-    ]);
+        // Apply search filter if needed
+        if ($searchValue) {
+            $query->where('stream_name', 'LIKE', "%$searchValue%"); // Filter streams by name
+        }
 
-// Apply program filter if provided
-if ($programmeId) {
-    $query->where('id', $programmeId);
-}
+        // Get total count before pagination
+        $totalCount = $query->count();
 
-// Apply search filter if needed
-if ($searchValue) {
-    $query->where('stream_name', 'LIKE', "%$searchValue%"); // Filter streams by name
-}
+        // Apply pagination
+        $streams = $query->skip($start)->take($length)->get();
 
-    // Get total count before pagination
-    $totalCount = $query->count();
-
-    // Apply pagination
-    $streams = $query->skip($start)->take($length)->get();
-
-    $streams = $streams->filter(function ($stream) {
-        return $stream->paymentRequests->isNotEmpty()
-        || $stream->nonInvoicePayments->isNotEmpty()
-        || $stream->travelExpenses->isNotEmpty();
+        $streams = $streams->filter(function ($stream) {
+            return $stream->paymentRequests->isNotEmpty()
+                || $stream->nonInvoicePayments->isNotEmpty()
+                || $stream->travelExpenses->isNotEmpty();
         });
 
         $filteredCount = $streams->count();
 
 
-    // Initialize the data array
-    $this->data = []; 
+        // Initialize the data array
+        $this->data = [];
 
-    foreach ($streams as $stream) {
-        $categoriesArray = []; // Initialize categories array for this stream
-        $totalProgramExpense = 0; // Initialize total program expense for this stream
+        foreach ($streams as $stream) {
+            $categoriesArray = []; // Initialize categories array for this stream
+            $totalProgramExpense = 0; // Initialize total program expense for this stream
 
-        // Process each payment request for the current stream
-        foreach ($stream->paymentRequests as $paymentRequest) {
-            // Get the category related to the payment request
-            if($paymentRequest->transaction_date != null){
-            $category = Category::with('children')->find($paymentRequest->category_id);
+            // Process each payment request for the current stream
+            foreach ($stream->paymentRequests as $paymentRequest) {
+                // Get the category related to the payment request
+                if ($paymentRequest->transaction_date != null) {
+                    $category = Category::with('children')->find($paymentRequest->category_id);
 
-            if ($category) {
-                // Determine parent category name
-                $parentCategoryName = $category->parent ? $category->parent->category_name : $category->category_name;
-                 
-                // Initialize parent category if it doesn't exist
-                if (!isset($categoriesArray[$parentCategoryName])) {
-                    $categoriesArray[$parentCategoryName] = [
-                        'category_name' => $parentCategoryName,
-                        'total_expense' => 0,
-                        'dop' => $paymentRequest->transaction_date,
-                    ];
-                }
+                    if ($category) {
+                        // Determine parent category name
+                        $parentCategoryName = $category->parent ? $category->parent->category_name : $category->category_name;
 
-                // Update the total expense for the parent category
-                $categoriesArray[$parentCategoryName]['total_expense'] += $paymentRequest->total_expense;
+                        // Initialize parent category if it doesn't exist
+                        if (!isset($categoriesArray[$parentCategoryName])) {
+                            $categoriesArray[$parentCategoryName] = [
+                                'category_name' => $parentCategoryName,
+                                'total_expense' => 0,
+                                'dop' => $paymentRequest->transaction_date,
+                            ];
+                        }
 
-                // Update the total program expense
-                $totalProgramExpense += $paymentRequest->total_expense;
-            }
-            }
-        }
+                        // Update the total expense for the parent category
+                        $categoriesArray[$parentCategoryName]['total_expense'] += $paymentRequest->total_expense;
 
-        foreach ($stream->nonInvoicePayments as $nonInvoice) {
-            if ($nonInvoice->transaction_date != null) {
-                $category = Category::with('children')->find($nonInvoice->category_id);
-
-                if ($category) {
-                    $parentCategoryName = $category->parent ? $category->parent->category_name : $category->category_name;
-
-                    if (!isset($categoriesArray[$parentCategoryName])) {
-                        $categoriesArray[$parentCategoryName] = [
-                            'category_name' => $parentCategoryName,
-                            'total_expense' => 0,
-                            'dop' => $nonInvoice->transaction_date,
-                        ];
+                        // Update the total program expense
+                        $totalProgramExpense += $paymentRequest->total_expense;
                     }
-
-                    $categoriesArray[$parentCategoryName]['total_expense'] += $nonInvoice->total_noninvoice;
-                    $totalProgramExpense += $nonInvoice->total_noninvoice;
                 }
             }
+
+            foreach ($stream->nonInvoicePayments as $nonInvoice) {
+                if ($nonInvoice->transaction_date != null) {
+                    $category = Category::with('children')->find($nonInvoice->category_id);
+
+                    if ($category) {
+                        $parentCategoryName = $category->parent ? $category->parent->category_name : $category->category_name;
+
+                        if (!isset($categoriesArray[$parentCategoryName])) {
+                            $categoriesArray[$parentCategoryName] = [
+                                'category_name' => $parentCategoryName,
+                                'total_expense' => 0,
+                                'dop' => $nonInvoice->transaction_date,
+                            ];
+                        }
+
+                        $categoriesArray[$parentCategoryName]['total_expense'] += $nonInvoice->total_noninvoice;
+                        $totalProgramExpense += $nonInvoice->total_noninvoice;
+                    }
+                }
+            }
+
+            foreach ($stream->travelExpenses as $travel) {
+                if ($travel->total_travel > 0) {
+                    $category = Category::with('children')->find($travel->category_id);
+
+                    if ($category) {
+                        $parentCategoryName = $category->parent
+                            ? $category->parent->category_name
+                            : $category->category_name;
+
+                        if (!isset($categoriesArray[$parentCategoryName])) {
+                            $categoriesArray[$parentCategoryName] = [
+                                'category_name' => $parentCategoryName,
+                                'total_expense' => 0,
+                                'dop' => null, // or $travel->updated_at if you want
+                            ];
+                        }
+
+                        $categoriesArray[$parentCategoryName]['total_expense'] += $travel->total_travel;
+                        $totalProgramExpense += $travel->total_travel;
+                    }
+                }
+            }
+
+            // Push stream-wise data along with total program expense
+            $this->data[] = [
+                'stream_name' => $stream->stream_name,
+                'total_program_expense' => number_format_indian($totalProgramExpense), // Total expense for the program
+                'categories' => array_values($categoriesArray) // Convert to a standard array
+            ];
         }
 
-        foreach ($stream->travelExpenses as $travel) {
-            if ($travel->total_travel > 0) {
-            $category = Category::with('children')->find($travel->category_id);
-    
-            if ($category) {
-            $parentCategoryName = $category->parent
-            ? $category->parent->category_name
-            : $category->category_name;
-    
-            if (!isset($categoriesArray[$parentCategoryName])) {
-            $categoriesArray[$parentCategoryName] = [
-            'category_name' => $parentCategoryName,
-            'total_expense' => 0,
-            'dop' => null, // or $travel->updated_at if you want
-            ];
-            }
-    
-            $categoriesArray[$parentCategoryName]['total_expense'] += $travel->total_travel;
-            $totalProgramExpense += $travel->total_travel;
-            }
-            }
-            }
-    
-        // Push stream-wise data along with total program expense
-        $this->data[] = [
-            'stream_name' => $stream->stream_name,
-            'total_program_expense' => number_format_indian($totalProgramExpense), // Total expense for the program
-            'categories' => array_values($categoriesArray) // Convert to a standard array
-        ];
+        // session(['program_data' => $this->data]);
+        session([
+            'program_data' => $this->data
+        ]);
+
+        // Return JSON response for DataTables
+        return response()->json([
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => $filteredCount,
+            'recordsFiltered' => $filteredCount,
+            'data' => $this->data,
+        ]);
     }
-
-    // session(['program_data' => $this->data]);
-    session([
-        'program_data' => $this->data
-    ]);
-
-    // Return JSON response for DataTables
-    return response()->json([
-        'draw' => intval($request->input('draw')),
-        'recordsTotal' => $filteredCount,
-        'recordsFiltered' => $filteredCount,
-        'data' =>  $this->data,
-    ]);
-}
 
 
     public function exportprogrammedata()
@@ -691,5 +694,124 @@ if ($searchValue) {
         return Excel::download(new ProgramDataExport($expProgramData, $startDate, $endDate), 'BUET_PRGM_Report.xlsx');
 
     }
+
+    public function staffreport()
+    {
+        $staff = Staff::orderBy('name')->get();
+        $financialYears = FinancialYear::orderByDesc('is_current')
+            ->orderByDesc('year')
+            ->get();
+
+        return view('reports.staff_report', compact('staff', 'financialYears'));
+    }
+
+    public function staffdata(Request $request)
+    {
+        $searchValue = $request->input('search.value');
+        $staffId = $request->input('staff');
+        $start = $request->input('start', 0);
+        $length = $request->input('length', 10);
+        $financial_year = $request->input('financial_year');
+
+
+        session()->forget(['staff_data']);
+
+        $query = Staff::with([
+            'travelexpense' => function ($q) use ($financial_year) {
+                $q->where('status', '!=', 'advance_requested');
+
+                if ($financial_year) {
+                    $q->where('financial_year_id', $financial_year);
+                }
+
+                $q->with(['sourceCity', 'destinationCity', 'details']);
+            }
+        ])
+            ->whereHas('travelexpense', function ($q) use ($financial_year) {
+                $q->where('status', '!=', 'advance_requested');
+
+                if ($financial_year) {
+                    $q->where('financial_year_id', $financial_year);
+                }
+            })
+            ->orderBy('id');
+
+
+        if ($staffId) {
+            $query->where('id', $staffId);
+        }
+
+        if ($searchValue) {
+            $query->where('name', 'LIKE', "%$searchValue%");
+        }
+
+        $totalCount = $query->count();
+        $staffList = $query->skip($start)->take($length)->get();
+
+        $data = [];
+        $serial = $start + 1;
+
+        foreach ($staffList as $staff) {
+            $tripCount = $staff->travelexpense->count();
+            $first = true;
+
+            foreach ($staff->travelexpense as $expense) {
+                $expenseAmount = $expense->amount ?? 0;
+                $advanceAmount = $expense->advance_amount ?? 0;
+                $finalamount = $expense->final_amount ?? 0;
+                $paidamount = abs($advanceAmount + $finalamount);
+                $balance = abs($expenseAmount - $paidamount);
+                $total = $expenseAmount + $advanceAmount;
+
+
+                $tripName = $expense->title ?? 'Trip';
+                $source = $expense->sourceCity->name ?? 'N/A';
+                $destination = $expense->destinationCity->name ?? 'N/A';
+
+                $tripLabel = $tripName . " ({$source} → {$destination})";
+
+                $fromDate = \Carbon\Carbon::parse($expense->from_date);
+                $toDate = \Carbon\Carbon::parse($expense->to_date);
+
+                $dateperiod = $fromDate->format('d-m-y') . ' - ' . $toDate->format('d-m-y');
+
+                $days = $fromDate->diffInDays($toDate) + 1; // +1 to include both from and to
+
+                $dateperiod .= " ({$days} days)";
+
+                $data[] = [
+                    'serial' => $first ? $serial : '',
+                    'name' => $first ? $staff->name : '',
+                    'trip' => $tripLabel ?? '',
+                    'dateperiod' => $dateperiod ?? '',
+                    'expense' => number_format($expenseAmount),
+                    'paid' => number_format($paidamount),
+                    'balance' => number_format($balance),
+                    //'total' => number_format($total),
+                    'rowspan' => $first ? $tripCount : 0, // For JS rowspan logic
+                ];
+
+                $first = false;
+            }
+
+            $serial++;
+        }
+
+        // Save session data for future export
+        session([
+            'staff_data' => $staffList
+        ]);
+
+        return response()->json([
+            'draw' => intval($request->input('draw')),
+            'recordsTotal' => $totalCount,
+            'recordsFiltered' => $totalCount,
+            'data' => $data
+        ]);
+    }
+
+
+
+
 
 }

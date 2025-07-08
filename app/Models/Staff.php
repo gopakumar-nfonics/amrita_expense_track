@@ -27,4 +27,9 @@ class Staff extends Model
     {
         return $this->belongsTo(Designation::class, 'designation_id');
     }
+
+    public function travelexpense()
+    {
+        return $this->hasMany(TravelExpense::class, 'staff_id');
+    }
 }

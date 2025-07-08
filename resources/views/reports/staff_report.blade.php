@@ -144,23 +144,33 @@ $(document).ready(function() {
             },
             columns: [{
                     data: 'serial',
-                    title: "#"
+                    title: "#",
+                    className: "sorting_disabled",
+                    orderable: false,
                 },
                 {
                     data: 'name',
-                    title: "Staff"
+                    title: "Staff",
+                    className: "sorting_disabled",
+                    orderable: false,
                 },
                 {
                     data: 'trip',
-                    title: "Trip Details"
+                    title: "Trip Details",
+                    className: "sorting_disabled",
+                    orderable: false,
                 },
                 {
                     data: 'dateperiod',
-                    title: "Date Period"
+                    title: "Date Period",
+                    className: "sorting_disabled",
+                    orderable: false,
                 },
                 {
                     data: 'expense',
                     title: "Expense",
+                    className: "text-end sorting_disabled",
+                    orderable: false,
                     render: function(data, type, row) {
                         return `<p class="sub-expense-disp fs-7 fw-bold ls-n1 text-end">&#x20b9;<span class="total-cost-span">${data}</span></p>`;
                     }
@@ -168,6 +178,8 @@ $(document).ready(function() {
                 {
                     data: 'paid',
                     title: "Paid",
+                    className: "text-end sorting_disabled",
+                    orderable: false,
                     render: function(data, type, row) {
                         return `<p class="sub-expense-disp fs-7 fw-bold ls-n1 text-end">&#x20b9;<span class="total-cost-span">${data}</span></p>`;
                     }
@@ -175,6 +187,8 @@ $(document).ready(function() {
                 {
                     data: 'balance',
                     title: "Balance",
+                    className: "text-end sorting_disabled",
+                    orderable: false,
                     render: function(data, type, row) {
                         return `<p class="sub-expense-disp fs-7 fw-bold ls-n1 text-end">&#x20b9;<span class="total-cost-span">${data}</span></p>`;
                     },

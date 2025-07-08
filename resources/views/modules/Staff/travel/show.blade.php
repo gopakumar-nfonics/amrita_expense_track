@@ -10,7 +10,7 @@
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        View Travel Expense
+                        Travel Expense Details
                     </h1>
                 </div>
                 <!--end::Page title-->
@@ -54,8 +54,28 @@
                                 <!--begin::Text-->
                                 <div class="d-flex  justify-content-between text-sm-start fw-semibold fs-7 text-muted">
                                     <div class="d-flex flex-column">
-                                        <span class="d-block w-100 fs-1 ms-sm-auto mb-2 color-blue txt-uppercase">
+                                        <span class="d-block w-100 fs-3 ms-sm-auto color-blue txt-uppercase">
                                             {{ ucfirst($expense->title) }}
+                                        </span>
+                                        <span>
+                                            @php
+                                                $formattedStatus = ucwords(str_replace('_', ' ', $expense->status));
+
+                                                $badgeClass = in_array($expense->status, [
+                                                    'advance_requested',
+                                                    'expense_submitted',
+                                                ])
+                                                    ? 'badge-light-info'
+                                                    : (in_array($expense->status, [
+                                                        'advance_received',
+                                                        'expense_settled',
+                                                    ])
+                                                        ? 'badge-light-success'
+                                                        : 'badge-light-secondary'); // fallback for unknown statuses
+                                            @endphp
+                                            <span class="badge {{ $badgeClass }} fs-8 mb-0">
+                                                {{ $formattedStatus }}
+                                            </span>
                                         </span>
                                         <span class="fs-5 text-gray-900">
                                             {{ $expense->staff->name }} | {{ $expense->staff->email }}

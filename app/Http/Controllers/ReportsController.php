@@ -786,7 +786,7 @@ class ReportsController extends Controller
                 $fromDate = \Carbon\Carbon::parse($expense->from_date);
                 $toDate = \Carbon\Carbon::parse($expense->to_date);
 
-                $dateperiod = $fromDate->format('d-m-y') . ' - ' . $toDate->format('d-m-y');
+                $dateperiod = $fromDate->format('d-m-y') . ' to ' . $toDate->format('d-m-y');
 
                 $days = $fromDate->diffInDays($toDate) + 1; // +1 to include both from and to
 

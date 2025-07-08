@@ -46,7 +46,7 @@ class StaffExport implements FromArray, WithEvents
                 $fromDate = \Carbon\Carbon::parse($expense->from_date);
                 $toDate = \Carbon\Carbon::parse($expense->to_date);
                 $days = $fromDate->diffInDays($toDate) + 1;
-                $datePeriod = $fromDate->format('d-m-y') . ' - ' . $toDate->format('d-m-y') . " ({$days} days)";
+                $datePeriod = $fromDate->format('d-m-y') . ' to ' . $toDate->format('d-m-y') . " ({$days} days)";
 
                 $expenseAmount = $expense->amount ?? 0;
                 $advanceAmount = $expense->advance_amount ?? 0;
@@ -120,7 +120,7 @@ class StaffExport implements FromArray, WithEvents
                         $fromDate = \Carbon\Carbon::parse($expense->from_date);
                         $toDate = \Carbon\Carbon::parse($expense->to_date);
                         $days = $fromDate->diffInDays($toDate) + 1;
-                        $period = $fromDate->format('d-m-y') . ' - ' . $toDate->format('d-m-y') . " ({$days} days)";
+                        $period = $fromDate->format('d-m-y') . ' to ' . $toDate->format('d-m-y') . " ({$days} days)";
 
                         $trip = ($expense->title ?? ' ') . ' (' .
                             ($expense->sourceCity->name ?? 'N/A') . ' → ' .

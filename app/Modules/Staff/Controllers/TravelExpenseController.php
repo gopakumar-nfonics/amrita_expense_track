@@ -17,6 +17,7 @@ use Numbers_Words;
 use App\Modules\Staff\Models\Staff;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AdvanceRequestMail;
+use App\Mail\ExpenseSubmitMail;
 
 class TravelExpenseController extends Controller
 {
@@ -239,6 +240,17 @@ class TravelExpenseController extends Controller
                 'file_path' => $file_path ?? null,
             ]);
         }
+
+        $staff = Staff::where('id', $travelExpense->staff_id)->first();
+        $expenseDetails = [
+            'name' => $staff->name,
+            'expense_title' => $travelExpense->title,
+        ];
+
+        $adminsubject ="Expense Submitted";
+        $adminemail = env('CONTACT_MAIL');
+        Mail::to($adminemail)->send(new ExpenseSubmitMail($expenseDetails,$adminsubject));
+
 
         return redirect()->route('travel.index')->with('success', 'Travel expense submitted successfully.');
     }

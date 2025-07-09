@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use App\Modules\Staff\Models\Staff;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ApproveAdvanceMail;
+use App\Mail\ExpenseSettleMail;
 
 class travelexpense extends Controller
 {
@@ -178,6 +179,15 @@ class travelexpense extends Controller
             $expense->settlement_date = Carbon::createFromFormat('d-M-Y', $request->settlement_date)->format('Y-m-d');
         }
         $expense->save();
+
+        $staff = Staff::where('id', $expense->staff_id)->first();
+        $settlementDetails = [
+            'name' => $staff->name,
+            'expense_title' => $expense->title,
+        ];
+
+        $subject = $expense->title." Expense Settled"; 
+        Mail::to($staff->email)->send(new ExpenseSettleMail($settlementDetails, $subject));
 
         return response()->json([
             'message' => 'Expense Settled Successfully.',

@@ -14,6 +14,9 @@ use App\Models\FinancialYear;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Numbers_Words;
+use App\Modules\Staff\Models\Staff;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AdvanceRequestMail;
 
 class TravelExpenseController extends Controller
 {
@@ -75,6 +78,8 @@ class TravelExpenseController extends Controller
             'advance_amount' => 'required',
         ]);
 
+        $staff_id = Auth::guard('staff')->id();
+        $staff = Staff::where('id', $staff_id)->first();
         $currentYearId = FinancialYear::where('is_current', 1)->value('id') 
             ?? FinancialYear::orderByDesc('year')->value('id');
 
@@ -112,6 +117,15 @@ class TravelExpenseController extends Controller
             'expenditure' => '₹' . number_format($request->accommodation_amount / max($days, 1)) . ' per day for ' . $days . ' ' . \Str::plural('day', $days),
             'amount' => $request->accommodation_amount,
         ]);
+
+        $requestDetails = [
+            'name' => $staff->name,
+            'expense_title' => $travelExpense->title,
+        ];
+
+        $adminsubject ="Staff Advance Request - Review and Approval Required";
+        $adminemail = env('CONTACT_MAIL');
+        Mail::to($adminemail)->send(new AdvanceRequestMail($requestDetails,$adminsubject));
 
         return redirect()->route('travel.index')->with('success', 'Advance request submitted successfully.');
     }

@@ -11,6 +11,9 @@ use App\Models\FinancialYear;
 use Illuminate\Support\Facades\Crypt;
 use Numbers_Words;
 use Carbon\Carbon;
+use App\Modules\Staff\Models\Staff;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ApproveAdvanceMail;
 
 class travelexpense extends Controller
 {
@@ -150,6 +153,16 @@ class travelexpense extends Controller
             'status'             => 'advance_received',
             'advancepayment_date'=> $advanceDate,
         ]);
+
+        $staff = Staff::where('id', $expense->staff_id)->first();
+
+        $advanceDetails = [
+            'name' => $staff->name,
+            'expense_title' => $expense->title,
+        ];
+
+        $subject = $expense->title." Advance Approved"; 
+        Mail::to($staff->email)->send(new ApproveAdvanceMail($advanceDetails, $subject));
 
         return redirect()->back()->with('success', 'Advance request approved successfully.');
     }

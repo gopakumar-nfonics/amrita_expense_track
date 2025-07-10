@@ -52,11 +52,11 @@
                                         <p
                                             style="margin-bottom:20px; color:#181C32; font-weight:700;text-align: left;margin-left: 10px;">
                                             Dear Admin,</p>
-                                        <p style="margin-bottom:20px; color:#777;margin-top:20px;">
+                                        <p style="margin:20px; color:#777;">
                                             {{ $details['name'] }} has submitted a travel expense for the trip
                                             {{ $details['expense_title'] }}. The expense request has been received and
                                             is now available for your review.</p>
-                                        <p style="margin-bottom:20px; color:#777">Kindly review the submitted expense
+                                        <p style="margin:0px 20px; color:#777">Kindly review the submitted expense
                                             details and proceed with settlement.</p>
 
                                     </div>
@@ -83,7 +83,7 @@
                         <tr>
                             <td align="center" valign="center"
                                 style="font-size: 13px; padding:0 15px; text-align:center; font-weight: 500; color: #93949b;font-family:Arial,Helvetica,sans-serif;  border-top:1px solid #ccc;margin-top:20px">
-                                <p>&copy; 2024. Amrita Vishwa Vidyapeetham
+                                <p>&copy; {{ date('Y') }}. Amrita Vishwa Vidyapeetham
                                 </p>
                             </td>
                         </tr>

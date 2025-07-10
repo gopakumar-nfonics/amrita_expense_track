@@ -83,7 +83,7 @@
                         <tr>
                             <td align="center" valign="center"
                                 style="font-size: 13px; padding:0 15px; text-align:center; font-weight: 500; color: #93949b;font-family:Arial,Helvetica,sans-serif;  border-top:1px solid #ccc;margin-top:20px">
-                                <p>&copy; 2024. Amrita Vishwa Vidyapeetham
+                                <p>&copy; {{ date('Y') }}. Amrita Vishwa Vidyapeetham
                                 </p>
                             </td>
                         </tr>

@@ -52,11 +52,11 @@
                                         <p
                                             style="margin-bottom:20px; color:#181C32; font-weight:700;text-align: left;margin-left: 10px;">
                                             Dear Admin,</p>
-                                        <p style="margin-bottom:20px; color:#777;margin-top:20px;">
+                                        <p style="margin:20px; color:#777;">
                                             {{ $details['name'] }} has submitted a travel advance request for the trip
                                             {{ $details['expense_title'] }}. The request has been received and is now
                                             available for your review.</p>
-                                        <p style="margin-bottom:20px; color:#777">
+                                        <p style="margin: 0px 20px; color:#777">
                                             Please review the details, and if everything is in order, proceed with the
                                             approval process.
                                         </p>

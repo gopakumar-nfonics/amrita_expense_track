@@ -296,8 +296,12 @@
                                             <div class="d-flex justify-content-end">
                                                 <button type="submit" class="btn btn-sm btn-success me-5"
                                                     id="approveExpenseBtn" data-expense-id="{{ $expense->id }}">
-                                                    <i class="fa-solid fa-check"></i>
-                                                    Approve Travel Expense
+                                                    {{-- <i class="fa-solid fa-check"></i> --}}
+                                                    Approve
+                                                </button>
+                                                <button type="submit" class="btn btn-sm btn-danger me-5"
+                                                    id="rejectExpense" data-expense-id="{{ $expense->id }}">
+                                                    Reject
                                                 </button>
                                             </div>
                                         @endif
@@ -385,6 +389,68 @@
             flatpickr("#start_date", {
                 defaultDate: today, // Sets default to today
                 dateFormat: "d-M-Y", // Desired date format
+            });
+        });
+    </script>
+
+    <script>
+        $('#rejectExpense').on('click', function() {
+            const expenseId = $(this).data('expense-id');
+
+            Swal.fire({
+                title: 'Reject Expense',
+                input: 'textarea',
+                inputLabel: 'Reason for rejection',
+                inputPlaceholder: 'Enter reason here...',
+                inputAttributes: {
+                    'aria-label': 'Type your reason here'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Reject',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    confirmButton: 'btn btn-danger',
+                    cancelButton: 'btn'
+                },
+                icon: 'warning',
+                preConfirm: (reason) => {
+                    if (!reason) {
+                        Swal.showValidationMessage('Rejection reason is required');
+                    }
+                    return reason;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('travel.reject') }}",
+                        method: "POST",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            expense_id: expenseId,
+                            rejection_reason: result.value
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Rejected',
+                                text: response.message,
+                                timer: 1500,
+                                showConfirmButton: false
+                            });
+
+                            setTimeout(() => {
+                                window.location.href = response.redirect;
+                            }, 1500);
+                        },
+                        error: function() {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Something went wrong!'
+                            });
+                        }
+                    });
+                }
             });
         });
     </script>

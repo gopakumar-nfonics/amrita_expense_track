@@ -205,4 +205,26 @@ class travelexpense extends Controller
         return response()->json(['success' => 'Advance Request has been deleted!']);
         
     }
+
+    public function reject_expense(Request $request)
+    {
+        $request->validate([
+            'rejection_reason' => 'required|string',
+        ]);
+
+        $expense = TravelExpenseModel::findOrFail($request->expense_id);
+
+        $expense->status = 'rejected';
+        $expense->rejection_status = true;
+        $expense->rejection_reason = $request->rejection_reason;
+        
+        $expense->save();
+
+        
+
+        return response()->json([
+            'message' => 'Expense Rejected.',
+            'redirect' => route('travelexpense.index')
+        ]);
+    }
 }

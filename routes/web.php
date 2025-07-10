@@ -147,3 +147,4 @@ Route::resource('travelexpense', \App\Http\Controllers\resource\travelexpense::c
 Route::post('/travel/approve', [\App\Http\Controllers\resource\travelexpense::class, 'approve_advance'])->name('travel.approveadvance');
 Route::post('/travel/settle', [\App\Http\Controllers\resource\travelexpense::class, 'settle_expense'])->name('travel.settle');
 Route::post('/travel/delete', [\App\Http\Controllers\resource\travelexpense::class, 'deleteExpense'])->name('travel.deleterequest');
+Route::post('/travel/reject', [\App\Http\Controllers\resource\travelexpense::class, 'reject_expense'])->name('travel.reject');

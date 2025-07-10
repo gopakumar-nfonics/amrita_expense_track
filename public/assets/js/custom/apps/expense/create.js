@@ -26,6 +26,10 @@ var KTAppTravelExpense = (function () {
     var destCity = formElement.querySelector('select[name="destination_city"]');
     var travelModeSelect = row.querySelector('select[name="travel_modes[]"]');
   
+    // Save the current value (used in edit mode)
+    var currentValue = directionSelect?.value || '';
+    var isEditMode = !!currentValue;
+  
     // If the additional expense input doesn't exist, create it (hidden by default)
     var additionalInput = row.querySelector('input[name="additional_expense_desc[]"]');
     if (!additionalInput) {
@@ -63,6 +67,24 @@ var KTAppTravelExpense = (function () {
     // Always add Additional Expense as an option
     directionSelect.innerHTML += `<option value="Additional Expense">Additional Expense</option>`;
   
+    // NEW: Preserve existing selected value if it's not one of the generated options
+    if (
+      isEditMode &&
+      currentValue &&
+      !Array.from(directionSelect.options).some(opt => opt.value === currentValue)
+    ) {
+      const opt = document.createElement('option');
+      opt.value = currentValue;
+      opt.textContent = currentValue;
+      opt.selected = true;
+      directionSelect.insertBefore(opt, directionSelect.firstChild); // Show at top
+    }
+  
+    // NEW: Re-select current value if it was lost after rebuilding the options
+    if (isEditMode) {
+      directionSelect.value = currentValue;
+    }
+  
     // Bind change event to toggle travel mode & additional expense input
     directionSelect.addEventListener('change', function () {
       if (directionSelect.value === 'Additional Expense') {
@@ -78,9 +100,10 @@ var KTAppTravelExpense = (function () {
         additionalInput.style.display = 'none';
         additionalInput.required = false;
       }
-      
     });
   
+    // Trigger the visibility toggling logic once at init
+    directionSelect.dispatchEvent(new Event('change'));
   };
 
   var bindFileInputChange = function (row) {
@@ -143,6 +166,12 @@ var KTAppTravelExpense = (function () {
           fileInput.value = ''; // Clear file
         }
 
+        // Reset files
+        const viewExistingLink = newRow.querySelector('a[href*="storage"]');
+        if (viewExistingLink) {
+          viewExistingLink.closest('div').remove(); // remove the container div
+        }
+
         // Reset file name display
         const fileNameDisplay = newRow.querySelector('.file-name');
         if (fileNameDisplay) {
@@ -169,20 +198,21 @@ var KTAppTravelExpense = (function () {
       });
 
       // Initial row handlers
-      var firstRow = formElement.querySelector('[data-kt-element="item"]');
-      updateDirectionOptions(firstRow);
-
-      firstRow.querySelector('[data-kt-element="remove-item"]').addEventListener('click', function () {
-        firstRow.remove();
-        calculateTotals();
+      formElement.querySelectorAll('[data-kt-element="item"]').forEach(function (row) {
+        updateDirectionOptions(row);
+      
+        row.querySelector('[data-kt-element="remove-item"]').addEventListener('click', function () {
+          row.remove();
+          calculateTotals();
+        });
+      
+        row.querySelector('input[name="fare[]"]').addEventListener('input', function () {
+          calculateTotals();
+        });
+      
+        bindFileInputChange(row);
       });
-
-      firstRow.querySelector('input[name="fare[]"]').addEventListener('input', function () {
-        calculateTotals();
-      });
-
-      bindFileInputChange(firstRow);
-      calculateTotals();
+      
     }
   };
 })();

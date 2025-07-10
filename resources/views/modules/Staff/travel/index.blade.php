@@ -424,7 +424,7 @@
                                                     data-kt-menu="true">
                                                     @if ($expense->status == 'expense_submitted')
                                                         <div class="menu-item px-3">
-                                                            <a href="{{ route('travel.submit', $expense->id) }}"
+                                                            <a href="{{ route('travel.edit', $expense->id) }}"
                                                                 class="menu-link px-3"
                                                                 data-kt-customer-table-filter="delete_row">
                                                                 Edit

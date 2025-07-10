@@ -177,6 +177,29 @@ class TravelExpenseController extends Controller
         return view('modules.Staff.travel.submit', compact('expense', 'cities', 'travelModes', 'allowance', 'daAmount', 'accAmount'));
     }
 
+    public function edit($id)
+    {
+        $expense = TravelExpense::with('details')->findOrFail($id);
+        $cities = City::orderBy('name')->get();
+        $staff = Auth::user();
+
+        $travelModes = [];
+        if ($staff && $staff->designation) {
+            $travelModes = $staff->designation->travelModes()->with('parent')->orderBy('name')->get();
+            $allowance = DailyAllowanceAccommodation::where('designation_id', $staff->designation_id)
+                                                    ->first();
+        }
+
+        $daDetail = $expense->details->firstWhere('head', 'DA');
+        $accDetail = $expense->details->firstWhere('head', 'ACC');
+    
+        $daAmount = $daDetail?->amount ?? 0;
+        $accAmount = $accDetail?->amount ?? 0;
+        $total = $expense->amount;
+
+        return view('modules.Staff.travel.edit', compact('expense', 'cities', 'travelModes', 'allowance', 'daAmount', 'accAmount', 'total'));
+    }
+
     public function expense_store(Request $request, $id)
     {
         $request->validate([

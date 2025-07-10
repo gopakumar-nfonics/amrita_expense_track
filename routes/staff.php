@@ -19,6 +19,7 @@ Route::middleware(['web'])->prefix('staff')->group(function () {
         Route::get('/get-allowance', [TravelExpenseController::class, 'getAllowance'])->name('travel.getAllowance');
         Route::post('/travel-expense/delete', [TravelExpenseController::class, 'deleteExpense'])->name('travel.delete');
         Route::get('travel-expense/{id}', [TravelExpenseController::class, 'show'])->name('travel.show');
+        Route::get('travel-expense/edit/{id}', [TravelExpenseController::class, 'edit'])->name('travel.edit');
     });
 
    

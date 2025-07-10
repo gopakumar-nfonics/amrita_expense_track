@@ -223,7 +223,7 @@ class travelexpense extends Controller
         
 
         return response()->json([
-            'message' => 'Expense Rejected.',
+            'message' => 'Expense settlement request rejected..',
             'redirect' => route('travelexpense.index')
         ]);
     }

@@ -1,5 +1,22 @@
 @extends('layouts.admin')
 
+<style>
+    .swal2-textarea {
+    height: 6.75em;
+    padding: .75em;
+    margin: 10px 0px !important;
+}
+.swal2-popup .swal2-title {
+     margin-bottom: 30px
+}
+.swal2-popup .swal2-input-label {
+    text-align: left;
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+    </style>
+
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
         <!--begin::Toolbar-->
@@ -400,10 +417,10 @@
             Swal.fire({
                 title: 'Reject Expense',
                 input: 'textarea',
-                inputLabel: 'Reason for rejection',
-                inputPlaceholder: 'Enter reason here...',
+                inputLabel: 'Rejection Comments',
+                inputPlaceholder: 'Enter comments here...',
                 inputAttributes: {
-                    'aria-label': 'Type your reason here'
+                    'aria-label': 'Type your comments here'
                 },
                 showCancelButton: true,
                 confirmButtonText: 'Reject',
@@ -412,10 +429,10 @@
                     confirmButton: 'btn btn-danger',
                     cancelButton: 'btn'
                 },
-                icon: 'warning',
+       
                 preConfirm: (reason) => {
                     if (!reason) {
-                        Swal.showValidationMessage('Rejection reason is required');
+                        Swal.showValidationMessage('Rejection comments is required');
                     }
                     return reason;
                 }

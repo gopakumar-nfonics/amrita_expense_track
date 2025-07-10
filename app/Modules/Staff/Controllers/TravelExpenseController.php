@@ -190,10 +190,33 @@ class TravelExpenseController extends Controller
             'file.max' => 'The file size must not exceed 20MB.',
         ]);
 
+
+        $travelExpense = TravelExpense::with('details')->findOrFail($id);
+
+        $from = Carbon::parse($request->from_date);
+        $to = Carbon::parse($request->to_date);
+        $days = $from->diffInDays($to); // full days only
+
+        $travelExpense->details()->delete();
+
+        // Insert updated DA
+        TravelExpenseDetail::create([
+            'travel_expense_id' => $travelExpense->id,
+            'head' => 'DA',
+            'expenditure' => '₹' . number_format($request->allowance_amount / max($days, 1)) . ' per day for ' . $days . ' ' . \Str::plural('day', $days),
+            'amount' => $request->allowance_amount,
+        ]);
+
+        // Insert updated ACC
+        TravelExpenseDetail::create([
+            'travel_expense_id' => $travelExpense->id,
+            'head' => 'ACC',
+            'expenditure' => '₹' . number_format($request->accommodation_amount / max($days, 1)) . ' per day for ' . $days . ' ' . \Str::plural('day', $days),
+            'amount' => $request->accommodation_amount,
+        ]);
+
         // Calculate total fare
         $subTotal = array_sum($request->fare);
-
-        $travelExpense = TravelExpense::findOrFail($id);
   
         $travelExpense->update([
             'amount' => $subTotal,

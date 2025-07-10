@@ -298,7 +298,9 @@
                                                                         'expense_settled',
                                                                     ])
                                                                         ? 'badge-light-success'
-                                                                        : 'badge-light-secondary'); // fallback for unknown statuses
+                                                                        : ($expense->status === 'rejected'
+                                                                            ? 'badge-light-danger'
+                                                                            : 'badge-light-secondary')); // fallback for unknown statuses
                                                             @endphp
 
 

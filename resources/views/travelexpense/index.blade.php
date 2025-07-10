@@ -85,9 +85,10 @@
                                                                         'expense_settled',
                                                                     ])
                                                                         ? 'badge-light-success'
-                                                                        : 'badge-light-secondary'); // fallback for unknown statuses
+                                                                        : ($expense->status === 'rejected'
+                                                                            ? 'badge-light-danger'
+                                                                            : 'badge-light-secondary')); // fallback for unknown statuses
                                                             @endphp
-
 
                                                         </div>
                                                     </div>
@@ -113,6 +114,14 @@
                                                 <span class="badge {{ $badgeClass }} fs-8">
                                                     {{ $formattedStatus }}
                                                 </span>
+                                                @if ($expense->status === 'rejected')
+                                                    <span class="badge badge-light-info fs-8 rejected-span"
+                                                        title="View Comments" data-bs-toggle="modal"
+                                                        data-bs-target="#rejectionReasonModal"
+                                                        data-reason="{{ $expense->rejection_reason }}">
+                                                        <i class="fa-regular fa-comments color-blue fs-8 me-2"></i>
+                                                    </span>
+                                                @endif
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center">
@@ -408,6 +417,25 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Rejection Reason Modal -->
+                        <div class="modal fade" id="rejectionReasonModal" tabindex="-1"
+                            aria-labelledby="rejectionReasonModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered mw-650px">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="rejectionReasonModalLabel">
+                                            Rejection Reason
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close">X</button>
+                                    </div>
+                                    <div class="modal-body" id="rejectionReasonContent">
+                                        <!-- Reason will be injected here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
 
 
                     </div>
@@ -603,5 +631,16 @@
                     }
                 });
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('rejectionReasonModal');
+            modal.addEventListener('show.bs.modal', function(event) {
+                const trigger = event.relatedTarget;
+                const reason = trigger.getAttribute('data-reason');
+                document.getElementById('rejectionReasonContent').textContent = reason ||
+                    'No reason provided.';
+            });
+        });
     </script>
 @endsection

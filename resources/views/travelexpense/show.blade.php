@@ -2,20 +2,22 @@
 
 <style>
     .swal2-textarea {
-    height: 6.75em;
-    padding: .75em;
-    margin: 10px 0px !important;
-}
-.swal2-popup .swal2-title {
-     margin-bottom: 30px
-}
-.swal2-popup .swal2-input-label {
-    text-align: left;
-    display: block;
-    width: 100%;
-    margin-bottom: 0.5rem;
-}
-    </style>
+        height: 6.75em;
+        padding: .75em;
+        margin: 10px 0px !important;
+    }
+
+    .swal2-popup .swal2-title {
+        margin-bottom: 30px
+    }
+
+    .swal2-popup .swal2-input-label {
+        text-align: left;
+        display: block;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+</style>
 
 @section('content')
     <div class="d-flex flex-column flex-column-fluid">
@@ -84,7 +86,9 @@
                                                         'expense_settled',
                                                     ])
                                                         ? 'badge-light-success'
-                                                        : 'badge-light-secondary'); // fallback for unknown statuses
+                                                        : ($expense->status === 'rejected'
+                                                            ? 'badge-light-danger'
+                                                            : 'badge-light-secondary')); // fallback for unknown statuses
                                             @endphp
                                             <span class="badge {{ $badgeClass }} fs-8 mb-0">
                                                 {{ $formattedStatus }}
@@ -429,7 +433,7 @@
                     confirmButton: 'btn btn-danger',
                     cancelButton: 'btn'
                 },
-       
+
                 preConfirm: (reason) => {
                     if (!reason) {
                         Swal.showValidationMessage('Rejection comments is required');

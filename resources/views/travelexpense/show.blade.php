@@ -382,13 +382,13 @@
                                 icon: 'success',
                                 title: 'Success',
                                 text: response.message,
-                                timer: 1000,
+                                timer: 1500,
                                 showConfirmButton: false
                             });
 
                             setTimeout(() => {
                                 window.location.href = response.redirect;
-                            }, 1000);
+                            }, 1500);
                         },
                         error: function() {
                             document.getElementById('loaderOverlay').style.display = 'none';
@@ -459,13 +459,13 @@
                                 icon: 'success',
                                 title: 'Rejected',
                                 text: response.message,
-                                timer: 1000,
+                                timer: 1500,
                                 showConfirmButton: false
                             });
 
                             setTimeout(() => {
                                 window.location.href = response.redirect;
-                            }, 1000);
+                            }, 1500);
                         },
                         error: function() {
                             document.getElementById('loaderOverlay').style.display = 'none';

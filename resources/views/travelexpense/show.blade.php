@@ -366,7 +366,7 @@
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-
+                    document.getElementById('loaderOverlay').style.display = 'flex';
                     $.ajax({
                         url: "{{ route('travel.settle') }}",
                         method: "POST",
@@ -377,19 +377,21 @@
                             settlement_date: settlementDate
                         },
                         success: function(response) {
+                            document.getElementById('loaderOverlay').style.display = 'none';
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Success',
                                 text: response.message,
-                                timer: 1500,
+                                timer: 1000,
                                 showConfirmButton: false
                             });
 
                             setTimeout(() => {
                                 window.location.href = response.redirect;
-                            }, 1500);
+                            }, 1000);
                         },
                         error: function() {
+                            document.getElementById('loaderOverlay').style.display = 'none';
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error',
@@ -442,6 +444,7 @@
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
+                    document.getElementById('loaderOverlay').style.display = 'flex';
                     $.ajax({
                         url: "{{ route('travel.reject') }}",
                         method: "POST",
@@ -451,19 +454,21 @@
                             rejection_reason: result.value
                         },
                         success: function(response) {
+                            document.getElementById('loaderOverlay').style.display = 'none';
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Rejected',
                                 text: response.message,
-                                timer: 1500,
+                                timer: 1000,
                                 showConfirmButton: false
                             });
 
                             setTimeout(() => {
                                 window.location.href = response.redirect;
-                            }, 1500);
+                            }, 1000);
                         },
                         error: function() {
+                            document.getElementById('loaderOverlay').style.display = 'none';
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error',

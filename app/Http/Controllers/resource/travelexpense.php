@@ -30,8 +30,8 @@ class travelexpense extends Controller
             ->orderBy('id', 'desc')
             ->get();
         $programmes = Stream::orderBy('stream_name')->get();
-        $main_categories = Category::whereNull('parent_category')
-            ->with(['children', 'budgets'])
+        $main_categories = Category::where('category_name', 'Travel')
+            ->with(['budgets'])
             ->get();
 
         $years = FinancialYear::orderByDesc('is_current')
@@ -134,7 +134,7 @@ class travelexpense extends Controller
         $request->validate([
             'expense_id'  => 'required|exists:tbl_travel_expenses,id',
             'year'        => 'required',
-            // 'category'    => 'required',
+            'category'    => 'required',
             'programme'   => 'required',
             'associated'  => 'required',
             'approved_amount' => 'required',
@@ -148,7 +148,7 @@ class travelexpense extends Controller
 
         $expense->update([
             'financial_year_id'  => $request->year,
-            'category_id'        => 1,
+            'category_id'        => $request->category,
             'stream_id'          => $request->programme,
             'advance_amount'     => $request->approved_amount,
             'associated'         => $request->associated,

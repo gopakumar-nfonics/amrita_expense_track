@@ -302,7 +302,7 @@
                                                     </div>
                                                 </div>
 
-                                                {{-- <div class="mb-3">
+                                                <div class="mb-3">
                                                     <label class="form-label required">
                                                         Category
                                                     </label>
@@ -312,7 +312,7 @@
                                                         data-placeholder="Select Category" name="category" id="category"
                                                         onchange="getallocatedbudget()">
                                                         <option></option>
-                                                        @foreach ($main_categories as $main_category)
+                                                        {{-- @foreach ($main_categories as $main_category)
                                                             @if ($main_category->children->isNotEmpty())
                                                                 <optgroup label="{{ $main_category->category_name }}">
                                                                     @foreach ($main_category->children as $subcategory)
@@ -331,9 +331,15 @@
                                                                     {{ $main_category->category_name }}
                                                                 </option>
                                                             @endif
+                                                        @endforeach --}}
+                                                        @foreach ($main_categories as $main_category)
+                                                            <option value="{{ $main_category->id }}"
+                                                                {{ old('category') == $main_category->id ? 'selected' : '' }}>
+                                                                {{ $main_category->category_name }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
-                                                </div> --}}
+                                                </div>
 
                                                 <div class="mb-3">
                                                     <label class="form-label required">

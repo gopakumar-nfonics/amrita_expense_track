@@ -190,7 +190,6 @@ class TravelExpenseController extends Controller
     {
         $request->validate([
             'direction.*' => 'required',
-            'notes.*' => 'required',
             'fare.*' => 'required',
             'file.*' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png,webp|max:20480',
         ],
@@ -216,49 +215,8 @@ class TravelExpenseController extends Controller
             'status' => 'expense_submitted', // default
         ]);
 
-        // Save each travel fare row
-        // foreach ($request->direction as $index => $head) {
-        //     $expenditure = $request->travel_modes[$index] ?? null;
-
-        //     // If it's "Additional Expense", replace travel_mode with user-defined input
-        //     if ($head === 'Additional Expense' && isset($request->additional_expense_desc[$index])) {
-        //         $expenditure = $request->additional_expense_desc[$index];
-        //     } elseif ($expenditure) {
-                
-        //         $mode = TravelMode::with('parent')->find($expenditure);
-        //         $expenditure = $mode && $mode->parent
-        //             ? $mode->parent->name . ' - ' . $mode->name
-        //             : ($mode ? $mode->name : null);
-        //     }
-
-        //     $file_path = null;
-        //     if ($request->hasFile("file.$index")) {
-        //         $file = $request->file("file.$index");
-
-        //         $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        //         $extension = $file->getClientOriginalExtension();
-        //         $slug = \Str::of($originalName)
-        //                 ->lower()
-        //                 ->replace(['_', ' '], '-'); // Replace underscores/spaces with hyphens
-
-        //         $formattedName = ucwords((string) $slug, '-');
-        //         $filename = $formattedName . '_' . time() . '.' . $extension;
-
-        //         $path = $file->storeAs('expense_document', $filename, 'public');
-        //         $file_path = $path;
-        //     }
-
-        //     TravelExpenseDetail::create([
-        //         'travel_expense_id' => $travelExpense->id,
-        //         'head' => $head,
-        //         'expenditure' => $expenditure,
-        //         'amount' => $request->fare[$index],
-        //         'file_path' => $file_path ?? null,
-        //     ]);
-        // }
-
         foreach ($request->direction as $index => $categoryId) {
-            $notes = $request->notes[$index] ?? null;
+            $notes = isset($request->notes[$index]) ? $request->notes[$index] : null;
             $fare = $request->fare[$index] ?? 0;
     
             $file_path = null;
@@ -313,7 +271,7 @@ class TravelExpenseController extends Controller
     {
         $id = Crypt::decrypt($id);
         $staffId = auth()->guard('staff')->id();
-        $expense = TravelExpense::with(['staff','sourceCity', 'destinationCity', 'category', 'stream', 'details'])
+        $expense = TravelExpense::with(['staff','sourceCity', 'destinationCity', 'category', 'stream', 'details.category'])
         ->where('staff_id', $staffId)
         ->find($id);
 

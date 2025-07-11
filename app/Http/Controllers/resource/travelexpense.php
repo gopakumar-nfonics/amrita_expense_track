@@ -70,7 +70,7 @@ class travelexpense extends Controller
     public function show($id)
     {
         $id = Crypt::decrypt($id);
-        $expense = TravelExpenseModel::with(['staff', 'sourceCity', 'destinationCity', 'category', 'stream', 'details'])->find($id);
+        $expense = TravelExpenseModel::with(['staff', 'sourceCity', 'destinationCity', 'category', 'stream', 'details.category'])->find($id);
 
         $totalAmount = $expense->amount;
         $advanceAmount = $expense->advance_amount;

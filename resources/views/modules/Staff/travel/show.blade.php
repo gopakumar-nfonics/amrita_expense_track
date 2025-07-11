@@ -146,10 +146,10 @@
                                                                 Head
                                                             </th>
                                                             <th class="min-w-150px pb-2">
-                                                                Expenditure
+                                                                Amount
                                                             </th>
                                                             <th class="min-w-150px pb-2">
-                                                                Amount
+                                                                Notes
                                                             </th>
                                                             <th class="min-w-150px pb-2">
                                                                 Reference Document
@@ -163,16 +163,7 @@
                                                                     <div class="d-flex align-items-center">
                                                                         <div class="ms-0">
                                                                             <div class="fw-bold">
-                                                                                {{ $detail->head }}
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="d-flex align-items-center">
-                                                                        <div class="ms-0">
-                                                                            <div class="fw-bold">
-                                                                                {{ $detail->expenditure }}
+                                                                                {{ $detail->category->category_name }}
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -182,6 +173,15 @@
                                                                         <div class="ms-0">
                                                                             <div class="fw-bold">
                                                                                 {{ $detail->amount }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div class="ms-0">
+                                                                            <div class="fw-bold">
+                                                                                {{ $detail->expenditure ?? 'NA' }}
                                                                             </div>
                                                                         </div>
                                                                     </div>

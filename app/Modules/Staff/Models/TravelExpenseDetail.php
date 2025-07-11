@@ -18,4 +18,9 @@ class TravelExpenseDetail extends Model
         'amount',
         'file_path'
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(\App\Models\Category::class, 'travel_head');
+    }
 }

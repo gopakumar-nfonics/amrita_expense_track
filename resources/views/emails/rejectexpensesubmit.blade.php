@@ -52,14 +52,15 @@
                                         <p
                                             style="margin-bottom:20px; color:#181C32; font-weight:700;text-align: left;margin-left: 10px;">
                                             Dear {{ $details['name'] }},</p>
-                                        <p style="margin-bottom:20px; color:#777;margin-top:20px;">
+                                        <p style="margin:20px; color:#777;margin-top:20px;">
                                             We regret to inform you that your travel expense request for
                                             {{ $details['expense_title'] }} has been
                                             rejected.
-                                        <p style="margin-bottom:20px; color:#777">
-                                            Reason for Rejection: {{ $details['reason'] }}
+                                        <p style="margin:20px; color:#777">
+                                            Reason for Rejection: <span
+                                                style="font-weight:700; color:#181C32;">{{ $details['reason'] }}</span>
                                         </p>
-                                        <p style="margin-bottom:20px; color:#777;">
+                                        <p style="margin:0px 20px;; color:#777;">
                                             If you have any questions or would like to discuss this further, please feel
                                             free to reach out.
                                         </p>

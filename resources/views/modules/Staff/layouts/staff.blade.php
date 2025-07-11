@@ -256,166 +256,166 @@
                                 <!--end:Menu link-->
                             </div> --}}
 
-                            <div class="menu-item pt-5">
-                                <!--begin:Menu content-->
-                                <div class="menu-content">
-                                    <span class="menu-heading fw-bold text-uppercase fs-7">My Expenses</span>
+                                <div class="menu-item pt-5">
+                                    <!--begin:Menu content-->
+                                    <div class="menu-content">
+                                        <span class="menu-heading fw-bold text-uppercase fs-7">My Expenses</span>
+                                    </div>
+                                    <!--end:Menu content-->
                                 </div>
-                                <!--end:Menu content-->
-                            </div>
 
 
 
-                            <!--begin:Menu item-->
-                            <div data-kt-menu-trigger="click"
-                                class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['travel.index', 'travel.create'])) show @endif">
-                                <!--begin:Menu link-->
-                                <span class="menu-link">
-                                    <span class="menu-icon">
-                                        <i class="fa-solid fa-object-ungroup f-15 p-0"></i>
+                                <!--begin:Menu item-->
+                                <div data-kt-menu-trigger="click"
+                                    class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['travel.index', 'travel.create'])) show @endif">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+                                            <i class="fa-solid fa-object-ungroup f-15 p-0"></i>
+                                        </span>
+                                        <span class="menu-title">Expenses</span>
+                                        <span class="menu-arrow"></span>
                                     </span>
-                                    <span class="menu-title">Expenses</span>
-                                    <span class="menu-arrow"></span>
-                                </span>
-                                <!--end:Menu link-->
-                                <!--begin:Menu sub-->
-                                <div class="menu-sub menu-sub-accordion">
-                                    <!--begin:Menu item-->
-                                    <div class="menu-item">
-                                        <!--begin:Menu link-->
-                                        <a class="menu-link @if (in_array(Route::currentRouteName(), ['travel.index'])) active @endif"
-                                            href="{{ route('travel.index') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Expense List</span>
-                                        </a>
-                                        <!--end:Menu link-->
+                                    <!--end:Menu link-->
+                                    <!--begin:Menu sub-->
+                                    <div class="menu-sub menu-sub-accordion">
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
+                                            <a class="menu-link @if (in_array(Route::currentRouteName(), ['travel.index'])) active @endif"
+                                                href="{{ route('travel.index') }}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Expense List</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
+                                            <a class="menu-link  @if (in_array(Route::currentRouteName(), ['travel.create'])) active @endif"
+                                                href="{{ route('travel.create') }}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Request Advance</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
                                     </div>
-                                    <!--end:Menu item-->
-                                    <div class="menu-item">
-                                        <!--begin:Menu link-->
-                                        <a class="menu-link  @if (in_array(Route::currentRouteName(), ['travel.create'])) active @endif"
-                                            href="{{ route('travel.create') }}">
-                                            <span class="menu-bullet">
-                                                <span class="bullet bullet-dot"></span>
-                                            </span>
-                                            <span class="menu-title">Request Advance</span>
-                                        </a>
-                                        <!--end:Menu link-->
-                                    </div>
+                                    <!--end:Menu sub-->
                                 </div>
-                                <!--end:Menu sub-->
+
+                                <!--end:Menu item-->
+
+
                             </div>
-
-                            <!--end:Menu item-->
-
-
+                            <!--end::Menu-->
                         </div>
-                        <!--end::Menu-->
+                        <!--end::Menu wrapper-->
                     </div>
-                    <!--end::Menu wrapper-->
+                    <!--end::sidebar menu-->
+                    <!--begin::Footer-->
+                    <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
+
+                        <span class="footer-label">{{ date('Y') }} © Amrita Vishwa Vidyapeetham</span>
+                        <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
+
+                        <!--end::Svg Icon-->
+                        </a>
+                    </div>
+                    <!--end::Footer-->
                 </div>
-                <!--end::sidebar menu-->
-                <!--begin::Footer-->
-                <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
+                <!--end::Sidebar-->
 
-                    <span class="footer-label">2024© Amrita Vishwa Vidyapeetham</span>
-                    <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
+                @yield('content')
 
-                    <!--end::Svg Icon-->
-                    </a>
-                </div>
-                <!--end::Footer-->
-            </div>
-            <!--end::Sidebar-->
+                <!--begin::Javascript-->
+                <script>
+                    var hostUrl = "assets/";
+                </script>
+                <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+                <script src="{{ url('/') }}/assets/plugins/global/plugins.bundle.js"></script>
+                <script src="{{ url('/') }}/assets/js/scripts.bundle.js"></script>
+                <!--end::Global Javascript Bundle-->
+                <!--begin::Vendors Javascript(used for this page only)-->
+                <script src="{{ url('/') }}/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+                <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+                <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+                <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+                <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
+                <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+                <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+                <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+                <script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
+                <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
+                <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
+                <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
+                <script src="{{ url('/') }}/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+                <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+                <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+                <!--end::Vendors Javascript-->
+                <!--begin::Custom Javascript(used for this page only)-->
+                <script src="{{ url('/') }}/assets/js/widgets.bundle.js"></script>
+                <script src="{{ url('/') }}/assets/js/custom/widgets.js"></script>
+                <script src="{{ url('/') }}/assets/js/custom/apps/chat/chat.js"></script>
+                <script src="{{ url('/') }}/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
+                <script src="{{ url('/') }}/assets/js/custom/utilities/modals/create-app.js"></script>
+                <script src="{{ url('/') }}/assets/js/custom/utilities/modals/new-target.js"></script>
+                <script src="{{ url('/') }}/assets/js/custom/utilities/modals/users-search.js"></script>
+                <script src="{{ url('/') }}/assets/js/alertify/alertify.min.js"></script>
+                <script src="{{ url('/') }}/assets/plugins/custom/timepicker/jquery.timepicker.min599c.js?v4.0.2"></script>
+                <script src="{{ url('/') }}/assets/plugins/custom/bootstrap-datepicker/bootstrap-datepicker.min599c.js?v4.0.2">
+                </script>
+                <script src="{{ url('/') }}/assets/js/custom/custom.js"></script>
+                <!--end::Custom Javascript-->
+                <!--end::Javascript-->
+                <script>
+                    $(document).ready(function() {
+                        @if (Session::has('success'))
+                            alertify.success(`{{ Session::get('success') }}`);
+                        @endif
 
-            @yield('content')
-
-            <!--begin::Javascript-->
-            <script>
-                var hostUrl = "assets/";
-            </script>
-            <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-            <script src="{{ url('/') }}/assets/plugins/global/plugins.bundle.js"></script>
-            <script src="{{ url('/') }}/assets/js/scripts.bundle.js"></script>
-            <!--end::Global Javascript Bundle-->
-            <!--begin::Vendors Javascript(used for this page only)-->
-            <script src="{{ url('/') }}/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
-            <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-            <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-            <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
-            <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
-            <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-            <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
-            <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
-            <script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
-            <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
-            <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
-            <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script>
-            <script src="{{ url('/') }}/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-            <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-            <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
-            <!--end::Vendors Javascript-->
-            <!--begin::Custom Javascript(used for this page only)-->
-            <script src="{{ url('/') }}/assets/js/widgets.bundle.js"></script>
-            <script src="{{ url('/') }}/assets/js/custom/widgets.js"></script>
-            <script src="{{ url('/') }}/assets/js/custom/apps/chat/chat.js"></script>
-            <script src="{{ url('/') }}/assets/js/custom/utilities/modals/upgrade-plan.js"></script>
-            <script src="{{ url('/') }}/assets/js/custom/utilities/modals/create-app.js"></script>
-            <script src="{{ url('/') }}/assets/js/custom/utilities/modals/new-target.js"></script>
-            <script src="{{ url('/') }}/assets/js/custom/utilities/modals/users-search.js"></script>
-            <script src="{{ url('/') }}/assets/js/alertify/alertify.min.js"></script>
-            <script src="{{ url('/') }}/assets/plugins/custom/timepicker/jquery.timepicker.min599c.js?v4.0.2"></script>
-            <script src="{{ url('/') }}/assets/plugins/custom/bootstrap-datepicker/bootstrap-datepicker.min599c.js?v4.0.2">
-            </script>
-            <script src="{{ url('/') }}/assets/js/custom/custom.js"></script>
-            <!--end::Custom Javascript-->
-            <!--end::Javascript-->
-            <script>
-                $(document).ready(function() {
-                    @if(Session::has('success'))
-                    alertify.success(`{{ Session::get('success') }}`);
-                    @endif
-
-                    @if(Session::has('error'))
-                    alertify.error(`{{ Session::get('error') }}`);
-                    @endif
+                        @if (Session::has('error'))
+                            alertify.error(`{{ Session::get('error') }}`);
+                        @endif
 
 
-                });
-            </script>
+                    });
+                </script>
 
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    // Get the sidebar toggle button
-                    const sidebarToggle = document.getElementById('kt_app_sidebar_toggle');
-                    const body = document.body;
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        // Get the sidebar toggle button
+                        const sidebarToggle = document.getElementById('kt_app_sidebar_toggle');
+                        const body = document.body;
 
-                    function isPaymentRequestPage() {
-                        // return window.location.href.includes('/payment/create');
-                        return 0;
-                    }
-
-                    function toggleSidebarMinimize() {
-                        if (isPaymentRequestPage()) {
-                            // Add the class to minimize the sidebar
-                            sidebarToggle.classList.add('active');
-                            // Add the data attribute to the body
-                            body.setAttribute('data-kt-app-sidebar-minimize', 'on');
-                        } else {
-                            // Remove the class to restore the sidebar
-                            sidebarToggle.classList.remove('active');
-                            // Remove the data attribute from the body
-                            body.removeAttribute('data-kt-app-sidebar-minimize');
+                        function isPaymentRequestPage() {
+                            // return window.location.href.includes('/payment/create');
+                            return 0;
                         }
-                    }
-                    toggleSidebarMinimize();
-                });
-            </script>
+
+                        function toggleSidebarMinimize() {
+                            if (isPaymentRequestPage()) {
+                                // Add the class to minimize the sidebar
+                                sidebarToggle.classList.add('active');
+                                // Add the data attribute to the body
+                                body.setAttribute('data-kt-app-sidebar-minimize', 'on');
+                            } else {
+                                // Remove the class to restore the sidebar
+                                sidebarToggle.classList.remove('active');
+                                // Remove the data attribute from the body
+                                body.removeAttribute('data-kt-app-sidebar-minimize');
+                            }
+                        }
+                        toggleSidebarMinimize();
+                    });
+                </script>
 
 
-            @yield('pageScripts')
+                @yield('pageScripts')
 </body>
 <!--end::Body-->
 

@@ -165,7 +165,7 @@
                                                     <span class="input-group-text">
                                                         &#8377;
                                                     </span>
-                                                    <input type="number" name="advance_amount"
+                                                    <input type="text" name="advance_amount" id="advance_amount"
                                                         class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('advance_amount') is-invalid @enderror"
                                                         placeholder="Advance Amount"
                                                         value="{{ old('advance_amount') }}" />
@@ -198,84 +198,16 @@
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{{ asset('assets/js/custom/apps/expense/create.js') }}"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-    {{-- <script>
-        const perDayAllowance = {{ $allowance ? $allowance->allowance_amount : 0 }};
-        const perDayAccommodation = {{ $allowance ? $allowance->accommodation_amount : 0 }};
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const fromDateInput = document.querySelector('[name="from_date"]');
-            const toDateInput = document.querySelector('[name="to_date"]');
-            const allowanceInput = document.querySelector('[name="allowance_amount"]');
-            const accommodationInput = document.querySelector('[name="accommodation_amount"]');
-
-            const dayLabels = document.querySelectorAll('.days-count');
-
-            function calculateAmounts() {
-                const fromDate = new Date(fromDateInput.value);
-                const toDate = new Date(toDateInput.value);
-
-                if (fromDateInput.value && toDateInput.value && toDate >= fromDate) {
-                    // Calculate full days difference
-                    const timeDiff = toDate.getTime() - fromDate.getTime();
-                    const totalDays = Math.floor(timeDiff / (1000 * 3600 * 24));
-
-                    allowanceInput.value = perDayAllowance * totalDays;
-                    accommodationInput.value = perDayAccommodation * totalDays;
-
-                    dayLabels.forEach(label => {
-                        label.innerText = `[${totalDays} Day${totalDays !== 1 ? 's' : ''}]`;
-                    });
-
-                } else {
-                    allowanceInput.value = '';
-                    accommodationInput.value = '';
-
-                    dayLabels.forEach(label => {
-                        label.innerText = '';
-                    });
-                }
-            }
-
-            fromDateInput.addEventListener('change', calculateAmounts);
-            toDateInput.addEventListener('change', calculateAmounts);
-        });
-    </script> --}}
     <script>
         let perDayAllowance = 0;
         let perDayAccommodation = 0;
 
-        // function calculateAmounts() {
-        //     const fromDate = new Date($('#from_date').val());
-        //     const toDate = new Date($('#to_date').val());
-
-        //     if (!isNaN(fromDate) && !isNaN(toDate) && toDate >= fromDate) {
-        //         const totalDays = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24));
-
-        //         const totalAllowance = perDayAllowance * totalDays;
-        //         const totalAccommodation = perDayAccommodation * totalDays;
-
-        //         $('[name="allowance_amount"]').val(totalAllowance);
-        //         $('[name="accommodation_amount"]').val(totalAccommodation);
-
-        //         if (totalDays > 0) {
-        //             $('.days-count').text(`[${totalDays} Day${totalDays !== 1 ? 's' : ''}]`);
-        //         } else {
-        //             $('.days-count').text('');
-        //         }
-
-        //     } else {
-        //         $('[name="allowance_amount"]').val('');
-        //         $('[name="accommodation_amount"]').val('');
-        //         $('.days-count').text('');
-        //     }
-        // }
         function calculateAmounts() {
             const fromDate = new Date($('#from_date').val());
             const toDate = new Date($('#to_date').val());
 
             if (!isNaN(fromDate) && !isNaN(toDate) && toDate >= fromDate) {
-                const totalDays = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24));
+                const totalDays = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24)) + 1;
 
                 if (totalDays > 0) {
                     const totalAllowance = perDayAllowance * totalDays;
@@ -299,8 +231,6 @@
                 $('.days-count').text('');
             }
         }
-
-
 
         function fetchAllowance() {
             const cityId = $('#destination_city').val();
@@ -426,6 +356,42 @@
             dateFormat: "Y-m-d",
             altInput: true,
             altFormat: "Y-m-d"
+        });
+    </script>
+    <script>
+        function formatIndianNumber(value) {
+            value = value.replace(/,/g, ''); // remove commas
+
+            if (!/^\d+$/.test(value)) return ''; // only allow whole numbers
+
+            const lastThree = value.slice(-3);
+            const otherNumbers = value.slice(0, -3);
+
+            let formatted = '';
+            if (otherNumbers !== '') {
+                formatted = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + "," + lastThree;
+            } else {
+                formatted = lastThree;
+            }
+
+            return formatted;
+        }
+
+        const input = document.getElementById('advance_amount');
+
+        input.addEventListener('input', function(e) {
+            let caret = input.selectionStart;
+            const originalLength = input.value.length;
+
+            input.value = formatIndianNumber(input.value);
+
+            const newLength = input.value.length;
+            input.setSelectionRange(caret + (newLength - originalLength), caret + (newLength - originalLength));
+        });
+
+        // Remove commas before form submission
+        document.getElementById('kt_invoice_form').addEventListener('submit', function() {
+            input.value = input.value.replace(/,/g, '');
         });
     </script>
 @endsection

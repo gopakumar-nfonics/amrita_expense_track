@@ -76,7 +76,7 @@ class TravelExpenseController extends Controller
             'destination_city' => 'required',
             'allowance_amount' => 'required',
             'accommodation_amount' => 'required',
-            'advance_amount' => 'required',
+            'advance_amount' => 'required|numeric',
         ]);
 
         $staff_id = Auth::guard('staff')->id();

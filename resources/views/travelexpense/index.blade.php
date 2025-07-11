@@ -302,7 +302,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="mb-3">
+                                                {{-- <div class="mb-3">
                                                     <label class="form-label required">
                                                         Category
                                                     </label>
@@ -333,7 +333,7 @@
                                                             @endif
                                                         @endforeach
                                                     </select>
-                                                </div>
+                                                </div> --}}
 
                                                 <div class="mb-3">
                                                     <label class="form-label required">

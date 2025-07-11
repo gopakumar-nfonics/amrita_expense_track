@@ -134,7 +134,7 @@ class travelexpense extends Controller
         $request->validate([
             'expense_id'  => 'required|exists:tbl_travel_expenses,id',
             'year'        => 'required',
-            'category'    => 'required',
+            // 'category'    => 'required',
             'programme'   => 'required',
             'associated'  => 'required',
             'approved_amount' => 'required',
@@ -148,7 +148,7 @@ class travelexpense extends Controller
 
         $expense->update([
             'financial_year_id'  => $request->year,
-            'category_id'        => $request->category,
+            'category_id'        => 1,
             'stream_id'          => $request->programme,
             'advance_amount'     => $request->approved_amount,
             'associated'         => $request->associated,

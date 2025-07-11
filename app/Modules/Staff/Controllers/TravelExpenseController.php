@@ -18,6 +18,7 @@ use App\Modules\Staff\Models\Staff;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AdvanceRequestMail;
 use App\Mail\ExpenseSubmitMail;
+use App\Models\Category;
 
 class TravelExpenseController extends Controller
 {
@@ -103,22 +104,6 @@ class TravelExpenseController extends Controller
             'advance_amount' => $request->advance_amount,
         ]);
 
-        // Save DA
-        TravelExpenseDetail::create([
-            'travel_expense_id' => $travelExpense->id,
-            'head' => 'DA',
-            'expenditure' => '₹' . number_format($request->allowance_amount / max($days, 1)) . ' per day for ' . $days . ' ' . \Str::plural('day', $days),
-            'amount' => $request->allowance_amount,
-        ]);
-
-        // Save Accommodation
-        TravelExpenseDetail::create([
-            'travel_expense_id' => $travelExpense->id,
-            'head' => 'ACC',
-            'expenditure' => '₹' . number_format($request->accommodation_amount / max($days, 1)) . ' per day for ' . $days . ' ' . \Str::plural('day', $days),
-            'amount' => $request->accommodation_amount,
-        ]);
-
         $requestDetails = [
             'name' => $staff->name,
             'expense_title' => $travelExpense->title,
@@ -159,11 +144,12 @@ class TravelExpenseController extends Controller
     {
         $expense = TravelExpense::findOrFail($id);
         $cities = City::orderBy('name')->get();
+        $categories = Category::where('parent_category', $expense->category_id)->get();
         $staff = Auth::user();
 
         $travelModes = [];
         if ($staff && $staff->designation) {
-            $travelModes = $staff->designation->travelModes()->with('parent')->orderBy('name')->get();
+            // $travelModes = $staff->designation->travelModes()->with('parent')->orderBy('name')->get();
             $allowance = DailyAllowanceAccommodation::where('designation_id', $staff->designation_id)
                                                     ->first();
         }
@@ -174,7 +160,7 @@ class TravelExpenseController extends Controller
         $daAmount = $daDetail?->amount ?? 0;
         $accAmount = $accDetail?->amount ?? 0;
 
-        return view('modules.Staff.travel.submit', compact('expense', 'cities', 'travelModes', 'allowance', 'daAmount', 'accAmount'));
+        return view('modules.Staff.travel.submit', compact('expense', 'cities', 'allowance', 'daAmount', 'accAmount', 'categories'));
     }
 
     public function edit($id)
@@ -204,7 +190,7 @@ class TravelExpenseController extends Controller
     {
         $request->validate([
             'direction.*' => 'required',
-            'travel_modes.*' => 'required',
+            'notes.*' => 'required',
             'fare.*' => 'required',
             'file.*' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png,webp|max:20480',
         ],
@@ -222,22 +208,6 @@ class TravelExpenseController extends Controller
 
         $travelExpense->details()->delete();
 
-        // Insert updated DA
-        TravelExpenseDetail::create([
-            'travel_expense_id' => $travelExpense->id,
-            'head' => 'DA',
-            'expenditure' => '₹' . number_format($request->allowance_amount / max($days, 1)) . ' per day for ' . $days . ' ' . \Str::plural('day', $days),
-            'amount' => $request->allowance_amount,
-        ]);
-
-        // Insert updated ACC
-        TravelExpenseDetail::create([
-            'travel_expense_id' => $travelExpense->id,
-            'head' => 'ACC',
-            'expenditure' => '₹' . number_format($request->accommodation_amount / max($days, 1)) . ' per day for ' . $days . ' ' . \Str::plural('day', $days),
-            'amount' => $request->accommodation_amount,
-        ]);
-
         // Calculate total fare
         $subTotal = array_sum($request->fare);
   
@@ -247,43 +217,70 @@ class TravelExpenseController extends Controller
         ]);
 
         // Save each travel fare row
-        foreach ($request->direction as $index => $head) {
-            $expenditure = $request->travel_modes[$index] ?? null;
+        // foreach ($request->direction as $index => $head) {
+        //     $expenditure = $request->travel_modes[$index] ?? null;
 
-            // If it's "Additional Expense", replace travel_mode with user-defined input
-            if ($head === 'Additional Expense' && isset($request->additional_expense_desc[$index])) {
-                $expenditure = $request->additional_expense_desc[$index];
-            } elseif ($expenditure) {
+        //     // If it's "Additional Expense", replace travel_mode with user-defined input
+        //     if ($head === 'Additional Expense' && isset($request->additional_expense_desc[$index])) {
+        //         $expenditure = $request->additional_expense_desc[$index];
+        //     } elseif ($expenditure) {
                 
-                $mode = TravelMode::with('parent')->find($expenditure);
-                $expenditure = $mode && $mode->parent
-                    ? $mode->parent->name . ' - ' . $mode->name
-                    : ($mode ? $mode->name : null);
-            }
+        //         $mode = TravelMode::with('parent')->find($expenditure);
+        //         $expenditure = $mode && $mode->parent
+        //             ? $mode->parent->name . ' - ' . $mode->name
+        //             : ($mode ? $mode->name : null);
+        //     }
 
+        //     $file_path = null;
+        //     if ($request->hasFile("file.$index")) {
+        //         $file = $request->file("file.$index");
+
+        //         $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        //         $extension = $file->getClientOriginalExtension();
+        //         $slug = \Str::of($originalName)
+        //                 ->lower()
+        //                 ->replace(['_', ' '], '-'); // Replace underscores/spaces with hyphens
+
+        //         $formattedName = ucwords((string) $slug, '-');
+        //         $filename = $formattedName . '_' . time() . '.' . $extension;
+
+        //         $path = $file->storeAs('expense_document', $filename, 'public');
+        //         $file_path = $path;
+        //     }
+
+        //     TravelExpenseDetail::create([
+        //         'travel_expense_id' => $travelExpense->id,
+        //         'head' => $head,
+        //         'expenditure' => $expenditure,
+        //         'amount' => $request->fare[$index],
+        //         'file_path' => $file_path ?? null,
+        //     ]);
+        // }
+
+        foreach ($request->direction as $index => $categoryId) {
+            $notes = $request->notes[$index] ?? null;
+            $fare = $request->fare[$index] ?? 0;
+    
             $file_path = null;
             if ($request->hasFile("file.$index")) {
                 $file = $request->file("file.$index");
-
                 $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 $extension = $file->getClientOriginalExtension();
-                $slug = \Str::of($originalName)
-                        ->lower()
-                        ->replace(['_', ' '], '-'); // Replace underscores/spaces with hyphens
-
+    
+                $slug = \Str::of($originalName)->lower()->replace(['_', ' '], '-');
                 $formattedName = ucwords((string) $slug, '-');
                 $filename = $formattedName . '_' . time() . '.' . $extension;
-
+    
                 $path = $file->storeAs('expense_document', $filename, 'public');
                 $file_path = $path;
             }
-
+    
             TravelExpenseDetail::create([
                 'travel_expense_id' => $travelExpense->id,
-                'head' => $head,
-                'expenditure' => $expenditure,
-                'amount' => $request->fare[$index],
-                'file_path' => $file_path ?? null,
+                'travel_head' => $categoryId, // Updated column name
+                'amount' => $fare,
+                'expenditure' => $notes,
+                'file_path' => $file_path,
             ]);
         }
 

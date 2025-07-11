@@ -13,7 +13,7 @@ class TravelExpenseDetail extends Model
 
     protected $fillable = [
         'travel_expense_id',
-        'head',
+        'travel_head',
         'expenditure',
         'amount',
         'file_path'

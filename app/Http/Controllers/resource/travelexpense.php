@@ -15,6 +15,7 @@ use App\Modules\Staff\Models\Staff;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ApproveAdvanceMail;
 use App\Mail\ExpenseSettleMail;
+use App\Mail\ExpenseRejectMail;
 
 class travelexpense extends Controller
 {
@@ -220,7 +221,15 @@ class travelexpense extends Controller
         
         $expense->save();
 
-        
+        $staff = Staff::where('id', $expense->staff_id)->first();
+        $rejectionDetails = [
+            'name' => $staff->name,
+            'expense_title' => $expense->title,
+            'reason' => $expense->rejection_reason,
+        ];
+
+        $subject = $expense->title." Expense Rejected"; 
+        Mail::to($staff->email)->send(new ExpenseRejectMail($rejectionDetails, $subject));
 
         return response()->json([
             'message' => 'Expense settlement request rejected..',

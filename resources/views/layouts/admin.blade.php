@@ -342,7 +342,7 @@
                                                     <span class="menu-bullet">
                                                         <span class="bullet bullet-dot"></span>
                                                     </span>
-                                                    <span class="menu-title">Budget & Usage</span>
+                                                    <span class="menu-title">Category Wise</span>
                                                 </a>
                                                 <!--end:Menu link-->
                                             </div>

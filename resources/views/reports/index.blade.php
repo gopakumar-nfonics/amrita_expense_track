@@ -8,8 +8,9 @@
                 <!--begin::Page title-->
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <!--begin::Title-->
-                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Budget &
-                        Usage Report</h1>
+                    <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
+                        Budget Report | Category Wise
+                    </h1>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <!-- <ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
@@ -35,10 +36,10 @@
                 <div class="card mb-5 mb-xl-8">
                     <!--begin::Header-->
                     <!-- <div class="card-header border-0 pt-5">
-               <h3 class="card-title align-items-start flex-column">
-                <span class="card-label fw-bold fs-3 mb-1">Category List</span>
-               </h3>
-              </div> -->
+                   <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label fw-bold fs-3 mb-1">Category List</span>
+                   </h3>
+                  </div> -->
                     <!--end::Header-->
                     <!--begin::Body-->
                     <div class="card-body py-3">

@@ -200,10 +200,10 @@
                                                                     Head
                                                                 </th>
                                                                 <th class="min-w-150px w-150px">
-                                                                    Expenditure
+                                                                    Amount
                                                                 </th>
                                                                 <th class="min-w-150px w-150px">
-                                                                    Amount
+                                                                    Expenditure
                                                                 </th>
                                                                 <th class="min-w-150px w-150px">
                                                                     Upload File
@@ -216,87 +216,20 @@
 
                                                         <tbody data-kt-element="item-template">
                                                             @foreach ($expense->details as $index => $detail)
-                                                                @continue(in_array($detail->head, ['DA', 'ACC']))
                                                                 <tr class="border-bottom border-bottom-dashed"
                                                                     data-kt-element="item">
                                                                     <td>
                                                                         <select name="direction[]"
                                                                             data-kt-element="direction"
                                                                             class="form-select form-select-solid">
-                                                                            @php
-                                                                                // Normalize and collect all unique heads (excluding DA, ACC, Additional Expense)
-                                                                                $allHeads = $expense->details
-                                                                                    ->pluck('head')
-                                                                                    ->filter(
-                                                                                        fn($h) => !in_array($h, [
-                                                                                            'DA',
-                                                                                            'ACC',
-                                                                                            'Additional Expense',
-                                                                                        ]),
-                                                                                    )
-                                                                                    ->unique()
-                                                                                    ->values();
-
-                                                                                $currentHead = $detail->head;
-                                                                            @endphp
-
-                                                                            {{-- Force current value as selected --}}
-                                                                            <option value="{{ $currentHead }}" selected>
-                                                                                {{ $currentHead }}</option>
-
-                                                                            {{-- Other options --}}
-                                                                            @foreach ($allHeads as $headOption)
-                                                                                @continue($headOption === $currentHead) {{-- Avoid duplicate --}}
-                                                                                <option value="{{ $headOption }}">
-                                                                                    {{ $headOption }}</option>
+                                                                            <option value="">--Select--</option>
+                                                                            @foreach ($categories as $category)
+                                                                                <option value="{{ $category->id }}"
+                                                                                    {{ $category->id == $detail->travel_head ? 'selected' : '' }}>
+                                                                                    {{ $category->category_name }}
+                                                                                </option>
                                                                             @endforeach
-
-                                                                            {{-- Additional Expense --}}
-                                                                            @if ($currentHead !== 'Additional Expense')
-                                                                                <option value="Additional Expense">
-                                                                                    Additional Expense</option>
-                                                                            @endif
                                                                         </select>
-                                                                    </td>
-
-
-
-                                                                    <td>
-                                                                        @if ($detail->head === 'Additional Expense')
-                                                                            <input type="text"
-                                                                                name="additional_expense_desc[]"
-                                                                                class="form-control"
-                                                                                value="{{ $detail->expenditure }}"
-                                                                                placeholder="Specify Additional Expense">
-                                                                            <input type="hidden" name="travel_modes[]"
-                                                                                value="">
-                                                                        @else
-                                                                            <select name="travel_modes[]"
-                                                                                data-kt-element="travel-mode"
-                                                                                class="form-select form-select-solid">
-                                                                                <option value="">--Select--</option>
-                                                                                @foreach ($travelModes as $mode)
-                                                                                    @php
-                                                                                        $label = $mode->parent
-                                                                                            ? $mode->parent->name .
-                                                                                                ' : ' .
-                                                                                                $mode->name
-                                                                                            : $mode->name;
-                                                                                        $value = $mode->id;
-                                                                                        $composed = $mode->parent
-                                                                                            ? $mode->parent->name .
-                                                                                                ' - ' .
-                                                                                                $mode->name
-                                                                                            : $mode->name;
-                                                                                    @endphp
-                                                                                    <option value="{{ $value }}"
-                                                                                        {{ $composed == $detail->expenditure ? 'selected' : '' }}>
-                                                                                        {{ $label }}
-                                                                                    </option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                            <!-- JS will inject the additional input here -->
-                                                                        @endif
                                                                     </td>
 
                                                                     <td>
@@ -304,6 +237,13 @@
                                                                             type="number" name="fare[]"
                                                                             value="{{ $detail->amount }}"
                                                                             placeholder="Amount">
+                                                                    </td>
+
+                                                                    <td>
+                                                                        <input class="form-control form-control-solid"
+                                                                            type="text" name="notes[]"
+                                                                            value="{{ $detail->expenditure }}"
+                                                                            placeholder="Notes">
                                                                     </td>
 
                                                                     <td>

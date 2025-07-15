@@ -167,11 +167,12 @@ class TravelExpenseController extends Controller
     {
         $expense = TravelExpense::with('details')->findOrFail($id);
         $cities = City::orderBy('name')->get();
+        $categories = Category::where('parent_category', $expense->category_id)->get();
         $staff = Auth::user();
 
         $travelModes = [];
         if ($staff && $staff->designation) {
-            $travelModes = $staff->designation->travelModes()->with('parent')->orderBy('name')->get();
+            // $travelModes = $staff->designation->travelModes()->with('parent')->orderBy('name')->get();
             $allowance = DailyAllowanceAccommodation::where('designation_id', $staff->designation_id)
                                                     ->first();
         }
@@ -183,7 +184,7 @@ class TravelExpenseController extends Controller
         $accAmount = $accDetail?->amount ?? 0;
         $total = $expense->amount;
 
-        return view('modules.Staff.travel.edit', compact('expense', 'cities', 'travelModes', 'allowance', 'daAmount', 'accAmount', 'total'));
+        return view('modules.Staff.travel.edit', compact('expense', 'cities', 'allowance', 'daAmount', 'accAmount', 'total', 'categories'));
     }
 
     public function expense_store(Request $request, $id)

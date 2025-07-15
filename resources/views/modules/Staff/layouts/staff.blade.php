@@ -186,7 +186,7 @@
                     <!--begin::Logo-->
                     <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
                         <!--begin::Logo image-->
-                        <a href="{{ route('dashboard') }}">
+                        <a href="{{ route('travel.index') }}">
                             <img alt="Logo" src="{{ url('/') }}/assets/media/logos/logo.svg"
                                 class="h-35px app-sidebar-logo-default" />
                             <img alt="Logo" src="{{ url('/') }}/assets/media/logos/logo-small.png"

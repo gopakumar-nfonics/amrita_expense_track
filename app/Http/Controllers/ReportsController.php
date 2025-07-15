@@ -91,13 +91,14 @@ class ReportsController extends Controller
             AND tbl_travel_expenses.financial_year_id = tbl_budget.financial_year_id
         ), 0) +
         COALESCE((
-            SELECT SUM(amount)
-            FROM tbl_travel_expenses
-            INNER JOIN tbl_category ON tbl_travel_expenses.category_id = tbl_category.id
-            WHERE (tbl_travel_expenses.category_id = tbl_budget.category_id 
-                OR tbl_category.parent_category = tbl_budget.category_id)
-            AND tbl_travel_expenses.status = "expense_settled"
-            AND tbl_travel_expenses.financial_year_id = tbl_budget.financial_year_id
+            SELECT SUM(ted.amount)
+            FROM tbl_travel_expenses te
+            INNER JOIN travel_expense_details ted ON ted.travel_expense_id = te.id
+            WHERE ted.travel_head IN (
+                SELECT id FROM tbl_category WHERE parent_category = tbl_budget.category_id
+            )
+            AND te.status = "expense_settled"
+            AND te.financial_year_id = tbl_budget.financial_year_id
         ), 0)
     ) as used_amount')
             ->leftJoin('tbl_category', 'tbl_budget.category_id', '=', 'tbl_category.id')
@@ -132,11 +133,13 @@ class ReportsController extends Controller
                     ' . ($financialYearId ? 'AND tbl_travel_expenses.financial_year_id = ' . (int) $financialYearId : '') . '
                 ), 0) +
                 COALESCE((
-                    SELECT SUM(amount)
-                    FROM tbl_travel_expenses
-                    WHERE tbl_travel_expenses.category_id = tbl_category.id
-                    AND tbl_travel_expenses.status = "expense_settled"
-                    ' . ($financialYearId ? 'AND tbl_travel_expenses.financial_year_id = ' . (int) $financialYearId : '') . '
+                    SELECT SUM(ted.amount)
+                    FROM tbl_travel_expenses te
+                    INNER JOIN travel_expense_details ted ON ted.travel_expense_id = te.id
+                    WHERE ted.travel_head IN (
+                    SELECT id FROM tbl_category WHERE parent_category = tbl_category.id )
+                    AND te.status = "expense_settled"
+                    ' . ($financialYearId ? 'AND te.financial_year_id = ' . (int) $financialYearId : '') . '
                 ), 0)
             ) as used_amount_by_subcategory'))
                         ->whereNull('tbl_category.deleted_at')
@@ -170,11 +173,12 @@ class ReportsController extends Controller
                             ' . ($financialYearId ? 'AND tbl_travel_expenses.financial_year_id = ' . (int) $financialYearId : '') . '
                         ), 0) +
                         COALESCE((
-                            SELECT SUM(amount)
-                            FROM tbl_travel_expenses
-                            WHERE tbl_travel_expenses.category_id = tbl_category.id
-                            AND tbl_travel_expenses.status = "expense_settled"
-                            ' . ($financialYearId ? 'AND tbl_travel_expenses.financial_year_id = ' . (int) $financialYearId : '') . '
+                            SELECT SUM(ted.amount)
+                            FROM tbl_travel_expenses te
+                            INNER JOIN travel_expense_details ted ON ted.travel_expense_id = te.id
+                            WHERE ted.travel_head = tbl_category.id
+                            AND te.status = "expense_settled"
+                            ' . ($financialYearId ? 'AND te.financial_year_id = ' . (int) $financialYearId : '') . '
                         ), 0)
                     ) as used_amount'))
                                     ->whereNull('tbl_category.deleted_at');

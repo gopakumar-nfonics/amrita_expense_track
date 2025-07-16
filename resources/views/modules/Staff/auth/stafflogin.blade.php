@@ -130,7 +130,7 @@
             <div class="d-flex flex-center flex-wrap px-5">
                 <!--begin::Links-->
                 <div class="d-flex fw-semibold text-gray-400 fs-base">
-                    <span class="px-5" target="_blank">© 2024. Amrita Vishwa Vidyapeetham. All Rights Reserved.</span>
+                    <span class="px-5" target="_blank">© {{ date('Y') }}. Amrita Vishwa Vidyapeetham. All Rights Reserved.</span>
 
                 </div>
                 <!--end::Links-->

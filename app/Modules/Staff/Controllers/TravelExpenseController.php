@@ -56,11 +56,11 @@ class TravelExpenseController extends Controller
 
         // Get the results
         $expenses = $query->get();
+        $filteredExpenses = $expenses->where('status', '!=', 'rejected');
 
-        // Calculate totals
-        $totalAmount = $expenses->sum('amount');
-        $totalAdvance = $expenses->sum('advance_amount');
-        $totalFinal = $expenses->sum('final_amount');
+        $totalAmount = $filteredExpenses->sum('amount');
+        $totalAdvance = $filteredExpenses->sum('advance_amount');
+        $totalFinal = $filteredExpenses->sum('final_amount');
         $totalDisbursed = $totalAdvance + $totalFinal;
         $balance = $totalAmount - $totalDisbursed;
 
@@ -154,13 +154,7 @@ class TravelExpenseController extends Controller
                                                     ->first();
         }
 
-        $daDetail = $expense->details->firstWhere('head', 'DA');
-        $accDetail = $expense->details->firstWhere('head', 'ACC');
-    
-        $daAmount = $daDetail?->amount ?? 0;
-        $accAmount = $accDetail?->amount ?? 0;
-
-        return view('modules.Staff.travel.submit', compact('expense', 'cities', 'allowance', 'daAmount', 'accAmount', 'categories'));
+        return view('modules.Staff.travel.submit', compact('expense', 'cities', 'allowance', 'categories'));
     }
 
     public function edit($id)
@@ -177,14 +171,9 @@ class TravelExpenseController extends Controller
                                                     ->first();
         }
 
-        $daDetail = $expense->details->firstWhere('head', 'DA');
-        $accDetail = $expense->details->firstWhere('head', 'ACC');
-    
-        $daAmount = $daDetail?->amount ?? 0;
-        $accAmount = $accDetail?->amount ?? 0;
         $total = $expense->amount;
 
-        return view('modules.Staff.travel.edit', compact('expense', 'cities', 'allowance', 'daAmount', 'accAmount', 'total', 'categories'));
+        return view('modules.Staff.travel.edit', compact('expense', 'cities', 'allowance', 'total', 'categories'));
     }
 
     public function expense_store(Request $request, $id)
@@ -199,60 +188,113 @@ class TravelExpenseController extends Controller
             'file.max' => 'The file size must not exceed 20MB.',
         ]);
 
-
-        $travelExpense = TravelExpense::with('details')->findOrFail($id);
-
+        $oldExpense = TravelExpense::with('details')->findOrFail($id);
         $from = Carbon::parse($request->from_date);
         $to = Carbon::parse($request->to_date);
-        $days = $from->diffInDays($to); // full days only
-
-        $travelExpense->details()->delete();
-
-        // Calculate total fare
+        $days = $from->diffInDays($to);
         $subTotal = array_sum($request->fare);
-  
-        $travelExpense->update([
-            'amount' => $subTotal,
-            'status' => 'expense_submitted', // default
-        ]);
+    
+        // If rejected: Clone as new
+        if ($oldExpense->status === 'rejected') {
 
-        foreach ($request->direction as $index => $categoryId) {
-            $notes = isset($request->notes[$index]) ? $request->notes[$index] : null;
-            $fare = $request->fare[$index] ?? 0;
+            $oldExpense->update([
+                'is_resubmit' => true,
+            ]);
+
+            $newExpense = TravelExpense::create([
+                'title' => $oldExpense->title,
+                'staff_id' => $oldExpense->staff_id,
+                'from_date' => $oldExpense->from_date,
+                'to_date' => $oldExpense->to_date,
+                'source_city' => $oldExpense->source_city,
+                'destination_city' => $oldExpense->destination_city,
+                'financial_year_id' => $oldExpense->financial_year_id,
+                'category_id' => $oldExpense->category_id,
+                'stream_id' => $oldExpense->stream_id,
+                'associated' => $oldExpense->associated,
+                'status' => 'expense_submitted',
+                'amount' => $subTotal,
+                'advance_amount' => $oldExpense->advance_amount,
+                'advancepayment_date' => $oldExpense->advancepayment_date,
+            ]);
     
-            $file_path = null;
-            if ($request->hasFile("file.$index")) {
-                $file = $request->file("file.$index");
-                $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $extension = $file->getClientOriginalExtension();
+            foreach ($request->direction as $index => $categoryId) {
+                $notes = $request->notes[$index] ?? null;
+                $fare = $request->fare[$index] ?? 0;
+                $file_path = null;
     
-                $slug = \Str::of($originalName)->lower()->replace(['_', ' '], '-');
-                $formattedName = ucwords((string) $slug, '-');
-                $filename = $formattedName . '_' . time() . '.' . $extension;
+                if ($request->hasFile("file.$index")) {
+                    $file = $request->file("file.$index");
+                    $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $extension = $file->getClientOriginalExtension();
+                    $slug = \Str::of($originalName)->lower()->replace(['_', ' '], '-');
+                    $formattedName = ucwords((string) $slug, '-');
+                    $filename = $formattedName . '_' . time() . '.' . $extension;
+                    $path = $file->storeAs('expense_document', $filename, 'public');
+                    $file_path = $path;
+                }
     
-                $path = $file->storeAs('expense_document', $filename, 'public');
-                $file_path = $path;
+                TravelExpenseDetail::create([
+                    'travel_expense_id' => $newExpense->id,
+                    'travel_head' => $categoryId,
+                    'amount' => $fare,
+                    'expenditure' => $notes,
+                    'file_path' => $file_path,
+                ]);
             }
     
-            TravelExpenseDetail::create([
-                'travel_expense_id' => $travelExpense->id,
-                'travel_head' => $categoryId, // Updated column name
-                'amount' => $fare,
-                'expenditure' => $notes,
-                'file_path' => $file_path,
+            $staff = Staff::find($newExpense->staff_id);
+            $expenseDetails = [
+                'name' => $staff->name,
+                'expense_title' => $newExpense->title,
+            ];
+            $adminsubject = "Expense Re-Submitted";
+            $adminemail = env('CONTACT_MAIL');
+            Mail::to($adminemail)->send(new ExpenseSubmitMail($expenseDetails, $adminsubject));
+    
+        } else {
+            
+            $oldExpense->details()->delete();
+    
+            $oldExpense->update([
+                'amount' => $subTotal,
+                'status' => 'expense_submitted',
             ]);
+    
+            foreach ($request->direction as $index => $categoryId) {
+                $notes = $request->notes[$index] ?? null;
+                $fare = $request->fare[$index] ?? 0;
+                $file_path = null;
+    
+                if ($request->hasFile("file.$index")) {
+                    $file = $request->file("file.$index");
+                    $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $extension = $file->getClientOriginalExtension();
+                    $slug = \Str::of($originalName)->lower()->replace(['_', ' '], '-');
+                    $formattedName = ucwords((string) $slug, '-');
+                    $filename = $formattedName . '_' . time() . '.' . $extension;
+                    $path = $file->storeAs('expense_document', $filename, 'public');
+                    $file_path = $path;
+                }
+    
+                TravelExpenseDetail::create([
+                    'travel_expense_id' => $oldExpense->id,
+                    'travel_head' => $categoryId,
+                    'amount' => $fare,
+                    'expenditure' => $notes,
+                    'file_path' => $file_path,
+                ]);
+            }
+    
+            $staff = Staff::find($oldExpense->staff_id);
+            $expenseDetails = [
+                'name' => $staff->name,
+                'expense_title' => $oldExpense->title,
+            ];
+            $adminsubject = "Expense Submitted";
+            $adminemail = env('CONTACT_MAIL');
+            Mail::to($adminemail)->send(new ExpenseSubmitMail($expenseDetails, $adminsubject));
         }
-
-        $staff = Staff::where('id', $travelExpense->staff_id)->first();
-        $expenseDetails = [
-            'name' => $staff->name,
-            'expense_title' => $travelExpense->title,
-        ];
-
-        $adminsubject ="Expense Submitted";
-        $adminemail = env('CONTACT_MAIL');
-        Mail::to($adminemail)->send(new ExpenseSubmitMail($expenseDetails,$adminsubject));
-
 
         return redirect()->route('travel.index')->with('success', 'Travel expense submitted successfully.');
     }

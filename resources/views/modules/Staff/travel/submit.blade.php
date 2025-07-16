@@ -137,7 +137,7 @@
                                                     </span>
                                                     <input type="number" name="allowance_amount"
                                                         class=" read-only form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('allowance_amount') is-invalid @enderror"
-                                                        placeholder="" value="{{ old('allowance_amount', $daAmount) }}"
+                                                        placeholder="" value="{{ old('allowance_amount') }}"
                                                         readonly />
                                                 </div>
                                                 @error('allowance_amount')
@@ -156,7 +156,7 @@
                                                     <input type="number" name="accommodation_amount"
                                                         class=" read-only form-control form-control-lg form-control-solid @error('accommodation_amount') is-invalid @enderror"
                                                         placeholder=""
-                                                        value="{{ old('accommodation_amount', $accAmount) }}" readonly />
+                                                        value="{{ old('accommodation_amount') }}" readonly />
                                                 </div>
                                                 @error('accommodation_amount')
                                                     <div class="invalid-feedback">{{ $message }}</div>

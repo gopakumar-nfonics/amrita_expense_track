@@ -226,7 +226,7 @@
                                                             </a>
                                                         </div>
                                                     @endif
-                                                    @if (in_array($expense->status, ['expense_submitted', 'expense_settled']))
+                                                    @if (in_array($expense->status, ['expense_submitted', 'expense_settled', 'rejected']))
                                                         <div class="menu-item px-1">
                                                             <a href="{{ route('travelexpense.show', encrypt($expense->id)) }}"
                                                                 class="menu-link px-1">

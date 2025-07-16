@@ -19,9 +19,14 @@ class TravelExpense extends Model
         'source_city',
         'destination_city',
         'financial_year_id',
+        'category_id',
+        'stream_id',
+        'associated',
         'amount',
         'status',
         'advance_amount',
+        'advancepayment_date',
+        'is_resubmit',
     ];
 
     // (optional) relationship to Staff

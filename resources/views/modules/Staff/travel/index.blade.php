@@ -432,16 +432,16 @@
                                                 </a>
                                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-150px py-4"
                                                     data-kt-menu="true">
-                                                    {{-- @if ($expense->status == 'expense_submitted')
+                                                    @if (($expense->status === 'rejected' && !$expense->is_resubmit) || $expense->status === 'expense_submitted')
                                                         <div class="menu-item px-3">
                                                             <a href="{{ route('travel.edit', $expense->id) }}"
                                                                 class="menu-link px-3"
                                                                 data-kt-customer-table-filter="delete_row">
-                                                                Edit
+                                                                {{ $expense->status === 'rejected' ? 'Resubmit' : 'Edit' }}
                                                             </a>
                                                         </div>
-                                                    @endif --}}
-                                                    @if (in_array($expense->status, ['expense_submitted', 'expense_settled']))
+                                                    @endif
+                                                    @if (in_array($expense->status, ['expense_submitted', 'expense_settled', 'rejected']))
                                                         <div class="menu-item px-3">
                                                             <a href="{{ route('travel.show', encrypt($expense->id)) }}"
                                                                 class="menu-link px-3"

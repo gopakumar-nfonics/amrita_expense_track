@@ -137,8 +137,7 @@
                                                     </span>
                                                     <input type="number" name="allowance_amount"
                                                         class=" read-only form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('allowance_amount') is-invalid @enderror"
-                                                        placeholder="" value="{{ old('allowance_amount', $daAmount) }}"
-                                                        readonly />
+                                                        placeholder="" value="{{ old('allowance_amount') }}" readonly />
                                                 </div>
                                                 @error('allowance_amount')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -155,8 +154,8 @@
                                                     </span>
                                                     <input type="number" name="accommodation_amount"
                                                         class=" read-only form-control form-control-lg form-control-solid @error('accommodation_amount') is-invalid @enderror"
-                                                        placeholder=""
-                                                        value="{{ old('accommodation_amount', $accAmount) }}" readonly />
+                                                        placeholder="" value="{{ old('accommodation_amount') }}"
+                                                        readonly />
                                                 </div>
                                                 @error('accommodation_amount')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -189,7 +188,8 @@
                                                     </label>
                                                     <div class="text-muted fs-7 mb-5">Add all travel-related expenses,
                                                         including transportation, accommodation, meals, and other associated
-                                                        costs.</div>
+                                                        costs.
+                                                    </div>
 
                                                     <table class="table g-5 gs-0 mb-0 fw-bold text-gray-700"
                                                         data-kt-element="items">
@@ -374,7 +374,7 @@
             const toDate = new Date($('#to_date').val());
 
             if (!isNaN(fromDate) && !isNaN(toDate) && toDate >= fromDate) {
-                const totalDays = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24));
+                const totalDays = Math.floor((toDate - fromDate) / (1000 * 60 * 60 * 24)) + 1;
 
                 if (totalDays > 0) {
                     const totalAllowance = perDayAllowance * totalDays;
@@ -398,8 +398,6 @@
                 $('.days-count').text('');
             }
         }
-
-
 
         function fetchAllowance() {
             const cityId = $('#destination_city').val();
@@ -439,14 +437,12 @@
             });
 
             // Optionally trigger calculation if fields are pre-filled
-            // if ($('#from_date').val() && $('#to_date').val()) {
-            //     calculateAmounts();
-            // }
-            const isEditing = $('[name="allowance_amount"]').val() > 0 || $('[name="accommodation_amount"]').val() >
-                0;
-
-            if (!isEditing && $('#from_date').val() && $('#to_date').val()) {
+            if ($('#from_date').val() && $('#to_date').val()) {
                 calculateAmounts();
+            }
+            // Trigger fetchAllowance() if destination_city is pre-filled (edit mode)
+            if ($('#destination_city').val()) {
+                fetchAllowance();
             }
         });
     </script>

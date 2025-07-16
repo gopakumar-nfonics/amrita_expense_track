@@ -22,6 +22,11 @@
                             Submit Expense
                         </h1>
                     </div>
+                    <div class="card-toolbar">
+                        <a href="{{ route('travel.index') }}" class="btn btn-sm btn-primary">
+                            Back to List
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -137,8 +142,7 @@
                                                     </span>
                                                     <input type="number" name="allowance_amount"
                                                         class=" read-only form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('allowance_amount') is-invalid @enderror"
-                                                        placeholder="" value="{{ old('allowance_amount') }}"
-                                                        readonly />
+                                                        placeholder="" value="{{ old('allowance_amount') }}" readonly />
                                                 </div>
                                                 @error('allowance_amount')
                                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -155,8 +159,8 @@
                                                     </span>
                                                     <input type="number" name="accommodation_amount"
                                                         class=" read-only form-control form-control-lg form-control-solid @error('accommodation_amount') is-invalid @enderror"
-                                                        placeholder=""
-                                                        value="{{ old('accommodation_amount') }}" readonly />
+                                                        placeholder="" value="{{ old('accommodation_amount') }}"
+                                                        readonly />
                                                 </div>
                                                 @error('accommodation_amount')
                                                     <div class="invalid-feedback">{{ $message }}</div>

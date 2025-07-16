@@ -22,6 +22,11 @@
                             Edit Expense
                         </h1>
                     </div>
+                    <div class="card-toolbar">
+                        <a href="{{ route('travel.index') }}" class="btn btn-sm btn-primary">
+                            Back to List
+                        </a>
+                    </div>
                 </div>
             </div>
 

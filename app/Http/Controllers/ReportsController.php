@@ -735,7 +735,8 @@ class ReportsController extends Controller
 
         $query = Staff::with([
             'travelexpense' => function ($q) use ($financial_year) {
-                $q->where('status', '!=', 'advance_requested');
+                // $q->where('status', '!=', 'advance_requested');
+                $q->whereNotIn('status', ['advance_requested', 'rejected']);
 
                 if ($financial_year) {
                     $q->where('financial_year_id', $financial_year);
@@ -745,7 +746,8 @@ class ReportsController extends Controller
             }
         ])
             ->whereHas('travelexpense', function ($q) use ($financial_year) {
-                $q->where('status', '!=', 'advance_requested');
+                // $q->where('status', '!=', 'advance_requested');
+                $q->whereNotIn('status', ['advance_requested', 'rejected']);
 
                 if ($financial_year) {
                     $q->where('financial_year_id', $financial_year);

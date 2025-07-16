@@ -203,7 +203,7 @@
                                                                     Amount
                                                                 </th>
                                                                 <th class="min-w-150px w-150px">
-                                                                    Expenditure
+                                                                    Notes
                                                                 </th>
                                                                 <th class="min-w-150px w-150px">
                                                                     Upload File

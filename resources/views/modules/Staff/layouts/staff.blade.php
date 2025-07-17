@@ -129,7 +129,7 @@
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5">
 
-                                        <a href="{{ route('userprofile') }}" class="menu-link px-5">My Profile</a>
+                                        <a href="{{ route('staff.profile') }}" class="menu-link px-5">My Profile</a>
 
                                     </div>
                                     <!--end::Menu item-->

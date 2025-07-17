@@ -11,6 +11,8 @@ Route::middleware(['web'])->prefix('staff')->group(function () {
 
     Route::middleware('auth:staff')->group(function () {
         Route::get('dashboard', [StaffController::class, 'dashboard'])->name('staff.dashboard');
+        Route::get('staff-profile', [StaffController::class, 'profile'])->name('staff.profile');
+        Route::post('staff-profile/update/{id}', [StaffController::class, 'update'])->name('staff.profile.update');
         Route::get('travel-expense/create', [TravelExpenseController::class, 'create'])->name('travel.create');
         Route::get('travel-expense/index', [TravelExpenseController::class, 'index'])->name('travel.index');
         Route::post('travel-expense/store', [TravelExpenseController::class, 'store'])->name('travel.store');

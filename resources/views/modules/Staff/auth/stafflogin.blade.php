@@ -97,12 +97,12 @@
 
 
                         <!--begin::Wrapper-->
-                        <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mt-5">
+                        {{-- <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mt-5">
                             <div></div>
                             <!--begin::Link-->
                             <a href="{{ route('password.request') }}" class="link-primary"><u>Forgot Password ?</u></a>
                             <!--end::Link-->
-                        </div>
+                        </div> --}}
                         <!--end::Wrapper-->
 
                         <!--begin::Submit button-->

@@ -88,7 +88,7 @@
                                                 <option value="">--Select Designation--</option>
                                                 @foreach ($designation as $designation)
                                                     <option value="{{ $designation->id }}"
-                                                        @if (old('designation', $designation->id) == $designation->id) selected @endif>
+                                                        @if (old('designation', $staffs->designation_id) == $designation->id) selected @endif>
                                                         {{ $designation->title }}</option>
                                                 @endforeach
                                             </select>

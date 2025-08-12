@@ -2,9 +2,9 @@
 
 @section('content')
 <style>
-    table tr:first-child td:nth-child(5) button {
-        display: none;
-    }
+table tr:first-child td:nth-child(5) button {
+    display: none;
+}
 </style>
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main" data-select2-id="select2-data-kt_app_main">
     <!--begin::Content wrapper-->
@@ -80,10 +80,12 @@
                                                             <!--end::Label-->
                                                             <!--begin::Select2-->
                                                             <!--begin::Editor-->
-                                                            <input id="" name="proposal_title" placeholder="Proposal Title"
+                                                            <input id="" name="proposal_title"
+                                                                placeholder="Proposal Title"
                                                                 class="form-control mb-2 @error('proposal_title') is-invalid @enderror"
                                                                 value="{{ old('proposal_title') }}" />
-                                                            @error('proposal_title')<div class="invalid-feedback">{{ $message }}
+                                                            @error('proposal_title')<div class="invalid-feedback">
+                                                                {{ $message }}
                                                             </div> @enderror
                                                             <!--end::Editor-->
                                                             <!--end::Select2-->
@@ -140,10 +142,12 @@
                                                         </div>
                                                         <div class="fs-6 fw-bold text-gray-700 col-lg-2">
                                                             <label class="form-label required">Proposal Year</label>
-                                                            <select name="proposal_year" class="form-select @error('proposal_year') is-invalid @enderror">
+                                                            <select name="proposal_year"
+                                                                class="form-select @error('proposal_year') is-invalid @enderror">
                                                                 <option value="">Select Year</option>
                                                                 @foreach($financialyears as $year)
-                                                                <option value="{{ $year->id }}" {{ old('proposal_year') == $year->id ? 'selected' : '' }}>
+                                                                <option value="{{ $year->id }}"
+                                                                    {{ old('proposal_year', $year->is_current == 1 ? $year->id : '') == $year->id ? 'selected' : '' }}>
                                                                     {{ $year->year }}
                                                                 </option>
                                                                 @endforeach
@@ -261,7 +265,8 @@
                                                         <!--begin::Input group-->
                                                         <div class="fv-row pt-0">
                                                             <div class="text-center">
-                                                                <label for="file-upload" class="btn btn-sm btn-info w-100 mt-5 mb-1">
+                                                                <label for="file-upload"
+                                                                    class="btn btn-sm btn-info w-100 mt-5 mb-1">
                                                                     <span class="svg-icon svg-icon-2">
                                                                         <i class="fa-solid fa-upload"></i>
                                                                     </span>
@@ -273,12 +278,14 @@
 
                                                                 <!-- Display Validation Error Message Below Input -->
                                                                 @error('file')
-                                                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                                                                <div class="invalid-feedback d-block">{{ $message }}
+                                                                </div>
                                                                 @enderror
                                                             </div>
 
                                                             <!-- Display Selected File Name -->
-                                                            <div class="text-muted fs-7 w-200px" id="file-name">Upload reference document.</div>
+                                                            <div class="text-muted fs-7 w-200px" id="file-name">Upload
+                                                                reference document.</div>
                                                         </div>
 
 
@@ -321,7 +328,8 @@
                                                                     <input type="text"
                                                                         class="form-control form-control-solid mb-2 @error('name.*') is-invalid @enderror"
                                                                         name="name[]" placeholder="Schedule Title">
-                                                                    @error('name.*')<div class="invalid-feedback milestone-error">
+                                                                    @error('name.*')<div
+                                                                        class="invalid-feedback milestone-error">
                                                                         Payment Schedule is required</div> @enderror
                                                                 </td>
                                                                 <td>
@@ -477,7 +485,7 @@
 <!--end::Global Stylesheets Bundle-->
 
 <script>
-    var hostUrl = "{{ asset('assets/') }}";
+var hostUrl = "{{ asset('assets/') }}";
 </script>
 
 <!--begin::Global Javascript Bundle(mandatory for all pages)-->
@@ -503,80 +511,80 @@
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#summernote').summernote({
-            height: 125, // Set the editor height
-            placeholder: 'Add service description...',
-            tabsize: 2,
-            toolbar: [
-                // [groupName, [list of buttons]]
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['font', ['superscript', 'subscript']],
-                ['para', ['ul', 'ol']],
-            ]
-        });
-
+$(document).ready(function() {
+    $('#summernote').summernote({
+        height: 125, // Set the editor height
+        placeholder: 'Add service description...',
+        tabsize: 2,
+        toolbar: [
+            // [groupName, [list of buttons]]
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['superscript', 'subscript']],
+            ['para', ['ul', 'ol']],
+        ]
     });
 
+});
 
 
 
-    function calculateTotalCost() {
-        const costInput = document.getElementById('order_cost');
-        const gstInput = document.getElementById('order_gst');
-        const totalCostInput = document.getElementById('total_cost');
 
-        // Get values from the input fields
-        const cost = parseFloat(costInput.value) || 0;
-        const gstPercentage = parseFloat(gstInput.value) || 0;
+function calculateTotalCost() {
+    const costInput = document.getElementById('order_cost');
+    const gstInput = document.getElementById('order_gst');
+    const totalCostInput = document.getElementById('total_cost');
 
-        // Calculate the total cost
-        const totalCost = cost + (cost * gstPercentage) / 100;
+    // Get values from the input fields
+    const cost = parseFloat(costInput.value) || 0;
+    const gstPercentage = parseFloat(gstInput.value) || 0;
+
+    // Calculate the total cost
+    const totalCost = cost + (cost * gstPercentage) / 100;
 
 
-        // Update the total cost field
-        totalCostInput.value = totalCost.toFixed(2); // Set the value with two decimal places
+    // Update the total cost field
+    totalCostInput.value = totalCost.toFixed(2); // Set the value with two decimal places
 
-        setCurrencyFormatting('#total_cost');
-    }
+    setCurrencyFormatting('#total_cost');
+}
 </script>
 <script>
-    function updateFileName() {
-        var input = document.getElementById('file-upload');
-        var fileName = input.files.length > 0 ? input.files[0].name : 'Upload reference document.';
-        document.getElementById('file-name').textContent = fileName;
-    }
+function updateFileName() {
+    var input = document.getElementById('file-upload');
+    var fileName = input.files.length > 0 ? input.files[0].name : 'Upload reference document.';
+    document.getElementById('file-name').textContent = fileName;
+}
 </script>
 <script>
-    document.getElementById('kt_invoice_form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+document.getElementById('kt_invoice_form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
 
-        // Show the SweetAlert confirmation dialog
-        swal({
-            title: "Are you sure?",
-            text: "Do you really want to submit this Proposal?",
-            icon: "warning",
-            buttons: {
-                cancel: {
-                    text: "Cancel",
-                    value: null,
-                    visible: true,
-                    closeModal: true,
-                },
-                confirm: {
-                    text: "Submit",
-                    value: true,
-                    visible: true,
-                    closeModal: true
-                }
+    // Show the SweetAlert confirmation dialog
+    swal({
+        title: "Are you sure?",
+        text: "Do you really want to submit this Proposal?",
+        icon: "warning",
+        buttons: {
+            cancel: {
+                text: "Cancel",
+                value: null,
+                visible: true,
+                closeModal: true,
             },
-            dangerMode: true,
-        }).then((willSubmit) => {
-            if (willSubmit) {
-                document.getElementById('loaderOverlay').style.display = 'flex';
-                this.submit();
+            confirm: {
+                text: "Submit",
+                value: true,
+                visible: true,
+                closeModal: true
             }
-        });
+        },
+        dangerMode: true,
+    }).then((willSubmit) => {
+        if (willSubmit) {
+            document.getElementById('loaderOverlay').style.display = 'flex';
+            this.submit();
+        }
     });
+});
 </script>
 @endsection

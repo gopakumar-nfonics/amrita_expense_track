@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Numbers_Words;
 use App\Mail\AdminInvoiceSubmit;
 use App\Mail\VendorInvoiceSubmit;
+use App\Models\FinancialYear;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
@@ -37,8 +38,9 @@ class invoice extends Controller
             }
 
         $paymentStatuses = ['completed', 'pending', 'failed', 'initiated'];
+        $financialyears = FinancialYear::get();
 
-        return view('invoice.index', compact('invoices', 'paymentStatuses'));
+        return view('invoice.index', compact('invoices', 'paymentStatuses', 'financialyears'));
     }
 
     /**

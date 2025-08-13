@@ -53,6 +53,14 @@
                             <option value="{{ $status }}">{{ ucfirst($status) }}</option>
                              @endforeach
                         </select>
+                        <select id="financialYearSelect" class="form-select" style="width: 100px;">
+                            @foreach ($financialyears as $year)
+                                <option value="<?= $year->year ?>"
+                                {{ old('proposal_year', $year->is_current == 1 ? $year->id : '') == $year->id ? 'selected' : '' }}>
+                                {{ $year->year }}
+                                </option>
+                            @endforeach
+                        </select>
                         <!--begin::Table-->
                         <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
                             id="budgettable">
@@ -67,6 +75,7 @@
                                     @endif
                                     <th class="min-w-150px">Cost</th>
                                     <th class="min-w-150px text-center">Actions</th>
+                                    <th style="display:none">Year</th>
                                     <th style="display:none">Status</th>
                                 </tr>
                             </thead>
@@ -218,6 +227,9 @@
                                         <!--end::Menu-->
                                     </td>
                                     <td style="display:none">
+                                        {{$inv->proposal->financialYear?->year ?? '-'}}
+                                    </td>
+                                    <td style="display:none">
                                         @if($inv->invoice_status == 0)
                                             pending
                                         @elseif($inv->invoice_status == 1)
@@ -263,6 +275,11 @@
                 "targets": -1,
                 "visible": false,
                 "searchable": true
+            },
+            {
+                "targets": -2,
+                "visible": false,
+                "searchable": true
             }]
         });
         $('#statusFilter').appendTo('#budgettable_wrapper .dataTables_filter').css({
@@ -280,6 +297,25 @@
                 table.column(-1).search('').draw();
             }
         });
+        $('#financialYearSelect').appendTo('#budgettable_wrapper .dataTables_filter').css({
+            'margin-left': '20px',
+            'width': '100px',
+            'height': '45px'
+        });
+
+        $('#financialYearSelect').on('change', function() {
+            var selectedYear = $(this).val();
+
+            if (selectedYear) {
+                table.column(-2).search('^' + selectedYear + '$', true, false).draw();
+            } else {
+                table.column(-2).search('').draw();
+            }
+        });
+        var initialYear = $('#financialYearSelect').val();
+        if (initialYear) {
+            table.column(-2).search('^' + initialYear + '$', true, false).draw();
+        }
     });
 </script>
 

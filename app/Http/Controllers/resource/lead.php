@@ -45,7 +45,8 @@ class lead extends Controller
         }
 
         $programmes = Stream::all();
-        return view('lead.index',compact('proposal','programmes'));
+        $financialyears = FinancialYear::get();
+        return view('lead.index',compact('proposal','programmes', 'financialyears'));
     }
 
     /**

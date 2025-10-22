@@ -51,7 +51,7 @@
                                         style="font-size: 14px; font-weight: 500; margin-bottom: 7px; font-family:Arial,Helvetica,sans-serif;text-align:left;">
                                         <p
                                             style="margin-bottom:20px; color:#525252; font-weight:700;text-align: left;margin-left: 10px;">
-                                            Dear<span style="text-transform: uppercase;">{{$details['name']}},</span>
+                                            Dear <span style="text-transform: uppercase;">{{$details['name']}},</span>
                                         <p style="margin:20px 15px 0px; color:#333;">
                                             We have received the proposal from you.</p>
 

@@ -1190,6 +1190,52 @@
                                         </div>
                                         <!--end:Menu sub-->
                                     </div>
+
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click"
+                                        class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['email-config.index', 'email-config.create', 'email-config.edit', 'email-config.show'])) show @endif">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-envelope-circle-check f-15 p-0"></i>
+                                            </span>
+                                            <span class="menu-title">Email Configuration</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['email-config.index'])) active @endif"
+                                                    href="{{ route('email-config.index') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Email List</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['email-config.create'])) active @endif"
+                                                    href="{{ route('email-config.create') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Add Email</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+
+                                        </div>
+                                        <!--end:Menu sub-->
+                                    </div>
+                                    <!--end:Menu item-->
                                 @endif
 
 

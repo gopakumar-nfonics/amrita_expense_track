@@ -53,6 +53,16 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('category', \App\Http\Controllers\resource\category::class);
     });
     Route::post('/category/deletecat', [\App\Http\Controllers\resource\category::class, 'deletecat'])->name('category.deletecat');
+    
+    // Email Configuration Routes
+    Route::group(['middleware' => 'checkRole'], function () {
+        Route::resource('email-config', \App\Http\Controllers\EmailConfigurationController::class)->parameters([
+            'email-config' => 'emailConfiguration'
+        ]);
+        Route::patch('/email-config/{emailConfiguration}/toggle-status', [\App\Http\Controllers\EmailConfigurationController::class, 'toggleStatus'])->name('email-config.toggle-status');
+        Route::get('/email-config-by-type', [\App\Http\Controllers\EmailConfigurationController::class, 'getByType'])->name('email-config.by-type');
+    });
+    
     Route::group(['middleware' => 'checkRole'], function () {
         Route::resource('budget', \App\Http\Controllers\resource\budget::class);
     });

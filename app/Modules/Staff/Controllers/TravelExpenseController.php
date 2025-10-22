@@ -64,7 +64,7 @@ class TravelExpenseController extends Controller
         $totalDisbursed = $totalAdvance + $totalFinal;
         $balance = $totalAmount - $totalDisbursed;
 
-        return view('modules.Staff.travel.index', compact('expenses', 'totalAmount', 'totalAdvance', 'financialyears', 'balance', 'totalDisbursed', 'currentYear'));
+        return view('modules.Staff.travel.index', compact('expenses', 'totalAmount', 'totalAdvance', 'financialyears', 'balance', 'totalDisbursed', 'currentYear','Year'));
     }
 
     public function store(Request $request)

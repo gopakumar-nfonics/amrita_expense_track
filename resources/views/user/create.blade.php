@@ -124,6 +124,7 @@
 											<option value="">Select a Role</option>
 											<option value="Admin">Admin</option>
 											<option value="Expense Manager">Expense Manager</option>
+											<option value="Reporter">Reporter</option>
 										</select>
 										@error('role')<div class="invalid-feedback">{{ $message }}</div> @enderror
 									</div>

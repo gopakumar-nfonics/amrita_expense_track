@@ -143,7 +143,9 @@ class HomeController extends Controller
 
                 return view('vendor_dashboard', compact('total_proposal_amount', 'total_paid_amount', 'remainingBudget','paid_percentage','proposal','financialyears','currentfinancialYear'));
             }
-        } else {
+        } elseif (Auth::user()->isReporter()) {
+            return redirect(route('vendorreport'));
+        }else {
 
             $Year = $request->query('year');
             if (!$Year) {

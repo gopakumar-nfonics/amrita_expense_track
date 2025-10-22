@@ -29,6 +29,9 @@ Route::middleware(['auth'])->group(function () {
         if (Auth::user()->isExpenseManager()) {
             return redirect(route('dashboard'));
         }
+        if (Auth::user()->isReporter()) {
+            return redirect(route('vendorreport'));
+        }
         if (Auth::user()->isvendor()) {
             return redirect(route('dashboard'));
         }

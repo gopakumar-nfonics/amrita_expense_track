@@ -105,7 +105,7 @@
                                 <div class="cursor-pointer symbol symbol-35px symbol-md-40px"
                                     data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                                     data-kt-menu-placement="bottom-end">
-                                    @if (Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
+                                    @if (Auth::user()->isAdmin() || Auth::user()->isExpenseManager() || Auth::user()->isReporter())
                                         <img src="{{ !empty(Auth::user()->thumbnail_path) ? asset(Auth::user()->thumbnail_path) : url('/assets/media/avatars/300-1.jpg') }}"
                                             alt="user" />
                                     @endif
@@ -364,6 +364,87 @@
                                     </div>
 
                                     <!--end:Menu item-->
+                                @endif
+
+                                @if (Auth::user()->isReporter())
+                                    <div class="menu-item pt-5">
+                                        <!--begin:Menu content-->
+                                        <div class="menu-content">
+                                            <span class="menu-heading fw-bold text-uppercase fs-7">Report Center</span>
+                                        </div>
+                                        <!--end:Menu content-->
+                                    </div>
+
+                                    <!--begin:Menu item-->
+                                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['vendorreport', 'programmereport','catreport','staffreport'])) show @endif">
+                                        <!--begin:Menu link-->
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="fa-solid fa-print"></i>
+                                            </span>
+                                            <span class="menu-title">Reports</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+                                        <!--end:Menu link-->
+                                        <!--begin:Menu sub-->
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['vendorreport'])) active @endif" href="{{ route('vendorreport') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Vendor Wise</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['programmereport'])) active @endif" href="{{ route('programmereport') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Programme Wise</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['catreport'])) active @endif" href="{{ route('catreport') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Category Wise</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                            <!--begin:Menu item-->
+                                            <div class="menu-item">
+                                                <!--begin:Menu link-->
+                                                <a class="menu-link @if (in_array(Route::currentRouteName(), ['staffreport'])) active @endif" href="{{ route('staffreport') }}">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-dot"></span>
+                                                    </span>
+                                                    <span class="menu-title">Staff Wise</span>
+                                                </a>
+                                                <!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+
+                                        </div>
+                                        <!--end:Menu sub-->
+                                    </div>
+
+                                    <!--end:Menu item-->
+                                @endif
+
+                                @if (Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
 
 
 
@@ -479,6 +560,7 @@
                                         <!--end:Menu content-->
                                     </div>
                                 @endif
+                                @if (Auth::user()->isAdmin() || Auth::user()->isExpenseManager() || Auth::user()->isvendor())
                                 <!--begin:Menu item-->
                                 <div data-kt-menu-trigger="click"
                                     class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['invoice.index', 'invoice.create'])) show @endif">
@@ -574,6 +656,7 @@
                                 </div>
 
                                 <!--end:Menu item-->
+                                @endif
                                 @if (Auth::user()->isAdmin() || Auth::user()->isExpenseManager())
                                     <div data-kt-menu-trigger="click"
                                         class="menu-item menu-accordion @if (in_array(Route::currentRouteName(), ['travelexpense.index'])) show @endif">

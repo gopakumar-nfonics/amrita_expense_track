@@ -20,12 +20,14 @@
                 </div>
                 <!--end::Page title-->
                 <!--begin::Button-->
+                 @if (!Auth::user()->isReporter())
                 <div class="card-toolbar">
 
                     <a href="javascript:history.back()" class="btn btn-sm btn-primary">
                         Back
                     </a>
                 </div>
+                @endif
                 <!--end::Button-->
             </div>
             <!--end::Toolbar container-->

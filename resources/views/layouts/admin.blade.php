@@ -90,6 +90,7 @@
                             <div class="app-navbar-item ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
                                 <!--begin::Menu wrapper-->
                                 <!--begin:Menu item-->
+                                @if(!Auth::user()->isReporter())
                                 <div class="menu-item me-7">
                                     <!--begin:Menu link-->
                                     <a class="menu-link" href="{{ route('support.center') }}">
@@ -101,6 +102,7 @@
                                     </a>
                                     <!--end:Menu link-->
                                 </div>
+                                 @endif
                                 <!--end:Menu item-->
                                 <div class="cursor-pointer symbol symbol-35px symbol-md-40px"
                                     data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"

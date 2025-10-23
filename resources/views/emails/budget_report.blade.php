@@ -87,7 +87,7 @@
   <div class="container">
     <img src="https://doabuet.amrita.edu/assets/media/logos/logo_purple.png" alt="Amrita Logo" class="logo" />
     <hr class="divider" />
-    <div style="font-size:14px; margin-bottom:10px; margin-top:20px;">Dear Admin,</div>
+    <div style="font-size:14px; margin-bottom:10px; margin-top:20px;">Dear {{$recipientName}},</div>
     <div style="font-size:14px; line-height:1.6; margin-bottom:15px;">
       Kindly find below the Weekly Budget Utilization Report for the {{ \Carbon\Carbon::now('Asia/Kolkata')->weekOfMonth == 1 ? 'first' : (\Carbon\Carbon::now('Asia/Kolkata')->weekOfMonth == 2 ? 'second' : (\Carbon\Carbon::now('Asia/Kolkata')->weekOfMonth == 3 ? 'third' : (\Carbon\Carbon::now('Asia/Kolkata')->weekOfMonth == 4 ? 'fourth' : 'fifth'))) }} week of {{ \Carbon\Carbon::now('Asia/Kolkata')->format('F') }} {{ $financialYear }}.
     </div>

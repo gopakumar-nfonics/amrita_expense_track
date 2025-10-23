@@ -40,6 +40,12 @@ class SendWeeklyBudgetReport extends Command
         $categories = $data['categories'];
         $financialYear = $data['financialYear'];
 
+        $recipientName = EmailConfiguration::where('is_active', true)
+    ->where('email_type', 'budget_report')
+    ->orderBy('created_at', 'desc')
+    ->value('recipient_name');
+
+
         // Determine recipients: optional --to email or fallback to config/DB
         $to = $this->option('to');
 
@@ -59,7 +65,7 @@ class SendWeeklyBudgetReport extends Command
         }
 
         foreach ($recipients as $email) {
-            Mail::to($email)->queue(new BudgetReportMail($categories, $financialYear));
+            Mail::to($email)->queue(new BudgetReportMail($categories, $financialYear,$recipientName));
         }
 
         $this->info('Weekly budget report queued for: ' . implode(',', $recipients));

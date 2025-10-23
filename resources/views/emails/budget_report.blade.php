@@ -97,9 +97,9 @@
     <table>
       <tr class="table-header">
         <th align="center">Category</th>
-        <th align="right">Allocated</th>
-        <th align="left">Sub Category</th>
-        <th align="right">Spent</th>
+        <th align="center">Allocated</th>
+        <th align="center">Sub Category</th>
+        <th align="center">Spent</th>
         <th align="center">Total Spent</th>
         <th align="center">Balance</th>
       </tr>
@@ -110,8 +110,8 @@
             <td align="right" rowspan="{{ count($cat['sub_categories']) }}"  style="vertical-align: middle; font-size: 12px;">₹{{ $cat['allocated'] }}</td>
             <td align="left" style="font-size: 11px;">{{ $cat['sub_categories'][0]['name'] }}</td>
             <td align="right" style="font-size: 12px;">₹{{ $cat['sub_categories'][0]['expense'] }}</td>
-            <td rowspan="{{ count($cat['sub_categories']) }}"  style="vertical-align: middle; font-size: 12px;">₹{{ $cat['total_expense'] }}</td>
-            <td rowspan="{{ count($cat['sub_categories']) }}"  style="vertical-align: middle; font-size: 12px;">₹{{ $cat['balance'] }}</td>
+            <td  align="right" rowspan="{{ count($cat['sub_categories']) }}"  style="vertical-align: middle; font-size: 12px;">₹{{ $cat['total_expense'] }}</td>
+            <td  align="right" rowspan="{{ count($cat['sub_categories']) }}"  style="vertical-align: middle; font-size: 12px;">₹{{ $cat['balance'] }}</td>
           </tr>
           @for($i = 1; $i < count($cat['sub_categories']); $i++)
             <tr>
